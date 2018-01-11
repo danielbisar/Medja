@@ -1,0 +1,11 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/Medja/bin
+/Medja/obj
+/Medja.OpenTk/bin
+/Medja.OpenTk/obj
+/MedjaTest/bin/Debug
+/MedjaTest/obj
+/packages
