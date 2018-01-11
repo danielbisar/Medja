@@ -7,8 +7,21 @@ namespace Medja.OpenTk.Rendering.Shaders
 {
     public class Shader : IDisposable
     {
+        private bool _isDisposed;
+
         public int Id { get; protected set; }
         public string Source { get; protected set; }
+
+        public void Compile()
+        {
+            GL.CompileShader(Id);
+
+            int result;
+            GL.GetShader(Id, ShaderParameter.CompileStatus, out result);
+
+            if (result != 1)
+                throw new Exception("VertextShader compilation error: " + GL.GetShaderInfoLog(Id));
+        }
 
         private void ReleaseUnmanagedResources()
         {
@@ -21,9 +34,16 @@ namespace Medja.OpenTk.Rendering.Shaders
 
         protected virtual void Dispose(bool disposing)
         {
-            ReleaseUnmanagedResources();
-            if (disposing)
+            if (!_isDisposed)
             {
+                _isDisposed = true;
+
+                if (disposing)
+                {
+                    // free managed resources
+                }
+
+                ReleaseUnmanagedResources();                
             }
         }
 

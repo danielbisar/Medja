@@ -9,7 +9,6 @@ namespace Medja.OpenTk.Rendering.Shaders
             Source = source;
             Id = GL.CreateShader(ShaderType.FragmentShader);
             GL.ShaderSource(Id, Source);
-            ShaderHelper.Compile(Id);
         }
     }
 }

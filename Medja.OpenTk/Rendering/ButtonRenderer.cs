@@ -9,37 +9,28 @@ namespace Medja.OpenTk.Rendering
 {
     public class ButtonRenderer : IControlRenderer
     {
-        private int _vertexBufferId;
-
-        private readonly VertextShader _vertextShader;
-        private readonly FragmentShader _fragmentShader;
-        private int _shaderProgramId;
-
+        private readonly Program _program;
+        private VertextBufferObject _vertexBuffer;
+        
         public ButtonRenderer()
         {
-            _vertextShader = new VertextShader(@"#version 330 core
-        layout(location = 0) in vec3 aPos;
+            var vertextShader = new VertextShader(DefaultShaders.Simple3DVertexShader);
+            var fragmentShader = new FragmentShader(DefaultShaders.SimpleFragmentShader);
+            _program = new Program();
 
-        void main()
-        {
-            gl_Position = vec4(aPos.x, aPos.y, 0, 1.0);
-        }");
+            _program.AddShader(vertextShader);
+            _program.AddShader(fragmentShader);
 
-            _fragmentShader = new FragmentShader(@"#version 330 core
-out vec4 FragColor;
+            _program.CompileAndLink();
+            _vertexBuffer = new VertextBufferObject();
 
-void main()
-{
-    FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);
-} ");
+            float[] vertices = {
+        -0.5f, -0.5f, 0.0f, // left  
+         0.5f, -0.5f, 0.0f, // right 
+         0.0f,  0.5f, 0.0f  // top   
+    };
 
-            _shaderProgramId = ShaderHelper.CreateProgram(_vertextShader, _fragmentShader);
-
-            // TODO using
-            _fragmentShader.Dispose();
-            _vertextShader.Dispose();
-
-            _vertexBufferId = GL.GenBuffer();
+            _vertexBuffer.Copy(vertices);
         }
 
         public void Render(Control control, RenderContext context)
@@ -47,7 +38,7 @@ void main()
             Debug.WriteLine("Button.Render");
             var button = control as Button;
 
-            var x = button.X;
+            /*var x = button.X;
             var y = button.Y;
             var xRight = x + button.Width;
             var yTop = y + button.Height;
@@ -61,14 +52,17 @@ void main()
                x, yTop,
                xRight, yTop,
                xRight, y
-            };
+            };*/                      
+      
+            GL.UseProgram(_program.Id);
+            //GL.BindBuffer(BufferTarget.ArrayBuffer, _vertexBuffer.Id);
+            GL.DrawArrays(PrimitiveType.Triangles, 0, 3);
 
-            GL.BindBuffer(BufferTarget.ArrayBuffer, _vertexBufferId);
-            GL.BufferData(BufferTarget.ArrayBuffer, vertices.Length * sizeof(float), vertices, BufferUsageHint.StaticDraw);
+            var errorCode = GL.GetError();
 
-            GL.DrawElements(BeginMode.Triangles, vertices.Length / 2, );
-
-            // todo use shaders
+            if (errorCode != ErrorCode.NoError)
+                throw new InvalidOperationException("Found GL Error: " + errorCode);
+            
             // todo render text
 
             button.IsRendered = true;

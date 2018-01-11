@@ -12,7 +12,6 @@ namespace Medja.OpenTk.Rendering.Shaders
             Source = source;
             Id = GL.CreateShader(ShaderType.VertexShader);
             GL.ShaderSource(Id, Source);
-            ShaderHelper.Compile(Id);
         }
     }
 }

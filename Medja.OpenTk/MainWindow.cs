@@ -86,7 +86,7 @@ namespace Medja
         private void SwitchTo2DMode()
         {
             GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrc1Alpha);
-            GL.Enable(EnableCap.Blend);
+            //GL.Enable(EnableCap.Blend); --> somehow nothing is drawn then
             GL.Disable(EnableCap.CullFace);
             GL.Disable(EnableCap.DepthTest);
         }
