@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Medja.Controls;
+﻿using Medja.Controls;
 
 namespace Medja.Rendering
 {
@@ -20,7 +17,7 @@ namespace Medja.Rendering
         private EmptyControlRenderer()
         { }
 
-        public void Render(Control control)
+        public void Render(Control control, RenderContext context)
         {
         }
     }

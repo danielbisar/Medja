@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Diagnostics;
 using Medja.Rendering;
 
 namespace Medja.Controls
@@ -15,6 +16,8 @@ namespace Medja.Controls
     {
         private readonly IControlRenderer _renderer;
 
+        public bool IsLayoutUpdated { get; set; }
+
         /// <summary>
         /// Indicates if the current state of the object was rendered. If IsRendered = false, the current state
         /// might not reflect the state that was last rendered.
@@ -23,9 +26,43 @@ namespace Medja.Controls
         /// </summary>
         public bool IsRendered { get; set; }
 
+        private readonly IProperty<float> _x;
+        public float X
+        {
+            get { return _x.Get(); }
+            set { _x.Set(value); }
+        }
+
+        private readonly IProperty<float> _y;
+        public float Y
+        {
+            get { return _y.Get(); }
+            set { _y.Set(value); }
+        }
+
+        private readonly IProperty<float> _width;
+        public float Width
+        {
+            get { return _width.Get(); }
+            set { _width.Set(value); }
+        }
+
+        private readonly IProperty<float> _height;
+        public float Height
+        {
+            get { return _height.Get(); }
+            set { _height.Set(value); }
+        }
+
         public Control()
         {
+            Debug.WriteLine("Create control " + GetType().Name);
             _renderer = RendererFactory.Get(GetType());
+
+            _x = AddProperty<float>();
+            _y = AddProperty<float>();
+            _width = AddProperty<float>();
+            _height = AddProperty<float>();
         }
 
         protected IProperty<T> AddProperty<T>()
@@ -41,13 +78,27 @@ namespace Medja.Controls
             // todo thread-safety? 
             // todo group properties: some might not effect the ui
 
+            IsLayoutUpdated = false;
             IsRendered = false;
+        }
+
+        public void UpdateLayout()
+        {
+            if (IsLayoutUpdated)
+                return;
+
+            Layout();
+            IsLayoutUpdated = true;
+        }
+
+        protected virtual void Layout()
+        {
         }
 
         public void Render(RenderContext renderContext)
         {
             if(!IsRendered || renderContext.ForceRender)
-                _renderer.Render(this);
+                _renderer.Render(this, renderContext);
         }
     }
 }

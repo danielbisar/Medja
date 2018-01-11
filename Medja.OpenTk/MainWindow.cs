@@ -26,7 +26,7 @@ namespace Medja
             Background = Color.Gray;
             Title = "TestApp";
 
-            _menu = new Menu();
+            _menu = new Menu(0.7f);
             _needsRedraw = true;
         }
 
@@ -59,8 +59,7 @@ namespace Medja
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
             base.OnUpdateFrame(e);
-
-            // TODO if anything was updated _needsRedraw = true;
+            _menu.UpdateLayout();
         }
 
         protected override void OnRenderFrame(FrameEventArgs e)

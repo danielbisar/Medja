@@ -7,6 +7,6 @@ namespace Medja.Rendering
 {
     public interface IControlRenderer
     {
-        void Render(Control control);
+        void Render(Control control, RenderContext context);
     }
 }

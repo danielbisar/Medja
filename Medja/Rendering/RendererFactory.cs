@@ -2,6 +2,9 @@
 
 namespace Medja.Rendering
 {
+    /// <summary>
+    /// Factory to allow injection of RendererMap by the consumer. Always use this class if you need a renderer.
+    /// </summary>
     public class RendererFactory
     {
         private static RendererMap _renderers;
@@ -16,16 +19,13 @@ namespace Medja.Rendering
         }
 
         /// <summary>
-        /// Returns the renderer for the control or an empty renderer if no renderer is registered.
+        /// <see cref="RendererMap.Get"/> for details.
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
         public static IControlRenderer Get(Type type)
         {
-            if (_renderers.TryGetValue(type, out var result))
-                return result;
-
-            return EmptyControlRenderer.Default;
+            return _renderers.Get(type);
         }
     }
 }
