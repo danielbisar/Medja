@@ -2,7 +2,7 @@
 {
     public class Button : Control
     {
-        private readonly IProperty<string> _text;
+        private readonly Property<string> _text;
 
         public string Text
         {

@@ -5,16 +5,13 @@ using System.Text;
 namespace Medja
 {
     /// <summary>
-    /// The generic parameter allows compile-time grouping of properties.
+    /// Base class for Medja objects
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    class MObject<T>
+    public class MObject
     {
-        /*private readonly Data _data;
-
-        public MObject()
+        protected virtual Property<T> AddProperty<T>()
         {
-            _data = new Data();
-        }*/
+            return new Property<T>();
+        }
     }
 }

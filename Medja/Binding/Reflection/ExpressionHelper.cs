@@ -43,18 +43,6 @@ namespace Medja.Binding.Reflection
             
             return Expression.Lambda<Action<TTarget, TSource>>(assign, targetP, sourceP);
         }
-
-        public static Expression ConvertToIfNeeded(this Expression expr, Type type)
-        {
-            //if (expr is ParameterExpression p)
-            //{
-            //    p.
-            //}
-            //else
-            //    throw NotImplementedException("For Expression of type " + expr.Type);
-
-            return expr;
-        }
     }
 
 }

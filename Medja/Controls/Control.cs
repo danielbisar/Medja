@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using Medja.Rendering;
 
@@ -12,7 +13,7 @@ namespace Medja.Controls
     /// ? Background/Foreground colors should be designed via renderers?
     /// 
     /// </remarks>
-    public class Control
+    public class Control : MObject
     {
         private readonly IControlRenderer _renderer;
 
@@ -26,28 +27,28 @@ namespace Medja.Controls
         /// </summary>
         public bool IsRendered { get; set; }
 
-        private readonly IProperty<float> _x;
+        private readonly Property<float> _x;
         public float X
         {
             get { return _x.Get(); }
             set { _x.Set(value); }
         }
 
-        private readonly IProperty<float> _y;
+        private readonly Property<float> _y;
         public float Y
         {
             get { return _y.Get(); }
             set { _y.Set(value); }
         }
 
-        private readonly IProperty<float> _width;
+        private readonly Property<float> _width;
         public float Width
         {
             get { return _width.Get(); }
             set { _width.Set(value); }
         }
 
-        private readonly IProperty<float> _height;
+        private readonly Property<float> _height;
         public float Height
         {
             get { return _height.Get(); }
@@ -65,18 +66,18 @@ namespace Medja.Controls
             _height = AddProperty<float>();
         }
 
-        protected IProperty<T> AddProperty<T>()
+        protected override Property<T> AddProperty<T>()
         {
-            var result = new Property<T>();
+            var result = base.AddProperty<T>();
             result.PropertyChanged += OnPropertyChanged;
 
             return result;
         }
 
-        private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void OnPropertyChanged(IProperty property)
         {
-            // todo thread-safety? 
-            // todo group properties: some might not effect the ui
+            //    // todo thread-safety? 
+            //    // todo group properties: some might not effect the ui
 
             IsLayoutUpdated = false;
             IsRendered = false;

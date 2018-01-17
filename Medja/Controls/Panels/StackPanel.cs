@@ -8,7 +8,7 @@ namespace Medja.Controls.Panels
     {
         public List<Control> Children { get; }
 
-        private readonly IProperty<float> _spaceBetweenChildrenProperty;
+        private readonly Property<float> _spaceBetweenChildrenProperty;
         public float SpaceBetweenChildren
         {
             get { return _spaceBetweenChildrenProperty.Get(); }

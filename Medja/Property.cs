@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel;
 
 namespace Medja
 {
-    public class Property<T> : IProperty<T>
+    public class Property<T> : IProperty
     {
+        // static readonly would be slower in access
         private readonly EqualityComparer<T> _comparer;
         private T _value;
 
@@ -32,7 +32,7 @@ namespace Medja
 
         private void NotifyPropertyChanged()
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(null));
+            PropertyChanged?.Invoke(this);
         }
     }
 }
