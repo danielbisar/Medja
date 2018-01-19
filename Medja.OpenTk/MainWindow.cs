@@ -26,7 +26,7 @@ namespace Medja
             Background = Color.Gray;
             Title = "TestApp";
 
-            _menu = new Menu(0.7f);
+            _menu = new Menu(0.5f, 0.75f);
             _needsRedraw = true;
         }
 
@@ -39,10 +39,58 @@ namespace Medja
         {
             base.OnResize(e);
 
-            GL.Viewport(0, 0, ClientRectangle.Width, ClientRectangle.Height);
+            //GL.Viewport(0, 0, ClientRectangle.Width, ClientRectangle.Height);
             /*var projection = Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 4, Width / (float)Height, 1.0f, 64.0f);
             GL.MatrixMode(MatrixMode.Projection);
             GL.LoadMatrix(ref projection);*/
+
+            //GL.Viewport(0, 0, ClientRectangle.Width, ClientRectangle.Height);
+            //GL.MatrixMode(MatrixMode.Projection);
+            //GL.LoadIdentity();            
+            //GL.MatrixMode(MatrixMode.Modelview);
+            //GL.LoadIdentity();
+            //GL.Ortho(0, ClientRectangle.Width, -ClientRectangle.Height, 0, 1, -1);
+
+            GL.MatrixMode(MatrixMode.Projection); // Tell opengl that we are doing project matrix work
+            GL.LoadIdentity(); // Clear the matrix
+            GL.Ortho(-9.0, 9.0, -9.0, 9.0, 0.0, 30.0); // Setup an Ortho view
+            GL.MatrixMode(MatrixMode.Modelview); // Tell opengl that we are doing model matrix work. (drawing)
+            GL.LoadIdentity(); // Clear the model matrix
+
+            /*
+             glMatrixMode(GL_PROJECTION);
+glLoadIdentity();
+glViewport(0, 0, screenWidth, screenHeight);
+glMatrixMode(GL_MODELVIEW);
+glLoadIdentity();
+glOrtho(0, screenWidth, 0, screenHeight, 1, -1); // Origin in lower-left corner
+glOrtho(0, screenWidth, screenHeight, 0, 1, -1); // Origin in upper-left corner
+             */
+
+            /*
+             * void display(void)
+{
+glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //Clear the screen
+// Set perspective view
+glMatrixMode (GL_PROJECTION);
+glLoadIdentity();
+gluPerspective(60, 1, 1, 30);
+glMatrixMode(GL_MODELVIEW);
+glLoadIdentity();
+
+Draw_3d();
+
+//Set ortho view
+glMatrixMode (GL_PROJECTION); // Tell opengl that we are doing project matrix work
+glLoadIdentity(); // Clear the matrix
+glOrtho(-9.0, 9.0, -9.0, 9.0, 0.0, 30.0); // Setup an Ortho view
+glMatrixMode(GL_MODELVIEW); // Tell opengl that we are doing model matrix work. (drawing)
+glLoadIdentity(); // Clear the model matrix
+
+Draw_2d();
+
+}
+             */
 
             // TODO smooth resizing of content
 
@@ -66,7 +114,10 @@ namespace Medja
         {
             base.OnRenderFrame(e);
 
-            if (_needsRedraw)
+            //_menu.X += 0.001f;
+            _menu.Y += 0.001f;
+
+            //if (_needsRedraw)
             {
                 _needsRedraw = false;
 
@@ -87,8 +138,8 @@ namespace Medja
         {
             GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrc1Alpha);
             //GL.Enable(EnableCap.Blend); --> somehow nothing is drawn then
-            GL.Disable(EnableCap.CullFace);
-            GL.Disable(EnableCap.DepthTest);
+            //GL.Disable(EnableCap.CullFace);
+            //GL.Disable(EnableCap.DepthTest);
         }
 
         private void SwitchTo3DMode()

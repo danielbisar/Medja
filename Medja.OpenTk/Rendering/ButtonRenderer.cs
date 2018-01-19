@@ -24,26 +24,46 @@ namespace Medja.OpenTk.Rendering
             _program.CompileAndLink();
             _vertexBuffer = new VertextBufferObject();
 
-            float[] vertices = {
-        -0.5f, -0.5f, 0.0f, // left  
-         0.5f, -0.5f, 0.0f, // right 
-         0.0f,  0.5f, 0.0f  // top   
-    };
+            //float[] vertices = {
+            //    -0.5f, 0.5f, 0, // left top
+            //     0.5f, 0.5f, 0, // right top
+            //     0.5f, 0, 0,    // right low
+            //     -0.5f, 0, 0,    // left low  
+            //};
 
-            _vertexBuffer.Copy(vertices);
+            //_vertexBuffer.Copy(vertices);
         }
 
         public void Render(Control control, RenderContext context)
-        {
-            Debug.WriteLine("Button.Render");
+        {            
             var button = control as Button;
 
-            /*var x = button.X;
+            var x = button.X;
             var y = button.Y;
             var xRight = x + button.Width;
             var yTop = y + button.Height;
 
-            var vertices = new []
+            //float[] vertices = {
+            //     x, yTop, 0, // left top
+            //     xRight, yTop, 0, // right top
+            //     xRight, y, 0,    // right low
+            //     x, y, 0,    // left low  
+            //};
+
+            Debug.WriteLine("Button.Render");
+            Debug.WriteLine("" + x + ", " + y);
+            Debug.WriteLine("" + xRight + ", " + yTop);
+
+            float[] vertices = {
+                -0.5f, 0.5f, 0, // left top
+                 0.5f, 0.5f, 0, // right top
+                 0.5f, 0, 0,    // right low
+                 -0.5f, 0, 0,    // left low  
+            };
+
+            _vertexBuffer.Copy(vertices);
+
+            /*var vertices = new []
             {
                x, y,
                xRight, y,
@@ -52,11 +72,12 @@ namespace Medja.OpenTk.Rendering
                x, yTop,
                xRight, yTop,
                xRight, y
-            };*/                      
-      
+            };*/
+
             GL.UseProgram(_program.Id);
             //GL.BindBuffer(BufferTarget.ArrayBuffer, _vertexBuffer.Id);
-            GL.DrawArrays(PrimitiveType.Triangles, 0, 3);
+            GL.DrawArrays(PrimitiveType.Quads, 0, 4);
+            //GL.DrawArrays(PrimitiveType.TriangleFan, 0, 4);
 
             var errorCode = GL.GetError();
 

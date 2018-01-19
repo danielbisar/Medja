@@ -6,22 +6,20 @@ namespace Medja.OpenTk
     // TODO should be a StackPanel to be more generic, and should be inside of Medja.Controls.Panels
     public class Menu : StackPanel
     {
-        public Menu(float width)
+        public Menu(float width, float height)
         {
             Width = width;
-            AddButton(0, 0, 0.5f);
+            Height = height;
+
+            AddButton();
+            AddButton();
+            AddButton();
+            AddButton();
         }
 
-        private void AddButton(float x, float y, float height)
+        private void AddButton()
         {
-            var button = new Button
-            {
-                Width = Width,
-                Height = height,
-                X = x,
-                Y = y
-            };
-
+            var button = new Button();
             Add(button);
         }
     }

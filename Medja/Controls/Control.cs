@@ -55,6 +55,13 @@ namespace Medja.Controls
             set { _height.Set(value); }
         }
 
+        private readonly Property<VerticalAlignment> _verticalAlignment;
+        public VerticalAlignment VerticalAlignment
+        {
+            get { return _verticalAlignment.Get(); }
+            set { _verticalAlignment.Set(value); }
+        }
+
         public Control()
         {
             Debug.WriteLine("Create control " + GetType().Name);
@@ -64,6 +71,7 @@ namespace Medja.Controls
             _y = AddProperty<float>();
             _width = AddProperty<float>();
             _height = AddProperty<float>();
+            _verticalAlignment = AddProperty<VerticalAlignment>();
         }
 
         protected override Property<T> AddProperty<T>()
@@ -88,12 +96,15 @@ namespace Medja.Controls
             if (IsLayoutUpdated)
                 return;
 
-            Layout();
+            Layout(new Size(Width, Height));
             IsLayoutUpdated = true;
         }
 
-        protected virtual void Layout()
+        internal virtual void Layout(Size availableSize)
         {
+            Width = availableSize.Width;
+            //if (VerticalAlignment == VerticalAlignment.Stretch)
+            Height = availableSize.Height;            
         }
 
         public void Render(RenderContext renderContext)

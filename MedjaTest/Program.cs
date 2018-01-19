@@ -12,10 +12,10 @@ namespace MedjaTest
     {
         static void Main(string[] args)
         {
-            ExecuteTest(() => new NativeTestObject());
-            ExecuteTest(() => new TPropertyTestObject());
-            ExecuteTest(() => new MTestObject());
-            ExecuteTest(() => new DefaultPropertyChangedTestObject());
+            //ExecuteTest(() => new NativeTestObject());
+            //ExecuteTest(() => new TPropertyTestObject());
+            //ExecuteTest(() => new MTestObject());
+            //ExecuteTest(() => new DefaultPropertyChangedTestObject());
 
             //Console.ReadLine();
 
