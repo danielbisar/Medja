@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Medja;
 using Medja.Performance;
+using MedjaTest.Performance;
 
 namespace MedjaTest
 {
@@ -12,10 +9,15 @@ namespace MedjaTest
     {
         static void Main(string[] args)
         {
+            //var bp = new BindingPerformance();
+            //bp.Run().Print();
+
             //ExecuteTest(() => new NativeTestObject());
             //ExecuteTest(() => new TPropertyTestObject());
             //ExecuteTest(() => new MTestObject());
             //ExecuteTest(() => new DefaultPropertyChangedTestObject());
+
+            //ExecuteCreationOnlyTest(() => new MTestObject());
 
             //Console.ReadLine();
 
@@ -23,6 +25,19 @@ namespace MedjaTest
             {
                 wnd.Run(1 / 30.0);
             }
+        }
+
+        private static void ExecuteCreationOnlyTest(Func<MTestObject> testObjFactory)
+        {
+            var report = new PropertyPerformanceReport();
+            report.TestProperties = false;
+            var result = report.CreateReport(testObjFactory);            
+
+            foreach (var item in result)
+                Console.WriteLine(item);
+
+            Console.WriteLine();
+            Console.WriteLine();
         }
 
         private static void ExecuteTest(Func<ITestObject> testObjFactory)

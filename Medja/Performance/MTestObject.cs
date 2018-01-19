@@ -6,22 +6,22 @@ namespace Medja.Performance
 {
     public class MTestObject : MObject, ITestObject
     {
-        private readonly Property<string> _testStringProperty;
-        private readonly Property<int> _testInt0;
-        private readonly Property<int> _testInt1;
-        private readonly Property<int> _testInt2;
-        private readonly Property<int> _testInt3;
-        private readonly Property<int> _testInt4;
-        private readonly Property<int> _testInt5;
-        private readonly Property<int> _testInt6;
-        private readonly Property<int> _testInt7;
-        private readonly Property<int> _testInt8;
-        private readonly Property<int> _testInt9;
-        private readonly Property<int> _testInt10;
-        private readonly Property<int> _testInt11;
-        private readonly Property<int> _testInt12;
-        private readonly Property<int> _testInt13;
-        private readonly Property<int> _testInt14;
+        public readonly Property<string> _testStringProperty;
+        public readonly Property<int> _testInt0;
+        public readonly Property<int> _testInt1;
+        public readonly Property<int> _testInt2;
+        public readonly Property<int> _testInt3;
+        public readonly Property<int> _testInt4;
+        public readonly Property<int> _testInt5;
+        public readonly Property<int> _testInt6;
+        public readonly Property<int> _testInt7;
+        public readonly Property<int> _testInt8;
+        public readonly Property<int> _testInt9;
+        public readonly Property<int> _testInt10;
+        public readonly Property<int> _testInt11;
+        public readonly Property<int> _testInt12;
+        public readonly Property<int> _testInt13;
+        public readonly Property<int> _testInt14;
 
         public string TestString
         {
@@ -48,22 +48,22 @@ namespace Medja.Performance
 
         public MTestObject()
         {
-            _testStringProperty = AddProperty<string>();
-            _testInt0 = AddProperty<int>();
-            _testInt1 = AddProperty<int>();
-            _testInt2 = AddProperty<int>();
-            _testInt3 = AddProperty<int>();
-            _testInt4 = AddProperty<int>();
-            _testInt5 = AddProperty<int>();
-            _testInt6 = AddProperty<int>();
-            _testInt7 = AddProperty<int>();
-            _testInt8 = AddProperty<int>();
-            _testInt9 = AddProperty<int>();
-            _testInt10 = AddProperty<int>();
-            _testInt11 = AddProperty<int>();
-            _testInt12 = AddProperty<int>();
-            _testInt13 = AddProperty<int>();
-            _testInt14 = AddProperty<int>();
+            _testStringProperty = new Property<string>();
+            _testInt0 = new Property<int>();
+            _testInt1 = new Property<int>();
+            _testInt2 = new Property<int>();
+            _testInt3 = new Property<int>();
+            _testInt4 = new Property<int>();
+            _testInt5 = new Property<int>();
+            _testInt6 = new Property<int>();
+            _testInt7 = new Property<int>();
+            _testInt8 = new Property<int>();
+            _testInt9 = new Property<int>();
+            _testInt10 = new Property<int>();
+            _testInt11 = new Property<int>();
+            _testInt12 = new Property<int>();
+            _testInt13 = new Property<int>();
+            _testInt14 = new Property<int>();
         }
     }
 }

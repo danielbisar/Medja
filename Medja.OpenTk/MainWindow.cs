@@ -115,7 +115,7 @@ Draw_2d();
             base.OnRenderFrame(e);
 
             //_menu.X += 0.001f;
-            _menu.Y += 0.001f;
+            //_menu.Y += 0.001f;
 
             //if (_needsRedraw)
             {

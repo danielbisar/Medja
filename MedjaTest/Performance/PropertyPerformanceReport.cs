@@ -1,51 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Medja.Performance;
 
-namespace Medja.Performance
+namespace MedjaTest.Performance
 {
     public class PropertyPerformanceReport
     {
-        private const int CreateIterations = 100000;
-        private const int PropertyIterations = 10000000;
-        private readonly string[] Strings = new[] {"12466487 4", "bklajsd ", "asdvlcj  sdf", "adfklj", "alsdfjk", "llsdk"};
-
-        public IEnumerable<string> CreateReport(Func<ITestObject> testObjFactory)
-        {
-            // warmup
-            for (int i = 0; i < 1000; i++)
-            {
-                Apply(testObjFactory(), i);
-            }
-
-            var testObj = testObjFactory();
-            var sw = Stopwatch.StartNew();
-
-            for (int i = 0; i < CreateIterations; i++)
-            {
-                testObj = testObjFactory();
-            }
-
-            sw.Stop();
-
-            GetTestObjAsString(testObj);
-            yield return string.Format("Object type: {0}", testObj.GetType());
-            yield return string.Format("{0} create iterations took {1}", CreateIterations, sw.Elapsed);
-
-            sw = Stopwatch.StartNew();
-            
-            for (int i = 0; i < PropertyIterations; i++)
-            {
-                Apply(testObj, i);
-            }
-
-            sw.Stop();
-
-            yield return GetTestObjAsString(testObj);
-            yield return string.Format("{0} property iterations took {1}", PropertyIterations, sw.Elapsed);
-        }
-
-        private string GetTestObjAsString(ITestObject testObj)
+        public static string GetTestObjAsString(ITestObject testObj)
         {
             return string.Join(",", new string[]
             {
@@ -67,6 +29,62 @@ namespace Medja.Performance
                 testObj.TestInt14.ToString(),
             });
         }
+
+        public const int CreateIterations = 5000000;
+        public const int PropertyIterations = 10000000;
+        private readonly string[] Strings = new[] {"12466487 4", "bklajsd ", "asdvlcj  sdf", "adfklj", "alsdfjk", "llsdk"};
+
+        public bool TestCreate { get; set; }
+        public bool TestProperties { get; set; }
+
+        public PropertyPerformanceReport()
+        {
+            TestCreate = true;
+            TestProperties = true;
+        }
+
+        public IEnumerable<string> CreateReport(Func<ITestObject> testObjFactory)
+        {
+            // warmup
+            for (int i = 0; i < 1000; i++)
+            {
+                Apply(testObjFactory(), i);
+            }
+
+            var testObj = testObjFactory();
+            Stopwatch sw;
+
+            if (TestCreate)
+            {
+                sw = Stopwatch.StartNew();
+
+                for (int i = 0; i < CreateIterations; i++)
+                {
+                    testObj = testObjFactory();
+                }
+
+                sw.Stop();
+
+                GetTestObjAsString(testObj);
+                yield return string.Format("Object type: {0}", testObj.GetType());
+                yield return string.Format("{0} create iterations took {1}", CreateIterations, sw.Elapsed);
+            }
+
+            if (TestProperties)
+            {
+                sw = Stopwatch.StartNew();
+
+                for (int i = 0; i < PropertyIterations; i++)
+                {
+                    Apply(testObj, i);
+                }
+
+                sw.Stop();
+
+                yield return GetTestObjAsString(testObj);
+                yield return string.Format("{0} * 15 property iterations took {1}", PropertyIterations, sw.Elapsed);
+            }
+        }        
 
         private void Apply(ITestObject testObj, int i)
         {

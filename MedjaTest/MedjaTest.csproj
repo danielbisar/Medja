@@ -45,6 +45,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExtendConsole.cs" />
+    <Compile Include="Performance\BindingPerformance.cs" />
+    <Compile Include="Performance\PropertyPerformanceReport.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -52,6 +55,7 @@
     <None Include="App.config" />
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
+    <None Include="Performance\Performance.md" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Medja.OpenTk\Medja.OpenTk.csproj">

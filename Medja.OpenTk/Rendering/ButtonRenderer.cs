@@ -43,23 +43,23 @@ namespace Medja.OpenTk.Rendering
             var xRight = x + button.Width;
             var yTop = y + button.Height;
 
-            //float[] vertices = {
-            //     x, yTop, 0, // left top
-            //     xRight, yTop, 0, // right top
-            //     xRight, y, 0,    // right low
-            //     x, y, 0,    // left low  
-            //};
-
-            Debug.WriteLine("Button.Render");
-            Debug.WriteLine("" + x + ", " + y);
-            Debug.WriteLine("" + xRight + ", " + yTop);
-
             float[] vertices = {
-                -0.5f, 0.5f, 0, // left top
-                 0.5f, 0.5f, 0, // right top
-                 0.5f, 0, 0,    // right low
-                 -0.5f, 0, 0,    // left low  
+                 x, yTop, 0, // left top
+                 xRight, yTop, 0, // right top
+                 xRight, y, 0,    // right low
+                 x, y, 0,    // left low  
             };
+
+            //Debug.WriteLine("Button.Render");
+            //Debug.WriteLine("" + x + ", " + y);
+            //Debug.WriteLine("" + xRight + ", " + yTop);
+
+            //float[] vertices = {
+            //    -0.5f, 0.5f, 0, // left top
+            //     0.5f, 0.5f, 0, // right top
+            //     0.5f, 0, 0,    // right low
+            //     -0.5f, 0, 0,    // left low  
+            //};
 
             _vertexBuffer.Copy(vertices);
 

@@ -8,10 +8,6 @@ namespace Medja
     /// Base class for Medja objects
     /// </summary>
     public class MObject
-    {
-        protected virtual Property<T> AddProperty<T>()
-        {
-            return new Property<T>();
-        }
+    {        
     }
 }

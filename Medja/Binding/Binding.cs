@@ -1,77 +1,45 @@
 ﻿using System;
-using System.ComponentModel;
-using Medja.Binding.Reflection;
 
-namespace Medja.Binding
+namespace Medja
 {
-    /// <summary>
-    /// Not thread-safe.
-    /// </summary>
-    public class Binding
+    public class Binding<TTarget, TSource> : IDisposable
     {
-        private readonly INotifyPropertyChanged _source;
-        private readonly string _sourcePropertyName;
+        private Property<TTarget> _target;
+        private Property<TSource> _source;
+        private Func<TSource, TTarget> _sourceConverter;
 
-        private readonly INotifyPropertyChanged _target;
-        private readonly string _targetPropertyName;
-
-        private readonly BindingMode _mode;
-        private bool _selfUpdated;
-
-        private Action<object, object> updateTarget;
-        private Action<object, object> updateSource;
-
-        public Binding(INotifyPropertyChanged source, string sourcePropertyName, INotifyPropertyChanged target, string targetPropertyName, BindingMode mode)
+        public Binding(Property<TTarget> target, Property<TSource> source, Func<TSource, TTarget> sourceConverter)
         {
+            source.PropertyChanged += OnSourcePropertyChanged;
             _source = source;
-            _sourcePropertyName = sourcePropertyName;
             _target = target;
-            _targetPropertyName = targetPropertyName;
-            _mode = mode;
-
-            AttachEventHandler();
-            updateTarget = ExpressionHelper.SetPropFromProp<object, object>(_target, targetPropertyName, _source, sourcePropertyName).Compile();
-            updateSource = ExpressionHelper.SetPropFromProp<object, object>(_source, sourcePropertyName, _target, targetPropertyName).Compile();
+            _sourceConverter = sourceConverter;
         }        
 
-        private void AttachEventHandler()
+        private void OnSourcePropertyChanged(IProperty property)
         {
-            _source.PropertyChanged += OnSourcePropertyChanged;
-
-            if (_mode == BindingMode.TwoWay)
-                _target.PropertyChanged += OnTargetPropertyChanged;
+            _target.Set(_sourceConverter(_source.Get()));
         }
 
-        private void OnSourcePropertyChanged(object sender, PropertyChangedEventArgs e)
+        public void Dispose()
         {
-            if (_selfUpdated)
-                return;
-
-            if (e.PropertyName == _sourcePropertyName)
-                UpdateTarget();
+            _source.PropertyChanged -= OnSourcePropertyChanged;
+            _source = null;
+            _target = null;
+            _sourceConverter = null;
         }
-        
-        private void OnTargetPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (_selfUpdated)
-                return;
+    }
 
-            if (e.PropertyName == _targetPropertyName)
-                UpdateSource();
-        }       
-
-        private void UpdateTarget()
+    public static class BindingFactory
+    {
+        public static Binding<T, T> Create<T>(Property<T> target, Property<T> source)
         {
-            _selfUpdated = true;
-            updateTarget(_target, _source);
-            _selfUpdated = false;
+            return new Binding<T, T>(target, source, p => p);
         }
 
-        private void UpdateSource()
+        public static Binding<TTarget, TSource> Create<TTarget, TSource>(Property<TTarget> target, Property<TSource> source, Func<TSource, TTarget> converter)
         {
-            _selfUpdated = true;
-            updateSource(_source, _target);
-            _selfUpdated = false;            
+            return new Binding<TTarget, TSource>(target, source, converter);
         }
     }
 }

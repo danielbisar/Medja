@@ -2,17 +2,16 @@
 {
     public class Button : Control
     {
-        private readonly Property<string> _text;
-
+        public readonly Property<string> PropertyText;
         public string Text
         {
-            get { return _text.Get(); }
-            set { _text.Set(value); }
+            get { return PropertyText.Get(); }
+            set { PropertyText.Set(value); }
         }
 
         public Button()
         {
-            _text = AddProperty<string>();
+            PropertyText = new Property<string>();
         }
     }
 }

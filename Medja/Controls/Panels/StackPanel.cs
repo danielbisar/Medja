@@ -8,19 +8,19 @@ namespace Medja.Controls.Panels
     {
         public List<Control> Children { get; }
 
-        private readonly Property<float> _spaceBetweenChildrenProperty;
+        public readonly Property<float> PropertySpaceBetweenChildrenProperty;
         public float SpaceBetweenChildren
         {
-            get { return _spaceBetweenChildrenProperty.Get(); }
-            set { _spaceBetweenChildrenProperty.Set(value); }
+            get { return PropertySpaceBetweenChildrenProperty.Get(); }
+            set { PropertySpaceBetweenChildrenProperty.Set(value); }
         }
 
         public StackPanel()
         {
-            _spaceBetweenChildrenProperty = AddProperty<float>();
+            PropertySpaceBetweenChildrenProperty = new Property<float>();
 
             Children = new List<Control>();
-            SpaceBetweenChildren = 0.01f;
+            SpaceBetweenChildren = 0.012f;
         }
 
         public void Add(Control control)
@@ -31,7 +31,7 @@ namespace Medja.Controls.Panels
 
         internal override void Layout(Size availableSize)
         {
-            Debug.WriteLine("StackPanel.Layout Children.Count = " + Children.Count);
+            //Debug.WriteLine("StackPanel.Layout Children.Count = " + Children.Count);
 
             base.Layout(availableSize);
 
@@ -50,7 +50,7 @@ namespace Medja.Controls.Panels
 
                 child.Layout(childAvailableSize);
 
-                Debug.WriteLine("child.X = " + child.X + ", child.Y = " + child.Y + ", child.Width = " + child.Width + ", child.Height = " + child.Height);
+                //Debug.WriteLine("child.X = " + child.X + ", child.Y = " + child.Y + ", child.Width = " + child.Width + ", child.Height = " + child.Height);
 
                 curY += child.Height + spacingY;
             }

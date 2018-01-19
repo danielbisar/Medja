@@ -4,7 +4,7 @@ namespace Medja
 {
     public class Property<T> : IProperty
     {
-        // static readonly would be slower in access
+        // creating a static variable inside this class makes creation 3X as slow as currently
         private readonly EqualityComparer<T> _comparer;
         private T _value;
 
@@ -12,7 +12,8 @@ namespace Medja
 
         public Property()
         {
-            _comparer = EqualityComparer<T>.Default;
+            // see EqualityComparerCache header for info why
+            _comparer = EqualityComparerCache<T>.Comparer;
         }
 
         // would allow properties with and without change notification

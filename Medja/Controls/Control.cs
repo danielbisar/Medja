@@ -27,39 +27,39 @@ namespace Medja.Controls
         /// </summary>
         public bool IsRendered { get; set; }
 
-        private readonly Property<float> _x;
+        public readonly Property<float> PropertyX;
         public float X
         {
-            get { return _x.Get(); }
-            set { _x.Set(value); }
+            get { return PropertyX.Get(); }
+            set { PropertyX.Set(value); }
         }
 
-        private readonly Property<float> _y;
+        public readonly Property<float> PropertyY;
         public float Y
         {
-            get { return _y.Get(); }
-            set { _y.Set(value); }
+            get { return PropertyY.Get(); }
+            set { PropertyY.Set(value); }
         }
 
-        private readonly Property<float> _width;
+        public readonly Property<float> PropertyWidth;
         public float Width
         {
-            get { return _width.Get(); }
-            set { _width.Set(value); }
+            get { return PropertyWidth.Get(); }
+            set { PropertyWidth.Set(value); }
         }
 
-        private readonly Property<float> _height;
+        public readonly Property<float> PropertyHeight;
         public float Height
         {
-            get { return _height.Get(); }
-            set { _height.Set(value); }
+            get { return PropertyHeight.Get(); }
+            set { PropertyHeight.Set(value); }
         }
 
-        private readonly Property<VerticalAlignment> _verticalAlignment;
+        public readonly Property<VerticalAlignment> PropertyVerticalAlignment;
         public VerticalAlignment VerticalAlignment
         {
-            get { return _verticalAlignment.Get(); }
-            set { _verticalAlignment.Set(value); }
+            get { return PropertyVerticalAlignment.Get(); }
+            set { PropertyVerticalAlignment.Set(value); }
         }
 
         public Control()
@@ -67,29 +67,27 @@ namespace Medja.Controls
             Debug.WriteLine("Create control " + GetType().Name);
             _renderer = RendererFactory.Get(GetType());
 
-            _x = AddProperty<float>();
-            _y = AddProperty<float>();
-            _width = AddProperty<float>();
-            _height = AddProperty<float>();
-            _verticalAlignment = AddProperty<VerticalAlignment>();
+            PropertyX = new Property<float>();
+            PropertyX.PropertyChanged += OnNeedsLayoutUpdatedPropertyChanged;
+
+            PropertyY = new Property<float>();
+            PropertyY.PropertyChanged += OnNeedsLayoutUpdatedPropertyChanged;
+
+            PropertyWidth = new Property<float>();
+            PropertyWidth.PropertyChanged += OnNeedsLayoutUpdatedPropertyChanged;
+
+            PropertyHeight = new Property<float>();
+            PropertyHeight.PropertyChanged += OnNeedsLayoutUpdatedPropertyChanged;
+
+            PropertyVerticalAlignment = new Property<VerticalAlignment>();
+            PropertyVerticalAlignment.PropertyChanged += OnNeedsLayoutUpdatedPropertyChanged;
         }
 
-        protected override Property<T> AddProperty<T>()
+        private void OnNeedsLayoutUpdatedPropertyChanged(IProperty property)
         {
-            var result = base.AddProperty<T>();
-            result.PropertyChanged += OnPropertyChanged;
-
-            return result;
-        }
-
-        private void OnPropertyChanged(IProperty property)
-        {
-            //    // todo thread-safety? 
-            //    // todo group properties: some might not effect the ui
-
             IsLayoutUpdated = false;
-            IsRendered = false;
-        }
+            // IsRendered will be set to false if change so that we really need new rendering
+        }        
 
         public void UpdateLayout()
         {
