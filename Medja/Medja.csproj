@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <Folder Include="Binding\" />
+    <Folder Include="Compiler\" />
   </ItemGroup>
 
 </Project>

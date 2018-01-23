@@ -19,3 +19,7 @@ How do we know if an object needs to be rendered again?
   TODO This of course is something we should have a deeper look at for the rendering API.
   TODO measure composition vs inheritance (accessing fields and call their submethods vs access virtual methods)
 - 
+
+# Language for designer
+- easy to use for users without designer (xml, json?, others)
+- allow perprocessor directives (debug only/release only/etc)

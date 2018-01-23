@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using Medja.OpenTk;
 using Medja.OpenTk.Rendering;
@@ -39,7 +40,9 @@ namespace Medja
         {
             base.OnResize(e);
 
-            //GL.Viewport(0, 0, ClientRectangle.Width, ClientRectangle.Height);
+            // sets the 0,0 to the upper left corner
+            GL.Viewport(-(ClientRectangle.Width / 2), ClientRectangle.Height / 2, ClientRectangle.Width, ClientRectangle.Height);
+
             /*var projection = Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 4, Width / (float)Height, 1.0f, 64.0f);
             GL.MatrixMode(MatrixMode.Projection);
             GL.LoadMatrix(ref projection);*/
@@ -51,11 +54,11 @@ namespace Medja
             //GL.LoadIdentity();
             //GL.Ortho(0, ClientRectangle.Width, -ClientRectangle.Height, 0, 1, -1);
 
-            GL.MatrixMode(MatrixMode.Projection); // Tell opengl that we are doing project matrix work
-            GL.LoadIdentity(); // Clear the matrix
-            GL.Ortho(-9.0, 9.0, -9.0, 9.0, 0.0, 30.0); // Setup an Ortho view
-            GL.MatrixMode(MatrixMode.Modelview); // Tell opengl that we are doing model matrix work. (drawing)
-            GL.LoadIdentity(); // Clear the model matrix
+            //GL.MatrixMode(MatrixMode.Projection); // Tell opengl that we are doing project matrix work
+            //GL.LoadIdentity(); // Clear the matrix
+            //GL.Ortho(-9.0, 9.0, -9.0, 9.0, 0.0, 30.0); // Setup an Ortho view
+            //GL.MatrixMode(MatrixMode.Modelview); // Tell opengl that we are doing model matrix work. (drawing)
+            //GL.LoadIdentity(); // Clear the model matrix
 
             /*
              glMatrixMode(GL_PROJECTION);
@@ -104,10 +107,12 @@ Draw_2d();
             // TODO check position and forward to relevant ui controls
         }
 
+        private int x = 0;
+
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
             base.OnUpdateFrame(e);
-            _menu.UpdateLayout();
+            _menu.UpdateLayout();            
         }
 
         protected override void OnRenderFrame(FrameEventArgs e)

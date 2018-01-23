@@ -50,9 +50,8 @@ namespace Medja.OpenTk.Rendering
                  x, y, 0,    // left low  
             };
 
-            //Debug.WriteLine("Button.Render");
-            //Debug.WriteLine("" + x + ", " + y);
-            //Debug.WriteLine("" + xRight + ", " + yTop);
+            Debug.WriteLine("Button.Render");
+            Debug.WriteLine("" + x + ", " + y + ", " + xRight + ", " + yTop);
 
             //float[] vertices = {
             //    -0.5f, 0.5f, 0, // left top
