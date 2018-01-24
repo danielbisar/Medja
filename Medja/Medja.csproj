@@ -9,4 +9,8 @@
     <Folder Include="Compiler\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="SkiaSharp" Version="1.59.3" />
+  </ItemGroup>
+
 </Project>
