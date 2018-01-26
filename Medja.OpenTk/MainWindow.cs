@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using Medja.OpenTk;
+using Medja.OpenTk.Eval;
 using Medja.OpenTk.Rendering;
 using Medja.Rendering;
 using OpenTK;
@@ -16,8 +19,8 @@ namespace Medja
     {
         public Color Background { get; set; }
 
-        private readonly Menu _menu;
-        private bool _needsRedraw;
+        private readonly MenuController _menuController;
+        private Layout _layout;
 
         public MainWindow()
         {
@@ -26,8 +29,25 @@ namespace Medja
             Background = Color.Gray;
             Title = "TestApp";
 
-            _menu = new Menu(0.5f, 0.75f);
-            _needsRedraw = true;
+            _menuController = new MenuController();
+            CreateMenu();
+
+            //_needsRedraw = true;
+        }
+
+        private void CreateMenu()
+        {
+            var mainMenu = new OpenTk.Eval.Menu("MainMenu");
+            mainMenu.Items.Add(new MenuEntry("Settings"));
+            mainMenu.Items.Add(new MenuEntry("Quit"));
+
+            var settingsMenu = new OpenTk.Eval.Menu("Settings");
+            settingsMenu.Items.Add(new MenuEntry("< Back")); // , mainMenu.BackCommand
+            settingsMenu.Items.Add(new MenuEntry("Enable Option 1")); // TODO toggle, databinding or just via click?
+            settingsMenu.Items.Add(new MenuEntry("Option 2"));
+
+            _menuController.Add(mainMenu);
+            _menuController.Add(settingsMenu);
         }
 
         protected override void OnLoad(EventArgs e)
@@ -39,7 +59,10 @@ namespace Medja
         {
             base.OnResize(e);
 
-            //GL.Viewport(0, 0, ClientRectangle.Width, ClientRectangle.Height);
+            // sets the 0,0 to the upper left corner
+            //GL.Viewport(-(ClientRectangle.Width / 2), ClientRectangle.Height / 2, ClientRectangle.Width, ClientRectangle.Height);
+            GL.Viewport(0, 0, ClientRectangle.Width, ClientRectangle.Height);
+
             /*var projection = Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 4, Width / (float)Height, 1.0f, 64.0f);
             GL.MatrixMode(MatrixMode.Projection);
             GL.LoadMatrix(ref projection);*/
@@ -50,18 +73,6 @@ namespace Medja
             //GL.MatrixMode(MatrixMode.Modelview);
             //GL.LoadIdentity();
             //GL.Ortho(0, ClientRectangle.Width, -ClientRectangle.Height, 0, 1, -1);
-
-
-            // Matrices
-            //int id = ShaderLoader::getUniformLocation(m_shader, "MatOrtho");
-            //glm::mat4 ortho = glm::mat4(1);
-            //ortho *= glm:rtho<float>(0.0f, 1024, 768, 0, -1.0f, 1.0f);
-            //glUniformMatrix4fv(id, 1, false, glm::value_ptr(ortho));
-
-            //var identity = Matrix4.Identity;
-            //Matrix4 orthoMatrix = identity; //new Matrix4(1 <-- ?);
-            //orthoMatrix *= Matrix4.CreateOrthographic(ClientRectangle.Width, ClientRectangle.Height, 1, -1);
-            //GL.UniformMatrix4(, false, ref orthoMatrix);
 
             //GL.MatrixMode(MatrixMode.Projection); // Tell opengl that we are doing project matrix work
             //GL.LoadIdentity(); // Clear the matrix
@@ -106,7 +117,7 @@ Draw_2d();
 
             // TODO smooth resizing of content
 
-            _needsRedraw = true;
+            //_needsRedraw = true;
         }
 
         protected override void OnMouseDown(MouseButtonEventArgs e)
@@ -114,36 +125,39 @@ Draw_2d();
             base.OnMouseDown(e);
 
             // TODO check position and forward to relevant ui controls
-        }
+        }        
 
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
             base.OnUpdateFrame(e);
-            _menu.UpdateLayout();
+
+            // pot slow
+            var menuControllerLayouter = new HorizontalStackPanelLayouter(new ItemsProvider(_menuController.CurrentMenu.Items.Cast<object>().ToList()));
+            var positionInfo = new PositionInfo();
+            positionInfo.X = 0;
+            positionInfo.Y = 0;
+            positionInfo.Width = 0.5f;
+            positionInfo.Height = 0.75f;
+
+            _layout = menuControllerLayouter.Layout(positionInfo);
         }
 
         protected override void OnRenderFrame(FrameEventArgs e)
         {
             base.OnRenderFrame(e);
 
-            _menu.X += 0.001f;
-            _menu.Y += 0.001f;
+            GL.ClearColor(Background);
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            //if (_needsRedraw)
+            SwitchTo2DMode();
+
+            if (_layout != null)
             {
-                _needsRedraw = false;
-
-                // TODO only if redraw is really needed
-                GL.ClearColor(Background);
-                GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-
-                SwitchTo2DMode();
-
-                // TODO currently we call this only with force = true, but we could also have the case of redraw some controls...
-                _menu.Render(new RenderContext() { ForceRender = true });
-
-                SwapBuffers();
+                var layoutRenderer = new LayoutRenderer();
+                layoutRenderer.Render(_layout);
             }
+
+            SwapBuffers();
         }
 
         private void SwitchTo2DMode()

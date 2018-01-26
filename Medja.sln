@@ -13,6 +13,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Medja.Test", "Medja.Test\Me
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Medja.Html", "Medja.Html\Medja.Html.csproj", "{4C5A30B1-FAA6-46C7-B783-D504BA89820C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9AE726CC-C4B9-45E6-997F-CDBA38668222}"
+	ProjectSection(SolutionItems) = preProject
+		Licenses.md = Licenses.md
+	EndProjectSection
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

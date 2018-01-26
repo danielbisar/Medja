@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using Medja.Controls;
 using Medja.OpenTk.Rendering.Shaders;
 using Medja.Rendering;
 using OpenTK.Graphics.OpenGL4;
+using SkiaSharp;
 
 namespace Medja.OpenTk.Rendering
 {
@@ -32,6 +34,8 @@ namespace Medja.OpenTk.Rendering
             //};
 
             //_vertexBuffer.Copy(vertices);
+
+            
         }
 
         public void Render(Control control, RenderContext context)
@@ -50,9 +54,8 @@ namespace Medja.OpenTk.Rendering
                  x, y, 0,    // left low  
             };
 
-            //Debug.WriteLine("Button.Render");
-            //Debug.WriteLine("" + x + ", " + y);
-            //Debug.WriteLine("" + xRight + ", " + yTop);
+            Debug.WriteLine("Button.Render");
+            Debug.WriteLine("" + x + ", " + y + ", " + xRight + ", " + yTop);
 
             //float[] vertices = {
             //    -0.5f, 0.5f, 0, // left top

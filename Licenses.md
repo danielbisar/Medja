@@ -12,4 +12,4 @@ Copyright (c) 2017 by Daniel Klafft
 | OpenTK.Platform.Windows and OpenTK.Platform.X11 | Mono | see above -> must include copyright notice | 
 | OpenTK.Compatibility, Tao.OpenGl, Tao.OpenAl and Tao.Platform.Windows.SimpleOpenGlControl | see above -> must include copyright notice |
 | OpenTK.Half DO WE USE that? | Half-to-Single and Single-to-Half conversions based on OpenEXR source code | see above |
-
+| SkiaSharp | MIT | includes Googles Skia -> license? |
