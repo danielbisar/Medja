@@ -8,19 +8,19 @@ namespace Medja.OpenTk
     {
         public Menu(float width, float height)
         {
-            Width = width;
-            Height = height;
+            //Width = width;
+            //Height = height;
 
-            AddButton();
-            AddButton();
-            AddButton();
-            AddButton();
+            //AddButton();
+            //AddButton();
+            //AddButton();
+            //AddButton();
         }
 
-        private void AddButton()
-        {
-            var button = new Button();
-            Add(button);
-        }
+        //private void AddButton()
+        //{
+        //    var button = new Button();
+        //    Add(button);
+        //}
     }
 }
