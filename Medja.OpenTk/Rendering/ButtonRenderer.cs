@@ -39,7 +39,7 @@ namespace Medja.OpenTk.Rendering
             var button = control as Button;
 
             var x = button.X;
-            var y = button.Y;
+            var y = button.Y * -1; // TODO fake a positive y axis; should be done via matrix projection/shader later
             var xRight = x + button.Width;
             var yTop = y + button.Height;
 
@@ -83,8 +83,8 @@ namespace Medja.OpenTk.Rendering
 
             if (errorCode != ErrorCode.NoError)
                 throw new InvalidOperationException("Found GL Error: " + errorCode);
+
             
-            // todo render text
 
             button.IsRendered = true;
         }

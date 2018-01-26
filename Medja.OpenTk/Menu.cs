@@ -17,9 +17,12 @@ namespace Medja.OpenTk
             AddButton();
         }
 
+        private int _i=0;
+
         private void AddButton()
         {
             var button = new Button();
+            button.Text =  "New Button " + _i++;
             Add(button);
         }
     }

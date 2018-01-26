@@ -51,11 +51,23 @@ namespace Medja
             //GL.LoadIdentity();
             //GL.Ortho(0, ClientRectangle.Width, -ClientRectangle.Height, 0, 1, -1);
 
-            GL.MatrixMode(MatrixMode.Projection); // Tell opengl that we are doing project matrix work
-            GL.LoadIdentity(); // Clear the matrix
-            GL.Ortho(-9.0, 9.0, -9.0, 9.0, 0.0, 30.0); // Setup an Ortho view
-            GL.MatrixMode(MatrixMode.Modelview); // Tell opengl that we are doing model matrix work. (drawing)
-            GL.LoadIdentity(); // Clear the model matrix
+
+            // Matrices
+            //int id = ShaderLoader::getUniformLocation(m_shader, "MatOrtho");
+            //glm::mat4 ortho = glm::mat4(1);
+            //ortho *= glm:rtho<float>(0.0f, 1024, 768, 0, -1.0f, 1.0f);
+            //glUniformMatrix4fv(id, 1, false, glm::value_ptr(ortho));
+
+            //var identity = Matrix4.Identity;
+            //Matrix4 orthoMatrix = identity; //new Matrix4(1 <-- ?);
+            //orthoMatrix *= Matrix4.CreateOrthographic(ClientRectangle.Width, ClientRectangle.Height, 1, -1);
+            //GL.UniformMatrix4(, false, ref orthoMatrix);
+
+            //GL.MatrixMode(MatrixMode.Projection); // Tell opengl that we are doing project matrix work
+            //GL.LoadIdentity(); // Clear the matrix
+            //GL.Ortho(-9.0, 9.0, -9.0, 9.0, 0.0, 30.0); // Setup an Ortho view
+            //GL.MatrixMode(MatrixMode.Modelview); // Tell opengl that we are doing model matrix work. (drawing)
+            //GL.LoadIdentity(); // Clear the model matrix
 
             /*
              glMatrixMode(GL_PROJECTION);
@@ -114,8 +126,8 @@ Draw_2d();
         {
             base.OnRenderFrame(e);
 
-            //_menu.X += 0.001f;
-            //_menu.Y += 0.001f;
+            _menu.X += 0.001f;
+            _menu.Y += 0.001f;
 
             //if (_needsRedraw)
             {

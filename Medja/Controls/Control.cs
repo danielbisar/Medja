@@ -103,6 +103,7 @@ namespace Medja.Controls
             Width = availableSize.Width;
             //if (VerticalAlignment == VerticalAlignment.Stretch)
             Height = availableSize.Height;            
+            IsRendered = false;
         }
 
         public void Render(RenderContext renderContext)
