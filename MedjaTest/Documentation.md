@@ -116,3 +116,117 @@ checkcontrol:
 	//}
 
 // TODO animation of menu sliding in the stackpanel
+
+
+-------------------------------------------------
+
+Separate layouting / rendering / control logic / business logic
+
+Layouter
+{
+	List<ControlState> _controls;
+
+	Layout GetLayout()
+	{
+		return MeasureAndArrange();
+	}
+}
+
+Renderer 
+{
+	List<ControlState> _controls;
+	...
+	void Render()
+	{
+		foreach(var control in _controls)
+		{
+			Render(control);
+		}
+	}
+
+	void Render(Control control)
+	{
+		// different ways (pattern matching, dictionary that contains the appropriate rendering method)
+	}
+
+	void DrawRect(...)
+	{
+	}
+
+	void DrawText(...)
+	{
+	}
+}
+
+ApplicationLoop
+{
+	Loop()
+	{
+		// this basically allows kind of a connected pipeline
+		// layout -> filter (what is not visible) -> effects -> animation -> filter -> render
+		// so each responsability is separated
+		// the lib does not have to implement everything (f.e. no renderer)
+		
+		var layout = Layouter.GetLayout();
+		var inputState = GetInputState(); // gets the state of all relevant input values (which keys are pressed, which pointing device, which pointing device buttons)
+		Input.HandelInput(inputState); // <- contains also the layouted list of controls
+		Renderer.Render(layout);
+	}
+}
+
+A control does not define it's position, this is handled via layouting (positioninfo is kind of attached)
+
+ControlState
+{
+	Control Control;
+	PositionInfo pos;
+	// other state infos (except the controls ones)
+}
+
+Infos for controls
+- Lists (ComboBox, ListBox, ...)
+- Text (TextBox, TextBlock, Button, Label, ...)
+- IsPressed (f.e. Button)
+-> input states
+	- IsMouseOver
+	- IsLeftMouseDown
+	- IsRightMouseDown
+
+Layoutinfos
+- Position: X, Y, Width, Height
+
+
+Control state changes can be adjusted via 
+
+Control.PropertyX.Changed += OnXChanged;
+
+Handle Input
+
+HandleInput
+{
+	List<ControlState> _controls;
+
+	void HandleInput(InputState state)
+	{
+		// find controls under cursor / use the last one and forward the input information
+		// f.e. 
+
+		var controls = GetControlsUnderCursor(state.CursorPos);
+
+		foreach(var control in controls)
+		{
+			// this OR see below
+			if(state.IsMouseDown)
+				control.IsMouseOver = true;
+
+			if(state.IsMousePressed)
+				control.IsMousePressed = true;
+
+			// alternative
+			control.InputState = state;
+
+			// this will just work fine or states that only change the appearance of a control
+			// what about executing actions? like a button click calls a method if the button IsEnabled
+		}
+	}
+}
