@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Medja.OpenTk.Eval
+﻿namespace Medja.Layers.Layouting
 {
     public class PositionInfo
     {

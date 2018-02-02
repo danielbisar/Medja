@@ -1,39 +1,43 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using System.Text;
+using Medja.Controls;
+using Medja.Layers;
+using Medja.Layers.Layouting;
+using Medja.OpenTk.Eval;
 using OpenTK.Graphics.OpenGL;
 using SkiaSharp;
 
-namespace Medja.OpenTk.Eval
+namespace Medja.OpenTk.Rendering
 {
-    public class LayoutRenderer
+    public class OpenTkRenderLayer : ILayer
     {
-        private readonly Random _rnd = new Random();
-
-        public void Render(Layout layout)
+        public IEnumerable<ControlState> Apply(IEnumerable<ControlState> states)
         {
-            // items in the back are coming first, the items in the front
-            // possible optimization just draw what is really visible, but this would be overhead for this simple prototype
-            foreach (var kvp in layout)
+            Debug.WriteLine(" --- OpenTkRenderLayer --- ");
+            
+            foreach(var state in states)
             {
-                var item = kvp.Key;
-                var positionInfo = kvp.Value;
+                var item = state.Control;
+                var position = state.Position;
 
-                if (item is Menu)
-                {
-                    GL.Color3(0.3, 0.3, 0.3);
-                    DrawRect(positionInfo);
-                }
-                else if (item is MenuEntry me)
+                Debug.WriteLine(" - Control: " + item.GetType().Name);
+
+                if (item is Button b)
                 {
                     GL.Color3(0.35, 0.35, 0.35);
-                    DrawRect(positionInfo);
+                    DrawRect(position);
                     GL.Color3(0, 0, 0);
 
-                    DrawText(positionInfo, me.Text);
+                    DrawText(position, b.Text);
                 }
                 else
-                    DrawRect(positionInfo);
+                    DrawRect(position);
             }
+
+            return states;
         }
 
         private bool _isFirstText = true;
