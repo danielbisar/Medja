@@ -1,11 +1,13 @@
 ﻿using System;
-using System.Diagnostics;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using Medja.OpenTk;
+using Medja.Controls;
+using Medja.Layers;
+using Medja.Layers.Layouting;
+using Medja.Layers.Rendering;
 using Medja.OpenTk.Eval;
 using Medja.OpenTk.Rendering;
-using Medja.Rendering;
 using OpenTK;
 
 // defines the user opengl implementation, just swap this to
@@ -17,22 +19,44 @@ namespace Medja
 {
     public class MainWindow : GameWindow
     {
-        public Color Background { get; set; }
-
         private readonly MenuController _menuController;
-        private Layout _layout;
+        private readonly LayerPipeline _layerPipeline;
+        private readonly RenderPipeline _renderPipeline;
+        private readonly LayoutLayer _layoutLayer;
+        private IEnumerable<ControlState> _controlStates;
 
         public MainWindow()
         {
-            MedjaLibrary.Initialize(new MedjaOpenTkRendererMap());
-
-            Background = Color.Gray;
             Title = "TestApp";
 
             _menuController = new MenuController();
             CreateMenu();
+            
+            var dockLayout = new DockLayout(new DockedControl[]
+            {
+                new DockedControl
+                {
+                    Dock = Dock.Right,
+                    Control = new DynamicItemsControl<VerticalStackLayout, MenuController>
+                    {
+                        ItemsHost = new VerticalStackLayout(),
+                        Clear = p => { },
+                        DataItem = _menuController,
+                        Apply = (h, d) => d.CurrentMenu.Items.Select(p => new Button { Text = p.Text })
+                    }
+                }
+            });
 
-            //_needsRedraw = true;
+            _layoutLayer = new LayoutLayer();
+            _layoutLayer.SetLayoutRoot(dockLayout);
+
+            _layerPipeline = new LayerPipeline();
+            _layerPipeline.AddLayer(_layoutLayer);
+            //_layerPipeline.AddLayer(inputLayer);
+
+            _renderPipeline = new RenderPipeline();
+            //_renderPipeline.AddLayer(new FilterInvisibleLayer());
+            _renderPipeline.AddLayer(new OpenTkRenderLayer());
         }
 
         private void CreateMenu()
@@ -62,6 +86,7 @@ namespace Medja
             // sets the 0,0 to the upper left corner
             //GL.Viewport(-(ClientRectangle.Width / 2), ClientRectangle.Height / 2, ClientRectangle.Width, ClientRectangle.Height);
             GL.Viewport(0, 0, ClientRectangle.Width, ClientRectangle.Height);
+            _layoutLayer.Size = new Size(ClientRectangle.Width, ClientRectangle.Height);
 
             /*var projection = Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 4, Width / (float)Height, 1.0f, 64.0f);
             GL.MatrixMode(MatrixMode.Projection);
@@ -125,37 +150,23 @@ Draw_2d();
             base.OnMouseDown(e);
 
             // TODO check position and forward to relevant ui controls
-        }        
+        }
 
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
             base.OnUpdateFrame(e);
-
-            // pot slow
-            var menuControllerLayouter = new HorizontalStackPanelLayouter(new ItemsProvider(_menuController.CurrentMenu.Items.Cast<object>().ToList()));
-            var positionInfo = new PositionInfo();
-            positionInfo.X = 0;
-            positionInfo.Y = 0;
-            positionInfo.Width = 0.5f;
-            positionInfo.Height = 0.75f;
-
-            _layout = menuControllerLayouter.Layout(positionInfo);
+            _controlStates = _layerPipeline.Execute();
         }
 
         protected override void OnRenderFrame(FrameEventArgs e)
         {
             base.OnRenderFrame(e);
 
-            GL.ClearColor(Background);
+            GL.ClearColor(Color.Gray);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             SwitchTo2DMode();
-
-            if (_layout != null)
-            {
-                var layoutRenderer = new LayoutRenderer();
-                layoutRenderer.Render(_layout);
-            }
+            _renderPipeline.Execute(_controlStates);
 
             SwapBuffers();
         }
