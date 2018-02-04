@@ -42,7 +42,7 @@ namespace Medja.Layers.Layouting
                             Position = new PositionInfo
                             {
                                 // TODO handle: MinWidth unset or > availableWidth
-                                X = state.Position.X + dockedControl.MinWidth,
+                                X = state.Position.Width - dockedControl.MinWidth,
                                 Y = 0, // TODO track already added controls
                                 Width = dockedControl.MinWidth,
                                 Height = state.Position.Height

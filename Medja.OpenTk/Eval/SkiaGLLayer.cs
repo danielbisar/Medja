@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using SkiaSharp;
 using OpenTK.Graphics.OpenGL;
 
@@ -18,10 +16,20 @@ namespace Medja.OpenTk.Eval
             _renderTarget = CreateRenderTarget();
         }
 
+        public SKSurface CreateSurface()
+        {
+            return SKSurface.Create(_grContext, _renderTarget);
+        }
+
         public void Resize(int width, int height)
         {
             _renderTarget.Width = width;
             _renderTarget.Height = height;
+        }        
+
+        public void Dispose()
+        {
+            _grContext.Dispose();
         }
 
         private GRBackendRenderTargetDesc CreateRenderTarget()
@@ -43,16 +51,6 @@ namespace Medja.OpenTk.Eval
                 StencilBits = stencil,
                 RenderTargetHandle = (IntPtr)framebuffer,
             };
-        }
-
-        public SKSurface CreateSurface()
-        {
-            return SKSurface.Create(_grContext, _renderTarget);
-        }
-
-        public void Dispose()
-        {
-            _grContext.Dispose();
-        }
+        }        
     }
 }

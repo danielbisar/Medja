@@ -18,8 +18,8 @@ namespace Medja.Layers.Layouting
 
         public VerticalStackLayout(IEnumerable<Control> controls)
         {
-            _children = new List<Control>();
-            SpaceBetweenChildren = 0.012f;
+            _children = new List<Control>(controls);
+            SpaceBetweenChildren = 10;
         }
 
         public void Add(Control child)
@@ -30,11 +30,13 @@ namespace Medja.Layers.Layouting
         public override IEnumerable<ControlState> GetLayout(ControlState state)
         {
             var pos = state.Position;
-            var curX = pos.X;
-            var curY = pos.Y;
             var spacingY = SpaceBetweenChildren;
             var count = _children.Count;
-            var childAvailableSize = new Size(pos.Width, (pos.Height / count) - spacingY * count);
+            var childAvailableSize = new Size(pos.Width - (Margin.Left + Margin.Right), ((pos.Height - (Margin.Top + Margin.Bottom)) / count) - spacingY * count);
+
+            var curX = pos.X + Margin.Left;
+            var curY = pos.Y + Margin.Top;
+
             Control child;
 
             for (int i = 0; i < count; i++)

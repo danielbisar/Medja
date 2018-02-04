@@ -12,89 +12,81 @@ using SkiaSharp;
 
 namespace Medja.OpenTk.Rendering
 {
+    // TODO dispose
     public class OpenTkRenderLayer : ILayer
     {
+        private SkiaGLLayer _skia;
+        private SKSurface _surface;
+        private SKPaint _paint;
+        private SKCanvas _canvas;
+
+        public OpenTkRenderLayer()
+        {
+            _skia = new SkiaGLLayer();
+        }
+
+        public void Resize(int width, int height)
+        {
+            _skia.Resize(width, height);
+        }
+
         public IEnumerable<ControlState> Apply(IEnumerable<ControlState> states)
         {
-            Debug.WriteLine(" --- OpenTkRenderLayer --- ");
-            
-            foreach(var state in states)
+            using (_surface = _skia.CreateSurface())
             {
-                var item = state.Control;
-                var position = state.Position;
-
-                Debug.WriteLine(" - Control: " + item.GetType().Name);
-
-                if (item is Button b)
+                using (_paint = new SKPaint
                 {
-                    GL.Color3(0.35, 0.35, 0.35);
-                    DrawRect(position);
-                    GL.Color3(0, 0, 0);
+                    // TODO dispose Typeface
+/*                    Typeface = SKTypeface.FromFamilyName("Arial"),
+                    TextSize = 12,*/
+                    IsAntialias = true,
+                    Color = SKColors.Orange,
+                    Style = SKPaintStyle.StrokeAndFill,
+                    //StrokeWidth = 10
+                })
+                {
+                    _canvas = _surface.Canvas;
+                    _canvas.Clear(SKColors.Gray);
 
-                    DrawText(position, b.Text);
+                    Debug.WriteLine(" --- OpenTkRenderLayer --- ");
+
+                    foreach (var state in states)
+                    {
+                        var item = state.Control;
+                        var position = state.Position;
+
+                        Debug.WriteLine(" - Control: " + item.GetType().Name);
+                        Debug.WriteLine("      - Position: " + position);
+
+                        if (item is Button b)
+                        {
+                            DrawRect(position);
+                            DrawText(position, b.Text);
+                        }
+                        else
+                            DrawRect(position);
+                    }
+
+                    _canvas.Flush();
                 }
-                else
-                    DrawRect(position);
             }
 
             return states;
         }
 
-        private bool _isFirstText = true;
-
         private void DrawText(PositionInfo positionInfo, string text)
         {
-            // https://developer.xamarin.com/guides/xamarin-forms/advanced/skiasharp/basics/text/
-
-            using (var face = SKTypeface.FromFamilyName("Arial"))
-            {
-                using (var paint = new SKPaint
-                {
-                    Typeface = face,
-                    TextSize = 12,
-                    IsAntialias = true,
-                    Color = SKColors.Black
-                })
-                {
-                    var width = (int)(paint.MeasureText(text) + 1);
-                    var height = 13;
-
-                    using (var bitmap = new SKBitmap(width, height))
-                    {
-                        using (var canvas = new SKCanvas(bitmap))
-                        {
-                            canvas.Clear(SKColors.Green);
-                            canvas.DrawText(text, 0, 10, paint);
-                            canvas.Flush();
-                        }
-
-                        if (_isFirstText)
-                        {
-                            _isFirstText = false;
-
-                            using (var image = SKImage.FromBitmap(bitmap))
-                            {
-                                var data = image.Encode();
-
-                                using (var stream = new FileStream("output.png", FileMode.Create, FileAccess.Write))
-                                    data.SaveTo(stream);
-
-                                var texture = GL.GenTexture();
-                                GL.BindTexture(TextureTarget.ProxyTexture2D, texture);
-                                //GL.TexImage2D(TextureTarget2d, 0, PixelInternalFormat.Rgb, )
-                                // http://www.opengl-tutorial.org/beginners-tutorials/tutorial-5-a-textured-cube/
-
-                                //GL.Rect(positionInfo.X, positionInfo.Y, positionInfo.X + positionInfo.Width, positionInfo.Y + positionInfo.Height);
-                            }
-                        }
-                    }
-                }
-            }
+            _canvas.DrawText(text, positionInfo.X, positionInfo.Y, _paint);
         }
 
         private void DrawRect(PositionInfo positionInfo)
         {
-            GL.Rect(positionInfo.X, positionInfo.Y, positionInfo.X + positionInfo.Width, positionInfo.Y + positionInfo.Height);
+            _canvas.DrawRect(GetSKRectFrom(positionInfo), _paint);
+        }
+
+        private SKRect GetSKRectFrom(PositionInfo positionInfo)
+        {
+            return new SKRect(positionInfo.X, positionInfo.Y, positionInfo.Width + positionInfo.X, positionInfo.Height + positionInfo.Y);
         }
     }
 }

@@ -58,7 +58,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Licenses.md" />
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
     <None Include="Performance\Performance.md" />
