@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Medja.Layers.Layouting
 {
@@ -32,9 +33,11 @@ namespace Medja.Layers.Layouting
         }
 
         private IEnumerable<ControlState> HandleControl(ControlState state)
-        {
+        {            
             if (state.Control is LayoutControl lc)
             {
+                ApplyMargin(lc, state.Position);
+
                 // execute sublayout calls
                 foreach(var subState in lc.GetLayout(state))
                 {
@@ -44,6 +47,15 @@ namespace Medja.Layers.Layouting
             }
             else
                 yield return state;
+        }
+
+        private void ApplyMargin(LayoutControl lc, PositionInfo position)
+        {
+            var margin = lc.Margin;
+            position.X += margin.Left;
+            position.Y += margin.Top;
+            position.Width -= margin.Left + margin.Right;
+            position.Height -= margin.Top + margin.Bottom;
         }
     }
 }

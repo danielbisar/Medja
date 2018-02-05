@@ -42,11 +42,10 @@ namespace Medja
                     Control = new VerticalStackLayout(new Control[]
                     {
                         new Button { Text = "Test1" },
-                        new Button { Text = "Test2" }
+                        new Button { Text = "Test2" },
+                        new Button { Text = "Test3" },
+                        new Button { Text = "Test4" }
                     })
-                    {
-                        Margin = new Thickness(0,10)
-                    }
 
                     /*new DynamicItemsControl<VerticalStackLayout, MenuController>
                     {

@@ -32,10 +32,10 @@ namespace Medja.Layers.Layouting
             var pos = state.Position;
             var spacingY = SpaceBetweenChildren;
             var count = _children.Count;
-            var childAvailableSize = new Size(pos.Width - (Margin.Left + Margin.Right), ((pos.Height - (Margin.Top + Margin.Bottom)) / count) - spacingY * count);
+            var childAvailableSize = new Size(pos.Width, (pos.Height - spacingY*(count-1))/ count);
 
-            var curX = pos.X + Margin.Left;
-            var curY = pos.Y + Margin.Top;
+            var curX = pos.X;
+            var curY = pos.Y;
 
             Control child;
 

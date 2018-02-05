@@ -13,7 +13,7 @@ using SkiaSharp;
 namespace Medja.OpenTk.Rendering
 {
     // TODO dispose
-    public class OpenTkRenderLayer : ILayer
+    public class OpenTkRenderLayer : ILayer, IDisposable
     {
         private SkiaGLLayer _skia;
         private SKSurface _surface;
@@ -45,33 +45,49 @@ namespace Medja.OpenTk.Rendering
                     //StrokeWidth = 10
                 })
                 {
-                    _canvas = _surface.Canvas;
-                    _canvas.Clear(SKColors.Gray);
-
-                    Debug.WriteLine(" --- OpenTkRenderLayer --- ");
-
-                    foreach (var state in states)
+                    using (_canvas = _surface.Canvas)
                     {
-                        var item = state.Control;
-                        var position = state.Position;
+                        _canvas.Clear(SKColors.Gray);
 
-                        Debug.WriteLine(" - Control: " + item.GetType().Name);
-                        Debug.WriteLine("      - Position: " + position);
+                        Debug.WriteLine(" --- OpenTkRenderLayer --- ");
 
-                        if (item is Button b)
+                        foreach (var state in states)
                         {
-                            DrawRect(position);
-                            DrawText(position, b.Text);
-                        }
-                        else
-                            DrawRect(position);
-                    }
+                            var item = state.Control;
+                            var position = state.Position;
 
-                    _canvas.Flush();
+                            Debug.WriteLine(" - Control: " + item.GetType().Name);
+                            Debug.WriteLine("      - Position: " + position);
+
+                            if (item is Button b)
+                            {
+                                DrawRect(position);
+                                var oldColor = _paint.Color;
+                                _paint.Color = SKColors.Black;
+                                DrawTextCenteredInRect(position, b.Text);
+                                _paint.Color = oldColor;
+                            }
+                            else
+                                DrawRect(position);
+                        }
+
+                        _canvas.Flush();
+                    }
                 }
             }
 
             return states;
+        }
+
+        private void DrawTextCenteredInRect(PositionInfo position, string text)
+        {
+            //var width = _paint.MeasureText(text);
+            //var height = _paint.TextSize;*/
+
+            // work with a copy so we don't change the source PositionInfo
+            var skPoint = new SKPoint(position.X + position.Width / 2, position.Y + position.Height / 2); 
+            
+            _canvas.DrawText(text, skPoint.X, skPoint.Y, _paint);
         }
 
         private void DrawText(PositionInfo positionInfo, string text)
@@ -87,6 +103,46 @@ namespace Medja.OpenTk.Rendering
         private SKRect GetSKRectFrom(PositionInfo positionInfo)
         {
             return new SKRect(positionInfo.X, positionInfo.Y, positionInfo.Width + positionInfo.X, positionInfo.Height + positionInfo.Y);
+        }
+
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    if (_paint != null)
+                        _paint.Dispose();
+
+                    if (_surface != null)
+                        _surface.Dispose();        
+
+                    if (_skia != null)
+                        _skia.Dispose();
+                }
+
+                // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
+                // TODO: set large fields to null.
+
+                disposedValue = true;
+            }
+        }
+
+        // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
+        // ~OpenTkRenderLayer() {
+        //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+        //   Dispose(false);
+        // }
+
+        // This code added to correctly implement the disposable pattern.
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            Dispose(true);
+            // TODO: uncomment the following line if the finalizer is overridden above.
+            // GC.SuppressFinalize(this);
         }
     }
 }
