@@ -13,6 +13,10 @@
 - separation of concerns (designer: ui behavior, optic; programmer: business logic, data)
 	- designers often use tools maybe HTML, CSS like things; not too much programming
 - usable on embedded devices (clarify Raspberry PI or bigger?) -> Limited hardware CPU, Memory, GPU
+- input handling
+    easy
+	touch
+	drag@drop
 
 # Easy to use
 
