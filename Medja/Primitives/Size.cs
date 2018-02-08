@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Medja
+namespace Medja.Primitives
 {
     public class Size
     {
-        public static readonly Size Empty = new Size(0, 0);
-
         public float Width { get; set; }
         public float Height { get; set; }
 

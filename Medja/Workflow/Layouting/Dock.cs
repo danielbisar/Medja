@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Medja.Layers.Layouting
+namespace Medja.Layouting
 {
     public enum Dock
     {

@@ -1,18 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Text;
 using Medja.Controls;
-using Medja.Layers;
-using Medja.Layers.Layouting;
-using Medja.OpenTk.Eval;
-using OpenTK.Graphics.OpenGL;
+using Medja.Primitives;
 using SkiaSharp;
 
 namespace Medja.OpenTk.Rendering
 {
-    // TODO dispose
     public class OpenTkRenderLayer : ILayer, IDisposable
     {
         private SkiaGLLayer _skia;
@@ -20,87 +12,112 @@ namespace Medja.OpenTk.Rendering
         private SKPaint _paint;
         private SKCanvas _canvas;
 
+        public WorkflowState WorkflowState { get; set; }
+
         public OpenTkRenderLayer()
         {
             _skia = new SkiaGLLayer();
         }
 
-        public void Resize(int width, int height)
+        public void Execute()
         {
-            _skia.Resize(width, height);
-        }
+            var renderTargetSize = WorkflowState.RenderTargetSize;
+            // TODO check performance
+            _skia.Resize((int)renderTargetSize.Width, (int)renderTargetSize.Height);
 
-        public IEnumerable<ControlState> Apply(IEnumerable<ControlState> states)
-        {
-            using (_surface = _skia.CreateSurface())
+            /* Done via Skia GL.ClearColor(Color.Gray);
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);*/
+            
+            _surface = _skia.CreateSurface();
+            _canvas = _surface.Canvas;
+            _paint = GetDefaultPaint();
+
+            _canvas.Clear(SKColors.Gray);
+
+            foreach (var controlState in WorkflowState.Controls)
             {
-                using (_paint = new SKPaint
-                {
-                    // TODO dispose Typeface
-/*                    Typeface = SKTypeface.FromFamilyName("Arial"),
-                    TextSize = 12,*/
-                    IsAntialias = true,
-                    Color = SKColors.Orange,
-                    Style = SKPaintStyle.StrokeAndFill,
-                    //StrokeWidth = 10
-                })
-                {
-                    using (_canvas = _surface.Canvas)
-                    {
-                        _canvas.Clear(SKColors.Gray);
-
-                        Debug.WriteLine(" --- OpenTkRenderLayer --- ");
-
-                        foreach (var state in states)
-                        {
-                            var item = state.Control;
-                            var position = state.Position;
-
-                            Debug.WriteLine(" - Control: " + item.GetType().Name);
-                            Debug.WriteLine("      - Position: " + position);
-
-                            if (item is Button b)
-                            {
-                                DrawRect(position);
-                                var oldColor = _paint.Color;
-                                _paint.Color = SKColors.Black;
-                                DrawTextCenteredInRect(position, b.Text);
-                                _paint.Color = oldColor;
-                            }
-                            else
-                                DrawRect(position);
-                        }
-
-                        _canvas.Flush();
-                    }
-                }
+                Render(controlState);
             }
 
-            return states;
+            _canvas.Flush();
+            _paint.Dispose();
+            _surface.Dispose();
+
+
+            // TODO for 3D
+            /*GL.UseProgram(0);
+            GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
+            GL.CullFace(CullFaceMode.Back);
+            GL.Enable(EnableCap.CullFace);*/
+                        
+            //GL.Rotate(2, 1, 1, 0);
+            //GL.Begin(BeginMode.LineLoop);
+            //GL.Vertex3(0, 0, 0);
+            //GL.Vertex3(0, 0.5, 0);
+            //GL.Vertex3(0.5, 0.5, 0.5);
+            //GL.Vertex3(0.5, 0, 0.5);
+            //GL.End();
         }
 
-        private void DrawTextCenteredInRect(PositionInfo position, string text)
+        private void Render(ControlState controlState)
         {
+            var control = controlState.Control;
+            var position = controlState.Position;
+
+            if (control is Button b)
+            {
+                DrawRect(position);
+                var oldColor = _paint.Color;
+                _paint.Color = SKColors.Black;
+                DrawTextCenteredInRect(position, b.Text);
+                _paint.Color = oldColor;
+            }
+            //else
+            //    DrawRect(position);
+        }
+
+        private SKPaint GetDefaultPaint()
+        {
+            return new SKPaint
+            {
+                // TODO dispose Typeface
+                /*                    Typeface = SKTypeface.FromFamilyName("Arial"),
+                                    TextSize = 12,*/
+                IsAntialias = true,
+                Color = SKColors.Orange,
+                Style = SKPaintStyle.StrokeAndFill,
+                //StrokeWidth = 10
+            };
+        }
+
+        private void DrawTextCenteredInRect(Position position, string text)
+        {
+            if (string.IsNullOrEmpty(text))
+                return;
+
             //var width = _paint.MeasureText(text);
             //var height = _paint.TextSize;*/
 
             // work with a copy so we don't change the source PositionInfo
-            var skPoint = new SKPoint(position.X + position.Width / 2, position.Y + position.Height / 2); 
-            
+            var skPoint = new SKPoint(position.X + position.Width / 2, position.Y + position.Height / 2);
+
             _canvas.DrawText(text, skPoint.X, skPoint.Y, _paint);
         }
 
-        private void DrawText(PositionInfo positionInfo, string text)
+        private void DrawText(Position positionInfo, string text)
         {
+            if (string.IsNullOrEmpty(text))
+                return;
+
             _canvas.DrawText(text, positionInfo.X, positionInfo.Y, _paint);
         }
 
-        private void DrawRect(PositionInfo positionInfo)
+        private void DrawRect(Position positionInfo)
         {
             _canvas.DrawRect(GetSKRectFrom(positionInfo), _paint);
         }
 
-        private SKRect GetSKRectFrom(PositionInfo positionInfo)
+        private SKRect GetSKRectFrom(Position positionInfo)
         {
             return new SKRect(positionInfo.X, positionInfo.Y, positionInfo.Width + positionInfo.X, positionInfo.Height + positionInfo.Y);
         }
@@ -117,7 +134,7 @@ namespace Medja.OpenTk.Rendering
                         _paint.Dispose();
 
                     if (_surface != null)
-                        _surface.Dispose();        
+                        _surface.Dispose();
 
                     if (_skia != null)
                         _skia.Dispose();

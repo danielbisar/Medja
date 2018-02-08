@@ -12,7 +12,8 @@
 
   <ItemGroup>
     <Folder Include="Binding\" />
-    <Folder Include="Layers\Input\" />
+    <Folder Include="Workflow\Input\" />
+    <Folder Include="Workflow\Rendering\" />
   </ItemGroup>
 
   <ItemGroup>

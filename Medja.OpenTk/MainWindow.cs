@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using Medja.Controls;
-using Medja.Layers;
-using Medja.Layers.Layouting;
-using Medja.Layers.Rendering;
+using Medja.Layouting;
+using Medja.Primitives;
 using Medja.OpenTk.Eval;
 using Medja.OpenTk.Rendering;
 using OpenTK;
@@ -14,60 +9,44 @@ using OpenTK;
 // target another platform
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
+using Medja.Controls;
 
 namespace Medja
 {
     public class MainWindow : GameWindow
     {
         private readonly MenuController _menuController;
-        private readonly LayerPipeline _layerPipeline;
-        private readonly OpenTkRenderLayer _renderLayer;
-        private readonly RenderPipeline _renderPipeline;
-        private readonly LayoutLayer _layoutLayer;
-        private IEnumerable<ControlState> _controlStates;
-
+        private readonly Workflow _workflow;
+        
         public MainWindow()
         {
             Title = "TestApp";
+            Width = 800;
+            Height = 600;
+
+            _workflow = new Workflow();
+            _workflow.AddUpdateLayer(new UpdateLayoutLayer());
+            _workflow.AddRenderLayer(new OpenTkRenderLayer());
 
             _menuController = new MenuController();
             CreateMenu();
 
-            var dockLayout = new DockLayout(new DockedControl[]
+            var x = Width - 155;
+
+            var stackLayout = new VerticalStackLayout();
+
+            _workflow.AddControl(stackLayout).Position = new Position
             {
-                new DockedControl
-                {
-                    Dock = Dock.Right,
-                    MinWidth = 200,
-                    Control = new VerticalStackLayout(new Control[]
-                    {
-                        new Button { Text = "Test1" },
-                        new Button { Text = "Test2" },
-                        new Button { Text = "Test3" },
-                        new Button { Text = "Test4" }
-                    })
+                X = x,
+                Y = 50,
+                Width = 150,
+                Height = Height - 100
+            };
 
-                    /*new DynamicItemsControl<VerticalStackLayout, MenuController>
-                    {
-                        ItemsHost = new VerticalStackLayout(),
-                        Clear = p => { },
-                        DataItem = _menuController,
-                        Apply = (h, d) => d.CurrentMenu.Items.Select(p => new Button { Text = p.Text })
-                    }*/
-                }
-            });
-
-            _layoutLayer = new LayoutLayer();
-            _layoutLayer.SetLayoutRoot(dockLayout);
-
-            _layerPipeline = new LayerPipeline();
-            _layerPipeline.AddLayer(_layoutLayer);
-            //_layerPipeline.AddLayer(inputLayer);
-
-            _renderLayer = new OpenTkRenderLayer();
-            _renderPipeline = new RenderPipeline();
-            //_renderPipeline.AddLayer(new FilterInvisibleLayer());
-            _renderPipeline.AddLayer(_renderLayer);
+            stackLayout.Children.Add(_workflow.AddControl(new Button()));
+            stackLayout.Children.Add(_workflow.AddControl(new Button()));
+            stackLayout.Children.Add(_workflow.AddControl(new Button()));
+            stackLayout.Children.Add(_workflow.AddControl(new Button()));            
         }
 
         private void CreateMenu()
@@ -95,8 +74,7 @@ namespace Medja
             base.OnResize(e);
 
             GL.Viewport(0, 0, ClientRectangle.Width, ClientRectangle.Height);
-            _layoutLayer.Size = new Size(ClientRectangle.Width, ClientRectangle.Height);
-            _renderLayer.Resize(ClientRectangle.Width, ClientRectangle.Height);
+            _workflow.SetRenderTargetSize(new Size(ClientRectangle.Width, ClientRectangle.Height));
         }
 
         protected override void OnMouseDown(MouseButtonEventArgs e)
@@ -109,48 +87,14 @@ namespace Medja
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
             base.OnUpdateFrame(e);
-            _controlStates = _layerPipeline.Execute();
+            _workflow.Update();
         }
 
         protected override void OnRenderFrame(FrameEventArgs e)
         {
-            base.OnRenderFrame(e);
-
-            //GL.ClearColor(Color.Gray);
-            //GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-
-            SwitchTo2DMode();
-            _renderPipeline.Execute(_controlStates);
-
-            //SwitchTo3DMode();
-
-            ////GL.Viewport(0, 0, ClientRectangle.Width, ClientRectangle.Height);
-            ////GL.LoadIdentity();
-            //GL.Rotate(2, 1, 1, 0);
-            //GL.Begin(BeginMode.LineLoop);
-            //GL.Vertex3(0, 0, 0);
-            //GL.Vertex3(0, 0.5, 0);
-            //GL.Vertex3(0.5, 0.5, 0.5);
-            //GL.Vertex3(0.5, 0, 0.5);
-            //GL.End();
-
+            base.OnRenderFrame(e);            
+            _workflow.Render();
             SwapBuffers();
-        }
-
-        private void SwitchTo2DMode()
-        {
-            //GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrc1Alpha);
-            ////GL.Enable(EnableCap.Blend); --> somehow nothing is drawn then
-            //GL.Disable(EnableCap.CullFace);
-            //GL.Disable(EnableCap.DepthTest);
-        }
-
-        private void SwitchTo3DMode()
-        {
-            GL.UseProgram(0);
-            GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
-            GL.CullFace(CullFaceMode.Back);
-            GL.Enable(EnableCap.CullFace);
         }
     }
 }

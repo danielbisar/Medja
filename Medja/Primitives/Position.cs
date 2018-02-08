@@ -1,6 +1,6 @@
-﻿namespace Medja.Layers.Layouting
+﻿namespace Medja.Primitives
 {
-    public class PositionInfo
+    public class Position
     {
         public float X { get; set; }
         public float Y { get; set; }

@@ -2,7 +2,7 @@
 using SkiaSharp;
 using OpenTK.Graphics.OpenGL;
 
-namespace Medja.OpenTk.Eval
+namespace Medja.OpenTk.Rendering
 {
     public class SkiaGLLayer : IDisposable
     {

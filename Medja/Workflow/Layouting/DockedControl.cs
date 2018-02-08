@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Medja.Controls;
 
-namespace Medja.Layers.Layouting
+namespace Medja.Layouting
 {
     public class DockedControl
     {

@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Medja
+namespace Medja.Primitives
 {
     public class Thickness
     {
-        public static readonly Thickness Empty = new Thickness();
-
         public float Top { get; set; }
         public float Bottom { get; set; }
         public float Left { get; set; }
