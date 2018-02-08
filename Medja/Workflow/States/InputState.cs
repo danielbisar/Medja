@@ -1,12 +1,31 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Medja
 {
     public class InputState
-    {
+    {        
         public bool IsMouseOver { get; set; }
-        public bool IsMouseDown { get; set; }
+
+        private bool _isMouseDown;
+        public bool IsMouseDown
+        {
+            get { return _isMouseDown; }
+            set
+            {
+                var oldValue = _isMouseDown;
+                _isMouseDown = value;
+
+                if (!value && oldValue)
+                    NotifyClicked();                
+            }
+        }        
+
+        public event EventHandler MouseClicked;
+
+        private void NotifyClicked()
+        {
+            if (MouseClicked != null)
+                MouseClicked(this, EventArgs.Empty);
+        }
     }
 }

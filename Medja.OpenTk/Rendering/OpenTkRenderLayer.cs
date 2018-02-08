@@ -68,7 +68,9 @@ namespace Medja.OpenTk.Rendering
             {
                 var oldColor = _paint.Color;
 
-                _paint.Color = controlState.InputState.IsMouseOver ? SKColors.DarkOrange : SKColors.Orange;
+                _paint.Color = controlState.InputState.IsMouseOver 
+                            ? (controlState.InputState.IsMouseDown ? SKColors.OrangeRed : SKColors.DarkOrange) 
+                            : SKColors.Orange;
                 DrawRect(position);
                 
                 _paint.Color = SKColors.Black;

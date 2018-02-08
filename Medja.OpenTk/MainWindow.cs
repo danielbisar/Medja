@@ -10,6 +10,7 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
 using Medja.Controls;
+using Medja.Input;
 
 namespace Medja
 {
@@ -77,8 +78,14 @@ namespace Medja
 
                 verticalStackLayout.Children.Clear();
 
-                foreach(var menuEntry in _menuController.CurrentMenu.Items)
-                    verticalStackLayout.Children.Add(_workflow.AddControl(new Button() { Text = menuEntry.Text }));
+                foreach (var menuEntry in _menuController.CurrentMenu.Items)
+                {
+                    var controlState = _workflow.AddControl(new Button() { Text = menuEntry.Text });
+
+                    // TODO remove memory leak; implement the call for Command inside the button
+                    controlState.InputState.MouseClicked += (s, e) => { _menuController.NavigateTo("Settings"); };
+                    verticalStackLayout.Children.Add(controlState);
+                }
             };
 
             _menuController.Add(mainMenu);
@@ -101,11 +108,31 @@ namespace Medja
             _rootControl.Position.Height = ClientRectangle.Height;
         }
 
+        protected override void OnMouseMove(MouseMoveEventArgs e)
+        {
+            base.OnMouseMove(e);
+            _workflow.UpdateInput(GetInputDeviceState(e));
+        }
+
         protected override void OnMouseDown(MouseButtonEventArgs e)
         {
             base.OnMouseDown(e);
+            _workflow.UpdateInput(GetInputDeviceState(e));
+        }
 
-            // TODO check position and forward to relevant ui controls
+        protected override void OnMouseUp(MouseButtonEventArgs e)
+        {
+            base.OnMouseUp(e);
+            _workflow.UpdateInput(GetInputDeviceState(e));
+        }
+
+        private InputDeviceState GetInputDeviceState(MouseEventArgs e)
+        {
+            return new InputDeviceState
+            {
+                Pos = new Point(e.X, e.Y),
+                LeftButtonDown = e.Mouse.LeftButton == ButtonState.Pressed
+            };
         }
 
         protected override void OnUpdateFrame(FrameEventArgs e)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Medja.Controls;
+using Medja.Input;
 using Medja.Primitives;
 
 namespace Medja
@@ -63,6 +64,25 @@ namespace Medja
         public void RemoveControl(ControlState child)
         {
             _state.Controls.Remove(child);
+        }
+
+        public void UpdateInput(InputDeviceState inputDeviceState)
+        {
+            foreach (var child in _state.Controls.ToArray()) // copy the whole items because input events might modify the current state
+            {
+                var inputState = child.InputState;
+                inputState.IsMouseOver = IsMouseOver(child, inputDeviceState.Pos);
+                inputState.IsMouseDown = inputState.IsMouseOver && inputDeviceState.LeftButtonDown;
+            }
+        }
+
+        private bool IsMouseOver(ControlState child, Point pos)
+        {
+            var childPos = child.Position;
+            return pos.X >= childPos.X
+                && pos.Y >= childPos.Y
+                && pos.X <= (childPos.X + childPos.Width)
+                && pos.Y <= (childPos.Y + childPos.Height);
         }
     }
 }
