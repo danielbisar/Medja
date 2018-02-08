@@ -7,28 +7,34 @@ namespace Medja.Layouting
     public class VerticalStackLayout : LayoutControl
     {        
         public float SpaceBetweenChildren { get; set; }
+        public float ChildrenHeight { get; set; }
 
         public VerticalStackLayout()
         {
             SpaceBetweenChildren = 10;
+            ChildrenHeight = 50; // todo could be calculated on the fly, currently we set it
         }        
 
         // TODO margin and padding
 
         public override Size Measure(Size availableSize)
         {
-            var result = new Size();
+            //var result = new Size();
 
-            foreach(var child in Children)
-            {
-                result.Height += child.Position.Height + SpaceBetweenChildren;
-                result.Width = Math.Max(result.Width, child.Position.Width);
-            }
+            //result.Width = availableSize.Width;
 
-            result.Height = Math.Min(result.Height, availableSize.Height);
-            result.Width = Math.Min(result.Width, availableSize.Width);
+            //foreach(var child in Children)
+            //{
+            //    // todo child margin etc
+            //    // todo concept of measure children (like button -> text)
+            //    result.Height += child.Position.Height + SpaceBetweenChildren;                
+            //}
 
-            return result;
+            //result.Height = Math.Min(result.Height, availableSize.Height);
+            //result.Width = Math.Min(result.Width, availableSize.Width);
+
+            //return result;
+            return availableSize;
         }
 
         public override void Arrange(Point pos, Size targetSize)
@@ -50,9 +56,10 @@ namespace Medja.Layouting
                 position.X = curX;
                 position.Y = curY;
                 position.Width = childAvailableSize.Width;
-                position.Height = childAvailableSize.Height;
+                position.Height = ChildrenHeight;
 
-                curY += childAvailableSize.Height + spacingY;
+                //curY += childAvailableSize.Height + spacingY; <-- stretch
+                curY += position.Height + spacingY; // <-- just stack
             }
         }
     }

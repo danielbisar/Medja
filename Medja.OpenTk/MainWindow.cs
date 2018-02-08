@@ -17,7 +17,9 @@ namespace Medja
     {
         private readonly MenuController _menuController;
         private readonly Workflow _workflow;
-        
+        private readonly ControlState _rootControl;
+        private readonly ControlState _stack;
+
         public MainWindow()
         {
             Title = "TestApp";
@@ -27,26 +29,32 @@ namespace Medja
             _workflow = new Workflow();
             _workflow.AddUpdateLayer(new UpdateLayoutLayer());
             _workflow.AddRenderLayer(new OpenTkRenderLayer());
+            _workflow.SetRenderTargetSize(new Size(Width, Height));
 
-            _menuController = new MenuController();
-            CreateMenu();
+            _menuController = new MenuController();            
 
-            var x = Width - 155;
+            var dockPanel = new DockLayout();
+            _rootControl = _workflow.AddControl(dockPanel);
 
-            var stackLayout = new VerticalStackLayout();
-
-            _workflow.AddControl(stackLayout).Position = new Position
+            _rootControl.Position = new Position
             {
-                X = x,
-                Y = 50,
+                X = 0,
+                Y = 0,
+                Width = Width, // todo could be update via binding, currently we do it manually (see below - resize)
+                Height = Height
+            };
+            
+            var stackLayout = new VerticalStackLayout();
+            _stack = _workflow.AddControl(stackLayout);
+
+            dockPanel.Add(_stack, Dock.Right);
+
+            _stack.Position = new Position
+            {                
                 Width = 150,
-                Height = Height - 100
             };
 
-            stackLayout.Children.Add(_workflow.AddControl(new Button()));
-            stackLayout.Children.Add(_workflow.AddControl(new Button()));
-            stackLayout.Children.Add(_workflow.AddControl(new Button()));
-            stackLayout.Children.Add(_workflow.AddControl(new Button()));            
+            CreateMenu();
         }
 
         private void CreateMenu()
@@ -59,10 +67,24 @@ namespace Medja
             settingsMenu.Items.Add(new MenuEntry("< Back")); // , mainMenu.BackCommand
             settingsMenu.Items.Add(new MenuEntry("Enable Option 1")); // TODO toggle, databinding or just via click?
             settingsMenu.Items.Add(new MenuEntry("Option 2"));
+                        
+            _menuController.PropertyCurrentMenu.PropertyChanged += p => 
+            {
+                var verticalStackLayout = (VerticalStackLayout)_stack.Control;
+
+                foreach (var child in verticalStackLayout.Children)
+                    _workflow.RemoveControl(child);
+
+                verticalStackLayout.Children.Clear();
+
+                foreach(var menuEntry in _menuController.CurrentMenu.Items)
+                    verticalStackLayout.Children.Add(_workflow.AddControl(new Button() { Text = menuEntry.Text }));
+            };
 
             _menuController.Add(mainMenu);
             _menuController.Add(settingsMenu);
         }
+        
 
         protected override void OnLoad(EventArgs e)
         {
@@ -75,6 +97,8 @@ namespace Medja
 
             GL.Viewport(0, 0, ClientRectangle.Width, ClientRectangle.Height);
             _workflow.SetRenderTargetSize(new Size(ClientRectangle.Width, ClientRectangle.Height));
+            _rootControl.Position.Width = ClientRectangle.Width;
+            _rootControl.Position.Height = ClientRectangle.Height;
         }
 
         protected override void OnMouseDown(MouseButtonEventArgs e)

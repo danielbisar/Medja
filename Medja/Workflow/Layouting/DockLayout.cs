@@ -1,60 +1,57 @@
 ﻿using System;
-using System.Collections.Generic;
 using Medja.Layers.Layouting;
 using Medja.Primitives;
+using Medja.Property;
 
 namespace Medja.Layouting
 {
-    //public class DockLayout : LayoutControl
-    //{
-    //    private List<DockedControl> _dockedControls;
-        
-    //    public DockLayout(IEnumerable<DockedControl> dockedControls)
-    //    {
-    //        _dockedControls = new List<DockedControl>(dockedControls);
-    //    }
+    public class DockLayout : LayoutControl
+    {
+        private static int DockAttachedId = AttachedProperties.GetNextId();
 
-    //    public DockLayout()
-    //        : this(new DockedControl[0])
-    //    {
-    //    }
+        public DockLayout()
+        {
+        }
 
-    //    public void Add(DockedControl dockedControl)
-    //    {
-    //        _dockedControls.Add(dockedControl);
-    //    }
+        public void Add(ControlState control, Dock dock)
+        {
+            control.SetAttachedProperty(DockAttachedId, dock);
+            Children.Add(control);
+        }
 
-    //    public override IEnumerable<ControlState> GetLayout(ControlState state)
-    //    {
-    //        // TODO finish implementation, by no means done now, for our use case this is enough
-    //        foreach(var dockedControl in _dockedControls)
-    //        {
-    //            switch (dockedControl.Dock)
-    //            {
-    //                case Dock.Top:
-    //                    break;
-    //                case Dock.Left:
-    //                    break;
-    //                case Dock.Right:
-    //                    yield return new ControlState
-    //                    {
-    //                        Control = dockedControl.Control,
-    //                        Position = new Position
-    //                        {
-    //                            // TODO handle: MinWidth unset or > availableWidth
-    //                            X = state.Position.Width - dockedControl.MinWidth,
-    //                            Y = 0, // TODO track already added controls
-    //                            Width = dockedControl.MinWidth,
-    //                            Height = state.Position.Height
-    //                        }
-    //                    };
-    //                    break;
-    //                case Dock.Bottom:
-    //                    break;
-    //                default:
-    //                    throw new ArgumentOutOfRangeException("Dock");
-    //            }
-    //        }
-    //    }
-    //}
+        public override Size Measure(Size availableSize)
+        {
+            return availableSize;
+        }
+
+        public override void Arrange(Point pos, Size targetSize)
+        {
+            foreach (var child in Children)
+            {
+                var dock = (Dock?)child.GetAttachedProperty(DockAttachedId);
+
+                if (dock == null)
+                    dock = Dock.Top;
+
+                var childPos = child.Position;
+
+                switch (dock)
+                {
+                    case Dock.Top:
+                        break;
+                    case Dock.Left:
+                        break;
+                    case Dock.Right:
+                        childPos.X = targetSize.Width - child.Position.Width;
+                        childPos.Y = pos.Y;
+                        childPos.Height = targetSize.Height; // TODO later calculate the left over space
+                        break;
+                    case Dock.Bottom:
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException("Dock");
+                }
+            }
+        }        
+    }
 }

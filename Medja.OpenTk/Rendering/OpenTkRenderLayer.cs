@@ -66,8 +66,11 @@ namespace Medja.OpenTk.Rendering
 
             if (control is Button b)
             {
-                DrawRect(position);
                 var oldColor = _paint.Color;
+
+                _paint.Color = controlState.InputState.IsMouseOver ? SKColors.DarkOrange : SKColors.Orange;
+                DrawRect(position);
+                
                 _paint.Color = SKColors.Black;
                 DrawTextCenteredInRect(position, b.Text);
                 _paint.Color = oldColor;

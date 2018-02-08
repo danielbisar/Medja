@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Medja.Layers.Layouting;
 using Medja.Primitives;
@@ -16,8 +17,14 @@ namespace Medja.Layouting
             {
                 if(control.Control is LayoutControl lc)
                 {
-                    var result = lc.Measure(WorkflowState.RenderTargetSize);
+                    // TODO handle empty size and use WorkflowState.TargetRenderSize
+                    var availableSize = new Size(control.Position.Width, control.Position.Height);
+                    var result = lc.Measure(availableSize);
                     lc.Arrange(new Point(control.Position.X, control.Position.Y), result);
+
+                    Debug.WriteLine("Found layout control: " + lc.GetType().Name);
+                    Debug.WriteLine("AvailableSize: " + availableSize);
+                    Debug.WriteLine("After measure: " + result);
                 }
             }
         }

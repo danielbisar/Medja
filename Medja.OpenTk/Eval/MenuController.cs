@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Medja.OpenTk.Eval
 {
@@ -10,10 +9,17 @@ namespace Medja.OpenTk.Eval
         private Stack<Menu> _previousMenus;
         private List<Menu> _menus;
 
-        public Menu CurrentMenu { get; private set; }        
+        public readonly Property<Menu> PropertyCurrentMenu;
+        public Menu CurrentMenu
+        {
+            get { return PropertyCurrentMenu.Get(); }
+            set { PropertyCurrentMenu.Set(value); }
+        }            
 
         public MenuController()
         {
+            PropertyCurrentMenu = new Property<Menu>();
+
             _previousMenus = new Stack<Menu>();
             _menus = new List<Menu>();
         }

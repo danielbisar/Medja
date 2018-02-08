@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Medja.Controls;
 using Medja.Primitives;
 
@@ -57,6 +58,11 @@ namespace Medja
         public void SetRenderTargetSize(Size size)
         {
             _state.RenderTargetSize = size;
+        }
+
+        public void RemoveControl(ControlState child)
+        {
+            _state.Controls.Remove(child);
         }
     }
 }
