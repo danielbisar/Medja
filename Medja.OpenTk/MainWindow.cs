@@ -1,5 +1,4 @@
 ﻿using System;
-using Medja.Layouting;
 using Medja.Primitives;
 using Medja.OpenTk.Eval;
 using Medja.OpenTk.Rendering;
@@ -23,14 +22,14 @@ namespace Medja
 
         public MainWindow()
         {
-            Title = "TestApp";
-            Width = 800;
-            Height = 600;
+            //Title = "TestApp";
+            //Width = 800;
+            //Height = 600;
 
-            _workflow = new Workflow();
-            _workflow.AddUpdateLayer(new UpdateLayoutLayer());
-            _workflow.AddRenderLayer(new OpenTkRenderLayer());
-            _workflow.SetRenderTargetSize(new Size(Width, Height));
+            //_workflow = new Workflow();
+            //_workflow.AddUpdateLayer(new UpdateLayoutLayer());
+            //_workflow.AddRenderLayer(new OpenTkRenderLayer());
+            //_workflow.SetRenderTargetSize(new Primitives.Size(Width, Height));
 
             _menuController = new MenuController();            
 
@@ -98,12 +97,35 @@ namespace Medja
             base.OnLoad(e);
         }
 
+        /*
+         * public void UpdateInput(InputDeviceState inputDeviceState)
+        {
+            foreach (var child in _state.Controls.ToArray()) // copy the whole items because input events might modify the current state
+            {
+                var inputState = child.InputState;
+                inputState.IsMouseOver = IsMouseOver(child, inputDeviceState.Pos);
+                inputState.IsMouseDown = inputState.IsMouseOver && inputDeviceState.LeftButtonDown;
+            }
+        }
+
+        private bool IsMouseOver(ControlState child, Point pos)
+        {
+            var childPos = child.Position;
+            return pos.X >= childPos.X
+                && pos.Y >= childPos.Y
+                && pos.X <= (childPos.X + childPos.Width)
+                && pos.Y <= (childPos.Y + childPos.Height);
+        }
+         *
+         *
+         */
+
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
 
-            GL.Viewport(0, 0, ClientRectangle.Width, ClientRectangle.Height);
-            _workflow.SetRenderTargetSize(new Size(ClientRectangle.Width, ClientRectangle.Height));
+            //GL.Viewport(0, 0, ClientRectangle.Width, ClientRectangle.Height);
+            //_workflow.SetRenderTargetSize(new Primitives.Size(ClientRectangle.Width, ClientRectangle.Height));
             _rootControl.Position.Width = ClientRectangle.Width;
             _rootControl.Position.Height = ClientRectangle.Height;
         }
@@ -130,7 +152,7 @@ namespace Medja
         {
             return new InputDeviceState
             {
-                Pos = new Point(e.X, e.Y),
+                Pos = new Primitives.Point(e.X, e.Y),
                 LeftButtonDown = e.Mouse.LeftButton == ButtonState.Pressed
             };
         }

@@ -1,8 +1,8 @@
 ﻿using System;
-using Medja.Layers.Layouting;
+using Medja.Controls;
 using Medja.Primitives;
 
-namespace Medja.Layouting
+namespace Medja.Controls
 {
     public class VerticalStackLayout : LayoutControl
     {        
@@ -17,7 +17,7 @@ namespace Medja.Layouting
 
         // TODO margin and padding
 
-        public override Size Measure(Size availableSize)
+        internal override Size Measure(Size availableSize)
         {
             //var result = new Size();
 
@@ -37,16 +37,16 @@ namespace Medja.Layouting
             return availableSize;
         }
 
-        public override void Arrange(Point pos, Size targetSize)
+        internal override void Arrange(Size targetSize)
         {
             var spacingY = SpaceBetweenChildren;
             var count = Children.Count;
             var childAvailableSize = new Size(targetSize.Width, (targetSize.Height - spacingY * (count - 1)) / count);
 
-            var curX = pos.X;
-            var curY = pos.Y;
+            var curX = Position.X;
+            var curY = Position.Y;
 
-            ControlState child;
+            Control child;
 
             for (int i = 0; i < count; i++)
             {

@@ -13,6 +13,7 @@
   <ItemGroup>
     <Folder Include="Binding\" />
     <Folder Include="Workflow\Rendering\" />
+    <Folder Include="Workflow\States\" />
   </ItemGroup>
 
   <ItemGroup>

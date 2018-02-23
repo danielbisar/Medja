@@ -26,6 +26,11 @@ namespace Medja
             NotifyPropertyChanged();
         }
 
+        public void UnnotifiedSet(T value)
+        {
+            _value = value;
+        }
+
         public T Get()
         {
             return _value;

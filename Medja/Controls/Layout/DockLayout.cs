@@ -1,9 +1,9 @@
 ﻿using System;
-using Medja.Layers.Layouting;
+using Medja.Controls;
 using Medja.Primitives;
 using Medja.Property;
 
-namespace Medja.Layouting
+namespace Medja.Controls
 {
     public class DockLayout : LayoutControl
     {
@@ -13,18 +13,18 @@ namespace Medja.Layouting
         {
         }
 
-        public void Add(ControlState control, Dock dock)
+        public void Add(Control control, Dock dock)
         {
             control.SetAttachedProperty(DockAttachedId, dock);
             Children.Add(control);
         }
 
-        public override Size Measure(Size availableSize)
+        internal override Size Measure(Size availableSize)
         {
             return availableSize;
         }
 
-        public override void Arrange(Point pos, Size targetSize)
+        internal override void Arrange(Size targetSize)
         {
             foreach (var child in Children)
             {
@@ -43,7 +43,7 @@ namespace Medja.Layouting
                         break;
                     case Dock.Right:
                         childPos.X = targetSize.Width - child.Position.Width;
-                        childPos.Y = pos.Y;
+                        childPos.Y = Position.Y;
                         childPos.Height = targetSize.Height; // TODO later calculate the left over space
                         break;
                     case Dock.Bottom:
