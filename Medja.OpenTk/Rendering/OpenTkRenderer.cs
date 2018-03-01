@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using Medja.Controls;
+using OpenTK;
 using SkiaSharp;
 
 namespace Medja.OpenTk.Rendering
@@ -24,13 +25,14 @@ namespace Medja.OpenTk.Rendering
             _skia = new SkiaGLLayer();
         }
 
+        public void SetSize(Rectangle rectangle)
+        {
+            _skia.Resize(rectangle.Width, rectangle.Height);
+        }
+
         public void Render(IEnumerable<Control> controls)
         {
-            //var renderTargetSize = WorkflowState.RenderTargetSize;
-            // TODO check performance
-            //_skia.Resize((int)renderTargetSize.Width, (int)renderTargetSize.Height);
-
-            /* Done via Skia GL.ClearColor(Color.Gray);
+            /* Done via Skia.Clear
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);*/
             
             _surface = _skia.CreateSurface();
@@ -67,6 +69,7 @@ namespace Medja.OpenTk.Rendering
         private void Render(Control control)
         {
             Debug.WriteLine("Render called for: " + control);
+            Debug.WriteLine("Position: " + control.Position);
 
             if (control is Button b)
             {

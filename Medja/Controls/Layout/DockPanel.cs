@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Medja.Controls;
 using Medja.Primitives;
-using Medja.Property;
 
 namespace Medja.Controls
 {
@@ -25,6 +23,9 @@ namespace Medja.Controls
 
         internal override Size Measure(Size availableSize)
         {
+            //foreach (var child in Children)
+            //    child.Measure(availableSize);
+
             return availableSize;
         }
 
@@ -45,6 +46,9 @@ namespace Medja.Controls
                         childPos.X = targetSize.Width - child.Position.Width;
                         childPos.Y = Position.Y;
                         childPos.Height = targetSize.Height; // TODO later calculate the left over space
+
+                        // TODO this is fake
+                        child.Arrange(targetSize);
                         break;
                     case Dock.Bottom:
                         break;

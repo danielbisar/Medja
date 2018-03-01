@@ -41,6 +41,9 @@ namespace Medja.OpenTk
         {
             var clientRect = _gameWindow.ClientRectangle;
             GL.Viewport(0, 0, clientRect.Width, clientRect.Height);
+
+            AssureRenderer();
+            _renderer.SetSize(clientRect);
         }
 
         private void OnUpdateFrame(object sender, FrameEventArgs e)
@@ -50,11 +53,18 @@ namespace Medja.OpenTk
 
         private void OnRenderFrame(object sender, FrameEventArgs e)
         {
-            if(_renderer == null)
-                _renderer = new OpenTkRenderer(); // TODO cannot be initialized without the window, but should also not have the null check here every call, for now seems fine
+            AssureRenderer();            
 
             var controls = _medjaWindow.GetAllControls();
             _renderer.Render(controls);
+
+            _gameWindow.SwapBuffers();
+        }
+
+        private void AssureRenderer()
+        {
+            if (_renderer == null)
+                _renderer = new OpenTkRenderer(); // TODO cannot be initialized without the window, but should also not have the null check here every call, for now seems fine
         }
     }
 }

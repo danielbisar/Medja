@@ -4,9 +4,9 @@ using Medja.OpenTk;
 
 namespace SensorFrontend
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             var app = MedjaApplication.Create(new MedjaOpenTkLibrary());
             app.MainWindow = SetupWindow(app.CreateWindow());
@@ -21,8 +21,15 @@ namespace SensorFrontend
 
             window.Title = "SensorFrontend";
 
+            var stackPanel = new VerticalStackPanel();
+            stackPanel.Position.Width = 100;
+            stackPanel.Children.Add(new Button());
+            stackPanel.Children.Add(new Button());
+            stackPanel.Children.Add(new Button());
+            stackPanel.Children.Add(new Button());
+
             var dockPanel = new DockPanel();
-            //dockPanel.Add(new Menu(), Dock.Right);
+            dockPanel.Add(stackPanel, Dock.Right);
 
             window.Content = dockPanel;
 
