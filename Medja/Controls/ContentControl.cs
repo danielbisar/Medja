@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using Medja.Primitives;
 
 namespace Medja.Controls
@@ -50,7 +48,7 @@ namespace Medja.Controls
 
         public override IEnumerable<Control> GetAllControls()
         {
-            yield return Content;
+            yield return this;
 
             foreach (var control in Content.GetAllControls())
                 yield return control;

@@ -6,14 +6,15 @@
 
   <ItemGroup>
     <Compile Remove="Compiler\**" />
+    <Compile Remove="Workflow\States\**" />
     <EmbeddedResource Remove="Compiler\**" />
+    <EmbeddedResource Remove="Workflow\States\**" />
     <None Remove="Compiler\**" />
+    <None Remove="Workflow\States\**" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Binding\" />
-    <Folder Include="Workflow\Rendering\" />
-    <Folder Include="Workflow\States\" />
   </ItemGroup>
 
   <ItemGroup>

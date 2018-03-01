@@ -20,7 +20,11 @@ namespace SensorFrontend
             position.Height = 600;
 
             window.Title = "SensorFrontend";
-            window.Content = new DockLayout();
+
+            var dockPanel = new DockPanel();
+            //dockPanel.Add(new Menu(), Dock.Right);
+
+            window.Content = dockPanel;
 
             return window;
         }

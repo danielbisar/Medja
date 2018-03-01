@@ -3,10 +3,20 @@ using Medja.Controls;
 
 namespace Medja
 {
+    /// <summary>
+    /// Represents an application instance (handling windows and other library stuff)
+    /// 
+    /// currently we just allow one actual window per application.
+    /// </summary>
     public class MedjaApplication
     {
         private static MedjaApplication _application;
-
+        
+        /// <summary>
+        /// Initializes the MedjaApplication, not thread-safe.
+        /// </summary>
+        /// <param name="library">The used library implementation.</param>
+        /// <returns>The application instance.</returns>
         public static MedjaApplication Create(IMedjaLibrary library)
         {
             if(_application != null)
@@ -16,8 +26,6 @@ namespace Medja
         }
 
         private readonly IMedjaLibrary _library;
-
-        private bool _isMainWindowClosed;
 
         private MedjaWindow _mainWindow;
         public MedjaWindow MainWindow
@@ -34,13 +42,7 @@ namespace Medja
         private MedjaApplication(IMedjaLibrary library)
         {
             _library = library;
-            _isMainWindowClosed = true;
-        }
-
-        public MedjaWindow CreateWindow()
-        {
-            return _library.CreateWindow();
-        }
+        }        
 
         private void UnregisterMainWindow()
         {
@@ -60,25 +62,39 @@ namespace Medja
 
         private void OnMainWindowClosed(object sender, EventArgs e)
         {
-            _isMainWindowClosed = true;
             UnregisterMainWindow();
             Shutdown();
         }
 
-        public void Run()
-        {
-            _library.Run(this);
-        }
-
+        /// <summary>
+        /// Closes the application in a soft way (does not quit if the window prevents it).
+        /// </summary>
         public void Shutdown()
         {
-            if (!_isMainWindowClosed && _mainWindow != null)
+            if (_mainWindow != null && !_mainWindow.IsClosed)
             {
                 _mainWindow.Close();
                 return; // function will be called by _mainWindow.Closed again
             }
 
             //_isRunning = false;
+        }
+
+        /// <summary>
+        /// Creates a new window. This method exists so you don't need to worry about the acutal used library instance.
+        /// </summary>
+        /// <returns>The new window instance provided by the library.</returns>
+        public MedjaWindow CreateWindow()
+        {
+            return _library.CreateWindow();
+        }
+
+        /// <summary>
+        /// Starts the application (shows the main window, starts message queue, ...)
+        /// </summary>
+        public void Run()
+        {
+            _library.Run(this);
         }
     }
 }

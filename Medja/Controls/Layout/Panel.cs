@@ -4,14 +4,14 @@ using Medja.Primitives;
 
 namespace Medja.Controls
 {
-    public abstract class LayoutControl : Control
+    public abstract class Panel : Control
     {
         public List<Control> Children { get; }
 
         public Thickness Margin { get; set; }
         public Thickness Padding { get; set; }
 
-        protected LayoutControl()
+        protected Panel()
         {
             Children = new List<Control>();
             Margin = new Thickness();

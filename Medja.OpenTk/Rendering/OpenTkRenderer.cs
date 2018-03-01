@@ -1,29 +1,34 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using Medja.Controls;
-using Medja.Primitives;
 using SkiaSharp;
 
 namespace Medja.OpenTk.Rendering
 {
-    public class OpenTkRenderLayer : ILayer, IDisposable
+    /// <summary>
+    /// This class is the main entry point for the rendering of controls for OpenTk with Skia.
+    /// 
+    /// WORK IN PROGRESS!!!
+    /// </summary>
+    public class OpenTkRenderer : IDisposable
     {
         private SkiaGLLayer _skia;
         private SKSurface _surface;
         private SKPaint _paint;
         private SKCanvas _canvas;
+        private bool _isDisposed;
 
-        public WorkflowState WorkflowState { get; set; }
-
-        public OpenTkRenderLayer()
+        public OpenTkRenderer()
         {
             _skia = new SkiaGLLayer();
         }
 
-        public void Execute()
+        public void Render(IEnumerable<Control> controls)
         {
-            var renderTargetSize = WorkflowState.RenderTargetSize;
+            //var renderTargetSize = WorkflowState.RenderTargetSize;
             // TODO check performance
-            _skia.Resize((int)renderTargetSize.Width, (int)renderTargetSize.Height);
+            //_skia.Resize((int)renderTargetSize.Width, (int)renderTargetSize.Height);
 
             /* Done via Skia GL.ClearColor(Color.Gray);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);*/
@@ -34,9 +39,9 @@ namespace Medja.OpenTk.Rendering
 
             _canvas.Clear(SKColors.Gray);
 
-            foreach (var controlState in WorkflowState.Controls)
+            foreach (var control in controls)
             {
-                Render(controlState);
+                Render(control);
             }
 
             _canvas.Flush();
@@ -59,22 +64,25 @@ namespace Medja.OpenTk.Rendering
             //GL.End();
         }
 
-        private void Render(ControlState controlState)
+        private void Render(Control control)
         {
-            var control = controlState.Control;
-            var position = controlState.Position;
+            Debug.WriteLine("Render called for: " + control);
 
             if (control is Button b)
             {
+                var position = control.Position;
+                var skRect = position.ToSKRect();
+
                 var oldColor = _paint.Color;
 
-                _paint.Color = controlState.InputState.IsMouseOver 
-                            ? (controlState.InputState.IsMouseDown ? SKColors.OrangeRed : SKColors.DarkOrange) 
+                _paint.Color = control.InputState.IsMouseOver
+                            ? (control.InputState.IsMouseDown ? SKColors.OrangeRed : SKColors.DarkOrange)
                             : SKColors.Orange;
-                DrawRect(position);
                 
+                _canvas.DrawRect(skRect, _paint);
+
                 _paint.Color = SKColors.Black;
-                DrawTextCenteredInRect(position, b.Text);
+                DrawTextCenteredInRect(skRect, b.Text);
                 _paint.Color = oldColor;
             }
             //else
@@ -95,43 +103,29 @@ namespace Medja.OpenTk.Rendering
             };
         }
 
-        private void DrawTextCenteredInRect(Position position, string text)
+        private void DrawTextCenteredInRect(SKRect rect, string text)
         {
             if (string.IsNullOrEmpty(text))
                 return;
 
             //var width = _paint.MeasureText(text);
             //var height = _paint.TextSize;*/
-
-            // work with a copy so we don't change the source PositionInfo
-            var skPoint = new SKPoint(position.X + position.Width / 2, position.Y + position.Height / 2);
-
-            _canvas.DrawText(text, skPoint.X, skPoint.Y, _paint);
+            _canvas.DrawText(text, rect.MidX, rect.MidY, _paint);
         }
 
-        private void DrawText(Position positionInfo, string text)
-        {
-            if (string.IsNullOrEmpty(text))
-                return;
+        //private void DrawText(Position positionInfo, string text)
+        //{
+        //    if (string.IsNullOrEmpty(text))
+        //        return;
 
-            _canvas.DrawText(text, positionInfo.X, positionInfo.Y, _paint);
-        }
+        //    _canvas.DrawText(text, positionInfo.X, positionInfo.Y, _paint);
+        //}
 
-        private void DrawRect(Position positionInfo)
-        {
-            _canvas.DrawRect(GetSKRectFrom(positionInfo), _paint);
-        }
-
-        private SKRect GetSKRectFrom(Position positionInfo)
-        {
-            return new SKRect(positionInfo.X, positionInfo.Y, positionInfo.Width + positionInfo.X, positionInfo.Height + positionInfo.Y);
-        }
-
-        private bool disposedValue = false; // To detect redundant calls
+        //private bool disposedValue = false; // To detect redundant calls
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposedValue)
+            if (!_isDisposed)
             {
                 if (disposing)
                 {
@@ -148,7 +142,7 @@ namespace Medja.OpenTk.Rendering
                 // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
                 // TODO: set large fields to null.
 
-                disposedValue = true;
+                _isDisposed = true;
             }
         }
 

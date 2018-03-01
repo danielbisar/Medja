@@ -14,7 +14,7 @@ namespace Medja.OpenTk
 
             GameWindow.Resize += OnGameWindowResize;
 
-            PropertyTitle.PropertyChanged += p => GameWindow.Title = Title;
+            TitleProperty.PropertyChanged += p => GameWindow.Title = Title;
             Position.PropertyX.PropertyChanged += p => GameWindow.X = (int)Position.X;
             Position.PropertyY.PropertyChanged += p => GameWindow.Y = (int)Position.Y;
             Position.PropertyWidth.PropertyChanged += p => GameWindow.Width = (int)Position.Width;

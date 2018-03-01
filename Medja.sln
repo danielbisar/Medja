@@ -11,14 +11,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Medja.OpenTk", "Medja.OpenT
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Medja.Test", "Medja.Test\Medja.Test.csproj", "{9601D220-5121-4EB9-8A74-22605C6C6E7C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Medja.Html", "Medja.Html\Medja.Html.csproj", "{4C5A30B1-FAA6-46C7-B783-D504BA89820C}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9AE726CC-C4B9-45E6-997F-CDBA38668222}"
 	ProjectSection(SolutionItems) = preProject
 		Licenses.md = Licenses.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SensorFrontend", "SensorFrontend\SensorFrontend.csproj", "{641577D3-DF36-4D06-A3A3-69940EB80860}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SensorFrontend", "SensorFrontend\SensorFrontend.csproj", "{641577D3-DF36-4D06-A3A3-69940EB80860}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,10 +40,6 @@ Global
 		{9601D220-5121-4EB9-8A74-22605C6C6E7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9601D220-5121-4EB9-8A74-22605C6C6E7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9601D220-5121-4EB9-8A74-22605C6C6E7C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4C5A30B1-FAA6-46C7-B783-D504BA89820C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4C5A30B1-FAA6-46C7-B783-D504BA89820C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4C5A30B1-FAA6-46C7-B783-D504BA89820C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4C5A30B1-FAA6-46C7-B783-D504BA89820C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{641577D3-DF36-4D06-A3A3-69940EB80860}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{641577D3-DF36-4D06-A3A3-69940EB80860}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{641577D3-DF36-4D06-A3A3-69940EB80860}.Release|Any CPU.ActiveCfg = Release|Any CPU

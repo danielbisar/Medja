@@ -4,12 +4,12 @@ using Medja.Primitives;
 
 namespace Medja.Controls
 {
-    public class VerticalStackLayout : LayoutControl
+    public class VerticalStackPanel : Panel
     {        
         public float SpaceBetweenChildren { get; set; }
         public float ChildrenHeight { get; set; }
 
-        public VerticalStackLayout()
+        public VerticalStackPanel()
         {
             SpaceBetweenChildren = 10;
             ChildrenHeight = 50; // todo could be calculated on the fly, currently we set it

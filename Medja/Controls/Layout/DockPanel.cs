@@ -1,22 +1,26 @@
 ﻿using System;
+using System.Collections.Generic;
 using Medja.Controls;
 using Medja.Primitives;
 using Medja.Property;
 
 namespace Medja.Controls
 {
-    public class DockLayout : LayoutControl
+    public class DockPanel : Panel
     {
-        private static int DockAttachedId = AttachedProperties.GetNextId();
+        private Dictionary<Control, Dock> _docks;
 
-        public DockLayout()
+        public DockPanel()
         {
+            _docks = new Dictionary<Control, Dock>();
         }
 
         public void Add(Control control, Dock dock)
         {
-            control.SetAttachedProperty(DockAttachedId, dock);
+            _docks.Add(control, dock);
             Children.Add(control);
+
+            // TODO handle remove of child: remove dock info also, else memory leak
         }
 
         internal override Size Measure(Size availableSize)
@@ -28,11 +32,7 @@ namespace Medja.Controls
         {
             foreach (var child in Children)
             {
-                var dock = (Dock?)child.GetAttachedProperty(DockAttachedId);
-
-                if (dock == null)
-                    dock = Dock.Top;
-
+                var dock = _docks[child];
                 var childPos = child.Position;
 
                 switch (dock)

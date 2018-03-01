@@ -16,9 +16,9 @@ namespace Medja
     public class MainWindow : GameWindow
     {
         private readonly MenuController _menuController;
-        private readonly Workflow _workflow;
-        private readonly ControlState _rootControl;
-        private readonly ControlState _stack;
+        //private readonly Workflow _workflow;
+        //private readonly ControlState _rootControl;
+        //private readonly ControlState _stack;
 
         public MainWindow()
         {
@@ -31,65 +31,65 @@ namespace Medja
             //_workflow.AddRenderLayer(new OpenTkRenderLayer());
             //_workflow.SetRenderTargetSize(new Primitives.Size(Width, Height));
 
-            _menuController = new MenuController();            
+            //_menuController = new MenuController();            
 
-            var dockPanel = new DockLayout();
-            _rootControl = _workflow.AddControl(dockPanel);
+            //var dockPanel = new DockLayout();
+            //_rootControl = _workflow.AddControl(dockPanel);
 
-            _rootControl.Position = new Position
-            {
-                X = 0,
-                Y = 0,
-                Width = Width, // todo could be update via binding, currently we do it manually (see below - resize)
-                Height = Height
-            };
+            //_rootControl.Position = new Position
+            //{
+            //    X = 0,
+            //    Y = 0,
+            //    Width = Width, // todo could be update via binding, currently we do it manually (see below - resize)
+            //    Height = Height
+            //};
             
-            var stackLayout = new VerticalStackLayout();
-            _stack = _workflow.AddControl(stackLayout);
+            //var stackLayout = new VerticalStackLayout();
+            //_stack = _workflow.AddControl(stackLayout);
 
-            dockPanel.Add(_stack, Dock.Right);
+            //dockPanel.Add(_stack, Dock.Right);
 
-            _stack.Position = new Position
-            {                
-                Width = 150,
-            };
+            //_stack.Position = new Position
+            //{                
+            //    Width = 150,
+            //};
 
-            CreateMenu();
+            //CreateMenu();
         }
 
-        private void CreateMenu()
-        {
-            var mainMenu = new OpenTk.Eval.Menu("MainMenu");
-            mainMenu.Items.Add(new MenuEntry("Settings"));
-            mainMenu.Items.Add(new MenuEntry("Quit"));
+        //private void CreateMenu()
+        //{
+        //    var mainMenu = new OpenTk.Eval.Menu("MainMenu");
+        //    mainMenu.Items.Add(new MenuEntry("Settings"));
+        //    mainMenu.Items.Add(new MenuEntry("Quit"));
 
-            var settingsMenu = new OpenTk.Eval.Menu("Settings");
-            settingsMenu.Items.Add(new MenuEntry("< Back")); // , mainMenu.BackCommand
-            settingsMenu.Items.Add(new MenuEntry("Enable Option 1")); // TODO toggle, databinding or just via click?
-            settingsMenu.Items.Add(new MenuEntry("Option 2"));
+        //    var settingsMenu = new OpenTk.Eval.Menu("Settings");
+        //    settingsMenu.Items.Add(new MenuEntry("< Back")); // , mainMenu.BackCommand
+        //    settingsMenu.Items.Add(new MenuEntry("Enable Option 1")); // TODO toggle, databinding or just via click?
+        //    settingsMenu.Items.Add(new MenuEntry("Option 2"));
                         
-            _menuController.PropertyCurrentMenu.PropertyChanged += p => 
-            {
-                var verticalStackLayout = (VerticalStackLayout)_stack.Control;
+        //    _menuController.PropertyCurrentMenu.PropertyChanged += p => 
+        //    {
+        //        var verticalStackLayout = (VerticalStackLayout)_stack.Control;
 
-                foreach (var child in verticalStackLayout.Children)
-                    _workflow.RemoveControl(child);
+        //        foreach (var child in verticalStackLayout.Children)
+        //            _workflow.RemoveControl(child);
 
-                verticalStackLayout.Children.Clear();
+        //        verticalStackLayout.Children.Clear();
 
-                foreach (var menuEntry in _menuController.CurrentMenu.Items)
-                {
-                    var controlState = _workflow.AddControl(new Button() { Text = menuEntry.Text });
+        //        foreach (var menuEntry in _menuController.CurrentMenu.Items)
+        //        {
+        //            var controlState = _workflow.AddControl(new Button() { Text = menuEntry.Text });
 
-                    // TODO remove memory leak; implement the call for Command inside the button
-                    controlState.InputState.MouseClicked += (s, e) => { _menuController.NavigateTo("Settings"); };
-                    verticalStackLayout.Children.Add(controlState);
-                }
-            };
+        //            // TODO remove memory leak; implement the call for Command inside the button
+        //            controlState.InputState.MouseClicked += (s, e) => { _menuController.NavigateTo("Settings"); };
+        //            verticalStackLayout.Children.Add(controlState);
+        //        }
+        //    };
 
-            _menuController.Add(mainMenu);
-            _menuController.Add(settingsMenu);
-        }
+        //    _menuController.Add(mainMenu);
+        //    _menuController.Add(settingsMenu);
+        //}
         
 
         protected override void OnLoad(EventArgs e)
@@ -126,26 +126,26 @@ namespace Medja
 
             //GL.Viewport(0, 0, ClientRectangle.Width, ClientRectangle.Height);
             //_workflow.SetRenderTargetSize(new Primitives.Size(ClientRectangle.Width, ClientRectangle.Height));
-            _rootControl.Position.Width = ClientRectangle.Width;
-            _rootControl.Position.Height = ClientRectangle.Height;
+            //_rootControl.Position.Width = ClientRectangle.Width;
+            //_rootControl.Position.Height = ClientRectangle.Height;
         }
 
         protected override void OnMouseMove(MouseMoveEventArgs e)
         {
             base.OnMouseMove(e);
-            _workflow.UpdateInput(GetInputDeviceState(e));
+            //_workflow.UpdateInput(GetInputDeviceState(e));
         }
 
         protected override void OnMouseDown(MouseButtonEventArgs e)
         {
             base.OnMouseDown(e);
-            _workflow.UpdateInput(GetInputDeviceState(e));
+            //_workflow.UpdateInput(GetInputDeviceState(e));
         }
 
         protected override void OnMouseUp(MouseButtonEventArgs e)
         {
             base.OnMouseUp(e);
-            _workflow.UpdateInput(GetInputDeviceState(e));
+            //_workflow.UpdateInput(GetInputDeviceState(e));
         }
 
         private InputDeviceState GetInputDeviceState(MouseEventArgs e)
@@ -160,13 +160,13 @@ namespace Medja
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
             base.OnUpdateFrame(e);
-            _workflow.Update();
+            //_workflow.Update();
         }
 
         protected override void OnRenderFrame(FrameEventArgs e)
         {
             base.OnRenderFrame(e);            
-            _workflow.Render();
+            //_workflow.Render();
             SwapBuffers();
         }
     }

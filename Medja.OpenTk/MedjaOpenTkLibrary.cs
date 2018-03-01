@@ -6,11 +6,22 @@ using OpenTK.Graphics.OpenGL;
 
 namespace Medja.OpenTk
 {
+    /// <summary>
+    /// Implements the connection between OpenTk and Medja.
+    /// </summary>
     public class MedjaOpenTkLibrary : IMedjaLibrary
     {
         private MedjaWindow _medjaWindow;
         private GameWindow _gameWindow;
+        private OpenTkRenderer _renderer;
+        
+        /// <inheritdoc />
+        public MedjaWindow CreateWindow()
+        {
+            return new OpenTkWindow();
+        }
 
+        /// <inheritdoc />
         public void Run(MedjaApplication application)
         {
             _medjaWindow = application.MainWindow;
@@ -39,12 +50,11 @@ namespace Medja.OpenTk
 
         private void OnRenderFrame(object sender, FrameEventArgs e)
         {
-            _renderer.Render(_medjaWindow.GetAllControls());
-        }
+            if(_renderer == null)
+                _renderer = new OpenTkRenderer(); // TODO cannot be initialized without the window, but should also not have the null check here every call, for now seems fine
 
-        public MedjaWindow CreateWindow()
-        {
-            return new OpenTkWindow();
+            var controls = _medjaWindow.GetAllControls();
+            _renderer.Render(controls);
         }
     }
 }
