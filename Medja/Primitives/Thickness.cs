@@ -11,6 +11,9 @@ namespace Medja.Primitives
         public float Left { get; set; }
         public float Right { get; set; }
 
+        public float TopAndBottom { get { return Top + Bottom; } }
+        public float LeftAndRight { get { return Left + Right; } }
+
         public Thickness()
             : this(0,0,0,0)
         {

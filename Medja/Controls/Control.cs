@@ -15,10 +15,18 @@ namespace Medja.Controls
 
         public MPosition Position { get; }
 
+        public Property<Color> BackgroundProperty { get; }
+        public Color Background
+        {
+            get { return BackgroundProperty.Get(); }
+            set { BackgroundProperty.Set(value); }
+        }
+
         public Control()
         {
             InputState = new InputState();
             Position = new MPosition();
+            BackgroundProperty = new Property<Color>();
         }
 
         public virtual void UpdateLayout()

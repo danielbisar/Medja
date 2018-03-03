@@ -1,6 +1,7 @@
 ﻿using System;
 using Medja.Controls;
 using Medja.OpenTk.Rendering;
+using Medja.Theming;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
@@ -14,7 +15,14 @@ namespace Medja.OpenTk
         private MedjaWindow _medjaWindow;
         private GameWindow _gameWindow;
         private OpenTkRenderer _renderer;
-        
+
+        public ControlFactory ControlFactory { get; }
+
+        public MedjaOpenTkLibrary()
+        {
+            ControlFactory = new DefaultTheme();
+        }
+
         /// <inheritdoc />
         public MedjaWindow CreateWindow()
         {

@@ -43,18 +43,17 @@ namespace Medja.Controls
                     case Dock.Left:
                         break;
                     case Dock.Right:
-                        childPos.X = targetSize.Width - child.Position.Width;
+                        childPos.X = targetSize.Width - childPos.Width;
                         childPos.Y = Position.Y;
                         childPos.Height = targetSize.Height; // TODO later calculate the left over space
-
-                        // TODO this is fake
-                        child.Arrange(targetSize);
                         break;
                     case Dock.Bottom:
                         break;
                     default:
                         throw new ArgumentOutOfRangeException("Dock");
                 }
+
+                child.Arrange(new Size(childPos.Width, childPos.Height));
             }
         }        
     }

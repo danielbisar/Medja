@@ -41,10 +41,11 @@ namespace Medja.Controls
         {
             var spacingY = SpaceBetweenChildren;
             var count = Children.Count;
-            var childAvailableSize = new Size(targetSize.Width, (targetSize.Height - spacingY * (count - 1)) / count);
+            var childAvailableSize = new Size(targetSize.Width - Padding.LeftAndRight, 
+                                              ((targetSize.Height - Padding.TopAndBottom) - spacingY * (count - 1)) / count);
 
-            var curX = Position.X;
-            var curY = Position.Y;
+            var curX = Position.X + Padding.Left;
+            var curY = Position.Y + Padding.Top;
 
             Control child;
 

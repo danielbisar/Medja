@@ -9,6 +9,8 @@ namespace Medja
     {
         MedjaWindow CreateWindow();
 
+        ControlFactory ControlFactory { get; }
+
         void Run(MedjaApplication application);        
     }
 }

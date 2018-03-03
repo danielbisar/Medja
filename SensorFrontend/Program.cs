@@ -8,13 +8,16 @@ namespace SensorFrontend
     {
         public static void Main(string[] args)
         {
-            var app = MedjaApplication.Create(new MedjaOpenTkLibrary());
-            app.MainWindow = SetupWindow(app.CreateWindow());
+            var lib = new MedjaOpenTkLibrary();
+            var app = MedjaApplication.Create(lib);
+            app.MainWindow = SetupWindow(app.CreateWindow(), lib);
             app.Run();
         }
 
-        private static MedjaWindow SetupWindow(MedjaWindow window)
+        private static MedjaWindow SetupWindow(MedjaWindow window, IMedjaLibrary library)
         {
+            var factory = library.ControlFactory;
+
             var position = window.Position;
             position.Width = 800;
             position.Height = 600;
@@ -22,11 +25,13 @@ namespace SensorFrontend
             window.Title = "SensorFrontend";
 
             var stackPanel = new VerticalStackPanel();
-            stackPanel.Position.Width = 100;
-            stackPanel.Children.Add(new Button());
-            stackPanel.Children.Add(new Button());
-            stackPanel.Children.Add(new Button());
-            stackPanel.Children.Add(new Button());
+            stackPanel.Padding = new Medja.Primitives.Thickness(10);
+            stackPanel.Position.Width = 170;
+            stackPanel.ChildrenHeight = 50;
+            stackPanel.Children.Add(factory.Create<Button>());
+            stackPanel.Children.Add(factory.Create<Button>());
+            stackPanel.Children.Add(factory.Create<Button>());
+            stackPanel.Children.Add(factory.Create<Button>());
 
             var dockPanel = new DockPanel();
             dockPanel.Add(stackPanel, Dock.Right);
