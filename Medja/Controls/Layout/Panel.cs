@@ -29,5 +29,13 @@ namespace Medja.Controls
                     yield return subControl;
             }
         }
+
+        internal override void UpdateAnimations()
+        {
+            base.UpdateAnimations();
+
+            foreach (var child in Children)
+                child.UpdateAnimations();
+        }
     }
 }

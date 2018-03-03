@@ -16,5 +16,10 @@ namespace Medja.Primitives
             Green = green;
             Blue = blue;
         }
+
+        public override string ToString()
+        {
+            return "Red = " + Red + ", Green = " + Green + ", Blue = " + Blue;
+        }
     }
 }

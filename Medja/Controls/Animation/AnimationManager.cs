@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Medja.Controls.Animation
@@ -9,31 +10,42 @@ namespace Medja.Controls.Animation
     /// </summary>
     public class AnimationManager
     {
-        private readonly Control _control;
-        private readonly HashSet<ControlAnimation> _animations;
+        private readonly List<ControlAnimation> _animations;
 
-        public AnimationManager(Control control)
+        public AnimationManager()
         {
-            _control = control ?? throw new ArgumentNullException(nameof(control));
-            _animations = new HashSet<ControlAnimation>();
+            _animations = new List<ControlAnimation>();
         }
 
         public void Start(ControlAnimation animation)
         {
-            _animations.Add(animation);
+            AddControlNewAnimation(animation);
             animation.Start();
         }
 
         public void Revert(ControlAnimation animation)
         {
-            _animations.Add(animation);
+            AddControlNewAnimation(animation);
             animation.Revert();
+        }
+
+        private void AddControlNewAnimation(ControlAnimation animation)
+        {
+            // TODO what happends with multiple animations on the same property?
+
+            // add is a little slower than with a hashset, but iteration faster
+            if (_animations.Contains(animation))
+                return;
+
+            _animations.Add(animation);
         }
 
         internal void ApplyAnimations()
         {
-            foreach (var animation in _animations)
+            foreach (var animation in _animations.Where(p => p.IsRunning))
                 animation.Apply();
+
+            _animations.RemoveAll(p => !p.IsRunning);
         }
     }
 }

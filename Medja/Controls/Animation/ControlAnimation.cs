@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace Medja.Controls.Animation
@@ -19,6 +20,12 @@ namespace Medja.Controls.Animation
 
         public bool IsReverting { get; protected set; }
 
+        /// <summary>
+        /// If set to true, after reaching the target value the animation reverts.
+        /// </summary>
+        public bool IsAutoRevert { get; set; }
+        public bool IsAutoRestart { get; set; }
+
         protected ControlAnimation()
         {
         }
@@ -31,7 +38,7 @@ namespace Medja.Controls.Animation
 
         protected long GetTicks()
         {
-            return Environment.TickCount;
+            return DateTime.UtcNow.Ticks;
         }
 
         internal virtual void Revert()
@@ -45,10 +52,25 @@ namespace Medja.Controls.Animation
         {
             IsRunningDuration = GetTicks() - _startTime;
             _precentage = (float)(IsRunningDuration / (double)Duration);
-            _precentage = Math.Max(_precentage, 1);
+            _precentage = Math.Min(_precentage, 1);
 
-            if (MedjaMath.AboutEquals(_precentage, 1))
-                Stop();
+            if (IsReverting)
+                _precentage = 1 - _precentage;
+
+            if (IsAtEnd(_precentage))
+            {
+                if (IsAutoRevert && !IsReverting)
+                    Revert();
+                else if (IsAutoRestart)
+                    Start();
+                else
+                    Stop();
+            }
+        }
+
+        private bool IsAtEnd(float percentage)
+        {
+            return IsReverting ? MedjaMath.AboutEquals(_precentage, 0) : MedjaMath.AboutEquals(_precentage, 1);
         }
 
         private void Stop()

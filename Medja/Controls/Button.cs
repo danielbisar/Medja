@@ -13,5 +13,10 @@
         {
             PropertyText = new Property<string>();
         }
+
+        public override string ToString()
+        {
+            return "Button: " + Text;
+        }
     }
 }

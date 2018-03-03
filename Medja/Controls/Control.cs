@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Medja.Controls.Animation;
 using Medja.Primitives;
 
 namespace Medja.Controls
@@ -10,6 +11,7 @@ namespace Medja.Controls
     /// </summary>
     public class Control : MObject
     {
+        public AnimationManager AnimationManager { get; }
         public Dictionary<int, object> AttachedProperties { get; set; }
         public InputState InputState { get; set; }
 
@@ -21,9 +23,10 @@ namespace Medja.Controls
             get { return BackgroundProperty.Get(); }
             set { BackgroundProperty.Set(value); }
         }
-
+        
         public Control()
         {
+            AnimationManager = new AnimationManager();
             InputState = new InputState();
             Position = new MPosition();
             BackgroundProperty = new Property<Color>();
@@ -32,6 +35,10 @@ namespace Medja.Controls
         public virtual void UpdateLayout()
         {
             Debug.WriteLine("Control.UpdateLayout of " + GetType().FullName);
+            UpdateAnimations();
+
+            var result = Measure(new Size(Position.Width, Position.Height));
+            Arrange(result);
         }
 
         internal virtual Size Measure(Size availableSize)
@@ -62,6 +69,11 @@ namespace Medja.Controls
         public virtual IEnumerable<Control> GetAllControls()
         {
             yield return this;
+        }
+
+        internal virtual void UpdateAnimations()
+        {
+            AnimationManager.ApplyAnimations();
         }
     }
 }

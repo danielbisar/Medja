@@ -17,17 +17,6 @@ namespace Medja.Controls
             PropertyContent = new Property<Control>();
         }
 
-        public override void UpdateLayout()
-        {
-            base.UpdateLayout();
-
-            if (Content == null)
-                return;
-
-            var result = Content.Measure(new Size(Position.Width, Position.Height));
-            Content.Arrange(result);
-        }
-
         internal override Size Measure(Size availableSize)
         {
             if (Content == null)
@@ -40,10 +29,8 @@ namespace Medja.Controls
         {
             base.Arrange(availableSize);
 
-            if (Content == null)
-                return;
-
-            Content.Arrange(availableSize);
+            if (Content != null)
+                Content.Arrange(availableSize);
         }
 
         public override IEnumerable<Control> GetAllControls()
@@ -52,6 +39,14 @@ namespace Medja.Controls
 
             foreach (var control in Content.GetAllControls())
                 yield return control;
+        }
+
+        internal override void UpdateAnimations()
+        {
+            base.UpdateAnimations();
+
+            if (Content != null)
+                Content.UpdateAnimations();
         }
     }
 }
