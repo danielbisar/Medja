@@ -15,6 +15,7 @@ namespace Medja.OpenTk
         private MedjaWindow _medjaWindow;
         private GameWindow _gameWindow;
         private OpenTkRenderer _renderer;
+        private OpenTkMouseHandler _mouseHandler;
 
         public ControlFactory ControlFactory { get; }
 
@@ -40,6 +41,8 @@ namespace Medja.OpenTk
                 _gameWindow.Resize += OnResize;
                 _gameWindow.UpdateFrame += OnUpdateFrame;
                 _gameWindow.RenderFrame += OnRenderFrame;
+
+                _mouseHandler = new OpenTkMouseHandler(_medjaWindow, _gameWindow);
 
                 _gameWindow.Run(1 / 30.0);
             }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using Medja.Controls.Animation;
 using Medja.Primitives;
@@ -13,7 +12,7 @@ namespace Medja.Controls
     {
         public AnimationManager AnimationManager { get; }
         public Dictionary<int, object> AttachedProperties { get; set; }
-        public InputState InputState { get; set; }
+        public InputState InputState { get; }
 
         public MPosition Position { get; }
 
@@ -34,7 +33,7 @@ namespace Medja.Controls
 
         public virtual void UpdateLayout()
         {
-            Debug.WriteLine("Control.UpdateLayout of " + GetType().FullName);
+            //Debug.WriteLine("Control.UpdateLayout of " + GetType().FullName);
             UpdateAnimations();
 
             var result = Measure(new Size(Position.Width, Position.Height));
@@ -43,13 +42,13 @@ namespace Medja.Controls
 
         internal virtual Size Measure(Size availableSize)
         {
-            Debug.WriteLine("Control.Measure of " + GetType().FullName);
+            //Debug.WriteLine("Control.Measure of " + GetType().FullName);
             return availableSize;
         }
 
         internal virtual void Arrange(Size availableSize)
         {
-            Debug.WriteLine("Control.Arrange of " + GetType().FullName);
+            //Debug.WriteLine("Control.Arrange of " + GetType().FullName);
             // TODO update position info
         }
 

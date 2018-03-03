@@ -18,6 +18,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SensorFrontend", "SensorFrontend\SensorFrontend.csproj", "{641577D3-DF36-4D06-A3A3-69940EB80860}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CodeSnippets", "CodeSnippets", "{AF615420-92B6-4499-9B2E-747990CB59C6}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\Documents\Visual Studio 2017\Code Snippets\Visual C#\My Code Snippets\MedjaProperty.snippet = ..\..\..\Documents\Visual Studio 2017\Code Snippets\Visual C#\My Code Snippets\MedjaProperty.snippet
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +52,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{AF615420-92B6-4499-9B2E-747990CB59C6} = {9AE726CC-C4B9-45E6-997F-CDBA38668222}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C850011B-C019-4712-A4BD-05D1429E9DC6}

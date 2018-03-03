@@ -53,11 +53,13 @@ public class MyClass
 		// known are:
 		// str - just for variable names, int, bool
 		// rect for rectangle
+		// e for eventargs
+		// p for default parameter in lambda expressions
 
 		// else write out names!
 	}
 
-	// method names CamelCase, always provide access modifier
+	// method names PascalCase, always provide access modifier
 	// use string not String, use bool not Boolean, use int not Int32 and so on
 
 	/// <...>Use documentation headers for public methods<...>

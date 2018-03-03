@@ -8,8 +8,6 @@ using OpenTK;
 // target another platform
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
-using Medja.Controls;
-using Medja.Input;
 
 namespace Medja
 {
@@ -130,32 +128,7 @@ namespace Medja
             //_rootControl.Position.Height = ClientRectangle.Height;
         }
 
-        protected override void OnMouseMove(MouseMoveEventArgs e)
-        {
-            base.OnMouseMove(e);
-            //_workflow.UpdateInput(GetInputDeviceState(e));
-        }
-
-        protected override void OnMouseDown(MouseButtonEventArgs e)
-        {
-            base.OnMouseDown(e);
-            //_workflow.UpdateInput(GetInputDeviceState(e));
-        }
-
-        protected override void OnMouseUp(MouseButtonEventArgs e)
-        {
-            base.OnMouseUp(e);
-            //_workflow.UpdateInput(GetInputDeviceState(e));
-        }
-
-        private InputDeviceState GetInputDeviceState(MouseEventArgs e)
-        {
-            return new InputDeviceState
-            {
-                Pos = new Primitives.Point(e.X, e.Y),
-                LeftButtonDown = e.Mouse.LeftButton == ButtonState.Pressed
-            };
-        }
+        
 
         protected override void OnUpdateFrame(FrameEventArgs e)
         {

@@ -68,8 +68,8 @@ namespace Medja.OpenTk.Rendering
 
         private void Render(Control control)
         {
-            Debug.WriteLine("Render called for: " + control);
-            Debug.WriteLine("Position: " + control.Position);
+            //Debug.WriteLine("Render called for: " + control);
+            //Debug.WriteLine("Position: " + control.Position);
 
             if (control is Button b)
             {

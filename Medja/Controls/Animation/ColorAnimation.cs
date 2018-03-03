@@ -13,6 +13,12 @@ namespace Medja.Controls.Animation
         private readonly Color _toColor;
         private readonly Color _diffColor;
 
+        public ColorAnimation(Property<Color> colorProperty, Color toColor, long duration)
+            : this(colorProperty, colorProperty.Get(), toColor, duration)
+        {
+
+        }
+
         public ColorAnimation(Property<Color> colorProperty, Color fromColor, Color toColor, long duration)
         {
             _colorProperty = colorProperty;
@@ -31,8 +37,6 @@ namespace Medja.Controls.Animation
         {
             base.Apply();
             _colorProperty.Set(GetCurrentColor());
-
-            Debug.WriteLine("ColorAnimation: " + _colorProperty.Get());
         }
 
         private Color GetCurrentColor()
