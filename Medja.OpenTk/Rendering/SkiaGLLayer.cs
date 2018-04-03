@@ -46,7 +46,7 @@ namespace Medja.OpenTk.Rendering
                 Width = bufferWidth,
                 Height = bufferHeight,
                 Config = GRPixelConfig.Bgra8888,
-                Origin = GRSurfaceOrigin.TopLeft,
+                Origin = GRSurfaceOrigin.BottomLeft,
                 SampleCount = samples,
                 StencilBits = stencil,
                 RenderTargetHandle = (IntPtr)framebuffer,

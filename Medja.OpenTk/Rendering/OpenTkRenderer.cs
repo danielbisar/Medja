@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Drawing;
 using Medja.Controls;
-using OpenTK;
 using SkiaSharp;
 
 namespace Medja.OpenTk.Rendering
