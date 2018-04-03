@@ -71,3 +71,45 @@ How do we know if an object needs to be rendered again?
 # Language for designer
 - easy to use for users without designer (xml, json?, others)
 - allow perprocessor directives (debug only/release only/etc)
+
+
+
+
+
+
+
+
+
+
+
+- startup performance vs runtime performance
+  - project fd: startup performance does not have to be so high, if runtime performance is
+  - lazy loading (just load what you need) can add significant 
+complexity 
+
+Ideal case:
+
+- All needed data is loaded on startup.
+- Rendering renders what is visible
+- Input handling handles what is visible
+- hidden items are not rendered/handled -> visibility property vs screen clipping
+- menu structure could be loaded on the fly, but also just when needed (different ways of implementing: xml, code, ...)
+- Rendering complexity
+	keep the ui simple but still intuitive and nice
+	test: f.e. button: bitmap vs flat rectangle with color changes
+	text-rendering
+		-> size of text, font loading, nice appearance
+- input device handling optimization 
+	for touch no mouse over is needed, just press, release, click, double click
+	-> exception zoom (two finger action)
+- rendering of graph
+	- just process data that can be seen, it doesn't make sense to render 1.0 mil points if you will not be able to distinguish them on the screen at all
+
+- multithreading: how much cores do we have? expected 4
+- 1 for ui handling (can we use multiple for that?)
+- 3 for other things like: backend (data reading), filtering (fft, howmuch to display, others?), data processing: triggers
+- what about ipc (serialization performance, transfer performance)
+
+
+https://stackoverflow.com/questions/38682886/netmq-vs-clrzmq
+http://blog.scottlogic.com/2015/03/20/ZeroMQ-Quick-Intro.html

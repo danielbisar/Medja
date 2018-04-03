@@ -21,10 +21,10 @@ namespace MedjaTest
 
             //Console.ReadLine();
 
-            using (var wnd = new MainWindow())
-            {
-                wnd.Run(1 / 30.0);
-            }
+            //using (var wnd = new MainWindow())
+            //{
+            //    wnd.Run(1 / 30.0);
+            //}
         }
 
         private static void ExecuteCreationOnlyTest(Func<MTestObject> testObjFactory)

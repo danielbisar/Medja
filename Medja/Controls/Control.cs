@@ -1,66 +1,78 @@
-﻿using System;
-using Medja.Layers.Layouting;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
+using Medja.Controls.Animation;
+using Medja.Primitives;
 
 namespace Medja.Controls
 {
     /// <summary>
     /// Any control should inherit from this class.
     /// </summary>
-    /// <remarks>
-    /// 
-    /// ? Background/Foreground colors should be designed via renderers?
-    /// 
-    /// </remarks>
     public class Control : MObject
     {
-        public PositionInfo PositionInfo { get; set; }
+        public AnimationManager AnimationManager { get; }
+        public Dictionary<int, object> AttachedProperties { get; set; }
+        public InputState InputState { get; }
 
-        public float MinWidth { get; set; }
-        public float Width { get; set; }
-        public float MaxWidth { get; set; }
-        public float ActualWidth { get; set; }
+        public MPosition Position { get; }
 
-        public float MinHeight { get; set; }
-        public float Height { get; set; }
-        public float MaxHeight { get; set; }
-        public float ActualHeight { get; set; }
-
-        public Thickness Margin { get; set; }
-
+        public Property<Color> BackgroundProperty { get; }
+        public Color Background
+        {
+            get { return BackgroundProperty.Get(); }
+            set { BackgroundProperty.Set(value); }
+        }
+        
         public Control()
         {
+            AnimationManager = new AnimationManager();
+            InputState = new InputState();
+            Position = new MPosition();
+            BackgroundProperty = new Property<Color>();
         }
 
-        public virtual Size Measure(Size availableSize)
+        public virtual void UpdateLayout()
         {
-            var width = Math.Max(MinWidth, availableSize.Width);
-            width = Math.Min(width, MaxWidth);
+            //Debug.WriteLine("Control.UpdateLayout of " + GetType().FullName);
+            UpdateAnimations();
 
-            var height = Math.Max(MinHeight, availableSize.Height);
-            height = Math.Min(height, MaxHeight);
-
-            return new Size(width, height);
-        }        
-
-        protected virtual void Arrange(PositionInfo position)
-        {
-            PositionInfo = new PositionInfo
-            {
-                X = position.X,
-                Y = position.Y,
-                Width = position.Width,
-                Height = position.Height
-            };
+            var result = Measure(new Size(Position.Width, Position.Height));
+            Arrange(result);
         }
 
-        public void Layout()
+        internal virtual Size Measure(Size availableSize)
         {
-            var size = Measure(new Size(float.PositiveInfinity, float.PositiveInfinity));
-            Arrange(new PositionInfo
-            {
-                Width = size.Width,
-                Height = size.Height
-            });
+            //Debug.WriteLine("Control.Measure of " + GetType().FullName);
+            return availableSize;
+        }
+
+        internal virtual void Arrange(Size availableSize)
+        {
+            //Debug.WriteLine("Control.Arrange of " + GetType().FullName);
+            // TODO update position info
+        }
+
+        public void SetAttachedProperty(int id, object value)
+        {
+            AttachedProperties[id] = value;
+        }
+
+        public object GetAttachedProperty(int id)
+        {
+            if (AttachedProperties.TryGetValue(id, out var result))
+                return result;
+
+            return null;
+        }
+
+        public virtual IEnumerable<Control> GetAllControls()
+        {
+            yield return this;
+        }
+
+        internal virtual void UpdateAnimations()
+        {
+            AnimationManager.ApplyAnimations();
         }
     }
 }
