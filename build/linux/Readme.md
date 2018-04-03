@@ -6,7 +6,7 @@ Use setup_system.sh to setup your system for building.
 # Build
 from root folder of the repo
 
-CURRENTLY NOT WORKING
+CURRENTLY WORKING PARTLY even though you get an error message
 
 nuget restore
 msbuild /t:Rebuild /p:Configuration=Release Medja.sln
