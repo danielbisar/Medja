@@ -14,12 +14,7 @@ msbuild /t:Rebuild /p:Configuration=Release Medja.sln
 
 # Install mono
 
-Install the latest stable version of mono-complete which is much higher than what ubuntu offers directly. Official for the used package 16.04, tested with 17.10.
-
-http://www.mono-project.com/download/stable/#download-lin
-http://fsharp.org/use/linux/
-
-FSharp is required by opentk.
+https://baruchcodes.visualstudio.com/Medja/_wiki/wikis/Medja.wiki?wikiVersion=GBwikiMaster&pagePath=%2FLinux%20development%20environment
 
 # Native libs for linux
 

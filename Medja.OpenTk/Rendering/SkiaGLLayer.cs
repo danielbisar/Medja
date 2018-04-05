@@ -1,6 +1,8 @@
 ﻿using System;
 using SkiaSharp;
 using OpenTK.Graphics.OpenGL;
+using System.Runtime.InteropServices;
+using System.Reflection;
 
 namespace Medja.OpenTk.Rendering
 {
@@ -11,8 +13,7 @@ namespace Medja.OpenTk.Rendering
 
         public SkiaGLLayer()
         {
-            var glInterface = GRGlInterface.CreateNativeGlInterface();
-            _grContext = GRContext.Create(GRBackend.OpenGL, glInterface);
+            _grContext = GRContext.Create(GRBackend.OpenGL);
             _renderTarget = CreateRenderTarget();
         }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using Medja.Controls;
 using SkiaSharp;
+using OpenTK.Graphics.OpenGL;
 
 namespace Medja.OpenTk.Rendering
 {
