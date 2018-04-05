@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using Medja;
 using Medja.Controls;
 using Medja.OpenTk;
@@ -33,12 +32,16 @@ namespace SensorFrontend
 
             stackPanel.Children.Add(factory.Create<Button>(p =>
             {
-                p.Text = "1";
+                p.Text = "Settings";
                 p.InputState.MouseClicked += (s, e) => Debug.WriteLine("asd");
             }));
             stackPanel.Children.Add(factory.Create<Button>(p => p.Text = "2"));
             stackPanel.Children.Add(factory.Create<Button>(p => p.Text = "3"));
-            stackPanel.Children.Add(factory.Create<Button>(p => p.Text = "4"));
+            stackPanel.Children.Add(factory.Create<Button>(p => 
+            {
+                p.Text = "Quit";
+                p.InputState.MouseClicked += (s, e) => window.Close();
+            }));
 
             var dockPanel = new DockPanel();
             dockPanel.Add(stackPanel, Dock.Right);

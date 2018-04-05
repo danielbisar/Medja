@@ -4,6 +4,8 @@ namespace Medja
 {
     public class InputState
     {
+        private bool _isClearing;
+
         public Property<bool> IsMouseOverProperty { get; }
         public bool IsMouseOver
         {
@@ -38,7 +40,7 @@ namespace Medja
 
         private void OnIsLeftMouseDownChanged(IProperty property)
         {
-            if (!IsLeftMouseDown && !IsDrag)
+            if (!_isClearing && !IsLeftMouseDown && !IsDrag)
                 NotifyClicked();
         }
 
@@ -55,9 +57,13 @@ namespace Medja
 
         public void Clear()
         {
+            _isClearing = true;
+
             IsDrag = false;
             IsLeftMouseDown = false;
             IsMouseOver = false;
+
+            _isClearing = false;
         }
     }
 }

@@ -41,10 +41,20 @@ namespace Medja.OpenTk
                 _gameWindow.Resize += OnResize;
                 _gameWindow.UpdateFrame += OnUpdateFrame;
                 _gameWindow.RenderFrame += OnRenderFrame;
+                _gameWindow.Closed += OnWindowClosed;
 
                 _mouseHandler = new OpenTkMouseHandler(_medjaWindow, _gameWindow);
 
                 _gameWindow.Run(1 / 30.0);
+            }
+        }
+
+        private void OnWindowClosed(object sender, EventArgs e)
+        {
+            if (_renderer != null)
+            {
+                _renderer.Dispose();
+                _renderer = null;
             }
         }
 

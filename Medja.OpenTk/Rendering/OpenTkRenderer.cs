@@ -46,6 +46,7 @@ namespace Medja.OpenTk.Rendering
             }
 
             _canvas.Flush();
+            _canvas.Dispose();
             _paint.Dispose();
             _surface.Dispose();
 
@@ -67,9 +68,6 @@ namespace Medja.OpenTk.Rendering
 
         private void Render(Control control)
         {
-            //Debug.WriteLine("Render called for: " + control);
-            //Debug.WriteLine("Position: " + control.Position);
-
             if (control is Button b)
             {
                 var position = control.Position;
@@ -107,21 +105,12 @@ namespace Medja.OpenTk.Rendering
             if (string.IsNullOrEmpty(text))
                 return;
 
-            //var width = _paint.MeasureText(text);
-            //var height = _paint.TextSize;*/
-            _canvas.DrawText(text, rect.MidX, rect.MidY, _paint);
+            var width = _paint.MeasureText(text);
+            var height = _paint.TextSize;
+
+            _canvas.DrawText(text, rect.MidX - width / 2, rect.MidY + height / 2, _paint);
         }
-
-        //private void DrawText(Position positionInfo, string text)
-        //{
-        //    if (string.IsNullOrEmpty(text))
-        //        return;
-
-        //    _canvas.DrawText(text, positionInfo.X, positionInfo.Y, _paint);
-        //}
-
-        //private bool disposedValue = false; // To detect redundant calls
-
+        
         protected virtual void Dispose(bool disposing)
         {
             if (!_isDisposed)

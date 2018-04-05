@@ -21,6 +21,19 @@ http://fsharp.org/use/linux/
 
 FSharp is required by opentk.
 
+# Native libs for linux
+
+Downloaded from https://github.com/mono/SkiaSharp/releases
+Must match the used NuGet Package Version.
+
+Must currently be placed at the top level of the project, else they will be in a subfolder in the build directory.
+
+
+
+
+# currently not needed anymore
+-------------------------------
+
 # Build opentk
 
 If the scripts fails during execution you can continue by 
