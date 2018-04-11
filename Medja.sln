@@ -28,8 +28,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "windows", "windows", "{A4DE
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libs", "libs", "{11568008-1630-4859-A5F0-3DB571CD8C39}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ZeroMq", "ZeroMq", "{426E7D6E-3730-4554-9855-E0C47334DA91}"
 	ProjectSection(SolutionItems) = preProject
-		libs\zeromq.md = libs\zeromq.md
+		libs\ZeroMQ\zeromq.md = libs\ZeroMQ\zeromq.md
 	EndProjectSection
 EndProject
 Global
@@ -59,6 +61,7 @@ Global
 		{0E153307-835B-4D1B-9D2A-F2C8B76D1148} = {8D973690-AC8D-4D1E-B219-EC5E7FBC29C9}
 		{A4DE192F-E2F0-423F-9FDF-9F5FAC1BA8F0} = {8D973690-AC8D-4D1E-B219-EC5E7FBC29C9}
 		{11568008-1630-4859-A5F0-3DB571CD8C39} = {5F6B5F4A-F5F1-4844-9FD3-153DA6C2CC96}
+		{426E7D6E-3730-4554-9855-E0C47334DA91} = {11568008-1630-4859-A5F0-3DB571CD8C39}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4D03B243-CA6E-48EC-B91B-5EC47AFF07B0}

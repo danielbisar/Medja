@@ -2,6 +2,7 @@
 using Medja;
 using Medja.Controls;
 using Medja.OpenTk;
+using SensorFrontend.IPC;
 
 namespace SensorFrontend
 {
@@ -9,6 +10,14 @@ namespace SensorFrontend
     {
         public static void Main(string[] args)
         {
+            using(var client = new Client())
+            {
+                //client.Send("BLA");
+                //client.SendAndReceive("Test1");
+            }
+
+            return;
+
             var lib = new MedjaOpenTkLibrary();
             var app = MedjaApplication.Create(lib);
             app.MainWindow = SetupWindow(app.CreateWindow(), lib);

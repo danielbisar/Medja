@@ -1,8 +1,10 @@
 # Ubuntu
 
+## example projects
+- zeromq-vsc: basic client server with request/reply pattern in c
+
 ## required software
 please add missing if you find some
-
 
 apt install build-essential autoconf libtool
 apt install cmake	# for cppzmq 
