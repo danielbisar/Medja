@@ -52,6 +52,7 @@
     <Compile Include="Controls\Button.cs" />
     <Compile Include="Controls\ContentControl.cs" />
     <Compile Include="Controls\Control.cs" />
+    <Compile Include="Controls\Control3D.cs" />
     <Compile Include="Controls\ControlFactory.cs" />
     <Compile Include="Controls\InputState.cs" />
     <Compile Include="Controls\Layout\Dock.cs" />

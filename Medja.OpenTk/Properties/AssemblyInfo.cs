@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Medja.OpenTk")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Medja rendering layer using OpenTK")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("SprintWorx GmbH")]
 [assembly: AssemblyProduct("Medja.OpenTk")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
