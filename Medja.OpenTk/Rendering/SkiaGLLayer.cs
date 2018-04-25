@@ -1,12 +1,10 @@
 ﻿using System;
 using SkiaSharp;
 using OpenTK.Graphics.OpenGL;
-using System.Runtime.InteropServices;
-using System.Reflection;
 
 namespace Medja.OpenTk.Rendering
 {
-    public class SkiaGLLayer : IDisposable
+	public class SkiaGLLayer : IDisposable
     {
         private GRContext _grContext;
         private GRBackendRenderTargetDesc _renderTarget;
@@ -35,13 +33,16 @@ namespace Medja.OpenTk.Rendering
 
         private GRBackendRenderTargetDesc CreateRenderTarget()
         {
-            GL.GetInteger(GetPName.FramebufferBinding, out int framebuffer);
-            GL.GetInteger(GetPName.StencilBits, out int stencil);
-            GL.GetInteger(GetPName.Samples, out int samples);
-
-            int bufferWidth = 0;
+			int frameBuffer;
+			int stencil;
+			int samples;
+			int bufferWidth = 0;
             int bufferHeight = 0;
 
+            GL.GetInteger(GetPName.FramebufferBinding, out frameBuffer);
+            GL.GetInteger(GetPName.StencilBits, out stencil);
+            GL.GetInteger(GetPName.Samples, out samples);
+                     
             return new GRBackendRenderTargetDesc
             {
                 Width = bufferWidth,
@@ -50,7 +51,7 @@ namespace Medja.OpenTk.Rendering
                 Origin = GRSurfaceOrigin.BottomLeft,
                 SampleCount = samples,
                 StencilBits = stencil,
-                RenderTargetHandle = (IntPtr)framebuffer,
+                RenderTargetHandle = (IntPtr)frameBuffer,
             };
         }        
     }

@@ -9,8 +9,6 @@ namespace Medja.OpenTk.Rendering
 {
     /// <summary>
     /// This class is the main entry point for the rendering of controls for OpenTk with Skia.
-    /// 
-    /// WORK IN PROGRESS!!!
     /// </summary>
     public class OpenTkRenderer : IDisposable
     {
