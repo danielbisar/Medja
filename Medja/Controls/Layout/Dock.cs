@@ -9,6 +9,11 @@ namespace Medja.Controls
         Top,
         Left,
         Right,
-        Bottom
+        Bottom,
+
+        /// <summary>
+        /// Fills the left-over area. This can be used only for the last control added to the DockPanel.
+        /// </summary>
+        Fill
     }
 }
