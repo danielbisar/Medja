@@ -31,6 +31,12 @@ namespace Medja.Controls
 
         internal override void Arrange(Size targetSize)
         {
+            var left = Position.X;
+            var top = Position.Y;
+
+            var height = targetSize.Height;
+            var width = targetSize.Width;
+
             foreach (var child in Children)
             {
                 var dock = _docks[child];
@@ -39,15 +45,44 @@ namespace Medja.Controls
                 switch (dock)
                 {
                     case Dock.Top:
+                        childPos.X = left;
+                        childPos.Y = top;
+                        childPos.Width = width;
+
+                        top += childPos.Height;
+                        height -= childPos.Height;
                         break;
                     case Dock.Left:
+                        childPos.X = left;
+                        childPos.Y = top;
+                        childPos.Height = height;
+
+                        left += childPos.Width;
+                        width -= childPos.Width;
                         break;
                     case Dock.Right:
-                        childPos.X = targetSize.Width - childPos.Width;
-                        childPos.Y = Position.Y;
-                        childPos.Height = targetSize.Height; // TODO later calculate the left over space
+                        childPos.X = width - childPos.Width;
+                        childPos.Y = top;
+                        childPos.Height = height;
+
+                        width -= childPos.Width;
                         break;
                     case Dock.Bottom:
+                        childPos.X = left;
+                        childPos.Y = height - childPos.Height;
+                        childPos.Width = width;
+
+                        height -= childPos.Height;
+                        break;
+                    case Dock.Fill:
+                        if (Children[Children.Count - 1] != child)
+                            throw new InvalidOperationException("Only the last child can be set to Dock.Fill");
+
+                        childPos.X = left;
+                        childPos.Y = top;
+                        childPos.Height = height;
+                        childPos.Width = width;
+
                         break;
                     default:
                         throw new ArgumentOutOfRangeException("Dock");
