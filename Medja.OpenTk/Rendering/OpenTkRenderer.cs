@@ -9,8 +9,6 @@ namespace Medja.OpenTk.Rendering
 {
     /// <summary>
     /// This class is the main entry point for the rendering of controls for OpenTk with Skia.
-    /// 
-    /// WORK IN PROGRESS!!!
     /// </summary>
     public class OpenTkRenderer : IDisposable
     {
@@ -32,16 +30,34 @@ namespace Medja.OpenTk.Rendering
 
         public void Render(IEnumerable<Control> controls)
         {
-            /* Done via Skia.Clear
-            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);*/
+            var controls3d = new List<Control3D>();
+            var controls2d = new List<Control>();
+
+            foreach(var control in controls)
+            {
+                if (control is Control3D control3d)
+                    controls3d.Add(control3d);
+                else
+                    controls2d.Add(control);
+            }
+
+            GL.ClearColor(Color.Black);
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             
+            GL.UseProgram(0);
+
+            foreach (var control3d in controls3d)
+                control3d.Render();
+            
+            //GL.PushClientAttrib(ClientAttribMask.ClientAllAttribBits);
+
             _surface = _skia.CreateSurface();
             _canvas = _surface.Canvas;
             _paint = GetDefaultPaint();
 
-            _canvas.Clear(SKColors.Gray);
+            //_canvas.Clear(SKColors.Gray);
 
-            foreach (var control in controls)
+            foreach (var control in controls2d)
             {
                 Render(control);
             }
@@ -51,20 +67,7 @@ namespace Medja.OpenTk.Rendering
             _paint.Dispose();
             _surface.Dispose();
 
-
-            // TODO for 3D
-            /*GL.UseProgram(0);
-            GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
-            GL.CullFace(CullFaceMode.Back);
-            GL.Enable(EnableCap.CullFace);*/
-                        
-            //GL.Rotate(2, 1, 1, 0);
-            //GL.Begin(BeginMode.LineLoop);
-            //GL.Vertex3(0, 0, 0);
-            //GL.Vertex3(0, 0.5, 0);
-            //GL.Vertex3(0.5, 0.5, 0.5);
-            //GL.Vertex3(0.5, 0, 0.5);
-            //GL.End();
+            //GL.PopClientAttrib();
         }
 
         private void Render(Control control)
