@@ -79,6 +79,7 @@ namespace Medja.OpenTk
             var controls = _medjaWindow.GetAllControls();
             _renderer.Render(controls);
 
+            // display what was just drawn
             _gameWindow.SwapBuffers();
         }
 
