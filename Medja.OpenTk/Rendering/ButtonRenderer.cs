@@ -4,9 +4,7 @@ using SkiaSharp;
 namespace Medja.OpenTk.Rendering
 {
 	public class ButtonRenderer : IControlRenderer
-    {
-		public object Context { get; set; }
-                   
+    {                   
 		public void Render(object context, Control control)
 		{
 			var skiaCanvas = context as SKCanvas;
