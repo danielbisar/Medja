@@ -82,6 +82,8 @@
     <Compile Include="Property\Property.cs" />
     <Compile Include="Property\PropertyChangedEventHandler.cs" />
     <Compile Include="Theming\DefaultTheme.cs" />
+    <Compile Include="Controls\IControlRenderer.cs" />
+    <Compile Include="IDictionaryExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

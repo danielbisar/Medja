@@ -19,9 +19,9 @@ namespace Medja.OpenTk
 
         public ControlFactory ControlFactory { get; }
 
-        public MedjaOpenTkLibrary()
+		public MedjaOpenTkLibrary(ControlFactory factory = null)
         {
-            ControlFactory = new DefaultTheme();
+            ControlFactory = factory ?? new DefaultTheme();
         }
 
         /// <inheritdoc />
