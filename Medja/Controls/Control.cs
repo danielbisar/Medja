@@ -21,6 +21,8 @@ namespace Medja.Controls
             get { return BackgroundProperty.Get(); }
             set { BackgroundProperty.Set(value); }
         }
+
+		public IControlRenderer Renderer { get; set; }
         
         public Control()
         {
