@@ -13,8 +13,7 @@ namespace Medja.OpenTk.Rendering
     public class OpenTkRenderer : IDisposable
     {
         private SkiaGLLayer _skia;
-        private SKSurface _surface;
-        private SKPaint _paint;
+		private SKSurface _surface;
         private SKCanvas _canvas;
         private bool _isDisposed;
 
@@ -46,14 +45,13 @@ namespace Medja.OpenTk.Rendering
             
             GL.UseProgram(0);
 
-            foreach (var control3d in controls3d)
-                control3d.Render();
+			foreach (var control3d in controls3d)
+				Render(control3d);
             
             //GL.PushClientAttrib(ClientAttribMask.ClientAllAttribBits);
 
             _surface = _skia.CreateSurface();
             _canvas = _surface.Canvas;
-            _paint = GetDefaultPaint();
 
             //_canvas.Clear(SKColors.Gray);
 
@@ -63,8 +61,7 @@ namespace Medja.OpenTk.Rendering
             }
 
             _canvas.Flush();
-            _canvas.Dispose();
-            _paint.Dispose();
+			_canvas.Dispose();
             _surface.Dispose();
 
             //GL.PopClientAttrib();
@@ -72,47 +69,8 @@ namespace Medja.OpenTk.Rendering
 
         private void Render(Control control)
         {
-            if (control is Button b)
-            {
-                var position = control.Position;
-                var skRect = position.ToSKRect();
-
-                var oldColor = _paint.Color;
-
-                _paint.Color = control.Background.ToSKColor();                
-                _canvas.DrawRect(skRect, _paint);
-
-                _paint.Color = SKColors.Black;
-                DrawTextCenteredInRect(skRect, b.Text);
-                _paint.Color = oldColor;
-            }
-            //else
-            //    DrawRect(position);
-        }
-
-        private SKPaint GetDefaultPaint()
-        {
-            return new SKPaint
-            {
-                // TODO dispose Typeface
-                /*                    Typeface = SKTypeface.FromFamilyName("Arial"),
-                                    TextSize = 12,*/
-                IsAntialias = true,
-                Color = SKColors.Orange,
-                Style = SKPaintStyle.StrokeAndFill,
-                //StrokeWidth = 10
-            };
-        }
-
-        private void DrawTextCenteredInRect(SKRect rect, string text)
-        {
-            if (string.IsNullOrEmpty(text))
-                return;
-
-            var width = _paint.MeasureText(text);
-            var height = _paint.TextSize;
-
-            _canvas.DrawText(text, rect.MidX - width / 2, rect.MidY + height / 2, _paint);
+			if (control.Renderer != null)
+				control.Renderer.Render(_canvas, control);
         }
         
         protected virtual void Dispose(bool disposing)
@@ -121,9 +79,6 @@ namespace Medja.OpenTk.Rendering
             {
                 if (disposing)
                 {
-                    if (_paint != null)
-                        _paint.Dispose();
-
                     if (_surface != null)
                         _surface.Dispose();
 
