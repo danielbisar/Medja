@@ -60,6 +60,7 @@
     <Compile Include="Controls\Layout\Panel.cs" />
     <Compile Include="Controls\Layout\VerticalStackLayout.cs" />
     <Compile Include="Controls\MedjaWindow.cs" />
+    <Compile Include="Controls\MouseDraggedEventArgs.cs" />
     <Compile Include="IMedjaLibrary.cs" />
     <Compile Include="MedjaApplication.cs" />
     <Compile Include="MedjaMath.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="Primitives\Position.cs" />
     <Compile Include="Primitives\Size.cs" />
     <Compile Include="Primitives\Thickness.cs" />
+    <Compile Include="Primitives\Vector2D.cs" />
     <Compile Include="Primitives\VerticalAlignment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Property\EqualityComparerCache.cs" />

@@ -1,4 +1,5 @@
 ﻿using System;
+using Medja.Controls;
 using Medja.Primitives;
 
 namespace Medja
@@ -44,6 +45,7 @@ namespace Medja
         }
 
         public event EventHandler MouseClicked;
+        public event EventHandler<MouseDraggedEventArgs> MouseDragged;
 
         public InputState()
         {
@@ -62,6 +64,15 @@ namespace Medja
         {
             if (IsLeftMouseDown && MedjaMath.Distance(_mouseDownPointerPosition, PointerPosition) > _dragThreshold)
                 IsDrag = true;
+
+            if (IsDrag)
+                NotifyMouseDragged();
+        }
+
+        private void NotifyMouseDragged()
+        {
+            if (MouseDragged != null)
+                MouseDragged(this, new MouseDraggedEventArgs(_mouseDownPointerPosition, PointerPosition));
         }
 
         private void OnIsLeftMouseDownChanged(IProperty property)
