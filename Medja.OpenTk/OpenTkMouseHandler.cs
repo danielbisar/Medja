@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using Medja.Controls;
 using OpenTK;
 using OpenTK.Input;
@@ -50,11 +51,16 @@ namespace Medja.OpenTk
         private void ApplyMouse(Control control, MouseState mouseState)
         {
             var inputState = control.InputState;
+
+            // order is important
+            inputState.PointerPosition = ToMedjaPoint(mouseState.Position);
             inputState.IsMouseOver = true;
             inputState.IsLeftMouseDown = mouseState.IsLeftButtonDown;
+        }
 
-            if(mouseState.IsMouseMove)
-                inputState.MouseMoved();
+        private Medja.Primitives.Point ToMedjaPoint(Point position)
+        {
+            return new Primitives.Point(position.X, position.Y);
         }
 
         private void ClearInputState(Control control)
