@@ -49,10 +49,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Eval\MainWindow.cs" />
-    <Compile Include="Eval\Menu.cs" />
-    <Compile Include="Eval\MenuController.cs" />
-    <Compile Include="Eval\MenuEntry.cs" />
     <Compile Include="MedjaOpenTkLibrary.cs" />
     <Compile Include="MouseState.cs" />
     <Compile Include="OpenTkMouseHandler.cs" />
@@ -61,6 +57,7 @@
     <Compile Include="Rendering\OpenTkRenderer.cs" />
     <Compile Include="Rendering\SkiaExtensions.cs" />
     <Compile Include="Rendering\SkiaGLLayer.cs" />
+    <Compile Include="Rendering\ButtonRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Medja\Medja.csproj">

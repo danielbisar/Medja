@@ -7,7 +7,6 @@ namespace Medja.Controls
 {
     public class ControlFactory
     {
-        // is used so we don't need reflection
         private readonly Dictionary<Type, Func<object>> _factoryMethods;
 
         public ControlFactory()
@@ -15,6 +14,12 @@ namespace Medja.Controls
             _factoryMethods = new Dictionary<Type, Func<object>>();
             _factoryMethods.Add(typeof(Button), CreateButton);
         }
+
+		protected void AddFactoryMethod<T>(Func<object> factory)
+			where T: Control
+		{
+			_factoryMethods.Add(typeof(T), factory);
+		}
 
         protected virtual Button CreateButton()
         {
