@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Medja.Controls;
 using Medja.OpenTk.Rendering;
 using Medja.Theming;
@@ -76,7 +77,7 @@ namespace Medja.OpenTk
         {
             AssureRenderer();            
 
-            var controls = _medjaWindow.GetAllControls();
+            var controls = _medjaWindow.GetAllControls().ToList();
             _renderer.Render(controls);
 
             // display what was just drawn
