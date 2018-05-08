@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Linq;
 using Medja.Controls;
 using OpenTK;
 using OpenTK.Input;
@@ -30,7 +31,7 @@ namespace Medja.OpenTk
         {
             var position = e.Position;
 
-            foreach (var control in _medjaWindow.GetAllControls())
+            foreach (var control in _medjaWindow.GetAllControls().ToList())
             {
                 if (IsMouseOver(control, position))
                     ApplyMouse(control, e);
