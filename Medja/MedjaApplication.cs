@@ -38,6 +38,8 @@ namespace Medja
                 RegisterMainWindow();
             }
         }
+
+		public event EventHandler<ShutdownEventArgs> ShutdownEvent;
         
         private MedjaApplication(IMedjaLibrary library)
         {
@@ -71,8 +73,15 @@ namespace Medja
         /// </summary>
         public void Shutdown()
         {
-            if (_mainWindow != null && !_mainWindow.IsClosed)
-            {
+			var hasMainWindow = _mainWindow != null && !_mainWindow.IsClosed;
+
+			if (hasMainWindow)
+			{
+				var cancelShutdown = NotifyShutdown();
+
+				if (cancelShutdown)
+					return;
+
                 _mainWindow.Close();
                 return; // function will be called by _mainWindow.Closed again
             }
@@ -80,11 +89,25 @@ namespace Medja
             //_isRunning = false;
         }
 
-        /// <summary>
-        /// Creates a new window. This method exists so you don't need to worry about the acutal used library instance.
-        /// </summary>
-        /// <returns>The new window instance provided by the library.</returns>
-        public MedjaWindow CreateWindow()
+		private bool NotifyShutdown()
+		{
+			var result = false;
+
+			if(ShutdownEvent != null)
+			{
+				var eventArgs = new ShutdownEventArgs();
+				ShutdownEvent(this, eventArgs);
+				result = eventArgs.Cancel;
+			}
+
+			return result;
+		}
+
+		/// <summary>
+		/// Creates a new window. This method exists so you don't need to worry about the acutal used library instance.
+		/// </summary>
+		/// <returns>The new window instance provided by the library.</returns>
+		public MedjaWindow CreateWindow()
         {
             return _library.CreateWindow();
         }

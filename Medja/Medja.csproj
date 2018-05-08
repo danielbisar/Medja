@@ -86,6 +86,7 @@
     <Compile Include="Theming\DefaultTheme.cs" />
     <Compile Include="Controls\IControlRenderer.cs" />
     <Compile Include="IDictionaryExtensions.cs" />
+    <Compile Include="ShutdownEventArgs.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
