@@ -24,10 +24,10 @@ namespace Medja.OpenTk
         
         private void OnMouseDown(object sender, MouseButtonEventArgs e)
         {
-            ApplyMouseToControls(GetInputState(e), false);
+            ApplyMouseToControls(GetInputState(e));
         }        
 
-        private void ApplyMouseToControls(MouseState e, bool isMouseMove)
+        private void ApplyMouseToControls(MouseState e)
         {
             var position = e.Position;
 
@@ -82,7 +82,7 @@ namespace Medja.OpenTk
 
         private void OnMouseMove(object sender, MouseMoveEventArgs e)
         {
-            ApplyMouseToControls(GetInputState(e), true);
+            ApplyMouseToControls(GetInputState(e));
         }
 
         private MouseState GetInputState(MouseMoveEventArgs e)
@@ -97,7 +97,7 @@ namespace Medja.OpenTk
 
         private void OnMouseUp(object sender, MouseButtonEventArgs e)
         {
-            ApplyMouseToControls(GetInputState(e), false);
+            ApplyMouseToControls(GetInputState(e));
         }
     }
 }
