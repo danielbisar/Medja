@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using Medja.Controls;
 using SkiaSharp;
 using OpenTK.Graphics.OpenGL;
+using System;
 
 namespace Medja.OpenTk.Rendering
 {
-    /// <summary>
-    /// This class is the main entry point for the rendering of controls for OpenTk with Skia.
-    /// </summary>
+	/// <summary>
+	/// This class is the main entry point for the rendering of controls for OpenTk with Skia.
+	/// </summary>
 	public class OpenTkRenderer : IRenderer
     {
         private SkiaGLLayer _skia;
@@ -17,20 +17,38 @@ namespace Medja.OpenTk.Rendering
         private SKCanvas _canvas;
         private bool _isDisposed;
 
+		private int _previous3DControlCount;
+		private int _previous2DControlCount;
+
+		public Action SetupOpenGL { get; }
+
         public OpenTkRenderer()
         {
+			_previous2DControlCount = 0;
+			_previous3DControlCount = 0;
             _skia = new SkiaGLLayer();
+
+			SetupOpenGL = InternalSetupOpenGL;
         }
+
+        private void InternalSetupOpenGL()
+		{
+			GL.ClearColor(Color.Black);
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+
+            GL.UseProgram(0);
+		}
 
         public void SetSize(Rectangle rectangle)
         {
             _skia.Resize(rectangle.Width, rectangle.Height);
-        }
+        }      
 
         public void Render(IEnumerable<Control> controls)
         {
-            var controls3d = new List<Control3D>();
-            var controls2d = new List<Control>();
+			// we don't expect the controls to change a lot, so we cache at least the size of the lists
+			var controls3d = new List<Control3D>(_previous3DControlCount);
+			var controls2d = new List<Control>(_previous2DControlCount);
 
             foreach(var control in controls)
             {
@@ -40,10 +58,10 @@ namespace Medja.OpenTk.Rendering
                     controls2d.Add(control);
             }
 
-            GL.ClearColor(Color.Black);
-            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-            
-            GL.UseProgram(0);
+			_previous3DControlCount = controls3d.Count;
+			_previous2DControlCount = controls2d.Count;
+
+			SetupOpenGL();
 
 			foreach (var control3d in controls3d)
 				Render(control3d);
@@ -52,8 +70,6 @@ namespace Medja.OpenTk.Rendering
 
             _surface = _skia.CreateSurface();
             _canvas = _surface.Canvas;
-
-            //_canvas.Clear(SKColors.Gray);
 
             foreach (var control in controls2d)
             {
@@ -72,40 +88,19 @@ namespace Medja.OpenTk.Rendering
 			if (control.Renderer != null)
 				control.Renderer.Render(_canvas, control);
         }
-        
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!_isDisposed)
-            {
-                if (disposing)
-                {
-                    if (_surface != null)
-                        _surface.Dispose();
 
-                    if (_skia != null)
-                        _skia.Dispose();
-                }
-
-                // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
-                // TODO: set large fields to null.
-
-                _isDisposed = true;
-            }
-        }
-
-        // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
-        // ~OpenTkRenderLayer() {
-        //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-        //   Dispose(false);
-        // }
-
-        // This code added to correctly implement the disposable pattern.
         public void Dispose()
         {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-            Dispose(true);
-            // TODO: uncomment the following line if the finalizer is overridden above.
-            // GC.SuppressFinalize(this);
+			if (!_isDisposed)
+			{
+				if (_surface != null)
+					_surface.Dispose();
+
+				if (_skia != null)
+					_skia.Dispose();
+
+				_isDisposed = true;
+			}
         }
     }
 }
