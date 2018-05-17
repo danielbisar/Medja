@@ -83,10 +83,10 @@
     <Compile Include="Property\IProperty.cs" />
     <Compile Include="Property\Property.cs" />
     <Compile Include="Property\PropertyChangedEventHandler.cs" />
-    <Compile Include="Theming\DefaultTheme.cs" />
-    <Compile Include="Controls\IControlRenderer.cs" />
     <Compile Include="IDictionaryExtensions.cs" />
     <Compile Include="ShutdownEventArgs.cs" />
+    <Compile Include="Theming\ControlRendererBase.cs" />
+    <Compile Include="Theming\IControlRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
