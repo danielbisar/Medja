@@ -9,16 +9,23 @@ namespace Medja.OpenTk.Rendering
         private GRContext _grContext;
         private GRBackendRenderTargetDesc _renderTarget;
 
+		private readonly SKSurface _surface;
+		public SKCanvas Canvas { get; }
+
         public SkiaGLLayer()
         {
             _grContext = GRContext.Create(GRBackend.OpenGL);
             _renderTarget = CreateRenderTarget();
+			_surface = SKSurface.Create(_grContext, _renderTarget);
+			Canvas = _surface.Canvas;
+
+			ResetContext();
         }
 
-        public SKSurface CreateSurface()
-        {
-            return SKSurface.Create(_grContext, _renderTarget);
-        }
+		public void ResetContext()
+		{
+			_grContext.ResetContext();
+		}
 
         public void Resize(int width, int height)
         {
@@ -28,6 +35,8 @@ namespace Medja.OpenTk.Rendering
 
         public void Dispose()
         {
+			Canvas.Dispose();
+			_surface.Dispose();
             _grContext.Dispose();
         }
 
