@@ -58,6 +58,7 @@
     <Compile Include="Rendering\SkiaExtensions.cs" />
     <Compile Include="Rendering\SkiaGLLayer.cs" />
     <Compile Include="Rendering\ButtonRenderer.cs" />
+    <Compile Include="Rendering\IRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Medja\Medja.csproj">

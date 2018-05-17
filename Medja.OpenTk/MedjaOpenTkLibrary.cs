@@ -15,14 +15,22 @@ namespace Medja.OpenTk
     {
         private MedjaWindow _medjaWindow;
         private GameWindow _gameWindow;
-        private OpenTkRenderer _renderer;
+		private IRenderer _renderer;
         private OpenTkMouseHandler _mouseHandler;
 
         public ControlFactory ControlFactory { get; }
 
+        /// <summary>
+        /// Gets or sets the function that is used to create the renderer. 
+		/// The method is called after the window is displayed.
+        /// </summary>
+        /// <value>The renderer factory.</value>
+		public Func<IRenderer> RendererFactory { get; set; }
+
 		public MedjaOpenTkLibrary(ControlFactory factory = null)
         {
             ControlFactory = factory ?? new DefaultTheme();
+			RendererFactory = () => new OpenTkRenderer();
         }
 
         /// <inheritdoc />
@@ -32,7 +40,7 @@ namespace Medja.OpenTk
         }
 
         /// <inheritdoc />
-        public void Run(MedjaApplication application)
+		public void Run(MedjaApplication application)
         {
             _medjaWindow = application.MainWindow;
             _gameWindow = ((OpenTkWindow)_medjaWindow).GameWindow;
@@ -87,7 +95,7 @@ namespace Medja.OpenTk
         private void AssureRenderer()
         {
             if (_renderer == null)
-                _renderer = new OpenTkRenderer(); // TODO cannot be initialized without the window, but should also not have the null check here every call, for now seems fine
+				_renderer = RendererFactory(); // TODO cannot be initialized without the window, but should also not have the null check here every call, for now seems fine
         }
     }
 }
