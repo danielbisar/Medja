@@ -20,7 +20,7 @@ namespace Medja.OpenTk.Rendering
 		private int _previous3DControlCount;
 		private int _previous2DControlCount;
 
-		public Action SetupOpenGL { get; }
+		public Action SetupOpenGL { get; set; }
 
         public OpenTkRenderer()
         {
