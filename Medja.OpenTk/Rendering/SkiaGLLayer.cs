@@ -6,20 +6,18 @@ namespace Medja.OpenTk.Rendering
 {
 	public class SkiaGLLayer : IDisposable
     {
-        private GRContext _grContext;
-        private GRBackendRenderTargetDesc _renderTarget;
+		public readonly GRContext _grContext;
+		public GRBackendRenderTargetDesc _renderTarget;
+		public SKSurface _surface;
 
-		private readonly SKSurface _surface;
-		public SKCanvas Canvas { get; }
+		public SKCanvas Canvas { get; private set; }
 
         public SkiaGLLayer()
         {
             _grContext = GRContext.Create(GRBackend.OpenGL);
             _renderTarget = CreateRenderTarget();
-			_surface = SKSurface.Create(_grContext, _renderTarget);
-			Canvas = _surface.Canvas;
 
-			ResetContext();
+			UpdateSurface();
         }
 
 		public void ResetContext()
@@ -31,13 +29,32 @@ namespace Medja.OpenTk.Rendering
         {
             _renderTarget.Width = width;
             _renderTarget.Height = height;
-        }        
+
+			UpdateSurface();
+        }     
+
+        private void UpdateSurface()
+		{
+			if (Canvas != null)
+                Canvas.Dispose();
+			
+			if(_surface != null)
+			    _surface.Dispose();
+
+			_surface = SKSurface.Create(_grContext, _renderTarget);
+			Canvas = _surface.Canvas;
+			ResetContext();
+		}
 
         public void Dispose()
         {
-			Canvas.Dispose();
-			_surface.Dispose();
-            _grContext.Dispose();
+			if(Canvas != null)
+			    Canvas.Dispose();
+
+			if(_surface != null)
+			    _surface.Dispose();
+            
+			_grContext.Dispose();
         }
 
         private GRBackendRenderTargetDesc CreateRenderTarget()

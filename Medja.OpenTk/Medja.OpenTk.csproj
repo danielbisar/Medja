@@ -59,6 +59,7 @@
     <Compile Include="Rendering\SkiaGLLayer.cs" />
     <Compile Include="Rendering\ButtonRenderer.cs" />
     <Compile Include="Rendering\IRenderer.cs" />
+    <Compile Include="Rendering\OpenTkTheme.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Medja\Medja.csproj">

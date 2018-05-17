@@ -29,7 +29,7 @@ namespace Medja.OpenTk
 
 		public MedjaOpenTkLibrary(ControlFactory factory = null)
         {
-            ControlFactory = factory ?? new DefaultTheme();
+			ControlFactory = factory ?? new OpenTkTheme();
 			RendererFactory = () => new OpenTkRenderer();
         }
 

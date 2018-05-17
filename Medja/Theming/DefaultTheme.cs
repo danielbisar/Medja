@@ -14,7 +14,6 @@ namespace Medja.Theming
 
             var result = base.CreateButton();
             result.Background = defaultBackground;
-
             result.InputState.IsMouseOverProperty.PropertyChanged += p =>
             {
                 var prop = (Property<bool>)p;
