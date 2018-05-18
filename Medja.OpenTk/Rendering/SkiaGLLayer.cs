@@ -35,19 +35,18 @@ namespace Medja.OpenTk.Rendering
 
 		private void UpdateSurface()
 		{
-			//if (Canvas != null)
-			//	Canvas.Dispose();
+			if (Canvas != null)
+				Canvas.Dispose();
 
-			//if (_surface != null)
-			//_surface.Dispose();
-
-			GL.PushClientAttrib(ClientAttribMask.ClientAllAttribBits);
-			_surface = SKSurface.Create(_grContext, _renderTarget);
-			GL.PopClientAttrib();
-			//Canvas = _surface.Canvas;
-			//Canvas.
-
-			//ResetContext();
+			if (_surface != null)
+			    _surface.Dispose();
+			
+			OpenGLState.KeepState(() => 
+			{
+				_surface = SKSurface.Create(_grContext, _renderTarget);
+                Canvas = _surface.Canvas;
+                ResetContext();
+            });
 		}
 
 		public void Dispose()
