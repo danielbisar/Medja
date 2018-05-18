@@ -65,21 +65,21 @@ namespace Medja.OpenTk.Rendering
 			foreach (var control3d in controls3d)
 				Render(control3d);
 
-			GL.PushClientAttrib(ClientAttribMask.ClientAllAttribBits);
-			_skia.ResetContext();
-			GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
+			//GL.PushClientAttrib(ClientAttribMask.ClientAllAttribBits);
+			//_skia.ResetContext();
+			//GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
 
-			_canvas = _skia.Canvas;
+			//_canvas = _skia.Canvas;
 
-			foreach (var control in controls2d)
-			{
-				Render(control);
-			}
+			////foreach (var control in controls2d)
+			////{
+			////	Render(control);
+			////}
 
-			_canvas.Flush();
-			GL.PopClientAttrib();
-			GL.UseProgram(0);
-			GL.BindFramebuffer(FramebufferTarget.FramebufferExt, 0);
+			//_canvas.Flush();
+			//GL.PopClientAttrib();
+			//GL.UseProgram(0);
+			//GL.BindFramebuffer(FramebufferTarget.FramebufferExt, 0);
 		}
 
 		private void Render(Control control)

@@ -28,10 +28,17 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="OpenTK">
+      <HintPath>..\packages\OpenTK.2.0.0\lib\net20\OpenTK.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="OpenGlTestControl.cs" />
+    <Compile Include="OpenGlTestControlRenderer.cs" />
+    <Compile Include="TestAppTheme.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Medja.OpenTk\Medja.OpenTk.csproj">
@@ -42,6 +49,10 @@
       <Project>{553CC0CC-B651-40D4-B047-B20873FE0399}</Project>
       <Name>Medja</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="OpenTK.dll.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
