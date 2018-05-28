@@ -5,6 +5,7 @@ using Medja.Controls;
 using Medja.OpenTk;
 using Medja.OpenTk.Rendering;
 using OpenTK.Graphics.OpenGL;
+using OpenTK;
 
 namespace MedjaOpenGlTestApp
 {
@@ -21,8 +22,8 @@ namespace MedjaOpenGlTestApp
 			var window = application.CreateWindow();
 			application.MainWindow = window;
 
-			window.Position.X = 800;
-			window.Position.Y = 600;
+			window.Position.Width = 1280;
+			window.Position.Height = 1024;
 
 			var button = controlFactory.Create<Button>();
 			button.Text = "MyButton";

@@ -28,10 +28,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="OpenTK">
-      <HintPath>..\packages\OpenTK.2.0.0\lib\net20\OpenTK.dll</HintPath>
-    </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="OpenTK">
+      <HintPath>..\packages\OpenTK.3.0.0\lib\net20\OpenTK.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
