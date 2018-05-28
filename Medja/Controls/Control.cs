@@ -5,76 +5,84 @@ using Medja.Theming;
 
 namespace Medja.Controls
 {
-    /// <summary>
-    /// Any control should inherit from this class.
-    /// </summary>
-    public class Control : MObject
-    {
-        public AnimationManager AnimationManager { get; }
-        public Dictionary<int, object> AttachedProperties { get; set; }
-        public InputState InputState { get; }
+	/// <summary>
+	/// Any control should inherit from this class.
+	/// </summary>
+	public class Control : MObject
+	{
+		public AnimationManager AnimationManager { get; }
+		public Dictionary<int, object> AttachedProperties { get; set; }
+		public InputState InputState { get; }
 
-        public MPosition Position { get; }
+		public MPosition Position { get; }
 
-        public Property<Color> BackgroundProperty { get; }
-        public Color Background
-        {
-            get { return BackgroundProperty.Get(); }
-            set { BackgroundProperty.Set(value); }
-        }
+		public Property<Color> BackgroundProperty { get; }
+		public Color Background
+		{
+			get { return BackgroundProperty.Get(); }
+			set { BackgroundProperty.Set(value); }
+		}
 
 		public IControlRenderer Renderer { get; set; }
-        
-        public Control()
-        {
-            AnimationManager = new AnimationManager();
-            InputState = new InputState();
-            Position = new MPosition();
-            BackgroundProperty = new Property<Color>();
-        }
 
-        public virtual void UpdateLayout()
-        {
-            //Debug.WriteLine("Control.UpdateLayout of " + GetType().FullName);
-            UpdateAnimations();
+		public Control()
+		{
+			AnimationManager = new AnimationManager();
+			InputState = new InputState();
+			Position = new MPosition();
+			BackgroundProperty = new Property<Color>();
+		}
 
-            var result = Measure(new Size(Position.Width, Position.Height));
-            Arrange(result);
-        }
+		public virtual void UpdateLayout()
+		{
+			UpdateAnimations();
 
-        internal virtual Size Measure(Size availableSize)
-        {
-            //Debug.WriteLine("Control.Measure of " + GetType().FullName);
-            return availableSize;
-        }
+			var result = Measure(new Size(Position.Width, Position.Height));
+			Arrange(result);
+		}
 
-        internal virtual void Arrange(Size availableSize)
-        {
-            //Debug.WriteLine("Control.Arrange of " + GetType().FullName);
-            // TODO update position info
-        }
+		/// <summary>
+		/// Measure how much space the current control needs. Default just returns available size.
+		/// </summary>
+		/// <returns>The measure.</returns>
+		/// <param name="availableSize">Available size.</param>
+		internal virtual Size Measure(Size availableSize)
+		{
+			return availableSize;
+		}
 
-        public void SetAttachedProperty(int id, object value)
-        {
-            AttachedProperties[id] = value;
-        }
+		/// <summary>
+		/// Arrange places the sub-controls as needed. Default does nothing.
+		/// </summary>
+		/// <param name="availableSize">Available size.</param>
+		internal virtual void Arrange(Size availableSize)
+		{
+		}
 
-        public object GetAttachedProperty(int id)
-        {
-            if (AttachedProperties.TryGetValue(id, out var result))
-                return result;
+		public void SetAttachedProperty(int id, object value)
+		{
+			AttachedProperties[id] = value;
+		}
 
-            return null;
-        }
+		public object GetAttachedProperty(int id)
+		{
+			if (AttachedProperties.TryGetValue(id, out var result))
+				return result;
 
-        public virtual IEnumerable<Control> GetAllControls()
-        {
-            yield return this;
-        }
+			return null;
+		}
 
-        internal virtual void UpdateAnimations()
-        {
-            AnimationManager.ApplyAnimations();
-        }
-    }
+		public virtual IEnumerable<Control> GetAllControls()
+		{
+			yield return this;
+		}
+
+		/// <summary>
+		/// Updates the state of the animations. Should not be called manually.
+		/// </summary>
+		public virtual void UpdateAnimations()
+		{
+			AnimationManager.ApplyAnimations();
+		}
+	}
 }

@@ -29,13 +29,13 @@ namespace Medja.Controls
 			return availableSize;
 		}
 
-		internal override void Arrange(Size targetSize)
+		internal override void Arrange(Size availableSize)
 		{
 			var left = Position.X;
 			var top = Position.Y;
 
-			var height = targetSize.Height;
-			var width = targetSize.Width;
+			var height = availableSize.Height;
+			var width = availableSize.Width;
 
 			foreach (var child in Children)
 			{
