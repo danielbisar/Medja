@@ -29,7 +29,6 @@ namespace Medja.OpenTk
 		private void OnWindowLoad(object sender, EventArgs e)
 		{
 			// OpenTK call OnResize for Width and Height after Load, but the values are not up to date yet, so we just ignore the events
-			// BUGFIX: 99
 			_ignoreNextNResizeEvents = 2;
 		}
 
