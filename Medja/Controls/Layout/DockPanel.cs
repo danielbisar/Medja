@@ -21,7 +21,7 @@ namespace Medja.Controls
 			// TODO handle remove of child: remove dock info also, else memory leak
 		}
 
-		internal override Size Measure(Size availableSize)
+		public override Size Measure(Size availableSize)
 		{
 			//foreach (var child in Children)
 			//    child.Measure(availableSize);
@@ -29,7 +29,7 @@ namespace Medja.Controls
 			return availableSize;
 		}
 
-		internal override void Arrange(Size availableSize)
+		public override void Arrange(Size availableSize)
 		{
 			var left = Position.X;
 			var top = Position.Y;
