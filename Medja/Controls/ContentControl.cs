@@ -17,7 +17,7 @@ namespace Medja.Controls
 			PropertyContent = new Property<Control>();
 		}
 
-		internal override Size Measure(Size availableSize)
+		public override Size Measure(Size availableSize)
 		{
 			if (Content == null)
 				return base.Measure(availableSize);
@@ -25,7 +25,7 @@ namespace Medja.Controls
 			return Content.Measure(availableSize);
 		}
 
-		internal override void Arrange(Size availableSize)
+		public override void Arrange(Size availableSize)
 		{
 			base.Arrange(availableSize);
 

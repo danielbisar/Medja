@@ -46,7 +46,7 @@ namespace Medja.Controls
 		/// </summary>
 		/// <returns>The measure.</returns>
 		/// <param name="availableSize">Available size.</param>
-		internal virtual Size Measure(Size availableSize)
+		public virtual Size Measure(Size availableSize)
 		{
 			return availableSize;
 		}
@@ -55,7 +55,7 @@ namespace Medja.Controls
 		/// Arrange places the sub-controls as needed. Default does nothing.
 		/// </summary>
 		/// <param name="availableSize">Available size.</param>
-		internal virtual void Arrange(Size availableSize)
+		public virtual void Arrange(Size availableSize)
 		{
 		}
 
