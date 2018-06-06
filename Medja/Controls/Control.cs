@@ -23,6 +23,13 @@ namespace Medja.Controls
 			set { BackgroundProperty.Set(value); }
 		}
 
+		public Property<bool> IsEnabledProperty { get; }
+		public bool IsEnabled
+		{
+			get { return IsEnabledProperty.Get(); }
+			set { IsEnabledProperty.Set(value); }
+		}
+
 		public IControlRenderer Renderer { get; set; }
 
 		public Control()
@@ -31,6 +38,7 @@ namespace Medja.Controls
 			InputState = new InputState();
 			Position = new MPosition();
 			BackgroundProperty = new Property<Color>();
+			IsEnabledProperty = new Property<bool>();
 		}
 
 		public virtual void UpdateLayout()
