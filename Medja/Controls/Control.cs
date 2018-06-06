@@ -39,6 +39,7 @@ namespace Medja.Controls
 			Position = new MPosition();
 			BackgroundProperty = new Property<Color>();
 			IsEnabledProperty = new Property<bool>();
+			IsEnabledProperty.UnnotifiedSet(true);
 		}
 
 		public virtual void UpdateLayout()
