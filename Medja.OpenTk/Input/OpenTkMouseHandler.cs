@@ -1,5 +1,4 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Linq;
 using Medja.Controls;
 using OpenTK;
@@ -20,6 +19,7 @@ namespace Medja.OpenTk
 			_window.MouseDown += OnMouseDown;
 			_window.MouseMove += OnMouseMove;
 			_window.MouseUp += OnMouseUp;
+			_window.MouseWheel += OnMouseWheel;
 		}
 
 		private void OnMouseDown(object sender, MouseButtonEventArgs e)
@@ -57,6 +57,7 @@ namespace Medja.OpenTk
 			inputState.PointerPosition = ToMedjaPoint(mouseState.Position);
 			inputState.IsMouseOver = true;
 			inputState.IsLeftMouseDown = mouseState.IsLeftButtonDown;
+			inputState.MouseWheelDelta = mouseState.WheelDelta;
 		}
 
 		private Medja.Primitives.Point ToMedjaPoint(Point position)
@@ -98,6 +99,21 @@ namespace Medja.OpenTk
 		private void OnMouseUp(object sender, MouseButtonEventArgs e)
 		{
 			ApplyMouseToControls(GetInputState(e));
+		}
+
+		private void OnMouseWheel(object sender, MouseWheelEventArgs e)
+		{
+			ApplyMouseToControls(GetInputState(e));
+		}
+
+		private MouseState GetInputState(MouseWheelEventArgs e)
+		{
+			return new MouseState
+			{
+				Position = e.Position,
+				IsLeftButtonDown = e.Mouse.LeftButton == ButtonState.Pressed,
+				WheelDelta = e.DeltaPrecise
+			};
 		}
 	}
 }
