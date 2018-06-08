@@ -39,6 +39,7 @@
     <Compile Include="OpenGlTestControl.cs" />
     <Compile Include="OpenGlTestControlRenderer.cs" />
     <Compile Include="TestAppTheme.cs" />
+    <Compile Include="VertextBufferObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Medja.OpenTk\Medja.OpenTk.csproj">
