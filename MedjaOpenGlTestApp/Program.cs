@@ -28,6 +28,7 @@ namespace MedjaOpenGlTestApp
 			var button = controlFactory.Create<Button>();
 			button.Text = "MyButton";
 			button.InputState.MouseClicked += (s, e) => window.Close();
+			button.InputState.MouseWheelDeltaProperty.PropertyChanged += p => button.Text = "MouseWheelDelta: " + button.InputState.MouseWheelDelta;
 
 			var openGlTestControl = controlFactory.Create<OpenGlTestControl>();
 
