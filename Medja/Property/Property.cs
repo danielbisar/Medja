@@ -2,43 +2,46 @@
 
 namespace Medja
 {
-    // TODO implement readonly version
-    public class Property<T> : IProperty
-    {
-        // creating a static variable inside this class makes creation 3X as slow as currently
-        private readonly EqualityComparer<T> _comparer;
-        private T _value;
+	// TODO implement readonly version
+	public class Property<T> : IProperty
+	{
+		// creating a static variable inside this class makes creation 3X as slow as currently
+		private readonly EqualityComparer<T> _comparer;
+		private T _value;
 
-        public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler PropertyChanged;
 
-        public Property()
-        {
-            // see EqualityComparerCache header for info why
-            _comparer = EqualityComparerCache<T>.Comparer;
-        }
-        // would allow properties with and without change notification
-        public void Set(T value)
-        {
-            if (_comparer.Equals(_value, value))
-                return;
+		public Property()
+		{
+			// see EqualityComparerCache header for info why
+			_comparer = EqualityComparerCache<T>.Comparer;
+		}
+		// would allow properties with and without change notification
+		public void Set(T value)
+		{
+			if (_comparer.Equals(_value, value))
+				return;
 
-            _value = value;
-            NotifyPropertyChanged();
-        }
+			_value = value;
+			NotifyPropertyChanged();
+		}
 
-        public void UnnotifiedSet(T value)
-        {
-            _value = value;
-        }
+		public void UnnotifiedSet(T value)
+		{
+			_value = value;
+		}
 
-        public T Get()
-        {
-            return _value;
-        }
+		public T Get()
+		{
+			return _value;
+		}
 
-        private void NotifyPropertyChanged()
-        {
-            PropertyChanged?.Invoke(this);
-        }
-    }
+		/// <summary>
+		/// Manually call the property changed event, even though the property has not been changed.
+		/// </summary>
+		public void NotifyPropertyChanged()
+		{
+			PropertyChanged?.Invoke(this);
+		}
+	}
 }

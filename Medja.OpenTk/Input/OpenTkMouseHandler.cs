@@ -3,6 +3,7 @@ using System.Linq;
 using Medja.Controls;
 using OpenTK;
 using OpenTK.Input;
+using System;
 
 namespace Medja.OpenTk
 {
@@ -57,7 +58,12 @@ namespace Medja.OpenTk
 			inputState.PointerPosition = ToMedjaPoint(mouseState.Position);
 			inputState.IsMouseOver = true;
 			inputState.IsLeftMouseDown = mouseState.IsLeftButtonDown;
-			inputState.MouseWheelDelta = mouseState.WheelDelta;
+
+			if (mouseState.WheelDelta != 0
+				&& MedjaMath.AboutEquals(inputState.MouseWheelDelta, mouseState.WheelDelta))
+				inputState.MouseWheelDeltaProperty.NotifyPropertyChanged();
+			else
+				inputState.MouseWheelDelta = mouseState.WheelDelta;
 		}
 
 		private Medja.Primitives.Point ToMedjaPoint(Point position)
