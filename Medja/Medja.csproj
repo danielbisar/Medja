@@ -83,10 +83,10 @@
     <Compile Include="Property\IProperty.cs" />
     <Compile Include="Property\Property.cs" />
     <Compile Include="Property\PropertyChangedEventHandler.cs" />
-    <Compile Include="IDictionaryExtensions.cs" />
     <Compile Include="ShutdownEventArgs.cs" />
     <Compile Include="Theming\ControlRendererBase.cs" />
     <Compile Include="Theming\IControlRenderer.cs" />
+    <Compile Include="Linq\ExtendDictionary.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -95,6 +95,9 @@
     <None Include="Documentation\Compiler.md" />
     <None Include="Documentation\CoreDesign.md" />
     <None Include="Documentation\Properties.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Linq\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
