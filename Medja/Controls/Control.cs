@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Medja.Controls.Animation;
 using Medja.Primitives;
 using Medja.Theming;
@@ -32,6 +33,19 @@ namespace Medja.Controls
 
 		public IControlRenderer Renderer { get; set; }
 
+		public Property<Visibility> VisibilityProperty { get; }
+		public Visibility Visibility
+		{
+			get { return VisibilityProperty.Get(); }
+			set { VisibilityProperty.Set(value); }
+		}
+
+		public Property<bool> IsVisibleProperty { get; }
+		public bool IsVisible
+		{
+			get { return IsVisibleProperty.Get(); }
+		}
+
 		public Control()
 		{
 			AnimationManager = new AnimationManager();
@@ -40,6 +54,16 @@ namespace Medja.Controls
 			BackgroundProperty = new Property<Color>();
 			IsEnabledProperty = new Property<bool>();
 			IsEnabledProperty.UnnotifiedSet(true);
+
+			VisibilityProperty = new Property<Visibility>();
+			IsVisibleProperty = new Property<bool>();
+			IsVisibleProperty.UnnotifiedSet(true);
+			VisibilityProperty.PropertyChanged += OnVisibilityChanged;
+		}
+
+		private void OnVisibilityChanged(IProperty property)
+		{
+			IsVisibleProperty.Set(Visibility == Visibility.Visible);
 		}
 
 		public virtual void UpdateLayout()
