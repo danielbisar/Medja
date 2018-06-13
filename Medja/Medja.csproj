@@ -87,6 +87,7 @@
     <Compile Include="Theming\ControlRendererBase.cs" />
     <Compile Include="Theming\IControlRenderer.cs" />
     <Compile Include="Linq\ExtendDictionary.cs" />
+    <Compile Include="Primitives\Visibility.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

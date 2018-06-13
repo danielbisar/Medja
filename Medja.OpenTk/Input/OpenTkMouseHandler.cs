@@ -34,7 +34,7 @@ namespace Medja.OpenTk
 
 			foreach (var control in _medjaWindow.GetAllControls().ToList())
 			{
-				if (IsMouseOver(control, position) && control.IsEnabled)
+				if (IsMouseOver(control, position) && control.IsEnabled && control.IsVisible)
 					ApplyMouse(control, e);
 				else
 					ClearInputState(control);

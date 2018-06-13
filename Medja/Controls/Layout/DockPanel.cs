@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Medja.Primitives;
+using System.Linq;
 
 namespace Medja.Controls
 {
@@ -37,7 +38,7 @@ namespace Medja.Controls
 			var height = availableSize.Height;
 			var width = availableSize.Width;
 
-			foreach (var child in Children)
+			foreach (var child in Children.Where(p => p.Visibility != Visibility.Collapsed))
 			{
 				var dock = _docks[child];
 				var childPos = child.Position;
