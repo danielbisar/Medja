@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Drawing;
 using Medja;
 using Medja.Controls;
 using Medja.OpenTk;
 using Medja.OpenTk.Rendering;
 using OpenTK.Graphics.OpenGL;
-using OpenTK;
 
 namespace MedjaOpenGlTestApp
 {
@@ -22,8 +20,7 @@ namespace MedjaOpenGlTestApp
 			var window = application.CreateWindow();
 			application.MainWindow = window;
 
-			window.Position.Width = 1280;
-			window.Position.Height = 1024;
+			window.CenterOnScreen(800, 600);
 
 			var button = controlFactory.Create<Button>();
 			button.Text = "Close";
