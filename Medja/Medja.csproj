@@ -88,6 +88,7 @@
     <Compile Include="Theming\IControlRenderer.cs" />
     <Compile Include="Linq\ExtendDictionary.cs" />
     <Compile Include="Primitives\Visibility.cs" />
+    <Compile Include="Controls\ProgressBar.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

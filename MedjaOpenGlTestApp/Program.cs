@@ -4,6 +4,8 @@ using Medja.Controls;
 using Medja.OpenTk;
 using Medja.OpenTk.Rendering;
 using OpenTK.Graphics.OpenGL;
+using Medja.Controls.Animation;
+using System.Threading;
 
 namespace MedjaOpenGlTestApp
 {
@@ -43,6 +45,20 @@ namespace MedjaOpenGlTestApp
 					button.Visibility = Medja.Primitives.Visibility.Visible;
 			};
 
+			var progressBar = controlFactory.Create<ProgressBar>();
+			progressBar.MaxValue = 1000;
+			progressBar.Value = 0;
+
+			Timer timer = null;
+			timer = new Timer(s =>
+			{
+				progressBar.Value++;
+
+				if (progressBar.Value >= progressBar.MaxValue)
+					timer.Change(Timeout.Infinite, Timeout.Infinite);
+			});
+			timer.Change(0, 10);
+
 			var openGlTestControl = controlFactory.Create<OpenGlTestControl>();
 
 			var stackPanel = new VerticalStackPanel();
@@ -50,6 +66,7 @@ namespace MedjaOpenGlTestApp
 			stackPanel.ChildrenHeight = 50;
 			stackPanel.Children.Add(button);
 			stackPanel.Children.Add(button2);
+			stackPanel.Children.Add(progressBar);
 			stackPanel.Children.Add(openGlTestControl);
 
 			window.Content = stackPanel;

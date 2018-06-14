@@ -67,6 +67,7 @@
     <Compile Include="Window\MedjaWindowExtensions.cs" />
     <Compile Include="Rendering\OpenGLProgram.cs" />
     <Compile Include="Rendering\OpenGLShader.cs" />
+    <Compile Include="Rendering\ProgressBarRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Medja\Medja.csproj">

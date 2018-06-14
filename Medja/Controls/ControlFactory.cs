@@ -13,6 +13,7 @@ namespace Medja.Controls
 		{
 			_factoryMethods = new Dictionary<Type, Func<object>>();
 			_factoryMethods.Add(typeof(Button), CreateButton);
+			_factoryMethods.Add(typeof(ProgressBar), CreateProgressBar);
 		}
 
 		protected void AddFactoryMethod<TControl>(Func<object> factory)
@@ -24,6 +25,11 @@ namespace Medja.Controls
 		protected virtual Button CreateButton()
 		{
 			return new Button();
+		}
+
+		protected virtual ProgressBar CreateProgressBar()
+		{
+			return new ProgressBar();
 		}
 
 		public TControl Create<TControl>()
