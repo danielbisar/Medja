@@ -4,7 +4,6 @@ using Medja.Controls;
 using Medja.OpenTk;
 using Medja.OpenTk.Rendering;
 using OpenTK.Graphics.OpenGL;
-using Medja.Controls.Animation;
 using System.Threading;
 
 namespace MedjaOpenGlTestApp
