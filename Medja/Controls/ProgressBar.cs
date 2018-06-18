@@ -18,7 +18,7 @@
 
 		public float Percentage
 		{
-			get { return Value == 0 ? 0 : Value / MaxValue; }
+			get { return Value == 0 || MaxValue == 0 ? 0 : Value / MaxValue; }
 		}
 
 		public ProgressBar()
