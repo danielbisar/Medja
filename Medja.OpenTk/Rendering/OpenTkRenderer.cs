@@ -49,7 +49,7 @@ namespace Medja.OpenTk.Rendering
 
 			foreach (var control in controls)
 			{
-				if (control.Visibility == Primitives.Visibility.Visible)
+				if (control.IsVisible)
 				{
 					if (control is Control3D control3d)
 						controls3d.Add(control3d);
@@ -82,6 +82,12 @@ namespace Medja.OpenTk.Rendering
 
 		private void Render(Control control)
 		{
+			// it can be that this property has changed during rendering
+			// this should fix an issue with the progressbar being displayed
+			// even though it should not be visible anymore
+			if (!control.IsVisible)
+				return;
+
 			if (control.Renderer != null)
 				control.Renderer.Render(_canvas, control);
 		}
