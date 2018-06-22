@@ -46,6 +46,13 @@ namespace Medja.Controls
 			get { return IsVisibleProperty.Get(); }
 		}
 
+		public Property<object> DataContextProperty;
+		public object DataContext
+		{
+			get { return DataContextProperty.Get(); }
+			set { DataContextProperty.Set(value); }
+		}
+
 		public Control()
 		{
 			AnimationManager = new AnimationManager();
@@ -59,6 +66,8 @@ namespace Medja.Controls
 			IsVisibleProperty = new Property<bool>();
 			IsVisibleProperty.UnnotifiedSet(true);
 			VisibilityProperty.PropertyChanged += OnVisibilityChanged;
+
+			DataContextProperty = new Property<object>();
 		}
 
 		private void OnVisibilityChanged(IProperty property)
