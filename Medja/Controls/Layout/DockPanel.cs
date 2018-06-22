@@ -5,6 +5,11 @@ using System.Linq;
 
 namespace Medja.Controls
 {
+	/// <summary>
+	/// A simple dock panel.
+	/// 
+	/// To add or remove children use Add, Remove of this class not the Children list directly.
+	/// </summary>
 	public class DockPanel : Panel
 	{
 		private Dictionary<Control, Dock> _docks;
@@ -18,8 +23,12 @@ namespace Medja.Controls
 		{
 			_docks.Add(control, dock);
 			Children.Add(control);
+		}
 
-			// TODO handle remove of child: remove dock info also, else memory leak
+		public void Remove(Control control)
+		{
+			_docks.Remove(control);
+			Children.Remove(control);
 		}
 
 		public override Size Measure(Size availableSize)
