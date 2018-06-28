@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Medja.Controls.Animation;
 using Medja.Primitives;
 using Medja.Theming;
@@ -12,7 +11,7 @@ namespace Medja.Controls
 	public class Control : MObject
 	{
 		public AnimationManager AnimationManager { get; }
-		public Dictionary<int, object> AttachedProperties { get; set; }
+		public Dictionary<int, object> AttachedProperties { get; }
 		public InputState InputState { get; }
 
 		public MPosition Position { get; }
@@ -56,6 +55,7 @@ namespace Medja.Controls
 		public Control()
 		{
 			AnimationManager = new AnimationManager();
+			AttachedProperties = new Dictionary<int, object>();
 			InputState = new InputState();
 			Position = new MPosition();
 			BackgroundProperty = new Property<Color>();
@@ -112,6 +112,16 @@ namespace Medja.Controls
 				return result;
 
 			return null;
+		}
+
+		public T GetAttachedProperty<T>(int id)
+		{
+			return (T)GetAttachedProperty(id);
+		}
+
+		public void RemoveAttachedProperty(int id)
+		{
+			AttachedProperties.Remove(id);
 		}
 
 		public virtual IEnumerable<Control> GetAllControls()
