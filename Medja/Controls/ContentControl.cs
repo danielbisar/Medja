@@ -37,8 +37,11 @@ namespace Medja.Controls
 		{
 			yield return this;
 
-			foreach (var control in Content.GetAllControls())
-				yield return control;
+			if (Content != null)
+			{
+				foreach (var control in Content.GetAllControls())
+					yield return control;
+			}
 		}
 
 		public override void UpdateAnimations()
