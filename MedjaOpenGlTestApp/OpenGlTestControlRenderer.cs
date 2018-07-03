@@ -4,6 +4,7 @@ using Medja.Theming;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Graphics;
+using Medja.OpenTk.Rendering;
 
 namespace MedjaOpenGlTestApp
 {
@@ -15,7 +16,7 @@ namespace MedjaOpenGlTestApp
 		{
 			var vertices = new List<Vector3>();
 
-			for (int i = 0; i <= 20; i++)
+			for (int i = 0; i <= 10; i++)
 			{
 				for (int j = 0; j < 100; j++)
 				{
@@ -37,6 +38,7 @@ namespace MedjaOpenGlTestApp
 
 			_vbo = new VertextBufferObject();
 			_vbo.UpdateData(vertices);
+			//_vbo.VertexDrawLimit = 1000;
 		}
 
 		private List<Vector3> ReorderPointsForQuads(List<Vector3> vertices, int xyItemCount)

@@ -39,6 +39,7 @@ namespace Medja.OpenTk.Rendering
 		public VertextBufferObject()
 		{
 			_vertexBufferObjectId = -1;
+			VertexDrawLimit = -1;
 		}
 
 		/// <summary>
