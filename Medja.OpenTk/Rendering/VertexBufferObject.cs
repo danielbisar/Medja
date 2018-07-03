@@ -17,9 +17,18 @@ namespace Medja.OpenTk.Rendering
 			get { return _vertexBufferObjectId; }
 		}
 
-		public int Length
+		public int FloatValueCount
 		{
 			get { return _data == null ? -1 : _data.Length; }
+		}
+
+		/// <summary>
+		/// Gets or sets the amount of vertices to draw.
+		/// </summary>
+		/// <value>The vertex draw limit. -1 = no limit, another value = even though Data might contain more vertices, only draw the given number.</value>
+		public int VertexDrawLimit
+		{
+			get; set;
 		}
 
 		public float[] GetData()
@@ -55,7 +64,7 @@ namespace Medja.OpenTk.Rendering
 		{
 			var newDataLength = data.Count * 3;
 
-			if (newDataLength != Length)
+			if (newDataLength != FloatValueCount)
 				CreateData(newDataLength, bufferUsageHint);
 
 			UpdateData(ptr =>
@@ -97,7 +106,7 @@ namespace Medja.OpenTk.Rendering
 			GL.BindBuffer(BufferTarget.ArrayBuffer, _vertexBufferObjectId);
 			GL.VertexPointer(3, VertexPointerType.Float, Vector3.SizeInBytes, 0);
 
-			GL.DrawArrays(type, 0, _dataLengthDiv3);
+			GL.DrawArrays(type, 0, GetVerticesCount());
 
 			GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
 			GL.DisableClientState(ArrayCap.VertexArray);
@@ -116,10 +125,15 @@ namespace Medja.OpenTk.Rendering
 
 			GL.UnmapBuffer(BufferTarget.ArrayBuffer);
 
-			GL.DrawArrays(type, 0, _dataLengthDiv3);
+			GL.DrawArrays(type, 0, GetVerticesCount());
 
 			GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
 			GL.DisableClientState(ArrayCap.VertexArray);
+		}
+
+		private int GetVerticesCount()
+		{
+			return VertexDrawLimit == -1 ? _dataLengthDiv3 : Math.Min(_dataLengthDiv3, VertexDrawLimit);
 		}
 
 		public void Dispose()
