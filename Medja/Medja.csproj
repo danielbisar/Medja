@@ -66,6 +66,7 @@
     <Compile Include="MedjaMath.cs" />
     <Compile Include="MObject.cs" />
     <Compile Include="Performance\DefaultPropertyChangedTestObject.cs" />
+    <Compile Include="Performance\FramesPerSecondCounter.cs" />
     <Compile Include="Performance\ITestObject.cs" />
     <Compile Include="Performance\MTestObject.cs" />
     <Compile Include="Performance\NativeTestObject.cs" />
@@ -99,8 +100,6 @@
     <None Include="Documentation\CoreDesign.md" />
     <None Include="Documentation\Properties.md" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Linq\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
