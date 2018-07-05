@@ -16,7 +16,7 @@ namespace Medja.Performance
 
         public event EventHandler FramesCounted;
         
-        FramesPerSecondCounter()
+        public FramesPerSecondCounter()
         {
             _stopWatch = new Stopwatch();
             _countTicks = new TimeSpan(0,0,1).Ticks;
