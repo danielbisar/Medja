@@ -29,13 +29,17 @@ namespace Medja.Performance
 
             _frameCount++;
 
-            if(_countTicks < _stopWatch.ElapsedTicks)
+            if (_countTicks < _stopWatch.ElapsedTicks)
+            {
                 NotifyFramesCounted();
+                _stopWatch.Restart();
+                _frameCount = 0;
+            }
         }
 
         private void NotifyFramesCounted()
         {
-            FramesPerSecond = _frameCount / (float)(_stopWatch.ElapsedMilliseconds / 1000);
+            FramesPerSecond = _frameCount / (float)(_stopWatch.ElapsedMilliseconds / 1000.0);
 
             if(FramesCounted != null)
                 FramesCounted(this, EventArgs.Empty);

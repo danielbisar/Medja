@@ -5,6 +5,7 @@ using Medja.OpenTk;
 using Medja.OpenTk.Rendering;
 using OpenTK.Graphics.OpenGL;
 using System.Threading;
+using Medja.Performance;
 
 namespace MedjaOpenGlTestApp
 {
@@ -73,16 +74,28 @@ namespace MedjaOpenGlTestApp
 			application.Run();
 		}
 
-		private static IRenderer CreateRenderer()
+        private static FramesPerSecondCounter _fpsCounter = new FramesPerSecondCounter();
+
+
+        private static IRenderer CreateRenderer()
 		{
 			var openTkRenderer = new OpenTkRenderer();
 			openTkRenderer.Before3D = SetupOpenGl;
 
+            _fpsCounter.FramesCounted += OnFramesCounted;
+
 			return openTkRenderer;
 		}
 
-		private static void SetupOpenGl()
+        private static void OnFramesCounted(object sender, EventArgs e)
+        {
+            Console.WriteLine("FPS: " + _fpsCounter.FramesPerSecond);
+        }
+
+        private static void SetupOpenGl()
 		{
+            _fpsCounter.Tick();
+
 			GL.Enable(EnableCap.CullFace);
 			GL.CullFace(CullFaceMode.Back);
 			GL.Enable(EnableCap.DepthTest);
