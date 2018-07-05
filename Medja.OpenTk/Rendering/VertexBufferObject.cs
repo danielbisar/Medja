@@ -113,7 +113,7 @@ namespace Medja.OpenTk.Rendering
 			GL.DisableClientState(ArrayCap.VertexArray);
 		}
 
-		public void UpdateAndDraw(PrimitiveType type, Action<IntPtr> update, , BufferAccess bufferAccess = BufferAccess.WriteOnly)
+		public void UpdateAndDraw(PrimitiveType type, Action<IntPtr> update, BufferAccess bufferAccess = BufferAccess.WriteOnly)
 		{
 			GL.EnableClientState(ArrayCap.VertexArray);
 
