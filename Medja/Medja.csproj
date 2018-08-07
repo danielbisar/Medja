@@ -66,6 +66,7 @@
     <Compile Include="MedjaMath.cs" />
     <Compile Include="MObject.cs" />
     <Compile Include="Performance\DefaultPropertyChangedTestObject.cs" />
+    <Compile Include="Performance\FramesPerSecondCounter.cs" />
     <Compile Include="Performance\ITestObject.cs" />
     <Compile Include="Performance\MTestObject.cs" />
     <Compile Include="Performance\NativeTestObject.cs" />

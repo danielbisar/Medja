@@ -84,14 +84,14 @@ namespace Medja.OpenTk.Rendering
 			});
 		}
 
-		private void UpdateData(Action<IntPtr> update)
+		private void UpdateData(Action<IntPtr> update, BufferAccess bufferAccess = BufferAccess.WriteOnly)
 		{
 			GL.EnableClientState(ArrayCap.VertexArray);
 
 			GL.BindBuffer(BufferTarget.ArrayBuffer, _vertexBufferObjectId);
 			GL.VertexPointer(3, VertexPointerType.Float, Vector3.SizeInBytes, 0);
 
-			var verticesPtr = GL.MapBuffer(BufferTarget.ArrayBuffer, BufferAccess.WriteOnly);
+			var verticesPtr = GL.MapBuffer(BufferTarget.ArrayBuffer, bufferAccess);
 
 			update(verticesPtr);
 
@@ -113,14 +113,14 @@ namespace Medja.OpenTk.Rendering
 			GL.DisableClientState(ArrayCap.VertexArray);
 		}
 
-		public void UpdateAndDraw(PrimitiveType type, Action<IntPtr> update)
+		public void UpdateAndDraw(PrimitiveType type, Action<IntPtr> update, BufferAccess bufferAccess = BufferAccess.WriteOnly)
 		{
 			GL.EnableClientState(ArrayCap.VertexArray);
 
 			GL.BindBuffer(BufferTarget.ArrayBuffer, _vertexBufferObjectId);
 			GL.VertexPointer(3, VertexPointerType.Float, Vector3.SizeInBytes, 0);
 
-			var verticesPtr = GL.MapBuffer(BufferTarget.ArrayBuffer, BufferAccess.WriteOnly);
+			var verticesPtr = GL.MapBuffer(BufferTarget.ArrayBuffer, bufferAccess);
 
 			update(verticesPtr);
 
