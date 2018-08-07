@@ -4,6 +4,7 @@ using Medja.OpenTk;
 using Medja.OpenTk.Rendering;
 using OpenTK.Graphics.OpenGL;
 using System;
+using Medja.Primitives;
 
 namespace MedjaOpenGlTestApp
 {
@@ -22,6 +23,10 @@ namespace MedjaOpenGlTestApp
 
 			window.CenterOnScreen(800, 600);
 
+			var status = controlFactory.Create<Control>();
+			//status.Background = new Color(0, 1, 0);
+			status.Position.Height = 50;
+
 			var x = controlFactory.Create<TouchButtonList<string>>();
 			x.PageSize = 10;
 			x.InitializeButtonFromItem = (item, button) =>
@@ -33,10 +38,15 @@ namespace MedjaOpenGlTestApp
 			for (int i = 0; i < 100; i++)
 				x.AddItem("Item " + i);
 
+			var mainDock = controlFactory.Create<DockPanel>();
+
+			mainDock.Add(Dock.Top, status);
+			mainDock.Add(Dock.Fill, x);
+
 			//var stackPanel = controlFactory.Create<VerticalStackPanel>();
 			//stackPanel.Children.Add(controlFactory.Create<Button>(p => p.Text = "test"));
 
-			window.Content = x;
+			window.Content = mainDock;
 
 			application.Run();
 		}

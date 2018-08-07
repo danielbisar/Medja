@@ -13,6 +13,7 @@ namespace Medja.Controls
 		{
 			_factoryMethods = new Dictionary<Type, Func<object>>();
 			_factoryMethods.Add(typeof(Button), CreateButton);
+			_factoryMethods.Add(typeof(Control), CreateControl);
 			_factoryMethods.Add(typeof(ContentControl), CreateContentControl);
 			_factoryMethods.Add(typeof(DockPanel), CreateDockPanel);
 			_factoryMethods.Add(typeof(ProgressBar), CreateProgressBar);
@@ -28,6 +29,11 @@ namespace Medja.Controls
 		protected virtual Button CreateButton()
 		{
 			return new Button();
+		}
+
+		protected virtual Control CreateControl()
+		{
+			return new Control();
 		}
 
 		protected virtual ContentControl CreateContentControl()

@@ -30,7 +30,11 @@ namespace Medja.Controls
 			base.Arrange(availableSize);
 
 			if (Content != null)
+			{
+				Content.Position.X = Position.X;
+				Content.Position.Y = Position.Y;
 				Content.Arrange(availableSize);
+			}
 		}
 
 		public override IEnumerable<Control> GetAllControls()
