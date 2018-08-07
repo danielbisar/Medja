@@ -19,5 +19,13 @@ namespace Medja.OpenTk.Rendering
 
 			return result;
 		}
+
+		protected override Control CreateControl()
+		{
+			var result = base.CreateControl();
+			result.Renderer = new ControlRenderer();
+
+			return result;
+		}
 	}
 }
