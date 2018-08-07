@@ -56,7 +56,7 @@ namespace Medja.Controls
 		{
 			AnimationManager = new AnimationManager();
 			AttachedProperties = new Dictionary<int, object>();
-			InputState = new InputState();
+			InputState = new InputState(this);
 			Position = new MPosition();
 			BackgroundProperty = new Property<Color>();
 			IsEnabledProperty = new Property<bool>();

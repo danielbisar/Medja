@@ -9,13 +9,11 @@ namespace Medja.Controls
 	{
 		public List<Control> Children { get; }
 
-		public Thickness Margin { get; set; }
 		public Thickness Padding { get; set; }
 
 		protected Panel()
 		{
 			Children = new List<Control>();
-			Margin = new Thickness();
 			Padding = new Thickness();
 		}
 

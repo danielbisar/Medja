@@ -19,7 +19,7 @@ namespace Medja.Controls
 			_docks = new Dictionary<Control, Dock>();
 		}
 
-		public void Add(Control control, Dock dock)
+		public void Add(Dock dock, Control control)
 		{
 			_docks.Add(control, dock);
 			Children.Add(control);
@@ -41,11 +41,11 @@ namespace Medja.Controls
 
 		public override void Arrange(Size availableSize)
 		{
-			var left = Position.X;
-			var top = Position.Y;
+			var left = Position.X + Padding.Left;
+			var top = Position.Y + Padding.Top;
 
-			var height = availableSize.Height;
-			var width = availableSize.Width;
+			var height = availableSize.Height - Padding.TopAndBottom;
+			var width = availableSize.Width - Padding.LeftAndRight;
 
 			foreach (var child in Children.Where(p => p.Visibility != Visibility.Collapsed))
 			{

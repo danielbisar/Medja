@@ -16,6 +16,12 @@ namespace Medja
 		private double _dragThreshold;
 		private Point _mouseDownPointerPosition;
 
+		/// <summary>
+		/// Gets the control this InputState belongs to.
+		/// </summary>
+		/// <value>The control.</value>
+		public Control Control { get; }
+
 		public Property<bool> IsMouseOverProperty { get; }
 		public bool IsMouseOver
 		{
@@ -54,8 +60,9 @@ namespace Medja
 		public event EventHandler MouseClicked;
 		public event EventHandler<MouseDraggedEventArgs> MouseDragged;
 
-		public InputState()
+		public InputState(Control control)
 		{
+			Control = control;
 			IsLeftMouseDownProperty = new Property<bool>();
 			IsLeftMouseDownProperty.PropertyChanged += OnIsLeftMouseDownChanged;
 
