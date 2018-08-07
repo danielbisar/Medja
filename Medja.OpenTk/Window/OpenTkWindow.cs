@@ -7,6 +7,7 @@ namespace Medja.OpenTk
 	public class OpenTkWindow : MedjaWindow
 	{
 		private int _ignoreNextNResizeEvents;
+		private bool _isGameWindowDisposed;
 
 		public GameWindow GameWindow { get; }
 
@@ -15,6 +16,7 @@ namespace Medja.OpenTk
 			_ignoreNextNResizeEvents = 0;
 			GameWindow = new GameWindow();
 
+			GameWindow.Disposed += OnGameWindowDisposed;
 			GameWindow.Load += OnWindowLoad;
 			GameWindow.Resize += OnGameWindowResize;
 
@@ -23,6 +25,11 @@ namespace Medja.OpenTk
 			Position.PropertyY.PropertyChanged += p => GameWindow.Y = (int)Position.Y;
 			Position.PropertyWidth.PropertyChanged += p => GameWindow.Width = (int)Position.Width;
 			Position.PropertyHeight.PropertyChanged += p => GameWindow.Height = (int)Position.Height;
+		}
+
+		private void OnGameWindowDisposed(object sender, EventArgs e)
+		{
+			_isGameWindowDisposed = true;
 		}
 
 		private void OnWindowLoad(object sender, EventArgs e)
@@ -45,7 +52,9 @@ namespace Medja.OpenTk
 
 		public override void Close()
 		{
-			GameWindow.Close();
+			if (!_isGameWindowDisposed)
+				GameWindow.Close();
+
 			base.Close();
 		}
 	}
