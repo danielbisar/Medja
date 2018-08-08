@@ -5,6 +5,7 @@ using Medja.OpenTk.Rendering;
 using OpenTK.Graphics.OpenGL;
 using System;
 using Medja.Primitives;
+using System.Diagnostics;
 
 namespace MedjaOpenGlTestApp
 {
@@ -33,7 +34,7 @@ namespace MedjaOpenGlTestApp
 			{
 				button.Text = item;
 			};
-			x.ButtonClicked += (s, e) => Console.WriteLine("Button " + e.Item + " clicked");
+			x.ButtonClicked += (s, e) => window.Close(); //Console.WriteLine("Button " + e.Item + " clicked");
 
 			for (int i = 0; i < 100; i++)
 				x.AddItem("Item " + i);
@@ -47,7 +48,6 @@ namespace MedjaOpenGlTestApp
 			//stackPanel.Children.Add(controlFactory.Create<Button>(p => p.Text = "test"));
 
 			window.Content = mainDock;
-
 			application.Run();
 		}
 
