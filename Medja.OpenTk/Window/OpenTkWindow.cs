@@ -7,7 +7,7 @@ namespace Medja.OpenTk
 	public class OpenTkWindow : MedjaWindow
 	{
 		private int _ignoreNextNResizeEvents;
-		private bool _isGameWindowDisposed;
+		private bool _calledClose;
 
 		public GameWindow GameWindow { get; }
 
@@ -16,20 +16,15 @@ namespace Medja.OpenTk
 			_ignoreNextNResizeEvents = 0;
 			GameWindow = new GameWindow();
 
-			GameWindow.Disposed += OnGameWindowDisposed;
 			GameWindow.Load += OnWindowLoad;
 			GameWindow.Resize += OnGameWindowResize;
+			GameWindow.Closed += OnGameWindowClosed;
 
 			TitleProperty.PropertyChanged += p => GameWindow.Title = Title;
 			Position.PropertyX.PropertyChanged += p => GameWindow.X = (int)Position.X;
 			Position.PropertyY.PropertyChanged += p => GameWindow.Y = (int)Position.Y;
 			Position.PropertyWidth.PropertyChanged += p => GameWindow.Width = (int)Position.Width;
 			Position.PropertyHeight.PropertyChanged += p => GameWindow.Height = (int)Position.Height;
-		}
-
-		private void OnGameWindowDisposed(object sender, EventArgs e)
-		{
-			_isGameWindowDisposed = true;
 		}
 
 		private void OnWindowLoad(object sender, EventArgs e)
@@ -50,12 +45,38 @@ namespace Medja.OpenTk
 			Position.PropertyHeight.UnnotifiedSet(GameWindow.ClientRectangle.Height);
 		}
 
+		private void OnGameWindowClosed(object sender, EventArgs e)
+		{
+			Close();
+		}
+
 		public override void Close()
 		{
-			if (!_isGameWindowDisposed)
-				GameWindow.Close();
+			// prevent multiple calls of close which could occure by calling
+			// close -> GameWindow.Close -> GameWindow.Closed event
+			if (!_calledClose)
+			{
+				_calledClose = true;
 
-			base.Close();
+				TryCloseGameWindow();
+				base.Close();
+			}
+		}
+
+		private void TryCloseGameWindow()
+		{
+			try
+			{
+				GameWindow.Close();
+				GameWindow.Dispose();
+			}
+			catch (ObjectDisposedException)
+			{
+				// there seems to be no safe way to check if the window
+				// is disposed already so we just catch the ObjectDisposedException
+				// even the Disposed event is not executed if the user clicks on the X
+				// to close the window...
+			}
 		}
 	}
 }
