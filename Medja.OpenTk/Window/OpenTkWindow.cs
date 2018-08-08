@@ -67,7 +67,9 @@ namespace Medja.OpenTk
 		{
 			try
 			{
-				GameWindow.Close();
+				// call to GameWindow.Close(); and afterwards Dispose will
+				// create an error under linux (BadWindow from window manager X), 
+				// so we just call Dispose which will also close the window.
 				GameWindow.Dispose();
 			}
 			catch (ObjectDisposedException)
