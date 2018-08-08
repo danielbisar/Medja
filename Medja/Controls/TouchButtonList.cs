@@ -101,7 +101,13 @@ namespace Medja.Controls
 			UpdateItemsAndScrollingState();
 		}
 
-		private void UpdateItemsAndScrollingState()
+		public void ScrollIntoView(TItem item)
+		{
+			_visibleItems.MakeActivePageWith(item);
+			UpdateItemsAndScrollingState();
+		}
+
+		public void UpdateItemsAndScrollingState()
 		{
 			UpdateItems();
 			UpdateButtons();

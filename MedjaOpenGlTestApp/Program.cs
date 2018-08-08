@@ -29,7 +29,7 @@ namespace MedjaOpenGlTestApp
 			status.Position.Height = 50;
 
 			var x = controlFactory.Create<TouchButtonList<string>>();
-			x.PageSize = 10;
+			x.PageSize = 5;
 			x.InitializeButtonFromItem = (item, button) =>
 			{
 				button.Text = item;
@@ -38,6 +38,8 @@ namespace MedjaOpenGlTestApp
 
 			for (int i = 0; i < 100; i++)
 				x.AddItem("Item " + i);
+
+			x.ScrollIntoView("Item 19");
 
 			var mainDock = controlFactory.Create<DockPanel>();
 

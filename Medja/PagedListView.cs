@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -52,6 +53,21 @@ namespace Medja
 		public IEnumerable<TItem> GetCurrentItems()
 		{
 			return Source.Skip(_currentPos).Take(PageSize);
+		}
+
+		public bool MakeActivePageWith(TItem item)
+		{
+			var index = Source.IndexOf(item);
+
+			if (index == -1)
+				return false;
+
+			_currentPos = 0;
+
+			while (_currentPos + PageSize <= index && CanMoveNext())
+				MoveNext();
+
+			return true;
 		}
 	}
 }
