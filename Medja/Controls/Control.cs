@@ -14,6 +14,10 @@ namespace Medja.Controls
 		public Dictionary<int, object> AttachedProperties { get; }
 		public InputState InputState { get; }
 
+		/// <summary>
+		/// Gets the position this item should be drawn at.
+		/// </summary>
+		/// <value>The position.</value>
 		public MPosition Position { get; }
 
 		public Property<Color> BackgroundProperty { get; }
