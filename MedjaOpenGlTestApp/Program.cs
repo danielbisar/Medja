@@ -41,10 +41,10 @@ namespace MedjaOpenGlTestApp
 
 			touchButtonList.ScrollIntoView("Item 19");
 
-			//var mainDock = controlFactory.Create<DockPanel>();
+			var mainDock = controlFactory.Create<DockPanel>();
 
-			//mainDock.Add(Dock.Top, status);
-			//mainDock.Add(Dock.Fill, x);
+			mainDock.Add(Dock.Top, status);
+			mainDock.Add(Dock.Fill, touchButtonList);
 
 			//var stackPanel = controlFactory.Create<VerticalStackPanel>();
 			//stackPanel.Children.Add(controlFactory.Create<Button>(p => p.Text = "test"));
@@ -61,7 +61,7 @@ namespace MedjaOpenGlTestApp
 			//touchButtonList.Position.Height = 600;
 
 			var textBlock = controlFactory.Create<TextBlock>();
-			textBlock.Text = "This is some text for testing\nwith break";
+			textBlock.Text = "This is some text for testing\n\rwith break";
 			textBlock.Position.Width = 800;
 
 			window.Content = textBlock;

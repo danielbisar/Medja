@@ -4,29 +4,20 @@ using Medja.Controls;
 
 namespace Medja.OpenTk.Rendering
 {
-	public class ProgressBarRenderer : ControlRendererBase<SKCanvas, ProgressBar>
+	public class ProgressBarRenderer : SkiaControlRendererBase<ProgressBar>
 	{
-		protected override void Render(SKCanvas context, ProgressBar control)
+		protected override void InternalRender()
 		{
-			var position = control.Position;
+			_paint.Color = SKColors.Black;
+			_canvas.DrawRect(_rect, _paint);
 
-			var backgroundRect = position.ToSKRect();
+			var filledRect = new SKRect(_rect.Left,
+										_rect.Top,
+										_rect.Left + _rect.Width * _control.Percentage,
+										_rect.Bottom);
 
-			var filledRect = new SKRect(backgroundRect.Left,
-										  backgroundRect.Top,
-										  backgroundRect.Left + backgroundRect.Width * control.Percentage,
-										  backgroundRect.Bottom);
-
-			using (var paint = new SKPaint())
-			{
-				paint.IsAntialias = true;
-
-				paint.Color = SKColors.Black;
-				context.DrawRect(backgroundRect, paint);
-
-				paint.Color = SKColors.Red;
-				context.DrawRect(filledRect, paint);
-			}
+			_paint.Color = SKColors.Red;
+			_canvas.DrawRect(filledRect, _paint);
 		}
 	}
 }
