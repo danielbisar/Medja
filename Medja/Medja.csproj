@@ -95,6 +95,7 @@
     <Compile Include="Reflection\ReflectionExtensions.cs" />
     <Compile Include="Controls\TouchButtonClickedEventArgs.cs" />
     <Compile Include="IDictionaryExtensions.cs" />
+    <Compile Include="Controls\Layout\Canvas.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
