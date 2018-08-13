@@ -33,13 +33,15 @@ namespace Medja.OpenTk.Rendering
 			var lines = _control.Text.Split(new[] { "\n\r", "\n", "\r" }, StringSplitOptions.None);
 			var lineHeight = _paint.FontSpacing;
 
-			for (int i = 0; i < lines.Length; i++)
+			// add the height also for the first line
+			// else it seems the text is drawn at a 
+			// too high position
+			pos.Y += lineHeight;
+
+			for (int i = 0; i < lines.Length && pos.Y <= _rect.Bottom; i++)
 			{
-				// add the height also for the first line
-				// else it seems the text is drawn at a 
-				// too high position
-				pos.Y += lineHeight;
 				_canvas.DrawText(lines[i], pos, _paint);
+				pos.Y += lineHeight;
 			}
 
 			//paint.BreakText
