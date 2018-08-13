@@ -62,7 +62,9 @@ namespace MedjaOpenGlTestApp
 
 			var textBlock = controlFactory.Create<TextBlock>();
 			textBlock.Text = "This is some text for testing\n\rwith break";
-			textBlock.Position.Width = 800;
+			//textBlock.Position.Width = 800;
+			//textBlock.Position.Height = 30;
+			textBlock.Background = new Color(1, 1, 0);
 
 			window.Content = textBlock;
 			application.Run();

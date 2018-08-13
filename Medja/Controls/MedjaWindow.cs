@@ -30,7 +30,14 @@ namespace Medja.Controls
 			// to the window
 
 			if (Content != null)
-				Content.Arrange(availableSize);
+			{
+				var pos = Content.Position;
+
+				pos.Width = Position.Width;
+				pos.Height = Position.Height;
+
+				Content.Arrange(new Size(pos.Width, pos.Height));
+			}
 		}
 
 		public virtual void Close()
