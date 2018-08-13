@@ -28,28 +28,36 @@ namespace MedjaOpenGlTestApp
 			//status.Background = new Color(0, 1, 0);
 			status.Position.Height = 50;
 
-			var x = controlFactory.Create<TouchButtonList<string>>();
-			x.PageSize = 5;
-			x.InitializeButtonFromItem = (item, button) =>
+			var touchButtonList = controlFactory.Create<TouchButtonList<string>>();
+			touchButtonList.PageSize = 5;
+			touchButtonList.InitializeButtonFromItem = (item, button) =>
 			{
 				button.Text = item;
 			};
-			x.ButtonClicked += (s, e) => window.Close(); //Console.WriteLine("Button " + e.Item + " clicked");
+			touchButtonList.ButtonClicked += (s, e) => window.Close(); //Console.WriteLine("Button " + e.Item + " clicked");
 
 			for (int i = 0; i < 100; i++)
-				x.AddItem("Item " + i);
+				touchButtonList.AddItem("Item " + i);
 
-			x.ScrollIntoView("Item 19");
+			touchButtonList.ScrollIntoView("Item 19");
 
-			var mainDock = controlFactory.Create<DockPanel>();
+			//var mainDock = controlFactory.Create<DockPanel>();
 
-			mainDock.Add(Dock.Top, status);
-			mainDock.Add(Dock.Fill, x);
+			//mainDock.Add(Dock.Top, status);
+			//mainDock.Add(Dock.Fill, x);
 
 			//var stackPanel = controlFactory.Create<VerticalStackPanel>();
 			//stackPanel.Children.Add(controlFactory.Create<Button>(p => p.Text = "test"));
 
-			window.Content = mainDock;
+			var canvas = controlFactory.Create<Canvas>();
+			canvas.Children.Add(touchButtonList);
+
+			touchButtonList.Position.Width = 700;
+			touchButtonList.Position.Height = 600;
+			touchButtonList.Position.X = 10;
+			touchButtonList.Position.Y = 10;
+
+			window.Content = canvas;
 			application.Run();
 		}
 

@@ -61,6 +61,8 @@ namespace Medja.Controls
 					position.Width = childAvailableSize.Width;
 					position.Height = ChildrenHeight;
 
+					child.Arrange(new Size(position.Width, position.Height));
+
 					//curY += childAvailableSize.Height + spacingY; <-- stretch
 					curY += position.Height + spacingY; // <-- just stack
 				}
