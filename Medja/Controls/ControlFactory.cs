@@ -14,12 +14,13 @@ namespace Medja.Controls
 			_factoryMethods = new Dictionary<Type, Func<object>>();
 
 			_factoryMethods.Add(typeof(Button), CreateButton);
+			_factoryMethods.Add(typeof(Canvas), CreateCanvas);
 			_factoryMethods.Add(typeof(Control), CreateControl);
 			_factoryMethods.Add(typeof(ContentControl), CreateContentControl);
 			_factoryMethods.Add(typeof(DockPanel), CreateDockPanel);
+			_factoryMethods.Add(typeof(TextBlock), CreateTextBlock);
 			_factoryMethods.Add(typeof(ProgressBar), CreateProgressBar);
 			_factoryMethods.Add(typeof(VerticalStackPanel), CreateVerticalStackPanel);
-			_factoryMethods.Add(typeof(Canvas), CreateCanvas);
 		}
 
 		protected void AddFactoryMethod<TControl>(Func<object> factory)
@@ -28,14 +29,14 @@ namespace Medja.Controls
 			_factoryMethods.Add(typeof(TControl), factory);
 		}
 
-		protected virtual Canvas CreateCanvas()
-		{
-			return new Canvas();
-		}
-
 		protected virtual Button CreateButton()
 		{
 			return new Button();
+		}
+
+		protected virtual Canvas CreateCanvas()
+		{
+			return new Canvas();
 		}
 
 		protected virtual Control CreateControl()
@@ -51,6 +52,11 @@ namespace Medja.Controls
 		protected virtual DockPanel CreateDockPanel()
 		{
 			return new DockPanel();
+		}
+
+		protected virtual TextBlock CreateTextBlock()
+		{
+			return new TextBlock();
 		}
 
 		protected virtual ProgressBar CreateProgressBar()

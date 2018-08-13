@@ -49,18 +49,22 @@ namespace MedjaOpenGlTestApp
 			//var stackPanel = controlFactory.Create<VerticalStackPanel>();
 			//stackPanel.Children.Add(controlFactory.Create<Button>(p => p.Text = "test"));
 
-			var canvas = controlFactory.Create<Canvas>();
-			canvas.Children.Add(touchButtonList);
+			//var canvas = controlFactory.Create<Canvas>();
+			//canvas.Children.Add(touchButtonList);
 
-			canvas.Position.X = 50;
-			canvas.Position.Y = 50;
+			//canvas.Position.X = 50;
+			//canvas.Position.Y = 50;
 
-			touchButtonList.AttachedProperties.Add(Canvas.AttachedXId, 10.0f);
-			touchButtonList.AttachedProperties.Add(Canvas.AttachedYId, 10.0f);
-			touchButtonList.Position.Width = 700;
-			touchButtonList.Position.Height = 600;
+			//touchButtonList.AttachedProperties.Add(Canvas.AttachedXId, 10.0f);
+			//touchButtonList.AttachedProperties.Add(Canvas.AttachedYId, 10.0f);
+			//touchButtonList.Position.Width = 700;
+			//touchButtonList.Position.Height = 600;
 
-			window.Content = canvas;
+			var textBlock = controlFactory.Create<TextBlock>();
+			textBlock.Text = "This is some text for testing\nwith break";
+			textBlock.Position.Width = 800;
+
+			window.Content = textBlock;
 			application.Run();
 		}
 

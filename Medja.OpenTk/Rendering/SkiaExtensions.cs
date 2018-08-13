@@ -8,17 +8,32 @@ namespace Medja.OpenTk.Rendering
 	/// </summary>
 	public static class SkiaExtensions
 	{
-		public static SKRect ToSKRect(this MPosition position)
-		{
-			return new SKRect(position.X, position.Y, position.Width + position.X, position.Height + position.Y);
-		}
-
 		public static SKColor ToSKColor(this Color color)
 		{
 			if (color == null)
 				return new SKColor(0, 0, 0, 0xFF);
 
 			return new SKColor((byte)(0xFF * color.Red), (byte)(0xFF * color.Green), (byte)(0xFF * color.Blue));
+		}
+
+		/// <summary>
+		/// Creates an SKPoint object from the X,Y components of the MPosition object.
+		/// </summary>
+		/// <returns>The SKPoint.</returns>
+		/// <param name="position">Position.</param>
+		public static SKPoint ToSKPoint(this MPosition position)
+		{
+			return new SKPoint(position.X, position.Y);
+		}
+
+		/// <summary>
+		/// Creates an SKRect from the MPosition object.
+		/// </summary>
+		/// <returns>The SKRect.</returns>
+		/// <param name="position">Position.</param>
+		public static SKRect ToSKRect(this MPosition position)
+		{
+			return new SKRect(position.X, position.Y, position.Width + position.X, position.Height + position.Y);
 		}
 
 		/// <summary>

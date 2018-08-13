@@ -12,18 +12,26 @@ namespace Medja.OpenTk.Rendering
 			return result;
 		}
 
-		protected override ProgressBar CreateProgressBar()
-		{
-			var result = base.CreateProgressBar();
-			result.Renderer = new ProgressBarRenderer();
-
-			return result;
-		}
-
 		protected override Control CreateControl()
 		{
 			var result = base.CreateControl();
 			result.Renderer = new ControlRenderer();
+
+			return result;
+		}
+
+		protected override TextBlock CreateTextBlock()
+		{
+			var result = base.CreateTextBlock();
+			result.Renderer = new TextBlockRenderer();
+
+			return result;
+		}
+
+		protected override ProgressBar CreateProgressBar()
+		{
+			var result = base.CreateProgressBar();
+			result.Renderer = new ProgressBarRenderer();
 
 			return result;
 		}

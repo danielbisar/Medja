@@ -96,6 +96,8 @@
     <Compile Include="Controls\TouchButtonClickedEventArgs.cs" />
     <Compile Include="IDictionaryExtensions.cs" />
     <Compile Include="Controls\Layout\Canvas.cs" />
+    <Compile Include="Controls\TextBlock.cs" />
+    <Compile Include="Primitives\TextWrapping.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -104,6 +106,7 @@
     <None Include="Documentation\Compiler.md" />
     <None Include="Documentation\CoreDesign.md" />
     <None Include="Documentation\Properties.md" />
+    <None Include="Documentation\Controls.md" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Reflection\" />
