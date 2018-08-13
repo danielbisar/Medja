@@ -1,27 +1,12 @@
-﻿using System;
-using Medja.Theming;
-using SkiaSharp;
-using Medja.Controls;
+﻿using Medja.Controls;
 
 namespace Medja.OpenTk.Rendering
 {
-	public class ControlRenderer : ControlRendererBase<SKCanvas, Control>
+	public class ControlRenderer : SkiaControlRendererBase<Control>
 	{
-		protected override void Render(SKCanvas canvas, Control control)
+		protected override void InternalRender()
 		{
-			var position = control.Position;
-			var skRect = position.ToSKRect();
-
-			using (var paint = new SKPaint())
-			{
-				paint.IsAntialias = true;
-
-				if (control.Background != null)
-				{
-					paint.Color = control.Background.ToSKColor();
-					canvas.DrawRect(skRect, paint);
-				}
-			}
+			RenderBackground();
 		}
 	}
 }

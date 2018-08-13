@@ -70,6 +70,7 @@
     <Compile Include="Rendering\ProgressBarRenderer.cs" />
     <Compile Include="Rendering\ControlRenderer.cs" />
     <Compile Include="Rendering\TextBlockRenderer.cs" />
+    <Compile Include="Rendering\SkiaControlRendererBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Medja\Medja.csproj">

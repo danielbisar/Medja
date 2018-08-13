@@ -4,26 +4,18 @@ using SkiaSharp;
 
 namespace Medja.OpenTk.Rendering
 {
-	public class ButtonRenderer : ControlRendererBase<SKCanvas, Button>
+	public class ButtonRenderer : SkiaControlRendererBase<Button>
 	{
-		protected override void Render(SKCanvas canvas, Button button)
+		protected override void InternalRender()
 		{
-			var position = button.Position;
-			var skRect = position.ToSKRect();
+			_paint.Color = _control.IsEnabled && _control.InputState.IsMouseOver ? SKColors.Red : SKColors.Black;
+			_canvas.DrawRect(_rect, _paint);
 
-			using (var paint = new SKPaint())
-			{
-				paint.IsAntialias = true;
+			_paint.Color = _control.IsEnabled ? SKColors.Red : SKColors.DarkRed;
+			_canvas.DrawLine(_rect.Left, _rect.Bottom, _rect.Right, _rect.Bottom, _paint);
 
-				paint.Color = button.IsEnabled && button.InputState.IsMouseOver ? SKColors.Red : SKColors.Black;
-				canvas.DrawRect(skRect, paint);
-
-				paint.Color = button.IsEnabled ? SKColors.Red : SKColors.DarkRed;
-				canvas.DrawLine(skRect.Left, skRect.Bottom, skRect.Right, skRect.Bottom, paint);
-
-				paint.Color = button.IsEnabled ? SKColors.White : SKColors.Gray;
-				canvas.RenderTextCentered(button.Text, paint, skRect);
-			}
+			_paint.Color = _control.IsEnabled ? SKColors.White : SKColors.Gray;
+			_canvas.RenderTextCentered(_control.Text, _paint, _rect);
 		}
 	}
 }

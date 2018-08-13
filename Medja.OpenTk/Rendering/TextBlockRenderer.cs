@@ -1,49 +1,48 @@
 ﻿using System;
 using Medja.Controls;
-using Medja.Theming;
 using SkiaSharp;
 
 namespace Medja.OpenTk.Rendering
 {
-	public class TextBlockRenderer : ControlRendererBase<SKCanvas, TextBlock>
+	public class TextBlockRenderer : SkiaControlRendererBase<TextBlock>
 	{
-		protected override void Render(SKCanvas canvas, TextBlock control)
+		protected override void Render(SKCanvas context, TextBlock control)
 		{
-			var text = control.Text;
-
-			if (string.IsNullOrWhiteSpace(text))
+			if (string.IsNullOrWhiteSpace(control.Text))
 				return;
 
-			//var rect = control.Position.ToSKRect();
-			var pos = control.Position.ToSKPoint();
+			base.Render(context, control);
+		}
 
-			using (var paint = new SKPaint())
+		protected override void InternalRender()
+		{
+			RenderBackground();
+			var pos = _control.Position.ToSKPoint();
+
+			//if (control.TextWrapping == Primitives.TextWrapping.None)
+			//{
+			//  // shorten the text to renderable length
+			//  while (paint.MeasureText(text) > rect.Width
+			//         && text.Length > 1)
+			//      text = text.Substring(0, text.Length - 2);
+			//}
+
+			_paint.Color = _control.IsEnabled ? SKColors.Black : SKColors.DarkGray;
+
+
+			var lines = _control.Text.Split(new[] { "\n\r", "\n", "\r" }, StringSplitOptions.None);
+			var lineHeight = _paint.FontSpacing;
+
+			for (int i = 0; i < lines.Length; i++)
 			{
-				paint.IsAntialias = true;
-				paint.Color = control.IsEnabled ? SKColors.Black : SKColors.DarkGray;
-
-				//if (control.TextWrapping == Primitives.TextWrapping.None)
-				//{
-				//	// shorten the text to renderable length
-				//	while (paint.MeasureText(text) > rect.Width
-				//		   && text.Length > 1)
-				//		text = text.Substring(0, text.Length - 2);
-				//}
-
-				var lines = text.Split(new[] { "\n\r", "\n", "\r" }, StringSplitOptions.None);
-				var lineHeight = paint.FontSpacing;
-
-				for (int i = 0; i < lines.Length; i++)
-				{
-					// add the height also for the first line
-					// else it seems the text is drawn at a 
-					// too high position
-					pos.Y += lineHeight;
-					canvas.DrawText(lines[i], pos, paint);
-				}
-
-				//paint.BreakText
+				// add the height also for the first line
+				// else it seems the text is drawn at a 
+				// too high position
+				pos.Y += lineHeight;
+				_canvas.DrawText(lines[i], pos, _paint);
 			}
+
+			//paint.BreakText
 		}
 	}
 }
