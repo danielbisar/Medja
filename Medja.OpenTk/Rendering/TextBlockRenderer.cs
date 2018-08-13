@@ -27,7 +27,9 @@ namespace Medja.OpenTk.Rendering
 			//      text = text.Substring(0, text.Length - 2);
 			//}
 
-			_paint.Color = _control.IsEnabled ? SKColors.Black : SKColors.DarkGray;
+			_paint.Color = _control.IsEnabled
+				? _control.Foreground.ToSKColor()
+				: _control.Foreground.GetLighter(0.25f).ToSKColor();
 
 
 			var lines = _control.Text.Split(new[] { "\n\r", "\n", "\r" }, StringSplitOptions.None);

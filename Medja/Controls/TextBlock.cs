@@ -19,10 +19,19 @@ namespace Medja.Controls
 			set { PropertyTextWrapping.Set(value); }
 		}
 
+		public readonly Property<Color> PropertyForeground;
+		public Color Foreground
+		{
+			get { return PropertyForeground.Get(); }
+			set { PropertyForeground.Set(value); }
+		}
+
 		public TextBlock()
 		{
 			PropertyText = new Property<string>();
 			PropertyTextWrapping = new Property<TextWrapping>();
+			PropertyForeground = new Property<Color>();
+			PropertyForeground.UnnotifiedSet(Colors.Black);
 		}
 	}
 }
