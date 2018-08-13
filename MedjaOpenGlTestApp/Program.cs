@@ -52,10 +52,13 @@ namespace MedjaOpenGlTestApp
 			var canvas = controlFactory.Create<Canvas>();
 			canvas.Children.Add(touchButtonList);
 
+			canvas.Position.X = 50;
+			canvas.Position.Y = 50;
+
+			touchButtonList.AttachedProperties.Add(Canvas.AttachedXId, 10.0f);
+			touchButtonList.AttachedProperties.Add(Canvas.AttachedYId, 10.0f);
 			touchButtonList.Position.Width = 700;
 			touchButtonList.Position.Height = 600;
-			touchButtonList.Position.X = 10;
-			touchButtonList.Position.Y = 10;
 
 			window.Content = canvas;
 			application.Run();
