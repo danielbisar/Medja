@@ -98,6 +98,7 @@
     <Compile Include="Controls\Layout\Canvas.cs" />
     <Compile Include="Controls\TextBlock.cs" />
     <Compile Include="Primitives\TextWrapping.cs" />
+    <Compile Include="Primitives\Colors.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

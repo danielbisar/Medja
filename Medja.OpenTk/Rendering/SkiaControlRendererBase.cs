@@ -57,7 +57,10 @@ namespace Medja.OpenTk.Rendering
 			if (_control.Background == null)
 				return;
 
-			_paint.Color = _control.Background.ToSKColor();
+			_paint.Color = _control.IsEnabled ?
+				_control.Background.ToSKColor()
+				: _control.Background.GetLighter(0.25f).ToSKColor();
+
 			_canvas.DrawRect(_rect, _paint);
 		}
 	}
