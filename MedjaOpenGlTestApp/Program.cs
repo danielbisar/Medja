@@ -59,7 +59,7 @@ namespace MedjaOpenGlTestApp
 			//touchButtonList.Position.Height = 600;
 
 			var textBlock = controlFactory.Create<TextBlock>();
-			textBlock.Font.Name = "Monospace Regular";
+			textBlock.Font.Name = "Monospace";
 			textBlock.Font.Size = 20;
 			textBlock.Text = "This is some text for testing\n\rwith break";
 			textBlock.Foreground = Colors.White;
