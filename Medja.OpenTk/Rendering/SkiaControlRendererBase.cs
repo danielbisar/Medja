@@ -63,5 +63,14 @@ namespace Medja.OpenTk.Rendering
 
 			_canvas.DrawRect(_rect, _paint);
 		}
+
+		protected void RenderBorder(SKColor color)
+		{
+			_paint.Color = color;
+			_paint.IsStroke = true;
+
+			_canvas.DrawRect(_rect, _paint);
+			_paint.IsStroke = false;
+		}
 	}
 }

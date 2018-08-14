@@ -103,6 +103,8 @@
     <Compile Include="Primitives\FontStyle.cs" />
     <Compile Include="Controls\TextBox.cs" />
     <Compile Include="Controls\TextControl.cs" />
+    <Compile Include="Controls\KeyboardEventArgs.cs" />
+    <Compile Include="Controls\FocusManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

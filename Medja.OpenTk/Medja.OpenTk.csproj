@@ -72,6 +72,7 @@
     <Compile Include="Rendering\TextBlockRenderer.cs" />
     <Compile Include="Rendering\SkiaControlRendererBase.cs" />
     <Compile Include="Rendering\TextBoxRenderer.cs" />
+    <Compile Include="Input\OpenTKKeyboardHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Medja\Medja.csproj">

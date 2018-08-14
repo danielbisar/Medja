@@ -11,11 +11,13 @@ namespace Medja.OpenTk
 	{
 		private readonly MedjaWindow _medjaWindow;
 		private readonly GameWindow _window;
+		private readonly FocusManager _focusManager;
 
-		public OpenTkMouseHandler(MedjaWindow medjaWindow, GameWindow window)
+		public OpenTkMouseHandler(MedjaWindow medjaWindow, GameWindow window, FocusManager focusManager)
 		{
 			_medjaWindow = medjaWindow;
 			_window = window;
+			_focusManager = focusManager;
 
 			_window.MouseDown += OnMouseDown;
 			_window.MouseMove += OnMouseMove;
@@ -53,6 +55,12 @@ namespace Medja.OpenTk
 		private void ApplyMouse(Control control, MouseState mouseState)
 		{
 			var inputState = control.InputState;
+
+			// we are going to receive a clicked event
+			if (inputState.IsLeftMouseDown && !mouseState.IsLeftButtonDown)
+			{
+				_focusManager.SetFocus(control);
+			}
 
 			// order is important
 			inputState.PointerPosition = ToMedjaPoint(mouseState.Position);

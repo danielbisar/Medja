@@ -59,6 +59,7 @@ namespace Medja
 
 		public event EventHandler MouseClicked;
 		public event EventHandler<MouseDraggedEventArgs> MouseDragged;
+		public event EventHandler<KeyboardEventArgs> KeyPressed;
 
 		public InputState(Control control)
 		{
@@ -73,6 +74,11 @@ namespace Medja
 			MouseWheelDeltaProperty = new Property<float>();
 
 			_dragThreshold = 5;
+		}
+
+		public void NotifyKeyPressed(char key)
+		{
+			KeyPressed?.Invoke(this, new KeyboardEventArgs(key));
 		}
 
 		private void OnPointerPositionChanged(IProperty property)
