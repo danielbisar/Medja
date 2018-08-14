@@ -37,7 +37,8 @@ namespace MedjaOpenGlTestApp
 			for (int i = 0; i < 100; i++)
 				touchButtonList.AddItem("Item " + i);
 
-			touchButtonList.ScrollIntoView("Item 19");
+			//touchButtonList.ScrollIntoView("Item 19");
+			touchButtonList.RemoveItem("Item 19");
 
 			var mainDock = controlFactory.Create<DockPanel>();
 
@@ -66,7 +67,7 @@ namespace MedjaOpenGlTestApp
 			//textBlock.Position.Width = 800;
 			//textBlock.Position.Height = 30;
 
-			window.Content = textBlock;
+			window.Content = touchButtonList;
 			application.Run();
 		}
 
