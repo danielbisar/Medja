@@ -1,4 +1,5 @@
 ﻿using Medja.Controls;
+using Medja.Primitives;
 
 namespace Medja.OpenTk.Rendering
 {
@@ -24,6 +25,7 @@ namespace Medja.OpenTk.Rendering
 		{
 			var result = base.CreateTextBox();
 			result.Renderer = new TextBoxRenderer();
+			result.Background = Colors.LightGray;
 
 			return result;
 		}

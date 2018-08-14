@@ -1,15 +1,23 @@
 ﻿using System;
 using Medja.Controls;
 using SkiaSharp;
+using System.Diagnostics;
 
 namespace Medja.OpenTk.Rendering
 {
 	public class TextBoxRenderer : SkiaControlRendererBase<TextBox>
 	{
+		private readonly Stopwatch _caretStopWatch;
+
+		public TextBoxRenderer()
+		{
+			_caretStopWatch = Stopwatch.StartNew();
+		}
+
 		protected override void InternalRender()
 		{
 			RenderBackground();
-			RenderBorder();
+			RenderBorder(_control.Foreground.ToSKColor());
 
 			var pos = _control.Position.ToSKPoint();
 
@@ -27,27 +35,22 @@ namespace Medja.OpenTk.Rendering
 				_paint.Typeface = SKTypeface.FromFamilyName(font.Name, font.Style.ToSKTypefaceStyle());
 
 			_paint.TextSize = font.Size;
-
-
 			_paint.Color = _control.IsEnabled
 				? _control.Foreground.ToSKColor()
 				: _control.Foreground.GetLighter(0.25f).ToSKColor();
 
+			pos.Y += _paint.FontSpacing;
+			_canvas.DrawText(_control.Text, pos, _paint);
 
-			var lines = _control.Text.Split(new[] { "\n\r", "\n", "\r" }, StringSplitOptions.None);
-			var lineHeight = _paint.FontSpacing;
-
-			// add the height also for the first line
-			// else it seems the text is drawn at a 
-			// too high position
-			pos.Y += lineHeight;
-
-			for (int i = 0; i < lines.Length && pos.Y <= _rect.Bottom; i++)
+			if (_control.IsFocused && _caretStopWatch.ElapsedTicks % 10000000 <= 5000000)
 			{
-				_canvas.DrawText(lines[i], pos, _paint);
-				pos.Y += lineHeight;
-			}
+				var textLength = _paint.MeasureText(_control.Text);
+				var caretLeft = _rect.Left + textLength;
+				var top = _rect.Top + _paint.FontSpacing - _paint.TextSize;
+				var bottom = top + _paint.FontSpacing;
 
+				_canvas.DrawLine(new SKPoint(caretLeft, top), new SKPoint(caretLeft, bottom), _paint);
+			}
 
 			if (_paint.Typeface != null)
 			{
@@ -60,11 +63,6 @@ namespace Medja.OpenTk.Rendering
 			//paint.BreakText
 		}
 
-		private void RenderBorder()
-		{
-			_paint.Color = _control.Foreground.ToSKColor();
-			_paint.IsStroke = true;
-			_canvas.DrawRect(_rect, _paint);
-		}
+
 	}
 }

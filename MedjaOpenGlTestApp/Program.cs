@@ -59,15 +59,20 @@ namespace MedjaOpenGlTestApp
 			//touchButtonList.Position.Width = 700;
 			//touchButtonList.Position.Height = 600;
 
-			var textBlock = controlFactory.Create<TextBlock>();
-			textBlock.Font.Name = "Monospace";
-			textBlock.Font.Size = 20;
-			textBlock.Text = "This is some text for testing\n\rwith break";
-			textBlock.Foreground = Colors.White;
+			var textBox = controlFactory.Create<TextBox>();
+			textBox.Text = "Enter your text";
 			//textBlock.Position.Width = 800;
 			//textBlock.Position.Height = 30;
 
-			window.Content = touchButtonList;
+			var textBox2 = controlFactory.Create<TextBox>();
+			textBox2.Text = "another one";
+
+			var stackPanel = controlFactory.Create<VerticalStackPanel>();
+			stackPanel.ChildrenHeight = 50;
+			stackPanel.Children.Add(textBox);
+			stackPanel.Children.Add(textBox2);
+
+			window.Content = stackPanel;
 			application.Run();
 		}
 

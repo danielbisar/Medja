@@ -20,33 +20,40 @@ namespace Medja.Controls
 		/// <value>The position.</value>
 		public MPosition Position { get; }
 
-		public Property<Color> BackgroundProperty { get; }
+		public Property<Color> PropertyBackground { get; }
 		public Color Background
 		{
-			get { return BackgroundProperty.Get(); }
-			set { BackgroundProperty.Set(value); }
+			get { return PropertyBackground.Get(); }
+			set { PropertyBackground.Set(value); }
 		}
 
-		public Property<bool> IsEnabledProperty { get; }
+		public Property<bool> PropertyIsEnabled { get; }
 		public bool IsEnabled
 		{
-			get { return IsEnabledProperty.Get(); }
-			set { IsEnabledProperty.Set(value); }
+			get { return PropertyIsEnabled.Get(); }
+			set { PropertyIsEnabled.Set(value); }
+		}
+
+		public Property<bool> PropertyIsFocused;
+		public bool IsFocused
+		{
+			get { return PropertyIsFocused.Get(); }
+			internal set { PropertyIsFocused.Set(value); }
 		}
 
 		public IControlRenderer Renderer { get; set; }
 
-		public Property<Visibility> VisibilityProperty { get; }
+		public Property<Visibility> PropertyVisibility { get; }
 		public Visibility Visibility
 		{
-			get { return VisibilityProperty.Get(); }
-			set { VisibilityProperty.Set(value); }
+			get { return PropertyVisibility.Get(); }
+			set { PropertyVisibility.Set(value); }
 		}
 
-		public Property<bool> IsVisibleProperty { get; }
+		public Property<bool> PropertyIsVisible { get; }
 		public bool IsVisible
 		{
-			get { return IsVisibleProperty.Get(); }
+			get { return PropertyIsVisible.Get(); }
 		}
 
 		public Property<object> DataContextProperty;
@@ -62,21 +69,22 @@ namespace Medja.Controls
 			AttachedProperties = new Dictionary<int, object>();
 			InputState = new InputState(this);
 			Position = new MPosition();
-			BackgroundProperty = new Property<Color>();
-			IsEnabledProperty = new Property<bool>();
-			IsEnabledProperty.UnnotifiedSet(true);
+			PropertyBackground = new Property<Color>();
+			PropertyIsEnabled = new Property<bool>();
+			PropertyIsEnabled.UnnotifiedSet(true);
+			PropertyIsFocused = new Property<bool>();
 
-			VisibilityProperty = new Property<Visibility>();
-			IsVisibleProperty = new Property<bool>();
-			IsVisibleProperty.UnnotifiedSet(true);
-			VisibilityProperty.PropertyChanged += OnVisibilityChanged;
+			PropertyVisibility = new Property<Visibility>();
+			PropertyIsVisible = new Property<bool>();
+			PropertyIsVisible.UnnotifiedSet(true);
+			PropertyVisibility.PropertyChanged += OnVisibilityChanged;
 
 			DataContextProperty = new Property<object>();
 		}
 
 		private void OnVisibilityChanged(IProperty property)
 		{
-			IsVisibleProperty.Set(Visibility == Visibility.Visible);
+			PropertyIsVisible.Set(Visibility == Visibility.Visible);
 		}
 
 		public virtual void UpdateLayout()
