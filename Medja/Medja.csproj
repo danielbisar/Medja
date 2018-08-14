@@ -99,6 +99,8 @@
     <Compile Include="Controls\TextBlock.cs" />
     <Compile Include="Primitives\TextWrapping.cs" />
     <Compile Include="Primitives\Colors.cs" />
+    <Compile Include="Primitives\Font.cs" />
+    <Compile Include="Primitives\FontStyle.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -37,6 +37,28 @@ namespace Medja.OpenTk.Rendering
 		}
 
 		/// <summary>
+		/// Converts the FontStyle to the SKTypefaceStyle.
+		/// </summary>
+		/// <returns>The SKTypeface style.</returns>
+		/// <param name="fontStyle">Font style.</param>
+		public static SKTypefaceStyle ToSKTypefaceStyle(this FontStyle fontStyle)
+		{
+			switch (fontStyle)
+			{
+				case FontStyle.Normal:
+					return SKTypefaceStyle.Normal;
+				case FontStyle.Bold:
+					return SKTypefaceStyle.Bold;
+				case FontStyle.Italic:
+					return SKTypefaceStyle.Italic;
+				case FontStyle.BoldAndItalic:
+					return SKTypefaceStyle.BoldItalic;
+				default:
+					return SKTypefaceStyle.Normal;
+			}
+		}
+
+		/// <summary>
 		/// Renders the specified text on the canvas with the given paint and centered inside the given rect.
 		/// </summary>
 		/// <param name="text">Text.</param>

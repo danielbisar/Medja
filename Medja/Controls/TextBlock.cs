@@ -26,12 +26,16 @@ namespace Medja.Controls
 			set { PropertyForeground.Set(value); }
 		}
 
+		public Font Font { get; }
+
 		public TextBlock()
 		{
 			PropertyText = new Property<string>();
 			PropertyTextWrapping = new Property<TextWrapping>();
 			PropertyForeground = new Property<Color>();
 			PropertyForeground.UnnotifiedSet(Colors.Black);
+
+			Font = new Font();
 		}
 	}
 }
