@@ -89,6 +89,12 @@ namespace Medja.Controls
 			UpdateItemsAndScrollingState();
 		}
 
+		public void RemoveItem(TItem item)
+		{
+			if (Items.Remove(item))
+				UpdateItemsAndScrollingState();
+		}
+
 		public void ScrollUp()
 		{
 			_visibleItems.MovePrevious();
