@@ -18,6 +18,7 @@ namespace Medja.Controls
 			_factoryMethods.Add(typeof(Control), CreateControl);
 			_factoryMethods.Add(typeof(ContentControl), CreateContentControl);
 			_factoryMethods.Add(typeof(DockPanel), CreateDockPanel);
+			_factoryMethods.Add(typeof(TextBox), CreateTextBox);
 			_factoryMethods.Add(typeof(TextBlock), CreateTextBlock);
 			_factoryMethods.Add(typeof(ProgressBar), CreateProgressBar);
 			_factoryMethods.Add(typeof(VerticalStackPanel), CreateVerticalStackPanel);
@@ -52,6 +53,11 @@ namespace Medja.Controls
 		protected virtual DockPanel CreateDockPanel()
 		{
 			return new DockPanel();
+		}
+
+		protected virtual TextBox CreateTextBox()
+		{
+			return new TextBox();
 		}
 
 		protected virtual TextBlock CreateTextBlock()

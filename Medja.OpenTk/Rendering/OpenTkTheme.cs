@@ -20,6 +20,14 @@ namespace Medja.OpenTk.Rendering
 			return result;
 		}
 
+		protected override TextBox CreateTextBox()
+		{
+			var result = base.CreateTextBox();
+			result.Renderer = new TextBoxRenderer();
+
+			return result;
+		}
+
 		protected override TextBlock CreateTextBlock()
 		{
 			var result = base.CreateTextBlock();

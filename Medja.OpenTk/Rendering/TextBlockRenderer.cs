@@ -6,17 +6,13 @@ namespace Medja.OpenTk.Rendering
 {
 	public class TextBlockRenderer : SkiaControlRendererBase<TextBlock>
 	{
-		protected override void Render(SKCanvas context, TextBlock control)
-		{
-			if (string.IsNullOrWhiteSpace(control.Text))
-				return;
-
-			base.Render(context, control);
-		}
-
 		protected override void InternalRender()
 		{
 			RenderBackground();
+
+			if (string.IsNullOrWhiteSpace(_control.Text))
+				return;
+
 			var pos = _control.Position.ToSKPoint();
 
 			//if (control.TextWrapping == Primitives.TextWrapping.None)
