@@ -27,6 +27,14 @@ namespace Medja.OpenTk.Rendering
 			//      text = text.Substring(0, text.Length - 2);
 			//}
 
+			var font = _control.Font;
+
+			if (!string.IsNullOrEmpty(font.Name))
+				_paint.Typeface = SKTypeface.FromFamilyName(font.Name, font.Style.ToSKTypefaceStyle());
+
+			_paint.TextSize = font.Size;
+
+
 			_paint.Color = _control.IsEnabled
 				? _control.Foreground.ToSKColor()
 				: _control.Foreground.GetLighter(0.25f).ToSKColor();
@@ -44,6 +52,15 @@ namespace Medja.OpenTk.Rendering
 			{
 				_canvas.DrawText(lines[i], pos, _paint);
 				pos.Y += lineHeight;
+			}
+
+
+			if (_paint.Typeface != null)
+			{
+				// TODO this is for now, we will maybe keep the typefaces in a 
+				// cache depending on the performance
+				_paint.Typeface.Dispose();
+				_paint.Typeface = null;
 			}
 
 			//paint.BreakText
