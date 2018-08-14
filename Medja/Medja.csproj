@@ -101,6 +101,8 @@
     <Compile Include="Primitives\Colors.cs" />
     <Compile Include="Primitives\Font.cs" />
     <Compile Include="Primitives\FontStyle.cs" />
+    <Compile Include="Controls\TextBox.cs" />
+    <Compile Include="Controls\TextControl.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

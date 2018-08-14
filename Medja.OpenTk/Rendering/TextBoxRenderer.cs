@@ -4,14 +4,12 @@ using SkiaSharp;
 
 namespace Medja.OpenTk.Rendering
 {
-	public class TextBlockRenderer : SkiaControlRendererBase<TextBlock>
+	public class TextBoxRenderer : SkiaControlRendererBase<TextBox>
 	{
 		protected override void InternalRender()
 		{
 			RenderBackground();
-
-			if (string.IsNullOrWhiteSpace(_control.Text))
-				return;
+			RenderBorder();
 
 			var pos = _control.Position.ToSKPoint();
 
@@ -60,6 +58,13 @@ namespace Medja.OpenTk.Rendering
 			}
 
 			//paint.BreakText
+		}
+
+		private void RenderBorder()
+		{
+			_paint.Color = _control.Foreground.ToSKColor();
+			_paint.IsStroke = true;
+			_canvas.DrawRect(_rect, _paint);
 		}
 	}
 }
