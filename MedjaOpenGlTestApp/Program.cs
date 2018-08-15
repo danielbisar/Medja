@@ -4,12 +4,14 @@ using Medja.OpenTk;
 using Medja.OpenTk.Rendering;
 using OpenTK.Graphics.OpenGL;
 using Medja.Primitives;
+using System;
 
 namespace MedjaOpenGlTestApp
 {
 	class MainClass
 	{
 		private static MedjaWindow _window;
+		private static DialogParentControl _dialogParentControl;
 
 		public static void Main(string[] args)
 		{
@@ -19,23 +21,58 @@ namespace MedjaOpenGlTestApp
 			var controlFactory = library.ControlFactory;
 			var application = MedjaApplication.Create(library);
 
+			_dialogParentControl = controlFactory.Create<DialogParentControl>();
+			_dialogParentControl.Content = CreateTouchButtonList(controlFactory);
+			_dialogParentControl.DialogControl = CreateDialog(controlFactory);
+			_dialogParentControl.IsDialogVisible = true;
+
 			_window = application.CreateWindow();
-			application.MainWindow = _window;
-			_window.Background = Colors.Black;
-
 			_window.CenterOnScreen(800, 600);
+			_window.Background = Colors.Black;
+			_window.Content = _dialogParentControl;
 
-			var status = controlFactory.Create<Control>();
-			//status.Background = new Color(0, 1, 0);
-			status.Position.Height = 50;
+			application.MainWindow = _window;
+			application.Run();
+		}
 
-			var touchButtonList = controlFactory.Create<TouchButtonList<string>>();
+		private static Dialog CreateDialog(ControlFactory controlFactory)
+		{
+			var result = controlFactory.Create<InputBoxDialog>();
+			result.Message = "This is a message!";
+
+			return result;
+		}
+
+		private static Control CreateTouchButtonList(ControlFactory factory)
+		{
+			var touchButtonList = factory.Create<TouchButtonList<string>>();
 			touchButtonList.PageSize = 5;
 			touchButtonList.InitializeButtonFromItem = (item, b) =>
 			{
 				b.Text = item;
 			};
-			touchButtonList.ButtonClicked += (s, e) => _window.Close(); //Console.WriteLine("Button " + e.Item + " clicked");
+			touchButtonList.ButtonClicked += (s, e) =>
+			{
+				_dialogParentControl.IsDialogVisible = true;
+
+				PropertyChangedEventHandler onDialogClosed = null;
+
+				onDialogClosed = p =>
+				{
+					if (_dialogParentControl.IsDialogVisible == false)
+					{
+						e.Button.Text = "XXX: " + ((InputBoxDialog)_dialogParentControl.DialogControl).InputText;
+						_dialogParentControl.PropertyIsDialogVisible.PropertyChanged -= onDialogClosed;
+					}
+				};
+
+				_dialogParentControl.PropertyIsDialogVisible.PropertyChanged += onDialogClosed;
+
+				var inputBox = ((InputBoxDialog)_dialogParentControl.DialogControl);
+				inputBox.Message = (string)e.Item;
+				inputBox.InputText = "type something";
+
+			};
 
 			for (int i = 0; i < 100; i++)
 				touchButtonList.AddItem("Item " + i);
@@ -43,46 +80,7 @@ namespace MedjaOpenGlTestApp
 			//touchButtonList.ScrollIntoView("Item 19");
 			touchButtonList.RemoveItem("Item 19");
 
-			var mainDock = controlFactory.Create<DockPanel>();
-
-			mainDock.Add(Dock.Top, status);
-			mainDock.Add(Dock.Fill, touchButtonList);
-
-			//var stackPanel = controlFactory.Create<VerticalStackPanel>();
-			//stackPanel.Children.Add(controlFactory.Create<Button>(p => p.Text = "test"));
-
-			//var canvas = controlFactory.Create<Canvas>();
-			//canvas.Children.Add(touchButtonList);
-
-			//canvas.Position.X = 50;
-			//canvas.Position.Y = 50;
-
-			//touchButtonList.AttachedProperties.Add(Canvas.AttachedXId, 10.0f);
-			//touchButtonList.AttachedProperties.Add(Canvas.AttachedYId, 10.0f);
-			//touchButtonList.Position.Width = 700;
-			//touchButtonList.Position.Height = 600;
-
-			var textBox = controlFactory.Create<TextBox>();
-			textBox.Text = "Enter your text";
-			//textBlock.Position.Width = 800;
-			//textBlock.Position.Height = 30;
-
-			var textBox2 = controlFactory.Create<TextBox>();
-			textBox2.Text = "another one";
-
-			var button = controlFactory.Create<Button>();
-			button.Text = "example button";
-
-
-			var stackPanel = controlFactory.Create<VerticalStackPanel>();
-			stackPanel.Padding = new Thickness(10);
-			stackPanel.ChildrenHeight = 25;
-			stackPanel.Children.Add(textBox);
-			stackPanel.Children.Add(textBox2);
-			stackPanel.Children.Add(button);
-
-			_window.Content = touchButtonList;
-			application.Run();
+			return touchButtonList;
 		}
 
 		private static IRenderer CreateRenderer()

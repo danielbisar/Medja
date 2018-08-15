@@ -6,6 +6,7 @@ namespace Medja.Controls
 	{
 		public TextBox()
 		{
+			PropertyText.UnnotifiedSet(string.Empty);
 			InputState.KeyPressed += OnKeyPressed;
 		}
 

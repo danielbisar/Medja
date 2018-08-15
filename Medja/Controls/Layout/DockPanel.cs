@@ -71,7 +71,7 @@ namespace Medja.Controls
 						width -= childPos.Width;
 						break;
 					case Dock.Right:
-						childPos.X = width - childPos.Width;
+						childPos.X = left + width - childPos.Width;
 						childPos.Y = top;
 						childPos.Height = height;
 

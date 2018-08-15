@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Medja.Primitives;
 
 namespace Medja.Controls
@@ -12,9 +13,19 @@ namespace Medja.Controls
 			set { PropertyContent.Set(value); }
 		}
 
+		public Thickness Padding { get; set; }
+
 		public ContentControl()
 		{
 			PropertyContent = new Property<Control>();
+			Padding = new Thickness();
+			PropertyIsEnabled.PropertyChanged += OnIsEnabledChanged;
+		}
+
+		private void OnIsEnabledChanged(IProperty property)
+		{
+			if (Content != null)
+				Content.IsEnabled = IsEnabled;
 		}
 
 		public override Size Measure(Size availableSize)
@@ -33,10 +44,10 @@ namespace Medja.Controls
 			{
 				var pos = Content.Position;
 
-				pos.X = Position.X;
-				pos.Y = Position.Y;
-				pos.Width = Position.Width;
-				pos.Height = Position.Height;
+				pos.X = Position.X + Padding.Left;
+				pos.Y = Position.Y + Padding.Right;
+				pos.Width = Position.Width - Padding.LeftAndRight;
+				pos.Height = Position.Height - Padding.TopAndBottom;
 
 				Content.Arrange(new Size(pos.Width, pos.Height));
 			}
