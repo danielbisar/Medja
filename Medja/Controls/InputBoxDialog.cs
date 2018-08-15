@@ -79,7 +79,6 @@ namespace Medja.Controls
 
 			var buttonDockPanel = _controlFactory.Create<DockPanel>();
 			buttonDockPanel.Position.Height = 60;
-			//buttonDockPanel.Padding = new Thickness(50, 0);
 			buttonDockPanel.Add(Dock.Left, okButton);
 			buttonDockPanel.Add(Dock.Right, cancelButton);
 
