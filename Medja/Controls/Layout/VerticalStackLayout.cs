@@ -7,12 +7,12 @@ namespace Medja.Controls
 	public class VerticalStackPanel : Panel
 	{
 		public float SpaceBetweenChildren { get; set; }
-		public float ChildrenHeight { get; set; }
+		public float? ChildrenHeight { get; set; }
 
 		public VerticalStackPanel()
 		{
 			SpaceBetweenChildren = 10;
-			ChildrenHeight = 50; // todo could be calculated on the fly, currently we set it
+			ChildrenHeight = null; // todo could be calculated on the fly, currently we set it
 		}
 
 		// TODO margin and padding
@@ -59,7 +59,9 @@ namespace Medja.Controls
 					position.X = curX;
 					position.Y = curY;
 					position.Width = childAvailableSize.Width;
-					position.Height = ChildrenHeight;
+
+					if (ChildrenHeight.HasValue)
+						position.Height = ChildrenHeight.Value;
 
 					child.Arrange(new Size(position.Width, position.Height));
 

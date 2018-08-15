@@ -105,6 +105,11 @@
     <Compile Include="Controls\TextControl.cs" />
     <Compile Include="Controls\KeyboardEventArgs.cs" />
     <Compile Include="Controls\FocusManager.cs" />
+    <Compile Include="Controls\Dialog.cs" />
+    <Compile Include="Controls\DialogParentControl.cs" />
+    <Compile Include="Controls\SimpleMessageDialog.cs" />
+    <Compile Include="Globalization.cs" />
+    <Compile Include="Controls\InputBoxDialog.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

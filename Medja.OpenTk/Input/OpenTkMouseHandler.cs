@@ -33,14 +33,26 @@ namespace Medja.OpenTk
 		private void ApplyMouseToControls(MouseState e)
 		{
 			var position = e.Position;
+			Control relavantControl = null;
 
 			foreach (var control in _medjaWindow.GetAllControls().ToList())
 			{
-				if (IsMouseOver(control, position) && control.IsEnabled && control.IsVisible)
-					ApplyMouse(control, e);
+				if (control.IsEnabled
+					&& control.IsVisible
+					&& IsMouseOver(control, position))
+				{
+					if (relavantControl != null)
+						ClearInputState(relavantControl);
+
+					relavantControl = control;
+				}
 				else
 					ClearInputState(control);
 			}
+
+			// ApplyMouse only to the uppermost control
+			if (relavantControl != null)
+				ApplyMouse(relavantControl, e);
 		}
 
 		private bool IsMouseOver(Control control, Point pos)

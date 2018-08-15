@@ -8,6 +8,9 @@ namespace Medja
 		// creating a static variable inside this class makes creation 3X as slow as currently
 		private readonly EqualityComparer<T> _comparer;
 		private T _value;
+		private T _defaultValue;
+
+		public bool HasDefaultValue { get; private set; }
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
@@ -24,6 +27,18 @@ namespace Medja
 
 			_value = value;
 			NotifyPropertyChanged();
+		}
+
+		public void SetDefault(T value)
+		{
+			HasDefaultValue = true;
+			_defaultValue = value;
+		}
+
+		public void ResetAndClearWithDefault()
+		{
+			Set(_defaultValue);
+			HasDefaultValue = false;
 		}
 
 		public void UnnotifiedSet(T value)

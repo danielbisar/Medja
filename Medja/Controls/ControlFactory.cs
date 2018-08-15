@@ -17,7 +17,11 @@ namespace Medja.Controls
 			_factoryMethods.Add(typeof(Canvas), CreateCanvas);
 			_factoryMethods.Add(typeof(Control), CreateControl);
 			_factoryMethods.Add(typeof(ContentControl), CreateContentControl);
+			_factoryMethods.Add(typeof(Dialog), CreateDialog);
+			_factoryMethods.Add(typeof(DialogParentControl), CreateDialogParentControl);
 			_factoryMethods.Add(typeof(DockPanel), CreateDockPanel);
+			_factoryMethods.Add(typeof(InputBoxDialog), CreateInputBoxDialog);
+			_factoryMethods.Add(typeof(SimpleMessageDialog), CreateSimpleMessageDialog);
 			_factoryMethods.Add(typeof(TextBox), CreateTextBox);
 			_factoryMethods.Add(typeof(TextBlock), CreateTextBlock);
 			_factoryMethods.Add(typeof(ProgressBar), CreateProgressBar);
@@ -50,9 +54,29 @@ namespace Medja.Controls
 			return new ContentControl();
 		}
 
+		protected virtual Dialog CreateDialog()
+		{
+			return new Dialog();
+		}
+
+		protected virtual DialogParentControl CreateDialogParentControl()
+		{
+			return new DialogParentControl();
+		}
+
 		protected virtual DockPanel CreateDockPanel()
 		{
 			return new DockPanel();
+		}
+
+		protected virtual InputBoxDialog CreateInputBoxDialog()
+		{
+			return new InputBoxDialog(this);
+		}
+
+		protected virtual SimpleMessageDialog CreateSimpleMessageDialog()
+		{
+			return new SimpleMessageDialog(this);
 		}
 
 		protected virtual TextBox CreateTextBox()
