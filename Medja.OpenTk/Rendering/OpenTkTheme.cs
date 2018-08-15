@@ -9,6 +9,7 @@ namespace Medja.OpenTk.Rendering
 		{
 			var result = base.CreateButton();
 			result.Renderer = new ButtonRenderer();
+			result.Font.Name = "Sans";
 
 			return result;
 		}
@@ -25,7 +26,9 @@ namespace Medja.OpenTk.Rendering
 		{
 			var result = base.CreateTextBox();
 			result.Renderer = new TextBoxRenderer();
-			result.Background = Colors.LightGray;
+			result.Foreground = ColorMap.PrimaryText;
+			result.Background = ColorMap.Primary;
+			result.Font.Name = "Sans";
 
 			return result;
 		}
