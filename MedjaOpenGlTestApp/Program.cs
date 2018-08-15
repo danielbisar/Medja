@@ -9,6 +9,8 @@ namespace MedjaOpenGlTestApp
 {
 	class MainClass
 	{
+		private static MedjaWindow _window;
+
 		public static void Main(string[] args)
 		{
 			var library = new MedjaOpenTkLibrary(new TestAppTheme());
@@ -17,10 +19,11 @@ namespace MedjaOpenGlTestApp
 			var controlFactory = library.ControlFactory;
 			var application = MedjaApplication.Create(library);
 
-			var window = application.CreateWindow();
-			application.MainWindow = window;
+			_window = application.CreateWindow();
+			application.MainWindow = _window;
+			_window.Background = Colors.Black;
 
-			window.CenterOnScreen(800, 600);
+			_window.CenterOnScreen(800, 600);
 
 			var status = controlFactory.Create<Control>();
 			//status.Background = new Color(0, 1, 0);
@@ -28,11 +31,11 @@ namespace MedjaOpenGlTestApp
 
 			var touchButtonList = controlFactory.Create<TouchButtonList<string>>();
 			touchButtonList.PageSize = 5;
-			touchButtonList.InitializeButtonFromItem = (item, button) =>
+			touchButtonList.InitializeButtonFromItem = (item, b) =>
 			{
-				button.Text = item;
+				b.Text = item;
 			};
-			touchButtonList.ButtonClicked += (s, e) => window.Close(); //Console.WriteLine("Button " + e.Item + " clicked");
+			touchButtonList.ButtonClicked += (s, e) => _window.Close(); //Console.WriteLine("Button " + e.Item + " clicked");
 
 			for (int i = 0; i < 100; i++)
 				touchButtonList.AddItem("Item " + i);
@@ -67,12 +70,18 @@ namespace MedjaOpenGlTestApp
 			var textBox2 = controlFactory.Create<TextBox>();
 			textBox2.Text = "another one";
 
+			var button = controlFactory.Create<Button>();
+			button.Text = "example button";
+
+
 			var stackPanel = controlFactory.Create<VerticalStackPanel>();
-			stackPanel.ChildrenHeight = 50;
+			stackPanel.Padding = new Thickness(10);
+			stackPanel.ChildrenHeight = 25;
 			stackPanel.Children.Add(textBox);
 			stackPanel.Children.Add(textBox2);
+			stackPanel.Children.Add(button);
 
-			window.Content = stackPanel;
+			_window.Content = touchButtonList;
 			application.Run();
 		}
 
@@ -90,7 +99,8 @@ namespace MedjaOpenGlTestApp
 			GL.CullFace(CullFaceMode.Back);
 			GL.Enable(EnableCap.DepthTest);
 
-			GL.ClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+			var color = _window.Background;
+			GL.ClearColor(color.Red, color.Green, color.Blue, 1.0f);
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
 		}
 	}

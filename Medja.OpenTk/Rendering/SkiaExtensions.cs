@@ -58,23 +58,23 @@ namespace Medja.OpenTk.Rendering
 			}
 		}
 
-		/// <summary>
-		/// Renders the specified text on the canvas with the given paint and centered inside the given rect.
-		/// </summary>
-		/// <param name="text">Text.</param>
-		/// <param name="canvas">Canvas.</param>
-		/// <param name="paint">Paint.</param>
-		/// <param name="rect">Rect.</param>
-		public static void RenderTextCentered(this SKCanvas canvas, string text, SKPaint paint, SKRect rect)
-		{
-			if (string.IsNullOrEmpty(text))
-				return;
+		///// <summary>
+		///// Renders the specified text on the canvas with the given paint and centered inside the given rect.
+		///// </summary>
+		///// <param name="text">Text.</param>
+		///// <param name="canvas">Canvas.</param>
+		///// <param name="paint">Paint.</param>
+		///// <param name="rect">Rect.</param>
+		//public static void RenderTextCentered(this SKCanvas canvas, string text, SKPaint paint, SKRect rect)
+		//{
+		//	if (string.IsNullOrEmpty(text))
+		//		return;
 
-			var width = paint.MeasureText(text);
-			var height = paint.TextSize;
+		//	var width = paint.MeasureText(text);
+		//	var height = paint.TextSize;
 
-			canvas.DrawText(text, rect.MidX - width / 2, rect.MidY + height / 2, paint);
-		}
+		//	canvas.DrawText(text, rect.MidX - width / 2, rect.MidY + height / 2, paint);
+		//}
 
 		/// <summary>
 		/// Renders the specified text on the canvas with the given paint and inside the given rect.

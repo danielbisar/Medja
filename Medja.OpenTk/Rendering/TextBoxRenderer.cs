@@ -2,6 +2,7 @@
 using Medja.Controls;
 using SkiaSharp;
 using System.Diagnostics;
+using Medja.Primitives;
 
 namespace Medja.OpenTk.Rendering
 {
@@ -16,10 +17,13 @@ namespace Medja.OpenTk.Rendering
 
 		protected override void InternalRender()
 		{
-			RenderBackground();
-			RenderBorder(_control.Foreground.ToSKColor());
+			//RenderBackground();
+			//RenderBorder(_control.Foreground.ToSKColor(), new Thickness(1));
+
+			RenderBottomLine();
 
 			var pos = _control.Position.ToSKPoint();
+			var padding = new Thickness(5, 0);
 
 			//if (control.TextWrapping == Primitives.TextWrapping.None)
 			//{
@@ -39,7 +43,9 @@ namespace Medja.OpenTk.Rendering
 				? _control.Foreground.ToSKColor()
 				: _control.Foreground.GetLighter(0.25f).ToSKColor();
 
-			pos.Y += _paint.FontSpacing;
+			_rect.Left += padding.Left;
+			pos.Y += _paint.FontSpacing + padding.Top;
+			pos.X += padding.Left;
 			_canvas.DrawText(_control.Text, pos, _paint);
 
 			if (_control.IsFocused && _caretStopWatch.ElapsedTicks % 10000000 <= 5000000)
@@ -63,6 +69,23 @@ namespace Medja.OpenTk.Rendering
 			//paint.BreakText
 		}
 
+		private void RenderBottomLine()
+		{
+			if (!_control.IsEnabled)
+				_paint.Color = ColorMap.PrimaryLight.ToSKColor();
+			else
+			{
+				if (_control.IsFocused)
+				{
+					_paint.Color = ColorMap.Secondary.ToSKColor();
+				}
+				else
+				{
+					_paint.Color = ColorMap.PrimaryLight.ToSKColor();
+				}
+			}
 
+			_canvas.DrawLine(_rect.Left, _rect.Bottom, _rect.Right, _rect.Bottom, _paint);
+		}
 	}
 }
