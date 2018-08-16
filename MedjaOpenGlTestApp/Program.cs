@@ -37,7 +37,7 @@ namespace MedjaOpenGlTestApp
 
 		private static Dialog CreateDialog(ControlFactory controlFactory)
 		{
-			var result = controlFactory.Create<InputBoxDialog>();
+			var result = controlFactory.Create<QuestionDialog>();
 			result.Message = "This is a message!";
 
 			return result;
@@ -61,17 +61,14 @@ namespace MedjaOpenGlTestApp
 				{
 					if (_dialogParentControl.IsDialogVisible == false)
 					{
-						e.Button.Text = "XXX: " + ((InputBoxDialog)_dialogParentControl.DialogControl).InputText;
+						e.Button.Text = "XXX: " + ((QuestionDialog)_dialogParentControl.DialogControl).IsConfirmed;
 						_dialogParentControl.PropertyIsDialogVisible.PropertyChanged -= onDialogClosed;
 					}
 				};
 
 				_dialogParentControl.PropertyIsDialogVisible.PropertyChanged += onDialogClosed;
 
-				var inputBox = ((InputBoxDialog)_dialogParentControl.DialogControl);
-				inputBox.Message = (string)e.Item;
-				inputBox.InputText = "type something";
-
+				var inputBox = ((QuestionDialog)_dialogParentControl.DialogControl);
 			};
 
 			for (int i = 0; i < 100; i++)

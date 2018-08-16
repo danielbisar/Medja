@@ -31,6 +31,14 @@ namespace Medja.OpenTk.Rendering
 			return result;
 		}
 
+		protected override DialogButtonsControl CreateDialogButtonsControl()
+		{
+			var result = base.CreateDialogButtonsControl();
+			result.ButtonWidth = 150;
+
+			return result;
+		}
+
 		protected override InputBoxDialog CreateInputBoxDialog()
 		{
 			var result = base.CreateInputBoxDialog();
@@ -75,6 +83,15 @@ namespace Medja.OpenTk.Rendering
 		{
 			var result = base.CreateProgressBar();
 			result.Renderer = new ProgressBarRenderer();
+
+			return result;
+		}
+
+		protected override QuestionDialog CreateQuestionDialog()
+		{
+			var result = base.CreateQuestionDialog();
+			result.Renderer = new ControlRenderer();
+			result.Background = ColorMap.Primary;
 
 			return result;
 		}

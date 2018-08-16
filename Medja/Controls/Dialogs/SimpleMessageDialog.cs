@@ -38,16 +38,13 @@ namespace Medja.Controls
 			innerContentControl.Padding = new Thickness(10);
 			innerContentControl.Content = _messageTextBlock;
 
-			var okButton = CreateButton(Globalization.OK);
-			okButton.InputState.MouseClicked += OnOkButtonClicked;
-
-			var buttonDockPanel = _controlFactory.Create<DockPanel>();
-			buttonDockPanel.Position.Height = 60;
-			//buttonDockPanel.Padding = new Thickness(50, 0);
-			buttonDockPanel.Add(Dock.Bottom, okButton);
+			var buttons = _controlFactory.Create<DialogButtonsControl>();
+			buttons.Buttons = DialogButtons.Ok;
+			buttons.CreateContent();
+			buttons.Button1.InputState.MouseClicked += OnOkButtonClicked;
 
 			var dockPanel = _controlFactory.Create<DockPanel>();
-			dockPanel.Add(Dock.Bottom, buttonDockPanel);
+			dockPanel.Add(Dock.Bottom, buttons);
 			dockPanel.Add(Dock.Fill, innerContentControl);
 
 			return dockPanel;
@@ -56,15 +53,6 @@ namespace Medja.Controls
 		private void OnOkButtonClicked(object sender, EventArgs e)
 		{
 			DialogParent.IsDialogVisible = false;
-		}
-
-		private Button CreateButton(string text)
-		{
-			var result = _controlFactory.Create<Button>();
-			result.Text = text;
-			result.Position.Width = 100;
-
-			return result;
 		}
 	}
 }

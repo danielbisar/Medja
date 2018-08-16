@@ -105,11 +105,14 @@
     <Compile Include="Controls\TextControl.cs" />
     <Compile Include="Controls\KeyboardEventArgs.cs" />
     <Compile Include="Controls\FocusManager.cs" />
-    <Compile Include="Controls\Dialog.cs" />
-    <Compile Include="Controls\DialogParentControl.cs" />
-    <Compile Include="Controls\SimpleMessageDialog.cs" />
     <Compile Include="Globalization.cs" />
-    <Compile Include="Controls\InputBoxDialog.cs" />
+    <Compile Include="Controls\Dialogs\Dialog.cs" />
+    <Compile Include="Controls\Dialogs\DialogButtons.cs" />
+    <Compile Include="Controls\Dialogs\DialogButtonsControl.cs" />
+    <Compile Include="Controls\Dialogs\DialogParentControl.cs" />
+    <Compile Include="Controls\Dialogs\InputBoxDialog.cs" />
+    <Compile Include="Controls\Dialogs\QuestionDialog.cs" />
+    <Compile Include="Controls\Dialogs\SimpleMessageDialog.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -122,6 +125,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Reflection\" />
+    <Folder Include="Controls\Dialogs\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
