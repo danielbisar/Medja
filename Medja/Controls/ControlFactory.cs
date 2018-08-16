@@ -18,6 +18,7 @@ namespace Medja.Controls
 			_factoryMethods.Add(typeof(Control), CreateControl);
 			_factoryMethods.Add(typeof(ContentControl), CreateContentControl);
 			_factoryMethods.Add(typeof(Dialog), CreateDialog);
+			_factoryMethods.Add(typeof(DialogButtonsControl), CreateDialogButtonsControl);
 			_factoryMethods.Add(typeof(DialogParentControl), CreateDialogParentControl);
 			_factoryMethods.Add(typeof(DockPanel), CreateDockPanel);
 			_factoryMethods.Add(typeof(InputBoxDialog), CreateInputBoxDialog);
@@ -25,6 +26,7 @@ namespace Medja.Controls
 			_factoryMethods.Add(typeof(TextBox), CreateTextBox);
 			_factoryMethods.Add(typeof(TextBlock), CreateTextBlock);
 			_factoryMethods.Add(typeof(ProgressBar), CreateProgressBar);
+			_factoryMethods.Add(typeof(QuestionDialog), CreateQuestionDialog);
 			_factoryMethods.Add(typeof(VerticalStackPanel), CreateVerticalStackPanel);
 		}
 
@@ -57,6 +59,11 @@ namespace Medja.Controls
 		protected virtual Dialog CreateDialog()
 		{
 			return new Dialog();
+		}
+
+		protected virtual DialogButtonsControl CreateDialogButtonsControl()
+		{
+			return new DialogButtonsControl(this);
 		}
 
 		protected virtual DialogParentControl CreateDialogParentControl()
@@ -97,6 +104,11 @@ namespace Medja.Controls
 		protected virtual TouchButtonList<T> CreateTouchButtonList<T>()
 		{
 			return new TouchButtonList<T>(this);
+		}
+
+		protected virtual QuestionDialog CreateQuestionDialog()
+		{
+			return new QuestionDialog(this);
 		}
 
 		protected virtual VerticalStackPanel CreateVerticalStackPanel()

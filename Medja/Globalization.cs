@@ -6,5 +6,7 @@ namespace Medja
 	{
 		public static string OK = "OK";
 		public static string Cancel = "Cancel";
+		public static string Yes = "Yes";
+		public static string No = "No";
 	}
 }

@@ -71,19 +71,14 @@ namespace Medja.Controls
 			stackPanel.Children.Add(_messageTextBlock);
 			stackPanel.Children.Add(_inputTextBox);
 
-			var okButton = CreateButton(Globalization.OK);
-			okButton.InputState.MouseClicked += OnOkButtonClicked;
-
-			var cancelButton = CreateButton(Globalization.Cancel);
-			cancelButton.InputState.MouseClicked += OnCancelButtonClicked;
-
-			var buttonDockPanel = _controlFactory.Create<DockPanel>();
-			buttonDockPanel.Position.Height = 60;
-			buttonDockPanel.Add(Dock.Left, okButton);
-			buttonDockPanel.Add(Dock.Right, cancelButton);
+			var buttons = _controlFactory.Create<DialogButtonsControl>();
+			buttons.Buttons = DialogButtons.OkCancel;
+			buttons.CreateContent();
+			buttons.Button1.InputState.MouseClicked += OnOkButtonClicked;
+			buttons.Button2.InputState.MouseClicked += OnCancelButtonClicked;
 
 			var dockPanel = _controlFactory.Create<DockPanel>();
-			dockPanel.Add(Dock.Bottom, buttonDockPanel);
+			dockPanel.Add(Dock.Bottom, buttons);
 			dockPanel.Add(Dock.Fill, stackPanel);
 
 			return dockPanel;
@@ -104,15 +99,6 @@ namespace Medja.Controls
 		{
 			IsConfirmed = true;
 			DialogParent.IsDialogVisible = false;
-		}
-
-		private Button CreateButton(string text)
-		{
-			var result = _controlFactory.Create<Button>();
-			result.Text = text;
-			result.Position.Width = 100;
-
-			return result;
 		}
 	}
 }
