@@ -5,6 +5,7 @@ using Medja.OpenTk.Rendering;
 using OpenTK.Graphics.OpenGL;
 using Medja.Primitives;
 using System;
+using Medja.Performance;
 
 namespace MedjaOpenGlTestApp
 {
@@ -12,9 +13,13 @@ namespace MedjaOpenGlTestApp
 	{
 		private static MedjaWindow _window;
 		private static DialogParentControl _dialogParentControl;
+		private static FramesPerSecondCounter _fpsCounter;
 
 		public static void Main(string[] args)
 		{
+			_fpsCounter = new FramesPerSecondCounter();
+			_fpsCounter.FramesCounted += (s, e) => Console.WriteLine(_fpsCounter.FramesPerSecond);
+
 			var library = new MedjaOpenTkLibrary(new TestAppTheme());
 			library.RendererFactory = CreateRenderer;
 
@@ -90,6 +95,8 @@ namespace MedjaOpenGlTestApp
 
 		private static void SetupOpenGl()
 		{
+			_fpsCounter.Tick();
+
 			GL.Enable(EnableCap.CullFace);
 			GL.CullFace(CullFaceMode.Back);
 			GL.Enable(EnableCap.DepthTest);
