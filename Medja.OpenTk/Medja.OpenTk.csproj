@@ -74,6 +74,8 @@
     <Compile Include="Rendering\TextBoxRenderer.cs" />
     <Compile Include="Input\OpenTKKeyboardHandler.cs" />
     <Compile Include="Rendering\ColorMap.cs" />
+    <Compile Include="Rendering\TypefaceCache.cs" />
+    <Compile Include="Rendering\ISkiaRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Medja\Medja.csproj">

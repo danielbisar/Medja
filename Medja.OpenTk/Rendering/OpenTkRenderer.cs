@@ -14,6 +14,7 @@ namespace Medja.OpenTk.Rendering
 	{
 		private SkiaGLLayer _skia;
 		private SKCanvas _canvas;
+		private readonly SKTypeface _defaultTypeface;
 
 		private int _previous3DControlCount;
 		private int _previous2DControlCount;
@@ -26,6 +27,7 @@ namespace Medja.OpenTk.Rendering
 			_previous3DControlCount = 0;
 
 			_skia = new SkiaGLLayer();
+			_defaultTypeface = SKTypeface.FromFamilyName("Monospace", SKTypefaceStyle.Normal);
 
 			Before3D = InternalBefore3D;
 		}
@@ -88,12 +90,18 @@ namespace Medja.OpenTk.Rendering
 			if (!control.IsVisible)
 				return;
 
-			if (control.Renderer != null)
-				control.Renderer.Render(_canvas, control);
+			var skiaRenderer = control.Renderer as ISkiaRenderer;
+
+			if (skiaRenderer != null)
+			{
+				skiaRenderer.DefaultTypeFace = _defaultTypeface;
+				skiaRenderer.Render(_canvas, control);
+			}
 		}
 
 		public void Dispose()
 		{
+			_defaultTypeface.Dispose();
 			_skia.Dispose();
 		}
 	}

@@ -26,6 +26,7 @@ namespace MedjaOpenGlTestApp
 			var controlFactory = library.ControlFactory;
 			var application = MedjaApplication.Create(library);
 
+
 			_dialogParentControl = controlFactory.Create<DialogParentControl>();
 			_dialogParentControl.Content = CreateTouchButtonList(controlFactory);
 			_dialogParentControl.DialogControl = CreateDialog(controlFactory);
@@ -35,6 +36,7 @@ namespace MedjaOpenGlTestApp
 			_window.CenterOnScreen(800, 600);
 			_window.Background = Colors.Black;
 			_window.Content = _dialogParentControl;
+
 
 			application.MainWindow = _window;
 			application.Run();

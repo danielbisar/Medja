@@ -11,7 +11,7 @@ namespace Medja.OpenTk.Rendering
 	/// In Render call Render(canvas, control, ...) before using other render
 	/// methods of this class.
 	/// </summary>
-	public abstract class SkiaControlRendererBase<TControl> : ControlRendererBase<SKCanvas, TControl>
+	public abstract class SkiaControlRendererBase<TControl> : ControlRendererBase<SKCanvas, TControl>, ISkiaRenderer
 		where TControl : Control
 	{
 		protected readonly SKPaint _paint;
@@ -27,6 +27,8 @@ namespace Medja.OpenTk.Rendering
 		protected SKRect _rect;
 
 		protected TControl _control;
+
+		public SKTypeface DefaultTypeFace { get; set; }
 
 		public SkiaControlRendererBase()
 		{
@@ -88,8 +90,6 @@ namespace Medja.OpenTk.Rendering
 			var height = _paint.TextSize;
 
 			_canvas.DrawText(text, _rect.MidX - width / 2, _rect.MidY + height / 2, _paint);
-
-			EndText();
 		}
 
 		protected void RenderText(string text, Font font, SKPoint pos)
@@ -100,27 +100,23 @@ namespace Medja.OpenTk.Rendering
 			BeginText(font);
 
 			_canvas.DrawText(text, pos, _paint);
-
-			EndText();
 		}
 
 		private void BeginText(Font font)
 		{
-			if (!string.IsNullOrEmpty(font.Name))
-				_paint.Typeface = SKTypeface.FromFamilyName(font.Name, font.Style.ToSKTypefaceStyle());
-
+			// TODO this is just a workaround
+			_paint.Typeface = DefaultTypeFace;
 			_paint.TextSize = font.Size;
-		}
 
-		private void EndText()
-		{
-			if (_paint.Typeface != null)
-			{
-				// TODO this is for now, we will maybe keep the typefaces in a 
-				// cache depending on the performance
-				_paint.Typeface.Dispose();
-				_paint.Typeface = null;
-			}
+			//var nextTypeface = TypefaceCache.Get(font);
+
+			//if (_defaultTypeface != nextTypeface)
+			//{
+			//	_paint.Typeface = nextTypeface;
+			//	_defaultTypeface = nextTypeface;
+			//}
+
+			//_paint.TextSize = font.Size;
 		}
 	}
 }
