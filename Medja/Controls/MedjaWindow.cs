@@ -31,12 +31,7 @@ namespace Medja.Controls
 
 			if (Content != null)
 			{
-				var pos = Content.Position;
-
-				pos.Width = Position.Width;
-				pos.Height = Position.Height;
-
-				Content.Arrange(new Size(pos.Width, pos.Height));
+				ArrangeContent();
 			}
 		}
 
