@@ -46,8 +46,23 @@ namespace Medja.Controls
 
 				pos.X = Position.X + Padding.Left;
 				pos.Y = Position.Y + Padding.Right;
+				ArrangeContent();
+			}
+		}
+
+		protected virtual void ArrangeContent()
+		{
+			if (Content != null)
+			{
+				var pos = Content.Position;
+
 				pos.Width = Position.Width - Padding.LeftAndRight;
-				pos.Height = Position.Height - Padding.TopAndBottom;
+
+				var availableHeight = Position.Height - Padding.TopAndBottom;
+
+				pos.Height = Content.VerticalAlignment == VerticalAlignment.Top
+					|| Content.VerticalAlignment == VerticalAlignment.Bottom
+					? pos.Height : availableHeight;
 
 				Content.Arrange(new Size(pos.Width, pos.Height));
 			}

@@ -9,103 +9,74 @@ using Medja.Performance;
 
 namespace MedjaOpenGlTestApp
 {
-	class MainClass
-	{
-		private static MedjaWindow _window;
-		private static DialogParentControl _dialogParentControl;
-		private static FramesPerSecondCounter _fpsCounter;
+    class MainClass
+    {
+        private static MedjaWindow _window;
+        private static FramesPerSecondCounter _fpsCounter;
 
-		public static void Main(string[] args)
-		{
-			_fpsCounter = new FramesPerSecondCounter();
-			_fpsCounter.FramesCounted += (s, e) => Console.WriteLine(_fpsCounter.FramesPerSecond);
+        public static void Main(string[] args)
+        {
+            _fpsCounter = new FramesPerSecondCounter();
+            _fpsCounter.FramesCounted += (s, e) => Console.WriteLine(_fpsCounter.FramesPerSecond);
 
-			var library = new MedjaOpenTkLibrary(new TestAppTheme());
-			library.RendererFactory = CreateRenderer;
+            var library = new MedjaOpenTkLibrary(new TestAppTheme());
+            library.RendererFactory = CreateRenderer;
 
-			var controlFactory = library.ControlFactory;
-			var application = MedjaApplication.Create(library);
+            var controlFactory = library.ControlFactory;
+            var application = MedjaApplication.Create(library);
 
+            var textBlock1 = controlFactory.Create<TextBlock>();
+            textBlock1.Position.Height = 50;
+            textBlock1.Text = "TextBlock 1";
+            textBlock1.Background = new Color(1, 0.2f, 0);
 
-			_dialogParentControl = controlFactory.Create<DialogParentControl>();
-			_dialogParentControl.Content = CreateTouchButtonList(controlFactory);
-			_dialogParentControl.DialogControl = CreateDialog(controlFactory);
-			_dialogParentControl.IsDialogVisible = true;
+            var textBlock2 = controlFactory.Create<TextBlock>();
+            textBlock2.Position.Height = 50;
+            textBlock2.Position.Width = 200;
+            textBlock2.Text = "TextBlock 2";
+            textBlock2.Background = new Color(0, 1, 0);
+            textBlock2.HorizontalAlignment = HorizontalAlignment.Left;
 
-			_window = application.CreateWindow();
-			_window.CenterOnScreen(800, 600);
-			_window.Background = Colors.Black;
-			_window.Content = _dialogParentControl;
+            var textBlock3 = controlFactory.Create<TextBlock>();
+            textBlock3.Position.Height = 50;
+            textBlock3.Text = "TextBlock 3";
+            textBlock3.Background = new Color(0, 1, 1);
 
+            var dockPanel = controlFactory.Create<DockPanel>();
+            dockPanel.Add(Dock.Top, textBlock1);
+            dockPanel.Add(Dock.Bottom, textBlock2);
+            dockPanel.Add(Dock.Fill, textBlock3);
+            dockPanel.VerticalAlignment = VerticalAlignment.Top;
+            dockPanel.Position.Height = 200;
 
-			application.MainWindow = _window;
-			application.Run();
-		}
+            _window = application.CreateWindow();
+            _window.CenterOnScreen(800, 600);
+            _window.Background = Colors.Black;
+            _window.Content = dockPanel;
 
-		private static Dialog CreateDialog(ControlFactory controlFactory)
-		{
-			var result = controlFactory.Create<QuestionDialog>();
-			result.Message = "This is a message!";
+            application.MainWindow = _window;
+            application.Run();
+        }
 
-			return result;
-		}
+        private static IRenderer CreateRenderer()
+        {
+            var openTkRenderer = new OpenTkRenderer();
+            openTkRenderer.Before3D = SetupOpenGl;
 
-		private static Control CreateTouchButtonList(ControlFactory factory)
-		{
-			var touchButtonList = factory.Create<TouchButtonList<string>>();
-			touchButtonList.PageSize = 5;
-			touchButtonList.InitializeButtonFromItem = (item, b) =>
-			{
-				b.Text = item;
-			};
-			touchButtonList.ButtonClicked += (s, e) =>
-			{
-				_dialogParentControl.IsDialogVisible = true;
+            return openTkRenderer;
+        }
 
-				PropertyChangedEventHandler onDialogClosed = null;
+        private static void SetupOpenGl()
+        {
+            _fpsCounter.Tick();
 
-				onDialogClosed = p =>
-				{
-					if (_dialogParentControl.IsDialogVisible == false)
-					{
-						e.Button.Text = "XXX: " + ((QuestionDialog)_dialogParentControl.DialogControl).IsConfirmed;
-						_dialogParentControl.PropertyIsDialogVisible.PropertyChanged -= onDialogClosed;
-					}
-				};
+            GL.Enable(EnableCap.CullFace);
+            GL.CullFace(CullFaceMode.Back);
+            GL.Enable(EnableCap.DepthTest);
 
-				_dialogParentControl.PropertyIsDialogVisible.PropertyChanged += onDialogClosed;
-
-				var inputBox = ((QuestionDialog)_dialogParentControl.DialogControl);
-			};
-
-			for (int i = 0; i < 100; i++)
-				touchButtonList.AddItem("Item " + i);
-
-			//touchButtonList.ScrollIntoView("Item 19");
-			touchButtonList.RemoveItem("Item 19");
-
-			return touchButtonList;
-		}
-
-		private static IRenderer CreateRenderer()
-		{
-			var openTkRenderer = new OpenTkRenderer();
-			openTkRenderer.Before3D = SetupOpenGl;
-
-			return openTkRenderer;
-		}
-
-		private static void SetupOpenGl()
-		{
-			_fpsCounter.Tick();
-
-			GL.Enable(EnableCap.CullFace);
-			GL.CullFace(CullFaceMode.Back);
-			GL.Enable(EnableCap.DepthTest);
-
-			var color = _window.Background;
-			GL.ClearColor(color.Red, color.Green, color.Blue, 1.0f);
-			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
-		}
-	}
+            var color = _window.Background;
+            GL.ClearColor(color.Red, color.Green, color.Blue, 1.0f);
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
+        }
+    }
 }

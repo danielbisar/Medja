@@ -58,7 +58,7 @@
     <Compile Include="Controls\Layout\Dock.cs" />
     <Compile Include="Controls\Layout\DockPanel.cs" />
     <Compile Include="Controls\Layout\Panel.cs" />
-    <Compile Include="Controls\Layout\VerticalStackLayout.cs" />
+    <Compile Include="Controls\Layout\VerticalStackPanel.cs" />
     <Compile Include="Controls\MedjaWindow.cs" />
     <Compile Include="Controls\MouseDraggedEventArgs.cs" />
     <Compile Include="IMedjaLibrary.cs" />
@@ -113,6 +113,7 @@
     <Compile Include="Controls\Dialogs\InputBoxDialog.cs" />
     <Compile Include="Controls\Dialogs\QuestionDialog.cs" />
     <Compile Include="Controls\Dialogs\SimpleMessageDialog.cs" />
+    <Compile Include="Primitives\HorizontalAlignment.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -63,6 +63,20 @@ namespace Medja.Controls
 			set { DataContextProperty.Set(value); }
 		}
 
+		public readonly Property<VerticalAlignment> PropertyVerticalAlignment;
+		public VerticalAlignment VerticalAlignment
+		{
+			get { return PropertyVerticalAlignment.Get(); }
+			set { PropertyVerticalAlignment.Set(value); }
+		}
+
+		public readonly Property<HorizontalAlignment> PropertyHorizontalAlignment;
+		public HorizontalAlignment HorizontalAlignment
+		{
+			get { return PropertyHorizontalAlignment.Get(); }
+			set { PropertyHorizontalAlignment.Set(value); }
+		}
+
 		public Control()
 		{
 			AnimationManager = new AnimationManager();
@@ -80,6 +94,8 @@ namespace Medja.Controls
 			PropertyVisibility.PropertyChanged += OnVisibilityChanged;
 
 			DataContextProperty = new Property<object>();
+			PropertyVerticalAlignment = new Property<VerticalAlignment>();
+			PropertyHorizontalAlignment = new Property<HorizontalAlignment>();
 		}
 
 		private void OnVisibilityChanged(IProperty property)
