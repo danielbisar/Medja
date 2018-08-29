@@ -23,6 +23,7 @@ namespace Medja.Controls
 			_factoryMethods.Add(typeof(DockPanel), CreateDockPanel);
 			_factoryMethods.Add(typeof(InputBoxDialog), CreateInputBoxDialog);
 			_factoryMethods.Add(typeof(SimpleMessageDialog), CreateSimpleMessageDialog);
+			_factoryMethods.Add(typeof(TabControl), CreateTabControl);
 			_factoryMethods.Add(typeof(TextBox), CreateTextBox);
 			_factoryMethods.Add(typeof(TextBlock), CreateTextBlock);
 			_factoryMethods.Add(typeof(ProgressBar), CreateProgressBar);
@@ -84,6 +85,11 @@ namespace Medja.Controls
 		protected virtual SimpleMessageDialog CreateSimpleMessageDialog()
 		{
 			return new SimpleMessageDialog(this);
+		}
+
+		protected virtual TabControl CreateTabControl()
+		{
+			return new TabControl();
 		}
 
 		protected virtual TextBox CreateTextBox()

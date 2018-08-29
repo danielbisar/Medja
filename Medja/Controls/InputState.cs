@@ -85,6 +85,8 @@ namespace Medja
 		{
 			if (IsLeftMouseDown && MedjaMath.Distance(_mouseDownPointerPosition, PointerPosition) > _dragThreshold)
 				IsDrag = true;
+			else
+				IsDrag = false;
 
 			if (IsDrag)
 				NotifyMouseDragged();

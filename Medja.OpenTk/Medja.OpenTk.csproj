@@ -76,6 +76,7 @@
     <Compile Include="Rendering\ColorMap.cs" />
     <Compile Include="Rendering\TypefaceCache.cs" />
     <Compile Include="Rendering\ISkiaRenderer.cs" />
+    <Compile Include="Rendering\TabControlRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Medja\Medja.csproj">

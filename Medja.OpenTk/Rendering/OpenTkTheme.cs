@@ -57,6 +57,14 @@ namespace Medja.OpenTk.Rendering
 			return result;
 		}
 
+		protected override TabControl CreateTabControl()
+		{
+			var result = base.CreateTabControl();
+			result.Renderer = new TabControlRenderer();
+
+			return result;
+		}
+
 		protected override TextBox CreateTextBox()
 		{
 			var result = base.CreateTextBox();
