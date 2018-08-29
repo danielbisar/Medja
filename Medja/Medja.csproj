@@ -114,6 +114,8 @@
     <Compile Include="Controls\Dialogs\QuestionDialog.cs" />
     <Compile Include="Controls\Dialogs\SimpleMessageDialog.cs" />
     <Compile Include="Primitives\HorizontalAlignment.cs" />
+    <Compile Include="Controls\TabControl.cs" />
+    <Compile Include="Controls\TabItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -45,7 +45,7 @@ namespace Medja.Controls
 				var pos = Content.Position;
 
 				pos.X = Position.X + Padding.Left;
-				pos.Y = Position.Y + Padding.Right;
+				pos.Y = Position.Y + Padding.Top;
 				ArrangeContent();
 			}
 		}
