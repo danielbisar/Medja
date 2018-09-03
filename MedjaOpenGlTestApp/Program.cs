@@ -9,7 +9,7 @@ using Medja.Performance;
 
 namespace MedjaOpenGlTestApp
 {
-	class MainClass
+	public class MainClass
 	{
 		private static MedjaWindow _window;
 		private static FramesPerSecondCounter _fpsCounter;
@@ -25,24 +25,21 @@ namespace MedjaOpenGlTestApp
 			var controlFactory = library.ControlFactory;
 			var application = MedjaApplication.Create(library);
 
-			var textBlock1 = controlFactory.Create<TextBlock>();
-			textBlock1.Text = "tab 1 content";
+			var textBlock = controlFactory.Create<TextBlock>();
+			textBlock.Text = "My label:";
+			textBlock.Position.Height = 50;
 
-			var textBlock2 = controlFactory.Create<TextBlock>();
-			textBlock2.Text = "tab 2 content";
+			var textBox = controlFactory.Create<TextBox>();
+			textBox.Text = "Some text";
 
-			var textBlock3 = controlFactory.Create<TextBlock>();
-			textBlock3.Text = "tab 3 content";
-
-			var tabControl = controlFactory.Create<TabControl>();
-			tabControl.AddTab(new TabItem("Tab1", textBlock1));
-			tabControl.AddTab(new TabItem("Tab2", textBlock2));
-			tabControl.AddTab(new TabItem("Tab3", textBlock3));
+			var stackPanel = controlFactory.Create<VerticalStackPanel>();
+			stackPanel.Children.Add(textBlock);
+			stackPanel.Children.Add(textBox);
 
 			_window = application.CreateWindow();
 			_window.CenterOnScreen(800, 600);
 			_window.Background = Colors.Black;
-			_window.Content = tabControl;
+			_window.Content = stackPanel;
 
 			application.MainWindow = _window;
 			application.Run();
