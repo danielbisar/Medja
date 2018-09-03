@@ -25,6 +25,12 @@ namespace Medja.Controls
 			Children.Add(control);
 		}
 
+		public void Insert(Dock dock, Control control, int index)
+		{
+			_docks.Add(control, dock);
+			Children.Insert(index, control);
+		}
+
 		public void Remove(Control control)
 		{
 			_docks.Remove(control);
