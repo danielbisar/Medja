@@ -5,6 +5,7 @@ using Medja.OpenTk.Rendering;
 using OpenTK.Graphics.OpenGL;
 using Medja.Primitives;
 using System;
+using Medja.Controls.Layout;
 using Medja.Performance;
 
 namespace MedjaOpenGlTestApp
@@ -29,17 +30,29 @@ namespace MedjaOpenGlTestApp
 			textBlock.Text = "My label:";
 			textBlock.Position.Height = 50;
 
+			var textBlock2 = controlFactory.Create<TextBlock>();
+			textBlock2.Text = "ABC";
+
+			var textBlock3 = controlFactory.Create<TextBlock>();
+			textBlock3.Text = "CDE";
+			
 			var textBox = controlFactory.Create<TextBox>();
 			textBox.Text = "Some text";
 
-			var stackPanel = controlFactory.Create<VerticalStackPanel>();
-			stackPanel.Children.Add(textBlock);
-			stackPanel.Children.Add(textBox);
+			var tablePanel = controlFactory.Create<TablePanel>();
+			tablePanel.Rows.Add(new RowDefinition(50));
+			tablePanel.Rows.Add(new RowDefinition(50));
+			tablePanel.Columns.Add(new ColumnDefinition());
+			tablePanel.Columns.Add(new ColumnDefinition());
+			tablePanel.Children.Add(textBlock);
+			tablePanel.Children.Add(textBox);
+			tablePanel.Children.Add(textBlock2);
+			tablePanel.Children.Add(textBlock3);
 
 			_window = application.CreateWindow();
 			_window.CenterOnScreen(800, 600);
 			_window.Background = Colors.Black;
-			_window.Content = stackPanel;
+			_window.Content = tablePanel;
 
 			application.MainWindow = _window;
 			application.Run();

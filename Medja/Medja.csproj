@@ -55,6 +55,8 @@
     <Compile Include="Controls\Control3D.cs" />
     <Compile Include="Controls\ControlFactory.cs" />
     <Compile Include="Controls\InputState.cs" />
+    <Compile Include="Controls\Layout\ColumnAndRowEnumerator.cs" />
+    <Compile Include="Controls\Layout\ColumnDefinition.cs" />
     <Compile Include="Controls\Layout\Dock.cs" />
     <Compile Include="Controls\Layout\DockPanel.cs" />
     <Compile Include="Controls\Layout\Panel.cs" />
@@ -116,6 +118,8 @@
     <Compile Include="Primitives\HorizontalAlignment.cs" />
     <Compile Include="Controls\TabControl.cs" />
     <Compile Include="Controls\TabItem.cs" />
+    <Compile Include="Controls\Layout\TablePanel.cs" />
+    <Compile Include="Controls\Layout\RowDefinition.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
