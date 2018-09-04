@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Medja.Reflection;
 using System.Reflection;
+using Medja.Controls.Layout;
 
 namespace Medja.Controls
 {
@@ -29,12 +30,18 @@ namespace Medja.Controls
 			_factoryMethods.Add(typeof(ProgressBar), CreateProgressBar);
 			_factoryMethods.Add(typeof(QuestionDialog), CreateQuestionDialog);
 			_factoryMethods.Add(typeof(VerticalStackPanel), CreateVerticalStackPanel);
+			_factoryMethods.Add(typeof(TablePanel), CreateTablePanel);
 		}
 
 		protected void AddFactoryMethod<TControl>(Func<object> factory)
 			where TControl : Control
 		{
 			_factoryMethods.Add(typeof(TControl), factory);
+		}
+		
+		protected virtual TablePanel CreateTablePanel()
+		{
+			return new TablePanel();
 		}
 
 		protected virtual Button CreateButton()
