@@ -35,7 +35,7 @@ namespace Medja.Controls
 			Content = CreateContent();
 		}
 
-		private void OnTextChanged(IProperty property)
+		private void OnTextChanged(object sender, PropertyChangedEventArgs eventArgs)
 		{
 			_messageTextBlock.Text = Message;
 		}

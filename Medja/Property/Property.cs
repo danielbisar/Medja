@@ -19,14 +19,15 @@ namespace Medja
 			// see EqualityComparerCache header for info why
 			_comparer = EqualityComparerCache<T>.Comparer;
 		}
-		// would allow properties with and without change notification
+		
 		public void Set(T value)
 		{
 			if (_comparer.Equals(_value, value))
 				return;
 
+			var oldValue = _value;
 			_value = value;
-			NotifyPropertyChanged();
+			NotifyPropertyChanged(oldValue, value);
 		}
 
 		public void SetDefault(T value)
@@ -54,9 +55,14 @@ namespace Medja
 		/// <summary>
 		/// Manually call the property changed event, even though the property has not been changed.
 		/// </summary>
+		protected void NotifyPropertyChanged(object oldValue, object newValue)
+		{
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(oldValue, newValue));
+		}
+
 		public void NotifyPropertyChanged()
 		{
-			PropertyChanged?.Invoke(this);
+			NotifyPropertyChanged(_value, _value);
 		}
 	}
 }

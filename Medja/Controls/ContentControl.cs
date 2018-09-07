@@ -17,14 +17,28 @@ namespace Medja.Controls
 		public ContentControl()
 		{
 			PropertyContent = new Property<Control>();
+			PropertyContent.PropertyChanged += OnContentChanged;
 			Padding = new Thickness();
 			PropertyIsEnabled.PropertyChanged += OnIsEnabledChanged;
 		}
 
-		private void OnIsEnabledChanged(IProperty property)
+		protected virtual void OnContentChanged(object sender, PropertyChangedEventArgs eventArgs)
+		{
+			var content = eventArgs.OldValue as Control;
+
+			if (content != null && content.Parent == this)
+				content.Parent = null;
+
+			content = eventArgs.NewValue as Control;
+			
+			if (content != null)
+				content.Parent = this;
+		}
+
+		private void OnIsEnabledChanged(object sender, PropertyChangedEventArgs eventArgs)
 		{
 			if (Content != null)
-				Content.IsEnabled = IsEnabled;
+				Content.IsEnabled = (bool)eventArgs.NewValue;
 		}
 
 		public override Size Measure(Size availableSize)

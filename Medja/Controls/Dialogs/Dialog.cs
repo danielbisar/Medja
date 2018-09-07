@@ -2,16 +2,14 @@
 {
 	public class Dialog : ContentControl
 	{
-		public Property<DialogParentControl> PropertyDialogParent;
 		public DialogParentControl DialogParent
 		{
-			get { return PropertyDialogParent.Get(); }
-			set { PropertyDialogParent.Set(value); }
+			get { return Parent as DialogParentControl; }
+			set { Parent = value; }
 		}
 
 		public Dialog()
 		{
-			PropertyDialogParent = new Property<DialogParentControl>();
 		}
 
 		public void Show()

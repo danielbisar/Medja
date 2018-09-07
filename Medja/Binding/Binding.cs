@@ -16,7 +16,7 @@ namespace Medja
             _sourceConverter = sourceConverter;
         }        
 
-        private void OnSourcePropertyChanged(IProperty property)
+        private void OnSourcePropertyChanged(object sender, PropertyChangedEventArgs eventArgs)
         {
             _target.Set(_sourceConverter(_source.Get()));
         }
@@ -27,19 +27,6 @@ namespace Medja
             _source = null;
             _target = null;
             _sourceConverter = null;
-        }
-    }
-
-    public static class BindingFactory
-    {
-        public static Binding<T, T> Create<T>(Property<T> target, Property<T> source)
-        {
-            return new Binding<T, T>(target, source, p => p);
-        }
-
-        public static Binding<TTarget, TSource> Create<TTarget, TSource>(Property<TTarget> target, Property<TSource> source, Func<TSource, TTarget> converter)
-        {
-            return new Binding<TTarget, TSource>(target, source, converter);
         }
     }
 }

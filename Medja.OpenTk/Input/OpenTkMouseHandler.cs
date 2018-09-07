@@ -8,6 +8,45 @@ namespace Medja.OpenTk
 {
 	public class OpenTkMouseHandler
 	{
+		private static MouseState GetInputState(MouseWheelEventArgs e)
+		{
+			return new MouseState
+			{
+					Position = e.Position,
+					IsLeftButtonDown = e.Mouse.LeftButton == ButtonState.Pressed,
+					WheelDelta = e.DeltaPrecise
+			};
+		}
+		
+		private static bool IsMouseOver(Control control, Point pos)
+		{
+			var childPos = control.Position;
+			return pos.X >= childPos.X
+					&& pos.Y >= childPos.Y
+					&& pos.X <= (childPos.X + childPos.Width)
+					&& pos.Y <= (childPos.Y + childPos.Height);
+		}
+		
+		private static MouseState GetInputState(MouseEventArgs e)
+		{
+			return new MouseState
+			{
+					Position = e.Position,
+					IsLeftButtonDown = e.Mouse.LeftButton == ButtonState.Pressed,
+					IsMouseMove = true
+			};
+		}
+		
+		private static MouseState GetInputState(MouseButtonEventArgs e)
+		{
+			return new MouseState
+			{
+					Position = e.Position,
+					IsLeftButtonDown = e.Mouse.LeftButton == ButtonState.Pressed,
+					IsMouseMove = false
+			};
+		}
+		
 		private readonly MedjaWindow _medjaWindow;
 		private readonly GameWindow _window;
 		private readonly FocusManager _focusManager;
@@ -32,7 +71,7 @@ namespace Medja.OpenTk
 		private void ApplyMouseToControls(MouseState e)
 		{
 			var position = e.Position;
-			Control relavantControl = null;
+			Control relevantControl = null;
 
 			foreach (var control in _medjaWindow.GetAllControls().ToList())
 			{
@@ -40,27 +79,16 @@ namespace Medja.OpenTk
 					&& control.IsVisible
 					&& IsMouseOver(control, position))
 				{
-					if (relavantControl != null)
-						ClearInputState(relavantControl);
-
-					relavantControl = control;
+					relevantControl?.InputState.Clear();
+					relevantControl = control;
 				}
 				else
-					ClearInputState(control);
+					control.InputState.Clear();
 			}
 
 			// ApplyMouse only to the uppermost control
-			if (relavantControl != null)
-				ApplyMouse(relavantControl, e);
-		}
-
-		private bool IsMouseOver(Control control, Point pos)
-		{
-			var childPos = control.Position;
-			return pos.X >= childPos.X
-				&& pos.Y >= childPos.Y
-				&& pos.X <= (childPos.X + childPos.Width)
-				&& pos.Y <= (childPos.Y + childPos.Height);
+			if (relevantControl != null)
+				ApplyMouse(relevantControl, e);
 		}
 
 		private void ApplyMouse(Control control, MouseState mouseState)
@@ -90,35 +118,9 @@ namespace Medja.OpenTk
 			return new Primitives.Point(position.X, position.Y);
 		}
 
-		private void ClearInputState(Control control)
-		{
-			var inputState = control.InputState;
-			inputState.Clear();
-		}
-
-		private MouseState GetInputState(MouseButtonEventArgs e)
-		{
-			return new MouseState
-			{
-				Position = e.Position,
-				IsLeftButtonDown = e.Mouse.LeftButton == ButtonState.Pressed,
-				IsMouseMove = false
-			};
-		}
-
 		private void OnMouseMove(object sender, MouseMoveEventArgs e)
 		{
 			ApplyMouseToControls(GetInputState(e));
-		}
-
-		private MouseState GetInputState(MouseMoveEventArgs e)
-		{
-			return new MouseState
-			{
-				Position = e.Position,
-				IsLeftButtonDown = e.Mouse.LeftButton == ButtonState.Pressed,
-				IsMouseMove = true
-			};
 		}
 
 		private void OnMouseUp(object sender, MouseButtonEventArgs e)
@@ -129,16 +131,6 @@ namespace Medja.OpenTk
 		private void OnMouseWheel(object sender, MouseWheelEventArgs e)
 		{
 			ApplyMouseToControls(GetInputState(e));
-		}
-
-		private MouseState GetInputState(MouseWheelEventArgs e)
-		{
-			return new MouseState
-			{
-				Position = e.Position,
-				IsLeftButtonDown = e.Mouse.LeftButton == ButtonState.Pressed,
-				WheelDelta = e.DeltaPrecise
-			};
 		}
 	}
 }
