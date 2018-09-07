@@ -2,7 +2,6 @@
 using System.Linq;
 using Medja.Controls;
 using Medja.OpenTk.Rendering;
-using Medja.Theming;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using Medja.OpenTk.Input;

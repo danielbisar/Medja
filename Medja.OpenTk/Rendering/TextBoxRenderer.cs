@@ -1,5 +1,4 @@
-﻿using System;
-using Medja.Controls;
+﻿using Medja.Controls;
 using SkiaSharp;
 using System.Diagnostics;
 using Medja.Primitives;

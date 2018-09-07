@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Medja
+﻿namespace Medja
 {
     /// <summary>
     /// Base class for Medja objects

@@ -1,5 +1,4 @@
-﻿using System;
-namespace Medja.Primitives
+﻿namespace Medja.Primitives
 {
 	public static class Colors
 	{

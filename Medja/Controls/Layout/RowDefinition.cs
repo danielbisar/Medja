@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Medja.Controls.Layout
+﻿namespace Medja.Controls.Layout
 {
 	public class RowDefinition
 	{

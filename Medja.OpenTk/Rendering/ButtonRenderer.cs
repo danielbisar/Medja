@@ -1,6 +1,4 @@
 ﻿using Medja.Controls;
-using Medja.Theming;
-using SkiaSharp;
 
 namespace Medja.OpenTk.Rendering
 {

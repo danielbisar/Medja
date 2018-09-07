@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Medja.Controls
+﻿namespace Medja.Controls
 {
 	public enum DialogButtons
 	{

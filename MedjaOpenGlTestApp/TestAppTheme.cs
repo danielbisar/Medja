@@ -1,6 +1,4 @@
-﻿using System;
-using Medja.Controls;
-using Medja.OpenTk.Rendering;
+﻿using Medja.OpenTk.Rendering;
 
 namespace MedjaOpenGlTestApp
 {

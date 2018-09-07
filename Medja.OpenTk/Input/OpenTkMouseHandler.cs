@@ -3,7 +3,6 @@ using System.Linq;
 using Medja.Controls;
 using OpenTK;
 using OpenTK.Input;
-using System;
 
 namespace Medja.OpenTk
 {
