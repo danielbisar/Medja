@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using PropertyChangedEventArgs = System.ComponentModel.PropertyChangedEventArgs;
-using System.Text;
 
 namespace Medja.Performance
 {

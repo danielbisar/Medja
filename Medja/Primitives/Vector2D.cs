@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Medja.Primitives
+﻿namespace Medja.Primitives
 {
     public class Vector2D
     {
@@ -18,7 +12,7 @@ namespace Medja.Primitives
         }
 
         /// <summary>
-        /// Initilizes the vector using two points. Point one is the start and point to the target;
+        /// Initializes the vector using two points. Point one is the origin.
         /// </summary>
         /// <param name="p1"></param>
         /// <param name="p2"></param>
@@ -26,6 +20,11 @@ namespace Medja.Primitives
         {
             X = p2.X - p1.X;
             Y = p2.Y - p1.Y;
+        }
+
+        public override string ToString()
+        {
+            return string.Format("Vector2D: {0},{1}", X, Y);
         }
     }
 }

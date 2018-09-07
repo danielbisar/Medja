@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Diagnostics;
-using Medja.Controls;
-
-namespace Medja.Primitives
+﻿namespace Medja.Primitives
 {
 	/// <summary>
 	/// M for MedjaObject

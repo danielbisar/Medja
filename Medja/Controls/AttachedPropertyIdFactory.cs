@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Medja.Controls
+﻿namespace Medja.Controls
 {
 	public static class AttachedPropertyIdFactory
 	{

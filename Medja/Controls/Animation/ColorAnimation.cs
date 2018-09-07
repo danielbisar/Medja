@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
-using Medja.Primitives;
+﻿using Medja.Primitives;
 
 namespace Medja.Controls.Animation
 {

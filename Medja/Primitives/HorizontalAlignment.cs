@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Medja.Primitives
+﻿namespace Medja.Primitives
 {
 	public enum HorizontalAlignment
 	{

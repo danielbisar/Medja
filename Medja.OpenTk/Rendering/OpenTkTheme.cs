@@ -1,5 +1,4 @@
 ﻿using Medja.Controls;
-using Medja.Primitives;
 
 namespace Medja.OpenTk.Rendering
 {

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Medja.Primitives
+﻿namespace Medja.Primitives
 {
     public class Point
     {

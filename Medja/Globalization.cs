@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Medja
+﻿namespace Medja
 {
 	public static class Globalization
 	{

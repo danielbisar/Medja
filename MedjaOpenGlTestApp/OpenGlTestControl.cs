@@ -1,5 +1,4 @@
-﻿using System;
-using Medja.Controls;
+﻿using Medja.Controls;
 
 namespace MedjaOpenGlTestApp
 {

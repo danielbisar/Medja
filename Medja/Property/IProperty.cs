@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-
-namespace Medja
+﻿namespace Medja
 {
     public interface IProperty
     {

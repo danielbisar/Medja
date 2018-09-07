@@ -48,6 +48,10 @@ namespace MedjaOpenGlTestApp
 			tablePanel.Children.Add(textBox);
 			tablePanel.Children.Add(textBlock2);
 			tablePanel.Children.Add(textBlock3);
+			tablePanel.InputState.MouseDragged += (s, e) =>
+			{
+				Console.WriteLine("Mouse drag: " + e.Vector);
+			};
 
 			_window = application.CreateWindow();
 			_window.CenterOnScreen(800, 600);

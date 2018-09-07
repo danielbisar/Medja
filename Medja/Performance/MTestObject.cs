@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Medja.Performance
+﻿namespace Medja.Performance
 {
     public class MTestObject : MObject, ITestObject
     {

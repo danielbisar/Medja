@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Medja.Primitives;
 using SkiaSharp;
-using System.Linq;
 
 namespace Medja.OpenTk.Rendering
 {

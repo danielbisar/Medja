@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Medja.Controls
+﻿namespace Medja.Controls
 {
     public enum Dock
     {

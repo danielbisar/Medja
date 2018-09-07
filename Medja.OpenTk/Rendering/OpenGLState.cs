@@ -1,5 +1,4 @@
 using System;
-using SkiaSharp;
 using OpenTK.Graphics.OpenGL;
 
 namespace Medja.OpenTk.Rendering
