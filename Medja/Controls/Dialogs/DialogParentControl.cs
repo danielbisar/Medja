@@ -8,7 +8,6 @@ namespace Medja.Controls
 	/// </summary>
 	public class DialogParentControl : ContentControl
 	{
-		private Dialog _oldDialogControl;
 		public readonly Property<Dialog> PropertyDialogControl;
 		public Dialog DialogControl
 		{
@@ -34,20 +33,24 @@ namespace Medja.Controls
 			DialogPadding = new Thickness(100);
 		}
 
-		private void OnIsDialogVisibleChanged(IProperty property)
+		private void OnIsDialogVisibleChanged(object sender, PropertyChangedEventArgs eventArgs)
 		{
 			// TODO this is just a quick solution to simulate modality
 			if (Content != null)
 				Content.IsEnabled = !IsDialogVisible;
 		}
 
-		private void OnDialogControlChanged(IProperty property)
+		private void OnDialogControlChanged(object sender, PropertyChangedEventArgs eventArgs)
 		{
-			if (_oldDialogControl != null)
-				_oldDialogControl.DialogParent = null;
+			var dialog = eventArgs.OldValue as Dialog;
+			
+			if (dialog != null)
+				dialog.DialogParent = null;
 
-			_oldDialogControl = DialogControl;
-			_oldDialogControl.DialogParent = this;
+			dialog = eventArgs.NewValue as Dialog;
+
+			if (dialog != null)
+				dialog.DialogParent = this;
 		}
 
 		public override void Arrange(Size availableSize)

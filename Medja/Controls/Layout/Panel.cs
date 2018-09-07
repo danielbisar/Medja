@@ -7,7 +7,6 @@ namespace Medja.Controls
 	public abstract class Panel : Control
 	{
 		public List<Control> Children { get; }
-
 		public Thickness Padding { get; set; }
 
 		protected Panel()
@@ -17,13 +16,16 @@ namespace Medja.Controls
 			PropertyIsEnabled.PropertyChanged += OnIsEnabledChanged;
 		}
 
-		private void OnIsEnabledChanged(IProperty property)
+		private void OnIsEnabledChanged(object sender, PropertyChangedEventArgs eventArgs)
 		{
 			var isEnabled = IsEnabled;
 
-			foreach (var child in Children.Where(p => p != null))
+			foreach (var child in Children)
 			{
-				if (!child.PropertyIsEnabled.HasDefaultValue)
+				if (child == null) 
+					continue;
+				
+				if (!child.PropertyIsEnabled.HasDefaultValue) 
 					child.PropertyIsEnabled.SetDefault(child.IsEnabled);
 
 				if (!isEnabled)

@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Binding\Binding.cs" />
+    <Compile Include="Binding\BindingFactory.cs" />
     <Compile Include="Controls\Animation\AnimationManager.cs" />
     <Compile Include="Controls\Animation\ColorAnimation.cs" />
     <Compile Include="Controls\Animation\ControlAnimation.cs" />
@@ -66,13 +67,7 @@
     <Compile Include="IMedjaLibrary.cs" />
     <Compile Include="MedjaApplication.cs" />
     <Compile Include="MedjaMath.cs" />
-    <Compile Include="MObject.cs" />
-    <Compile Include="Performance\DefaultPropertyChangedTestObject.cs" />
     <Compile Include="Performance\FramesPerSecondCounter.cs" />
-    <Compile Include="Performance\ITestObject.cs" />
-    <Compile Include="Performance\MTestObject.cs" />
-    <Compile Include="Performance\NativeTestObject.cs" />
-    <Compile Include="Performance\TPropertyTestObject.cs" />
     <Compile Include="Primitives\Color.cs" />
     <Compile Include="Primitives\MPosition.cs" />
     <Compile Include="Primitives\Point.cs" />
@@ -85,6 +80,7 @@
     <Compile Include="Property\EqualityComparerCache.cs" />
     <Compile Include="Property\IProperty.cs" />
     <Compile Include="Property\Property.cs" />
+    <Compile Include="Property\PropertyChangedEventArgs.cs" />
     <Compile Include="Property\PropertyChangedEventHandler.cs" />
     <Compile Include="ShutdownEventArgs.cs" />
     <Compile Include="Theming\ControlRendererBase.cs" />

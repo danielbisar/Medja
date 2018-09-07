@@ -73,7 +73,7 @@ namespace Medja.Controls
 			return null;
 		}
 
-		protected virtual void OnSelectedTabChanged(IProperty property)
+		protected virtual void OnSelectedTabChanged(object sender, PropertyChangedEventArgs eventArgs)
 		{
 			if (SelectedTab == null)
 				Content = null;

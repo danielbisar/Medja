@@ -13,7 +13,7 @@ namespace Medja
 		/// <summary>
 		/// Defines the threshold in pixel that is used for a drag operation (the min. distance the mouse must move to indicate a drag)
 		/// </summary>
-		private double _dragThreshold;
+		private readonly double _dragThreshold;
 		private Point _mouseDownPointerPosition;
 
 		/// <summary>
@@ -81,7 +81,7 @@ namespace Medja
 			KeyPressed?.Invoke(this, new KeyboardEventArgs(key));
 		}
 
-		private void OnPointerPositionChanged(IProperty property)
+		private void OnPointerPositionChanged(object sender, PropertyChangedEventArgs eventArgs)
 		{
 			if (IsLeftMouseDown && MedjaMath.Distance(_mouseDownPointerPosition, PointerPosition) > _dragThreshold)
 				IsDrag = true;
@@ -98,7 +98,7 @@ namespace Medja
 				MouseDragged(this, new MouseDraggedEventArgs(_mouseDownPointerPosition, PointerPosition));
 		}
 
-		private void OnIsLeftMouseDownChanged(IProperty property)
+		private void OnIsLeftMouseDownChanged(object sender, PropertyChangedEventArgs eventArgs)
 		{
 			if (IsLeftMouseDown)
 				_mouseDownPointerPosition = PointerPosition;

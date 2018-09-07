@@ -5,11 +5,11 @@ namespace Medja.Controls
 {
 	public class MedjaWindow : ContentControl
 	{
-		public Property<string> TitleProperty { get; }
+		public readonly Property<string> PropertyTitle;
 		public string Title
 		{
-			get { return TitleProperty.Get(); }
-			set { TitleProperty.Set(value); }
+			get { return PropertyTitle.Get(); }
+			set { PropertyTitle.Set(value); }
 		}
 
 		public bool IsClosed { get; set; }
@@ -18,7 +18,7 @@ namespace Medja.Controls
 
 		public MedjaWindow()
 		{
-			TitleProperty = new Property<string>();
+			PropertyTitle = new Property<string>();
 		}
 
 		public override void Arrange(Size availableSize)

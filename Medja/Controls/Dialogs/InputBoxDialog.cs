@@ -47,17 +47,17 @@ namespace Medja.Controls
 			Content = CreateContent();
 		}
 
-		private void OnTextBoxTextChanged(IProperty property)
+		private void OnTextBoxTextChanged(object sender, PropertyChangedEventArgs eventArgs)
 		{
 			InputText = _inputTextBox.Text;
 		}
 
-		private void OnInputTextChanged(IProperty property)
+		private void OnInputTextChanged(object sender, PropertyChangedEventArgs eventArgs)
 		{
 			_inputTextBox.Text = InputText;
 		}
 
-		private void OnTextChanged(IProperty property)
+		private void OnTextChanged(object sender, PropertyChangedEventArgs eventArgs)
 		{
 			_messageTextBlock.Text = Message;
 		}
@@ -88,11 +88,6 @@ namespace Medja.Controls
 		{
 			IsConfirmed = false;
 			DialogParent.IsDialogVisible = false;
-		}
-
-		public override void Arrange(Size availableSize)
-		{
-			base.Arrange(availableSize);
 		}
 
 		private void OnOkButtonClicked(object sender, EventArgs e)

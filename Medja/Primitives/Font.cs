@@ -1,6 +1,6 @@
 ﻿namespace Medja.Primitives
 {
-	public class Font : MObject
+	public class Font
 	{
 		public readonly Property<string> PropertyName;
 		public string Name

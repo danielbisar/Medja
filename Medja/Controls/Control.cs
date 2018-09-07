@@ -8,7 +8,7 @@ namespace Medja.Controls
 	/// <summary>
 	/// Any control should inherit from this class.
 	/// </summary>
-	public class Control : MObject
+	public class Control
 	{
 		public AnimationManager AnimationManager { get; }
 		public Dictionary<int, object> AttachedProperties { get; }
@@ -20,21 +20,21 @@ namespace Medja.Controls
 		/// <value>The position.</value>
 		public MPosition Position { get; }
 
-		public Property<Color> PropertyBackground { get; }
+		public readonly Property<Color> PropertyBackground;
 		public Color Background
 		{
 			get { return PropertyBackground.Get(); }
 			set { PropertyBackground.Set(value); }
 		}
 
-		public Property<bool> PropertyIsEnabled { get; }
+		public readonly Property<bool> PropertyIsEnabled;
 		public bool IsEnabled
 		{
 			get { return PropertyIsEnabled.Get(); }
 			set { PropertyIsEnabled.Set(value); }
 		}
 
-		public Property<bool> PropertyIsFocused;
+		public readonly Property<bool> PropertyIsFocused;
 		public bool IsFocused
 		{
 			get { return PropertyIsFocused.Get(); }
@@ -43,24 +43,37 @@ namespace Medja.Controls
 
 		public IControlRenderer Renderer { get; set; }
 
-		public Property<Visibility> PropertyVisibility { get; }
+		public readonly Property<Visibility> PropertyVisibility;
 		public Visibility Visibility
 		{
 			get { return PropertyVisibility.Get(); }
 			set { PropertyVisibility.Set(value); }
 		}
 
-		public Property<bool> PropertyIsVisible { get; }
+		public readonly Property<bool> PropertyIsVisible;
 		public bool IsVisible
 		{
 			get { return PropertyIsVisible.Get(); }
 		}
 
-		public Property<object> DataContextProperty;
+		public readonly Property<Control> PropertyParent;
+		public Control Parent
+		{
+			get { return PropertyParent.Get(); }
+			set { PropertyParent.Set(value); }
+		}
+
+		public readonly Property<object> PropertyDataContext;
 		public object DataContext
 		{
-			get { return DataContextProperty.Get(); }
-			set { DataContextProperty.Set(value); }
+			get
+			{
+				if (PropertyDataContext.HasDefaultValue)
+					return Parent?.DataContext;
+				
+				return PropertyDataContext.Get();
+			}
+			set { PropertyDataContext.Set(value); }
 		}
 
 		public readonly Property<VerticalAlignment> PropertyVerticalAlignment;
@@ -83,6 +96,7 @@ namespace Medja.Controls
 			AttachedProperties = new Dictionary<int, object>();
 			InputState = new InputState(this);
 			Position = new MPosition();
+			
 			PropertyBackground = new Property<Color>();
 			PropertyIsEnabled = new Property<bool>();
 			PropertyIsEnabled.UnnotifiedSet(true);
@@ -93,12 +107,13 @@ namespace Medja.Controls
 			PropertyIsVisible.UnnotifiedSet(true);
 			PropertyVisibility.PropertyChanged += OnVisibilityChanged;
 
-			DataContextProperty = new Property<object>();
+			PropertyParent = new Property<Control>();
+			PropertyDataContext = new Property<object>();
 			PropertyVerticalAlignment = new Property<VerticalAlignment>();
 			PropertyHorizontalAlignment = new Property<HorizontalAlignment>();
 		}
 
-		private void OnVisibilityChanged(IProperty property)
+		private void OnVisibilityChanged(object sender, PropertyChangedEventArgs eventArgs)
 		{
 			PropertyIsVisible.Set(Visibility == Visibility.Visible);
 		}
@@ -136,10 +151,7 @@ namespace Medja.Controls
 
 		public object GetAttachedProperty(int id)
 		{
-			if (AttachedProperties.TryGetValue(id, out var result))
-				return result;
-
-			return null;
+			return AttachedProperties.TryGetValue(id, out var result) ? result : null;
 		}
 
 		public T GetAttachedProperty<T>(int id)

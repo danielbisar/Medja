@@ -3,7 +3,7 @@
 	/// <summary>
 	/// M for MedjaObject
 	/// </summary>
-	public class MPosition : MObject
+	public class MPosition
 	{
 		public Property<float> PropertyX { get; }
 		public Property<float> PropertyY { get; }
