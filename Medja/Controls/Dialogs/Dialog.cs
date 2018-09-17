@@ -1,4 +1,6 @@
-﻿namespace Medja.Controls
+﻿using System.Runtime.InteropServices;
+
+namespace Medja.Controls
 {
 	public class Dialog : ContentControl
 	{
@@ -14,7 +16,14 @@
 
 		public void Show()
 		{
-			DialogParent.IsDialogVisible = true;
+			if (DialogParent != null)
+				DialogParent.IsDialogVisible = true;
+		}
+		
+		public void Hide()
+		{
+			if (DialogParent != null)
+				DialogParent.IsDialogVisible = false;
 		}
 	}
 }
