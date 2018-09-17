@@ -13,7 +13,7 @@ namespace Medja.OpenTk.Rendering
 		public static readonly Color PrimaryText = Colors.White;
 
 		public static readonly Color Secondary = new Color(0.659f, 0, 0);
-		public static readonly Color SecondaryLight = new Color(0.882f, 0.278f, 0.173f);
+		public static readonly Color SecondaryLight = Secondary.GetDarker(0.7f);
 		public static readonly Color SecondaryText = Colors.White;
 	}
 }
