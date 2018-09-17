@@ -67,11 +67,6 @@ namespace Medja.Controls
 			DialogParent.IsDialogVisible = false;
 		}
 
-		public override void Arrange(Size availableSize)
-		{
-			base.Arrange(availableSize);
-		}
-
 		private void OnOkButtonClicked(object sender, EventArgs e)
 		{
 			IsConfirmed = true;
