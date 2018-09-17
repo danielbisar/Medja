@@ -3,32 +3,32 @@
 	/// <summary>
 	/// M for MedjaObject
 	/// </summary>
-	public class MPosition
+	public class MPosition : Position
 	{
 		public Property<float> PropertyX { get; }
 		public Property<float> PropertyY { get; }
 		public Property<float> PropertyWidth { get; }
 		public Property<float> PropertyHeight { get; }
 
-		public float X
+		public override float X
 		{
 			get { return PropertyX.Get(); }
 			set { PropertyX.Set(value); }
 		}
 
-		public float Y
+		public override float Y
 		{
 			get { return PropertyY.Get(); }
 			set { PropertyY.Set(value); }
 		}
 
-		public float Width
+		public override float Width
 		{
 			get { return PropertyWidth.Get(); }
 			set { PropertyWidth.Set(value); }
 		}
 
-		public float Height
+		public override float Height
 		{
 			get { return PropertyHeight.Get(); }
 			set { PropertyHeight.Set(value); }
@@ -40,11 +40,6 @@
 			PropertyY = new Property<float>();
 			PropertyWidth = new Property<float>();
 			PropertyHeight = new Property<float>();
-		}
-
-		public override string ToString()
-		{
-			return "X = " + X + ", Y = " + Y + ", Width = " + Width + ", Height = " + Height;
 		}
 	}
 }

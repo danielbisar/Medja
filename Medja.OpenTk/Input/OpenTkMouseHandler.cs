@@ -108,7 +108,7 @@ namespace Medja.OpenTk
 
 			if (mouseState.WheelDelta != 0
 				&& MedjaMath.AboutEquals(inputState.MouseWheelDelta, mouseState.WheelDelta))
-				inputState.MouseWheelDeltaProperty.NotifyPropertyChanged();
+				inputState.PropertyMouseWheelDelta.NotifyPropertyChanged();
 			else
 				inputState.MouseWheelDelta = mouseState.WheelDelta;
 		}

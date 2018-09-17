@@ -14,6 +14,15 @@ namespace Medja.OpenTk.Rendering
 			return result;
 		}
 
+		protected override CheckBox CreateCheckBox()
+		{
+			var result = base.CreateCheckBox();
+			result.Renderer = new CheckBoxRenderer();
+			result.Position.Height = 26;
+			
+			return result;
+		}
+
 		protected override Control CreateControl()
 		{
 			var result = base.CreateControl();

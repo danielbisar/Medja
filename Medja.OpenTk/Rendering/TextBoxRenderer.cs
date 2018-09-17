@@ -16,9 +16,6 @@ namespace Medja.OpenTk.Rendering
 
 		protected override void InternalRender()
 		{
-			//RenderBackground();
-			//RenderBorder(_control.Foreground.ToSKColor(), new Thickness(1));
-
 			RenderBottomLine();
 
 			var pos = _control.Position.ToSKPoint();
@@ -31,13 +28,7 @@ namespace Medja.OpenTk.Rendering
 			//         && text.Length > 1)
 			//      text = text.Substring(0, text.Length - 2);
 			//}
-
-			var font = _control.Font;
-
-			if (!string.IsNullOrEmpty(font.Name))
-				_paint.Typeface = SKTypeface.FromFamilyName(font.Name, font.Style.ToSKTypefaceStyle());
-
-			_paint.TextSize = font.Size;
+			
 			_paint.Color = _control.IsEnabled
 				? _control.Foreground.ToSKColor()
 				: _control.Foreground.GetLighter(0.25f).ToSKColor();
@@ -45,7 +36,7 @@ namespace Medja.OpenTk.Rendering
 			_rect.Left += padding.Left;
 			pos.Y += _paint.FontSpacing + padding.Top;
 			pos.X += padding.Left;
-			_canvas.DrawText(_control.Text, pos, _paint);
+			RenderText(_control.Text, _control.Font, pos);
 
 			if (_control.IsFocused && _caretStopWatch.ElapsedTicks % 10000000 <= 5000000)
 			{
@@ -56,15 +47,7 @@ namespace Medja.OpenTk.Rendering
 
 				_canvas.DrawLine(new SKPoint(caretLeft, top), new SKPoint(caretLeft, bottom), _paint);
 			}
-
-			if (_paint.Typeface != null)
-			{
-				// TODO this is for now, we will maybe keep the typefaces in a 
-				// cache depending on the performance
-				_paint.Typeface.Dispose();
-				_paint.Typeface = null;
-			}
-
+			
 			//paint.BreakText
 		}
 

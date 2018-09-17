@@ -16,6 +16,7 @@ namespace Medja.Controls
 
 			_factoryMethods.Add(typeof(Button), CreateButton);
 			_factoryMethods.Add(typeof(Canvas), CreateCanvas);
+			_factoryMethods.Add(typeof(CheckBox), CreateCheckBox);
 			_factoryMethods.Add(typeof(Control), CreateControl);
 			_factoryMethods.Add(typeof(ContentControl), CreateContentControl);
 			_factoryMethods.Add(typeof(Dialog), CreateDialog);
@@ -52,6 +53,11 @@ namespace Medja.Controls
 		protected virtual Canvas CreateCanvas()
 		{
 			return new Canvas();
+		}
+
+		protected virtual CheckBox CreateCheckBox()
+		{
+			return new CheckBox();
 		}
 
 		protected virtual Control CreateControl()

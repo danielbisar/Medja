@@ -38,11 +38,16 @@ namespace Medja.Controls.Layout
 
 			for (int i = 0; i < Children.Count && i < _positions.Count; i++)
 			{
-				var childPos = Children[i].Position;
+				var child = Children[i];
+				var childPos = child.Position;
 				var pos = _positions[i];
 				
 				childPos.Width = pos.Width;
-				childPos.Height = pos.Height;
+				childPos.Height = child.VerticalAlignment == VerticalAlignment.None ||
+						child.VerticalAlignment == VerticalAlignment.Stretch
+								? pos.Height
+								: childPos.Height;
+
 				childPos.X = pos.X + Position.X;
 				childPos.Y = pos.Y + Position.Y;
 			}
