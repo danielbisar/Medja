@@ -10,7 +10,9 @@ namespace Medja.OpenTk.Rendering
         {
             RenderBackground();
 
-            _paint.Color = ColorMap.PrimaryLight.ToSKColor();
+            _paint.Color = _control.IsEnabled 
+                    ? ColorMap.PrimaryLight.ToSKColor() 
+                    : ColorMap.Primary.ToSKColor();
 
             var checkMarkBorder = new SKRect(_rect.Left, _rect.Top, _rect.Left + _rect.Height, _rect.Bottom);
             _paint.IsStroke = true; 
@@ -19,7 +21,9 @@ namespace Medja.OpenTk.Rendering
 
             if (_control.IsChecked)
             {
-                _paint.Color = ColorMap.Secondary.ToSKColor();
+                _paint.Color = _control.IsEnabled 
+                        ? ColorMap.Secondary.ToSKColor()
+                        : ColorMap.SecondaryLight.ToSKColor();
                 _canvas.DrawRect(checkMarkBorder, _paint);
             }
 
