@@ -30,14 +30,15 @@ namespace MedjaOpenGlTestApp
 			textBlock.Text = "My label:";
 			textBlock.Position.Height = 50;
 
-			var textBlock2 = controlFactory.Create<TextBlock>();
-			textBlock2.Text = "ABC";
+			var textBox = controlFactory.Create<TextBox>();
+			textBox.Text = "ABC";
 
 			var textBlock3 = controlFactory.Create<TextBlock>();
 			textBlock3.Text = "CDE";
 			
-			var textBox = controlFactory.Create<TextBox>();
-			textBox.Text = "Some text";
+			var checkBox = controlFactory.Create<CheckBox>();
+			checkBox.Text = "Some text";
+			checkBox.VerticalAlignment = VerticalAlignment.Top;
 
 			var tablePanel = controlFactory.Create<TablePanel>();
 			tablePanel.Rows.Add(new RowDefinition(50));
@@ -45,8 +46,8 @@ namespace MedjaOpenGlTestApp
 			tablePanel.Columns.Add(new ColumnDefinition());
 			tablePanel.Columns.Add(new ColumnDefinition());
 			tablePanel.Children.Add(textBlock);
+			tablePanel.Children.Add(checkBox);
 			tablePanel.Children.Add(textBox);
-			tablePanel.Children.Add(textBlock2);
 			tablePanel.Children.Add(textBlock3);
 			tablePanel.InputState.MouseDragged += (s, e) =>
 			{

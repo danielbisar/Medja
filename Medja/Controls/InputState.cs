@@ -22,39 +22,42 @@ namespace Medja
 		/// <value>The control.</value>
 		public Control Control { get; }
 
-		public Property<bool> IsMouseOverProperty { get; }
+		public Property<bool> PropertyIsMouseOver { get; }
 		public bool IsMouseOver
 		{
-			get { return IsMouseOverProperty.Get(); }
-			set { IsMouseOverProperty.Set(value); }
+			get { return PropertyIsMouseOver.Get(); }
+			set { PropertyIsMouseOver.Set(value); }
 		}
 
-		public Property<bool> IsLeftMouseDownProperty { get; }
+		public Property<bool> PropertyIsLeftMouseDown { get; }
 		public bool IsLeftMouseDown
 		{
-			get { return IsLeftMouseDownProperty.Get(); }
-			set { IsLeftMouseDownProperty.Set(value); }
+			get { return PropertyIsLeftMouseDown.Get(); }
+			set { PropertyIsLeftMouseDown.Set(value); }
 		}
 
-		public Property<bool> IsDragProperty { get; }
+		public Property<bool> PropertyIsDrag { get; }
 		public bool IsDrag
 		{
-			get { return IsDragProperty.Get(); }
-			set { IsDragProperty.Set(value); }
+			get { return PropertyIsDrag.Get(); }
+			set { PropertyIsDrag.Set(value); }
 		}
 
-		public Property<Point> PointerPositionProperty { get; }
+		public Property<Point> PropertyPointerPosition { get; }
+		/// <summary>
+		/// Position of the mouse pointer relative to the containing window.
+		/// </summary>
 		public Point PointerPosition
 		{
-			get { return PointerPositionProperty.Get(); }
-			set { PointerPositionProperty.Set(value); }
+			get { return PropertyPointerPosition.Get(); }
+			set { PropertyPointerPosition.Set(value); }
 		}
 
-		public Property<float> MouseWheelDeltaProperty { get; }
+		public Property<float> PropertyMouseWheelDelta { get; }
 		public float MouseWheelDelta
 		{
-			get { return MouseWheelDeltaProperty.Get(); }
-			set { MouseWheelDeltaProperty.Set(value); }
+			get { return PropertyMouseWheelDelta.Get(); }
+			set { PropertyMouseWheelDelta.Set(value); }
 		}
 
 		public event EventHandler MouseClicked;
@@ -64,14 +67,14 @@ namespace Medja
 		public InputState(Control control)
 		{
 			Control = control;
-			IsLeftMouseDownProperty = new Property<bool>();
-			IsLeftMouseDownProperty.PropertyChanged += OnIsLeftMouseDownChanged;
+			PropertyIsLeftMouseDown = new Property<bool>();
+			PropertyIsLeftMouseDown.PropertyChanged += OnIsLeftMouseDownChanged;
 
-			IsMouseOverProperty = new Property<bool>();
-			IsDragProperty = new Property<bool>();
-			PointerPositionProperty = new Property<Point>();
-			PointerPositionProperty.PropertyChanged += OnPointerPositionChanged;
-			MouseWheelDeltaProperty = new Property<float>();
+			PropertyIsMouseOver = new Property<bool>();
+			PropertyIsDrag = new Property<bool>();
+			PropertyPointerPosition = new Property<Point>();
+			PropertyPointerPosition.PropertyChanged += OnPointerPositionChanged;
+			PropertyMouseWheelDelta = new Property<float>();
 
 			_dragThreshold = 5;
 		}

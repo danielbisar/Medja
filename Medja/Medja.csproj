@@ -51,6 +51,7 @@
     <Compile Include="Controls\Animation\ColorAnimation.cs" />
     <Compile Include="Controls\Animation\ControlAnimation.cs" />
     <Compile Include="Controls\Button.cs" />
+    <Compile Include="Controls\CheckBox.cs" />
     <Compile Include="Controls\ContentControl.cs" />
     <Compile Include="Controls\Control.cs" />
     <Compile Include="Controls\Control3D.cs" />
