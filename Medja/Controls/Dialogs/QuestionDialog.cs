@@ -3,7 +3,7 @@ using Medja.Primitives;
 
 namespace Medja.Controls
 {
-	public class QuestionDialog : Dialog
+	public class QuestionDialog : ConfirmableDialog
 	{
 		private readonly ControlFactory _controlFactory;
 		private readonly TextBlock _messageTextBlock;
@@ -15,18 +15,10 @@ namespace Medja.Controls
 			set { PropertyMessage.Set(value); }
 		}
 
-		public readonly Property<bool> PropertyIsConfirmed;
-		public bool IsConfirmed
-		{
-			get { return PropertyIsConfirmed.Get(); }
-			set { PropertyIsConfirmed.Set(value); }
-		}
-
 		public QuestionDialog(ControlFactory controlFactory)
 		{
 			PropertyMessage = new Property<string>();
 			PropertyMessage.PropertyChanged += OnTextChanged;
-			PropertyIsConfirmed = new Property<bool>();
 
 			_controlFactory = controlFactory;
 			_messageTextBlock = _controlFactory.Create<TextBlock>();
@@ -63,14 +55,12 @@ namespace Medja.Controls
 
 		private void OnCancelButtonClicked(object sender, EventArgs e)
 		{
-			IsConfirmed = false;
-			DialogParent.IsDialogVisible = false;
+			Dismiss();
 		}
 
 		private void OnOkButtonClicked(object sender, EventArgs e)
 		{
-			IsConfirmed = true;
-			DialogParent.IsDialogVisible = false;
+			Confirm();
 		}
 	}
 }
