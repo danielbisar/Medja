@@ -2,7 +2,6 @@
 
 namespace Medja
 {
-	// TODO implement readonly version
 	public class Property<T> : IProperty
 	{
 		// creating a static variable inside this class makes creation 3X as slow as currently
@@ -16,6 +15,7 @@ namespace Medja
 
 		public Property()
 		{
+			PropertyChanged += (s, e) => { };
 			// see EqualityComparerCache header for info why
 			_comparer = EqualityComparerCache<T>.Comparer;
 		}
@@ -25,6 +25,11 @@ namespace Medja
 			if (_comparer.Equals(_value, value))
 				return;
 
+			InternalSet(value);
+		}
+
+		protected virtual void InternalSet(T value)
+		{
 			var oldValue = _value;
 			_value = value;
 			NotifyPropertyChanged(oldValue, value);
@@ -55,9 +60,11 @@ namespace Medja
 		/// <summary>
 		/// Manually call the property changed event, even though the property has not been changed.
 		/// </summary>
-		protected void NotifyPropertyChanged(object oldValue, object newValue)
+		protected void NotifyPropertyChanged(T oldValue, T newValue)
 		{
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(oldValue, newValue));
+			// ReSharper disable once PossibleNullReferenceException
+			// see ctor empty delegate registration
+			PropertyChanged(this, new PropertyChangedEventArgs(oldValue, newValue));
 		}
 
 		public void NotifyPropertyChanged()
