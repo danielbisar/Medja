@@ -84,6 +84,7 @@
     <Compile Include="Property\Property.cs" />
     <Compile Include="Property\PropertyChangedEventArgs.cs" />
     <Compile Include="Property\PropertyChangedEventHandler.cs" />
+    <Compile Include="Property\PropertyValueStorage.cs" />
     <Compile Include="Property\ThreadSafeProperty.cs" />
     <Compile Include="ShutdownEventArgs.cs" />
     <Compile Include="Theming\ControlRendererBase.cs" />

@@ -63,19 +63,6 @@ namespace Medja.Controls
 			set { PropertyParent.Set(value); }
 		}
 
-		public readonly Property<object> PropertyDataContext;
-		public object DataContext
-		{
-			get
-			{
-				if (PropertyDataContext.HasDefaultValue)
-					return Parent?.DataContext;
-				
-				return PropertyDataContext.Get();
-			}
-			set { PropertyDataContext.Set(value); }
-		}
-
 		public readonly Property<VerticalAlignment> PropertyVerticalAlignment;
 		public VerticalAlignment VerticalAlignment
 		{
@@ -108,7 +95,6 @@ namespace Medja.Controls
 			PropertyVisibility.PropertyChanged += OnVisibilityChanged;
 
 			PropertyParent = new Property<Control>();
-			PropertyDataContext = new Property<object>();
 			PropertyVerticalAlignment = new Property<VerticalAlignment>();
 			PropertyHorizontalAlignment = new Property<HorizontalAlignment>();
 		}

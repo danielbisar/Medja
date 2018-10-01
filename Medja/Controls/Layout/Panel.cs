@@ -5,12 +5,15 @@ using System.Linq;
 namespace Medja.Controls
 {
 	public abstract class Panel : Control
-	{
+	{		
+		private readonly Dictionary<Property<bool>, PropertyValueStorage<bool>> _isEnabledValues;
+
 		public List<Control> Children { get; }
 		public Thickness Padding { get; set; }
 
 		protected Panel()
 		{
+			_isEnabledValues = new Dictionary<Property<bool>, PropertyValueStorage<bool>>();
 			Children = new List<Control>();
 			Padding = new Thickness();
 			PropertyIsEnabled.PropertyChanged += OnIsEnabledChanged;
@@ -24,14 +27,17 @@ namespace Medja.Controls
 			{
 				if (child == null) 
 					continue;
-				
-				if (!child.PropertyIsEnabled.HasDefaultValue) 
-					child.PropertyIsEnabled.SetDefault(child.IsEnabled);
+
+				if (!_isEnabledValues.TryGetValue(child.PropertyIsEnabled, out var oldValue))
+				{
+					oldValue = new PropertyValueStorage<bool>(child.PropertyIsEnabled);
+					_isEnabledValues.Add(child.PropertyIsEnabled, oldValue);
+				}
 
 				if (!isEnabled)
 					child.IsEnabled = false;
 				else
-					child.PropertyIsEnabled.ResetAndClearWithDefault();
+					oldValue.Restore();
 			}
 		}
 

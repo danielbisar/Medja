@@ -7,14 +7,12 @@ namespace Medja
 		// creating a static variable inside this class makes creation 3X as slow as currently
 		private readonly EqualityComparer<T> _comparer;
 		private T _value;
-		private T _defaultValue;
-
-		public bool HasDefaultValue { get; private set; }
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		public Property()
 		{
+			// register empty handler, see thread safety in wiki
 			PropertyChanged += (s, e) => { };
 			// see EqualityComparerCache header for info why
 			_comparer = EqualityComparerCache<T>.Comparer;
@@ -27,7 +25,7 @@ namespace Medja
 
 			InternalSet(value);
 		}
-
+		
 		protected virtual void InternalSet(T value)
 		{
 			var oldValue = _value;
@@ -35,23 +33,19 @@ namespace Medja
 			NotifyPropertyChanged(oldValue, value);
 		}
 
-		public void SetDefault(T value)
-		{
-			HasDefaultValue = true;
-			_defaultValue = value;
-		}
-
-		public void ResetAndClearWithDefault()
-		{
-			Set(_defaultValue);
-			HasDefaultValue = false;
-		}
-
-		public void UnnotifiedSet(T value)
+		/// <summary>
+		/// Sets a value without comparing/throwing an event.
+		/// </summary>
+		/// <param name="value"></param>
+		public virtual void UnnotifiedSet(T value)
 		{
 			_value = value;
 		}
 
+		/// <summary>
+		/// Gets the properties value.
+		/// </summary>
+		/// <returns></returns>
 		public T Get()
 		{
 			return _value;
@@ -66,7 +60,7 @@ namespace Medja
 			// see ctor empty delegate registration
 			PropertyChanged(this, new PropertyChangedEventArgs(oldValue, newValue));
 		}
-
+		
 		public void NotifyPropertyChanged()
 		{
 			NotifyPropertyChanged(_value, _value);
