@@ -13,13 +13,9 @@ namespace MedjaOpenGlTestApp
 	public class MainClass
 	{
 		private static MedjaWindow _window;
-		private static FramesPerSecondCounter _fpsCounter;
 
 		public static void Main(string[] args)
 		{
-			_fpsCounter = new FramesPerSecondCounter();
-			_fpsCounter.FramesCounted += (s, e) => Console.WriteLine(_fpsCounter.FramesPerSecond);
-
 			var library = new MedjaOpenTkLibrary(new TestAppTheme());
 			library.RendererFactory = CreateRenderer;
 
@@ -28,35 +24,24 @@ namespace MedjaOpenGlTestApp
 
 			var textBlock = controlFactory.Create<TextBlock>();
 			textBlock.Text = "My label:";
-			textBlock.Position.Height = 50;
+			textBlock.Position.Width = 50;
 
-			var textBox = controlFactory.Create<TextBox>();
-			textBox.Text = "ABC";
+			var textBlock2 = controlFactory.Create<TextBlock>();
+			textBlock2.Text = "Text2";
+			textBlock2.Position.Width = 50;
 
-			var checkBoxDisabled = controlFactory.Create<CheckBox>();
-			checkBoxDisabled.Text = "Disabled";
-			checkBoxDisabled.VerticalAlignment = VerticalAlignment.Top;
-			checkBoxDisabled.IsEnabled = false;
+			var control = controlFactory.Create<Control>();
+			control.Background = ColorMap.SecondaryLight;
 			
-			var checkBox = controlFactory.Create<CheckBox>();
-			checkBox.Text = "Some text";
-			checkBox.VerticalAlignment = VerticalAlignment.Top;
-			checkBox.PropertyIsChecked.PropertyChanged += (s, e) => checkBoxDisabled.IsChecked = (bool)e.NewValue;
+			var dockPanel = controlFactory.Create<DockPanel>();
+			dockPanel.Add(Dock.Right, textBlock);
+			dockPanel.Add(Dock.Right, textBlock2);
+			dockPanel.Add(Dock.Fill, control);
 			
-			var tablePanel = controlFactory.Create<TablePanel>();
-			tablePanel.Rows.Add(new RowDefinition(50));
-			tablePanel.Rows.Add(new RowDefinition(50));
-			tablePanel.Columns.Add(new ColumnDefinition());
-			tablePanel.Columns.Add(new ColumnDefinition());
-			tablePanel.Children.Add(textBlock);
-			tablePanel.Children.Add(checkBox);
-			tablePanel.Children.Add(textBox);
-			tablePanel.Children.Add(checkBoxDisabled);
-
 			_window = application.CreateWindow();
 			_window.CenterOnScreen(800, 600);
 			_window.Background = Colors.Black;
-			_window.Content = tablePanel;
+			_window.Content = dockPanel;
 
 			application.MainWindow = _window;
 			application.Run();
@@ -72,8 +57,6 @@ namespace MedjaOpenGlTestApp
 
 		private static void SetupOpenGl()
 		{
-			_fpsCounter.Tick();
-
 			GL.Enable(EnableCap.CullFace);
 			GL.CullFace(CullFaceMode.Back);
 			GL.Enable(EnableCap.DepthTest);

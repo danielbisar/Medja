@@ -1,9 +1,9 @@
 namespace Medja
 {
     /// <summary>
-    /// 
+    /// A thread safe version of <see cref="Property{T}"/>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T">The property type.</typeparam>
     /// <remarks>The call to unnotified set and set default value are not thread safe yet.</remarks>
     public class ThreadSafeProperty<T> : Property<T>
     {
@@ -17,11 +17,13 @@ namespace Medja
         protected override void InternalSet(T value)
         {
             lock (_lock)
-            {
                 base.InternalSet(value);
-            }
         }
-        
-        // TODO SetDefaultValue is not thread safe yet
+
+        public override void UnnotifiedSet(T value)
+        {
+            lock(_lock)
+                base.UnnotifiedSet(value);
+        }
     }
 }

@@ -1,8 +1,16 @@
 ﻿namespace Medja
 {
+    /// <summary>
+    /// The interface for values that support change notifications.
+    /// </summary>
     public interface IProperty
     {
         event PropertyChangedEventHandler PropertyChanged;
+       
+        /// <summary>
+        /// Calls the event PropertyChanged.
+        /// </summary>
+        void NotifyPropertyChanged();
     }
 
     // do not use this interface for performance reasons,
