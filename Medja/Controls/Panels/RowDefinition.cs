@@ -1,4 +1,4 @@
-﻿namespace Medja.Controls.Layout
+﻿namespace Medja.Controls
 {
 	public class RowDefinition
 	{
