@@ -57,8 +57,16 @@ namespace Medja.Controls
 			{
 				var pos = Content.Position;
 
-				pos.X = Position.X + Padding.Left;
-				pos.Y = Position.Y + Padding.Top;
+				if (Content.HorizontalAlignment == HorizontalAlignment.Right)
+					pos.X = Position.X + pos.Width - Padding.Right;
+				else
+					pos.X = Position.X + Padding.Left;
+
+				if (Content.VerticalAlignment == VerticalAlignment.Bottom)
+					pos.Y = Position.Y + pos.Height - Padding.Bottom;
+				else
+					pos.Y = Position.Y + Padding.Top;
+				
 				ArrangeContent();
 			}
 		}
