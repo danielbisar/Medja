@@ -65,20 +65,20 @@ namespace Medja.Controls
 
 		protected virtual void ArrangeContent()
 		{
-			if (Content != null)
-			{
-				var pos = Content.Position;
+			if (Content == null) 
+				return;
+			
+			var pos = Content.Position;
 
+			if(Content.HorizontalAlignment != HorizontalAlignment.Left 
+					&& Content.VerticalAlignment != VerticalAlignment.Bottom)
 				pos.Width = Position.Width - Padding.LeftAndRight;
 
-				var availableHeight = Position.Height - Padding.TopAndBottom;
+			if (Content.VerticalAlignment != VerticalAlignment.Top &&
+					Content.VerticalAlignment != VerticalAlignment.Bottom)
+				pos.Height = Position.Height - Padding.TopAndBottom;
 
-				pos.Height = Content.VerticalAlignment == VerticalAlignment.Top
-					|| Content.VerticalAlignment == VerticalAlignment.Bottom
-					? pos.Height : availableHeight;
-
-				Content.Arrange(new Size(pos.Width, pos.Height));
-			}
+			Content.Arrange(new Size(pos.Width, pos.Height));
 		}
 
 		public override IEnumerable<Control> GetAllControls()
