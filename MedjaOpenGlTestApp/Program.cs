@@ -4,9 +4,6 @@ using Medja.OpenTk;
 using Medja.OpenTk.Rendering;
 using OpenTK.Graphics.OpenGL;
 using Medja.Primitives;
-using System;
-using Medja.Controls.Layout;
-using Medja.Performance;
 
 namespace MedjaOpenGlTestApp
 {
