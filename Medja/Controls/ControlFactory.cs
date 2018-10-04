@@ -34,7 +34,7 @@ namespace Medja.Controls
 			_factoryMethods.Add(typeof(TablePanel), CreateTablePanel);
 		}
 
-		protected void AddFactoryMethod<TControl>(Func<object> factory)
+		protected void AddFactoryMethod<TControl>(Func<TControl> factory)
 			where TControl : Control
 		{
 			_factoryMethods.Add(typeof(TControl), factory);

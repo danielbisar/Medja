@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Medja.Primitives;
 
-namespace Medja.Controls.Layout
+namespace Medja.Controls
 {
 	public class TablePanel : Panel
 	{

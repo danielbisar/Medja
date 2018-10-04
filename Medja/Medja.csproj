@@ -58,12 +58,12 @@
     <Compile Include="Controls\ControlFactory.cs" />
     <Compile Include="Controls\Dialogs\ConfirmableDialog.cs" />
     <Compile Include="Controls\InputState.cs" />
-    <Compile Include="Controls\Layout\ColumnAndRowEnumerator.cs" />
-    <Compile Include="Controls\Layout\ColumnDefinition.cs" />
-    <Compile Include="Controls\Layout\Dock.cs" />
-    <Compile Include="Controls\Layout\DockPanel.cs" />
-    <Compile Include="Controls\Layout\Panel.cs" />
-    <Compile Include="Controls\Layout\VerticalStackPanel.cs" />
+    <Compile Include="Controls\Panels\ColumnAndRowEnumerator.cs" />
+    <Compile Include="Controls\Panels\ColumnDefinition.cs" />
+    <Compile Include="Controls\Panels\Dock.cs" />
+    <Compile Include="Controls\Panels\DockPanel.cs" />
+    <Compile Include="Controls\Panels\Panel.cs" />
+    <Compile Include="Controls\Panels\VerticalStackPanel.cs" />
     <Compile Include="Controls\MedjaWindow.cs" />
     <Compile Include="Controls\MouseDraggedEventArgs.cs" />
     <Compile Include="IMedjaLibrary.cs" />
@@ -97,7 +97,7 @@
     <Compile Include="Reflection\ReflectionExtensions.cs" />
     <Compile Include="Controls\TouchButtonClickedEventArgs.cs" />
     <Compile Include="IDictionaryExtensions.cs" />
-    <Compile Include="Controls\Layout\Canvas.cs" />
+    <Compile Include="Controls\Panels\Canvas.cs" />
     <Compile Include="Controls\TextBlock.cs" />
     <Compile Include="Primitives\TextWrapping.cs" />
     <Compile Include="Primitives\Colors.cs" />
@@ -118,8 +118,8 @@
     <Compile Include="Primitives\HorizontalAlignment.cs" />
     <Compile Include="Controls\TabControl.cs" />
     <Compile Include="Controls\TabItem.cs" />
-    <Compile Include="Controls\Layout\TablePanel.cs" />
-    <Compile Include="Controls\Layout\RowDefinition.cs" />
+    <Compile Include="Controls\Panels\TablePanel.cs" />
+    <Compile Include="Controls\Panels\RowDefinition.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
