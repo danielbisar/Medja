@@ -34,5 +34,10 @@ namespace Medja.Primitives
             Right = right;
             Bottom = bottom;
         }
+
+        public void SetAll(float value)
+        {
+            Top = Bottom = Left = Right = value;
+        }
     }
 }
