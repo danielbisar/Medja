@@ -20,8 +20,8 @@ namespace Medja.Controls
 
 			foreach (var child in Children.Where(HasAttachedXY))
 			{
-				child.Position.X = x + child.GetAttachedProperty<float>(AttachedXId);
-				child.Position.Y = y + child.GetAttachedProperty<float>(AttachedYId);
+				child.Position.X = x + child.GetAttachedProperty<float>(AttachedXId) + child.Margin.Left;
+				child.Position.Y = y + child.GetAttachedProperty<float>(AttachedYId) + child.Margin.Top;
 
 				child.Arrange(new Size(child.Position.Width, child.Position.Height));
 			}

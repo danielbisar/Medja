@@ -22,6 +22,7 @@ namespace Medja.Controls
 			_factoryMethods.Add(typeof(DialogButtonsControl), CreateDialogButtonsControl);
 			_factoryMethods.Add(typeof(DialogParentControl), CreateDialogParentControl);
 			_factoryMethods.Add(typeof(DockPanel), CreateDockPanel);
+			_factoryMethods.Add(typeof(HorizontalStackPanel), CreateHorizontalStackPanel);
 			_factoryMethods.Add(typeof(InputBoxDialog), CreateInputBoxDialog);
 			_factoryMethods.Add(typeof(SimpleMessageDialog), CreateSimpleMessageDialog);
 			_factoryMethods.Add(typeof(TabControl), CreateTabControl);
@@ -87,6 +88,11 @@ namespace Medja.Controls
 		protected virtual DockPanel CreateDockPanel()
 		{
 			return new DockPanel();
+		}
+
+		protected virtual HorizontalStackPanel CreateHorizontalStackPanel()
+		{
+			return new HorizontalStackPanel();
 		}
 
 		protected virtual InputBoxDialog CreateInputBoxDialog()

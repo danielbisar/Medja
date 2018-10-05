@@ -29,7 +29,7 @@ namespace Medja.Controls
             _currentX = 0;
             _currentY = 0;
 
-            var columnWidth = _width / (float)Columns.Count();
+            var columnWidth = _width / Columns.Count();
             
             foreach (var row in Rows)
             {

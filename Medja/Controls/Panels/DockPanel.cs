@@ -12,7 +12,7 @@ namespace Medja.Controls
 	/// </summary>
 	public class DockPanel : Panel
 	{
-		private Dictionary<Control, Dock> _docks;
+		private readonly Dictionary<Control, Dock> _docks;
 
 		public DockPanel()
 		{
@@ -57,81 +57,62 @@ namespace Medja.Controls
 			{
 				var dock = _docks[child];
 				var childPos = child.Position;
+				
+				// width and height
+
+				if (dock == Dock.Top || dock == Dock.Bottom || dock == Dock.Fill)
+				{
+					if (child.HorizontalAlignment != HorizontalAlignment.Left
+							&& child.HorizontalAlignment != HorizontalAlignment.Right)
+						childPos.Width = width - child.Margin.LeftAndRight;
+						
+					if (child.HorizontalAlignment != HorizontalAlignment.Right)
+						childPos.X = left + child.Margin.Left;
+					else
+						childPos.X = left + width - childPos.Width;
+				}
+				else if (dock == Dock.Left || dock == Dock.Right || dock == Dock.Fill)
+				{
+					if(child.VerticalAlignment != VerticalAlignment.Bottom
+							&& child.VerticalAlignment != VerticalAlignment.Top)
+						childPos.Height = height - child.Margin.TopAndBottom;
+						
+					if (child.VerticalAlignment != VerticalAlignment.Bottom)
+						childPos.Y = top + child.Margin.Top;
+					else
+						childPos.Y = top + height - childPos.Height;
+				}
 
 				switch (dock)
 				{
 					case Dock.Top:
-						childPos.X = GetChildPosX(child, left, width);
 						childPos.Y = top;
-						childPos.Width = GetChildWidth(child, width);
-
 						top += childPos.Height;
 						height -= childPos.Height;
 						break;
+					case Dock.Bottom:
+						height -= childPos.Height;
+						childPos.Y = top + height;
+						break;
 					case Dock.Left:
 						childPos.X = left;
-						childPos.Y = top;
-						childPos.Height = height;
-
 						left += childPos.Width;
 						width -= childPos.Width;
 						break;
 					case Dock.Right:
 						width -= childPos.Width;
-
 						childPos.X = left + width;
-						childPos.Y = top;
-						childPos.Height = height;
-						break;
-					case Dock.Bottom:
-						childPos.X = GetChildPosX(child, left, width);
-						childPos.Y = top + height - childPos.Height;
-						childPos.Width = GetChildWidth(child, width);
-
-						height -= childPos.Height;
 						break;
 					case Dock.Fill:
 						if (Children[Children.Count - 1] != child)
 							throw new InvalidOperationException("Only the last child can be set to Dock.Fill");
-
-						childPos.X = left;
-						childPos.Y = top;
-						childPos.Height = GetFillHeight(child, height);
-						childPos.Width = width;
-
 						break;
 					default:
-						throw new ArgumentOutOfRangeException("Dock");
+						throw new ArgumentOutOfRangeException(nameof(dock));
 				}
 
 				child.Arrange(new Size(childPos.Width, childPos.Height));
 			}
-		}
-
-		private float GetChildPosX(Control child, float left, float width)
-		{
-			if (child.HorizontalAlignment != HorizontalAlignment.Right)
-				return left;
-
-			return left + width - GetChildWidth(child, width);
-		}
-
-		private float GetChildWidth(Control child, float width)
-		{
-			return child.HorizontalAlignment != HorizontalAlignment.Left && child.HorizontalAlignment != HorizontalAlignment.Right
-									   ? width
-							: Math.Min(child.Position.Width, width);
-		}
-
-		private float GetFillHeight(Control child, float availableHeight)
-		{
-			var verticalAlignment = child.VerticalAlignment;
-
-			if (verticalAlignment == VerticalAlignment.None
-				|| verticalAlignment == VerticalAlignment.Stretch)
-				return availableHeight;
-
-			return child.Position.Height;
 		}
 	}
 }

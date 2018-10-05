@@ -41,15 +41,17 @@ namespace Medja.Controls
 				var child = Children[i];
 				var childPos = child.Position;
 				var pos = _positions[i];
-				
-				childPos.Width = pos.Width;
-				childPos.Height = child.VerticalAlignment == VerticalAlignment.None ||
-						child.VerticalAlignment == VerticalAlignment.Stretch
-								? pos.Height
-								: childPos.Height;
 
-				childPos.X = pos.X + Position.X;
-				childPos.Y = pos.Y + Position.Y;
+				if (child.HorizontalAlignment != HorizontalAlignment.Left &&
+						child.HorizontalAlignment != HorizontalAlignment.Right)
+					childPos.Width = pos.Width - Margin.LeftAndRight;
+
+				if (child.VerticalAlignment != VerticalAlignment.Bottom
+						&& child.VerticalAlignment != VerticalAlignment.Top)
+					childPos.Height = pos.Height - Margin.TopAndBottom;
+
+				childPos.X = pos.X + Position.X + child.Margin.Left;
+				childPos.Y = pos.Y + Position.Y + child.Margin.Right;
 			}
 		}
 	}

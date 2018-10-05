@@ -2,71 +2,49 @@
 
 namespace Medja.Controls
 {
-	public class VerticalStackPanel : Panel
-	{
-		public float SpaceBetweenChildren { get; set; }
-		public float? ChildrenHeight { get; set; }
+    public class VerticalStackPanel : Panel
+    {
+        public float SpaceBetweenChildren { get; set; }
+        public float? ChildrenHeight { get; set; }
 
-		public VerticalStackPanel()
-		{
-			SpaceBetweenChildren = 10;
-			ChildrenHeight = null; // todo could be calculated on the fly, currently we set it
-		}
+        public VerticalStackPanel()
+        {
+            SpaceBetweenChildren = 10;
+            ChildrenHeight = null;
+        }
 
-		// TODO margin and padding
+        public override void Arrange(Size targetSize)
+        {
+            var width = targetSize.Width - Padding.LeftAndRight;
+            var curX = Position.X + Padding.Left;
+            var curY = Position.Y + Padding.Top;
 
-		public override Size Measure(Size availableSize)
-		{
-			//var result = new Size();
+            for (int i = 0; i < Children.Count; i++)
+            {
+                var child = Children[i];
 
-			//result.Width = availableSize.Width;
+                if (child.Visibility == Visibility.Collapsed)
+                    continue;
 
-			//foreach(var child in Children)
-			//{
-			//    // todo child margin etc
-			//    // todo concept of measure children (like button -> text)
-			//    result.Height += child.Position.Height + SpaceBetweenChildren;                
-			//}
+                var childPos = child.Position;
+                
+                if(child.HorizontalAlignment != HorizontalAlignment.Left 
+                        && child.HorizontalAlignment != HorizontalAlignment.Right)
+                    childPos.Width = width - child.Margin.LeftAndRight;
 
-			//result.Height = Math.Min(result.Height, availableSize.Height);
-			//result.Width = Math.Min(result.Width, availableSize.Width);
+                if(child.HorizontalAlignment == HorizontalAlignment.Right)
+                    childPos.X = curX + width - childPos.Width;
+                else
+                    childPos.X = curX + child.Margin.Left;
+                
+                if (ChildrenHeight.HasValue)
+                    childPos.Height = ChildrenHeight.Value - child.Margin.TopAndBottom;
 
-			//return result;
-			return availableSize;
-		}
-
-		public override void Arrange(Size targetSize)
-		{
-			var spacingY = SpaceBetweenChildren;
-			var count = Children.Count;
-			var childAvailableSize = new Size(targetSize.Width - Padding.LeftAndRight,
-											  ((targetSize.Height - Padding.TopAndBottom) - spacingY * (count - 1)) / count);
-
-			var curX = Position.X + Padding.Left;
-			var curY = Position.Y + Padding.Top;
-
-			Control child;
-
-			for (int i = 0; i < count; i++)
-			{
-				child = Children[i];
-
-				if (child.Visibility != Visibility.Collapsed)
-				{
-					var position = child.Position;
-					position.X = curX;
-					position.Y = curY;
-					position.Width = childAvailableSize.Width;
-
-					if (ChildrenHeight.HasValue)
-						position.Height = ChildrenHeight.Value;
-
-					child.Arrange(new Size(position.Width, position.Height));
-
-					//curY += childAvailableSize.Height + spacingY; <-- stretch
-					curY += position.Height + spacingY; // <-- just stack
-				}
-			}
-		}
-	}
+                childPos.Y = curY + child.Margin.Top;
+                curY += childPos.Height + SpaceBetweenChildren;
+                
+                child.Arrange(new Size(childPos.Width, childPos.Height));
+            }
+        }
+    }
 }
