@@ -19,6 +19,7 @@ namespace Medja.Controls
 		/// </summary>
 		/// <value>The position.</value>
 		public MPosition Position { get; }
+		public Thickness Margin { get; }
 
 		public readonly Property<Color> PropertyBackground;
 		public Color Background
@@ -83,6 +84,7 @@ namespace Medja.Controls
 			AttachedProperties = new Dictionary<int, object>();
 			InputState = new InputState(this);
 			Position = new MPosition();
+			Margin = new Thickness();
 			
 			PropertyBackground = new Property<Color>();
 			PropertyIsEnabled = new Property<bool>();
