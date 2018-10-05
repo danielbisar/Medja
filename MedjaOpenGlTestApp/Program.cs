@@ -4,6 +4,7 @@ using Medja.OpenTk;
 using Medja.OpenTk.Rendering;
 using OpenTK.Graphics.OpenGL;
 using Medja.Primitives;
+using MedjaOpenGlTestApp.Tests;
 
 namespace MedjaOpenGlTestApp
 {
@@ -19,26 +20,12 @@ namespace MedjaOpenGlTestApp
 			var controlFactory = library.ControlFactory;
 			var application = MedjaApplication.Create(library);
 
-			var textBlock = controlFactory.Create<TextBlock>();
-			textBlock.Text = "My label:";
-			textBlock.Position.Width = 50;
-
-			var textBlock2 = controlFactory.Create<TextBlock>();
-			textBlock2.Text = "Text2";
-			textBlock2.Position.Width = 50;
-
-			var control = controlFactory.Create<Control>();
-			control.Background = ColorMap.SecondaryLight;
-			
-			var dockPanel = controlFactory.Create<DockPanel>();
-			dockPanel.Add(Dock.Right, textBlock);
-			dockPanel.Add(Dock.Right, textBlock2);
-			dockPanel.Add(Dock.Fill, control);
+			var test = new DockPanelTest(controlFactory);
 			
 			_window = application.CreateWindow();
 			_window.CenterOnScreen(800, 600);
 			_window.Background = Colors.Black;
-			_window.Content = dockPanel;
+			_window.Content = test.Create();
 
 			application.MainWindow = _window;
 			application.Run();

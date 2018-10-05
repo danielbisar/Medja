@@ -59,7 +59,6 @@ namespace Medja.Controls
 				var childPos = child.Position;
 				
 				// width and height
-
 				if (dock == Dock.Top || dock == Dock.Bottom || dock == Dock.Fill)
 				{
 					if (child.HorizontalAlignment != HorizontalAlignment.Left
@@ -69,39 +68,40 @@ namespace Medja.Controls
 					if (child.HorizontalAlignment != HorizontalAlignment.Right)
 						childPos.X = left + child.Margin.Left;
 					else
-						childPos.X = left + width - childPos.Width;
+						childPos.X = left + width - childPos.Width - child.Margin.Right;
 				}
-				else if (dock == Dock.Left || dock == Dock.Right || dock == Dock.Fill)
+				
+				if (dock == Dock.Left || dock == Dock.Right || dock == Dock.Fill)
 				{
 					if(child.VerticalAlignment != VerticalAlignment.Bottom
 							&& child.VerticalAlignment != VerticalAlignment.Top)
 						childPos.Height = height - child.Margin.TopAndBottom;
-						
+
 					if (child.VerticalAlignment != VerticalAlignment.Bottom)
 						childPos.Y = top + child.Margin.Top;
 					else
-						childPos.Y = top + height - childPos.Height;
+						childPos.Y = top + height - childPos.Height - child.Margin.Bottom;
 				}
 
 				switch (dock)
 				{
 					case Dock.Top:
-						childPos.Y = top;
-						top += childPos.Height;
-						height -= childPos.Height;
+						childPos.Y = top + child.Margin.Top;
+						top += child.Margin.TopAndBottom + childPos.Height;
+						height -= child.Margin.TopAndBottom + childPos.Height;
 						break;
 					case Dock.Bottom:
-						height -= childPos.Height;
-						childPos.Y = top + height;
+						height -= childPos.Height + child.Margin.TopAndBottom;
+						childPos.Y = top + child.Margin.Top + height;
 						break;
 					case Dock.Left:
-						childPos.X = left;
-						left += childPos.Width;
-						width -= childPos.Width;
+						childPos.X = left + child.Margin.Left;
+						left += child.Margin.LeftAndRight + childPos.Width;
+						width -= child.Margin.LeftAndRight + childPos.Width;
 						break;
 					case Dock.Right:
-						width -= childPos.Width;
-						childPos.X = left + width;
+						width -= childPos.Width + child.Margin.LeftAndRight;
+						childPos.X = left + child.Margin.Left + width;
 						break;
 					case Dock.Fill:
 						if (Children[Children.Count - 1] != child)
