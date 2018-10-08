@@ -56,6 +56,7 @@
     <Compile Include="Controls\Control.cs" />
     <Compile Include="Controls\Control3D.cs" />
     <Compile Include="Controls\ControlFactory.cs" />
+    <Compile Include="Controls\ControlTreeIterator.cs" />
     <Compile Include="Controls\Dialogs\ConfirmableDialog.cs" />
     <Compile Include="Controls\InputState.cs" />
     <Compile Include="Controls\Panels\ColumnAndRowEnumerator.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="Controls\Panels\VerticalStackPanel.cs" />
     <Compile Include="Controls\MedjaWindow.cs" />
     <Compile Include="Controls\MouseDraggedEventArgs.cs" />
+    <Compile Include="Debug\ControlTreeStringBuilder.cs" />
     <Compile Include="IMedjaLibrary.cs" />
     <Compile Include="MedjaApplication.cs" />
     <Compile Include="MedjaMath.cs" />

@@ -1,5 +1,9 @@
-﻿using Medja;
+﻿using System;
+using System.Diagnostics;
+using System.Linq;
+using Medja;
 using Medja.Controls;
+using Medja.Debug;
 using Medja.OpenTk;
 using Medja.OpenTk.Rendering;
 using OpenTK.Graphics.OpenGL;
@@ -26,6 +30,8 @@ namespace MedjaOpenGlTestApp
 			_window.CenterOnScreen(800, 600);
 			_window.Background = Colors.Black;
 			_window.Content = test.Create();
+			
+			Console.WriteLine(new ControlTreeStringBuilder(_window).GetTree());
 
 			application.MainWindow = _window;
 			application.Run();
