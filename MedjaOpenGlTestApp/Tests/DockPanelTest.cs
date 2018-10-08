@@ -1,4 +1,6 @@
+using System;
 using Medja.Controls;
+using Medja.Debug;
 using Medja.Primitives;
 
 namespace MedjaOpenGlTestApp.Tests

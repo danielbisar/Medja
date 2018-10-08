@@ -70,18 +70,15 @@ namespace Medja.Controls
 			}
 		}
 
-		public override IEnumerable<Control> GetAllControls()
+		public override IEnumerable<Control> GetChildren()
 		{
-			foreach (var item in base.GetAllControls())
-				yield return item;
+			var children = base.GetChildren();
+
+			foreach (var child in children)
+				yield return child;
 
 			if (DialogControl != null && IsDialogVisible)
-			{
 				yield return DialogControl;
-
-				foreach (var item in DialogControl.GetAllControls())
-					yield return item;
-			}
 		}
 	}
 }

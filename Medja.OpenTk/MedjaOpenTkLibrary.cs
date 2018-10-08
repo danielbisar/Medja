@@ -90,6 +90,8 @@ namespace Medja.OpenTk
 			AssureRenderer();
 
 			var controls = _medjaWindow.GetAllControls().ToList();
+			
+			_mouseHandler.Controls = controls;
 			_renderer.Render(controls);
 
 			// display what was just drawn

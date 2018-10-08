@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using Medja.Controls;
 using OpenTK;
@@ -50,6 +51,8 @@ namespace Medja.OpenTk
 		private readonly MedjaWindow _medjaWindow;
 		private readonly GameWindow _window;
 		private readonly FocusManager _focusManager;
+		
+		public List<Control> Controls { get; set; }
 
 		public OpenTkMouseHandler(MedjaWindow medjaWindow, GameWindow window, FocusManager focusManager)
 		{
@@ -70,10 +73,13 @@ namespace Medja.OpenTk
 
 		private void ApplyMouseToControls(MouseState e)
 		{
+			if (Controls == null)
+				return;
+			
 			var position = e.Position;
 			Control relevantControl = null;
 
-			foreach (var control in _medjaWindow.GetAllControls().ToList())
+			foreach(var control in Controls)
 			{
 				if (control.IsEnabled
 					&& control.IsVisible

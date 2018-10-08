@@ -41,16 +41,10 @@ namespace Medja.Controls
 			}
 		}
 
-		public override IEnumerable<Control> GetAllControls()
+		public override IEnumerable<Control> GetChildren()
 		{
-			yield return this;
-
 			foreach (var control in Children)
-			{
-				// GetAllControls also returns self
-				foreach (var subControl in control.GetAllControls())
-					yield return subControl;
-			}
+				yield return control;
 		}
 
 		public override void UpdateAnimations()

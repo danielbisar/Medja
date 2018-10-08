@@ -152,9 +152,9 @@ namespace Medja.Controls
 			AttachedProperties.Remove(id);
 		}
 
-		public virtual IEnumerable<Control> GetAllControls()
+		public virtual IEnumerable<Control> GetChildren()
 		{
-			yield return this;
+			return new Control[0];
 		}
 
 		/// <summary>

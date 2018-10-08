@@ -90,15 +90,10 @@ namespace Medja.Controls
 			Content.Arrange(new Size(pos.Width, pos.Height));
 		}
 
-		public override IEnumerable<Control> GetAllControls()
+		public override IEnumerable<Control> GetChildren()
 		{
-			yield return this;
-
 			if (Content != null)
-			{
-				foreach (var control in Content.GetAllControls())
-					yield return control;
-			}
+				yield return Content;
 		}
 
 		public override void UpdateAnimations()
