@@ -64,7 +64,7 @@ namespace Medja.Controls
 					pos.X = Position.X + (Padding.Left + margin.Left);
 
 				if (Content.VerticalAlignment == VerticalAlignment.Bottom)
-					pos.Y = Position.Y + pos.Height - (Padding.Bottom + margin.Bottom);
+					pos.Y = Position.Y + Position.Height - (pos.Height + Padding.Bottom + margin.Bottom);
 				else
 					pos.Y = Position.Y + (Padding.Top + margin.Top);
 				
@@ -79,12 +79,10 @@ namespace Medja.Controls
 			
 			var pos = Content.Position;
 
-			if(Content.HorizontalAlignment != HorizontalAlignment.Left 
-					&& Content.VerticalAlignment != VerticalAlignment.Bottom)
+			if(Content.HorizontalAlignment == HorizontalAlignment.Stretch)
 				pos.Width = Position.Width - (Padding.LeftAndRight + Margin.LeftAndRight);
 
-			if (Content.VerticalAlignment != VerticalAlignment.Top &&
-					Content.VerticalAlignment != VerticalAlignment.Bottom)
+			if (Content.VerticalAlignment == VerticalAlignment.Stretch)
 				pos.Height = Position.Height - (Padding.TopAndBottom + Margin.TopAndBottom);
 
 			Content.Arrange(new Size(pos.Width, pos.Height));

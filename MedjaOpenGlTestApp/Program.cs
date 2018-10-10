@@ -24,7 +24,9 @@ namespace MedjaOpenGlTestApp
 			var controlFactory = library.ControlFactory;
 			var application = MedjaApplication.Create(library);
 
-			var test = new DockPanelTest(controlFactory);
+			//var test = new DockPanelTest(controlFactory);
+			//var test = new SimpleDockPanelTest(controlFactory);
+			var test = new ContentControlTest(controlFactory);
 			
 			_window = application.CreateWindow();
 			_window.CenterOnScreen(800, 600);
