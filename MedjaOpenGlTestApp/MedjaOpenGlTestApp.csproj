@@ -39,7 +39,9 @@
     <Compile Include="OpenGlTestControl.cs" />
     <Compile Include="OpenGlTestControlRenderer.cs" />
     <Compile Include="TestAppTheme.cs" />
+    <Compile Include="Tests\ContentControlTest.cs" />
     <Compile Include="Tests\DockPanelTest.cs" />
+    <Compile Include="Tests\SimpleDockPanelTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Medja\Medja.csproj">
