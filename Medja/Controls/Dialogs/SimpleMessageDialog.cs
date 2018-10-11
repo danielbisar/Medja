@@ -46,6 +46,8 @@ namespace Medja.Controls
 			var dockPanel = _controlFactory.Create<DockPanel>();
 			dockPanel.Add(Dock.Bottom, buttons);
 			dockPanel.Add(Dock.Fill, innerContentControl);
+			dockPanel.VerticalAlignment = VerticalAlignment.Stretch;
+			dockPanel.HorizontalAlignment = HorizontalAlignment.Stretch;
 
 			return dockPanel;
 		}
