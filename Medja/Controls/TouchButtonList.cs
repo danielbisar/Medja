@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Medja.Primitives;
 
 namespace Medja.Controls
 {
@@ -79,7 +80,9 @@ namespace Medja.Controls
 
 			mainDockPanel.Add(Dock.Right, scrollButtonDockPanel);
 			mainDockPanel.Add(Dock.Fill, _itemsStackPanel);
-
+			mainDockPanel.VerticalAlignment = VerticalAlignment.Stretch;
+			mainDockPanel.HorizontalAlignment = HorizontalAlignment.Stretch;
+			
 			Content = mainDockPanel;
 		}
 
