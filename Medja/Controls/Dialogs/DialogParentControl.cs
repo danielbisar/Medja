@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Medja.Debug;
 using Medja.Primitives;
 
 namespace Medja.Controls
@@ -56,6 +58,8 @@ namespace Medja.Controls
 		public override void Arrange(Size availableSize)
 		{
 			base.Arrange(availableSize);
+			
+			Console.WriteLine(new ControlTreeStringBuilder(this).GetTree());
 
 			if (IsDialogVisible && DialogControl != null)
 			{
