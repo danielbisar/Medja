@@ -52,8 +52,6 @@ namespace Medja.Controls
 			
 			ContentArranger.Position(area);
 			ContentArranger.Stretch(area);
-			
-			Console.WriteLine(new ControlTreeStringBuilder(this).GetTree());
 		}
 
 		public virtual void Close()
