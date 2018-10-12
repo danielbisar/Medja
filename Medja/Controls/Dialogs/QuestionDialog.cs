@@ -36,19 +36,16 @@ namespace Medja.Controls
 		{
 			_messageTextBlock.Position.Height = 100;
 
-			var stackPanel = _controlFactory.Create<VerticalStackPanel>();
-			stackPanel.Padding = new Thickness(10);
-			stackPanel.Children.Add(_messageTextBlock);
-
 			var buttons = _controlFactory.Create<DialogButtonsControl>();
 			buttons.Buttons = DialogButtons.OkCancel;
 			buttons.CreateContent();
+			buttons.HorizontalAlignment = HorizontalAlignment.Stretch;
 			buttons.Button1.InputState.MouseClicked += OnOkButtonClicked;
 			buttons.Button2.InputState.MouseClicked += OnCancelButtonClicked;
 
 			var dockPanel = _controlFactory.Create<DockPanel>();
 			dockPanel.Add(Dock.Bottom, buttons);
-			dockPanel.Add(Dock.Fill, stackPanel);
+			dockPanel.Add(Dock.Fill, _messageTextBlock);
 			dockPanel.VerticalAlignment = VerticalAlignment.Stretch;
 			dockPanel.HorizontalAlignment = HorizontalAlignment.Stretch;
 

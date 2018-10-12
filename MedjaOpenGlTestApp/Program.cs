@@ -26,7 +26,8 @@ namespace MedjaOpenGlTestApp
 
 			//var test = new DockPanelTest(controlFactory);
 			//var test = new SimpleDockPanelTest(controlFactory);
-			var test = new ContentControlTest(controlFactory);
+			//var test = new ContentControlTest(controlFactory);
+			var test = new DialogParentControlTest(controlFactory);
 			
 			_window = application.CreateWindow();
 			_window.CenterOnScreen(800, 600);

@@ -59,8 +59,8 @@
 
         public void Subtract(Thickness thickness)
         {
-            X -= thickness.Left;
-            Y -= thickness.Top;
+            X += thickness.Left;
+            Y += thickness.Top;
             Width -= thickness.LeftAndRight;
             Height -= thickness.TopAndBottom;
         }
