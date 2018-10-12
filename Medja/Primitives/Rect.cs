@@ -76,7 +76,7 @@
         /// <param name="value"></param>
         public void SubtractTop(float value)
         {
-            Y -= value;
+            Y += value;
             Height -= value;
         }
     }

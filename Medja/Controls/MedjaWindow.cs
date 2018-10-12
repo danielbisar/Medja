@@ -31,8 +31,11 @@ namespace Medja.Controls
 			if (content == null)
 				return;
 
-			content.HorizontalAlignment = HorizontalAlignment.Stretch;
-			content.VerticalAlignment = VerticalAlignment.Stretch;
+			if (content.VerticalAlignment == VerticalAlignment.None)
+				content.VerticalAlignment = VerticalAlignment.Stretch;
+				
+			if (content.HorizontalAlignment == HorizontalAlignment.None)
+				content.HorizontalAlignment = HorizontalAlignment.Stretch;
 		}
 
 		public override void Arrange(Size availableSize)

@@ -80,6 +80,13 @@ namespace Medja.Controls
 			else
 			{
 				Content = SelectedTab.Content;
+				
+				if (Content.VerticalAlignment == VerticalAlignment.None)
+					Content.VerticalAlignment = VerticalAlignment.Stretch;
+				
+				if (Content.HorizontalAlignment == HorizontalAlignment.None)
+					Content.HorizontalAlignment = HorizontalAlignment.Stretch;
+				
 				SelectedTab.IsSelected = true;
 			}
 		}
@@ -108,7 +115,7 @@ namespace Medja.Controls
 
 		public override void Arrange(Size availableSize)
 		{
-			base.Arrange(availableSize);
+			//base.Arrange(availableSize);
 			
 			var area = Rect.Subtract(Position, Margin);
 			area.Subtract(Padding);
