@@ -32,8 +32,6 @@ namespace MedjaOpenGlTestApp
 			_window.CenterOnScreen(800, 600);
 			_window.Background = Colors.Black;
 			_window.Content = test.Create();
-			
-			Console.WriteLine(new ControlTreeStringBuilder(_window).GetTree());
 
 			application.MainWindow = _window;
 			application.Run();

@@ -10,7 +10,6 @@ namespace Medja.OpenTk.Rendering
 			var tabs = _control.Tabs;
 			var padding = _control.Padding;
 			var tabHeaderWidth = (_rect.Width - padding.LeftAndRight) / tabs.Count;
-			var backgroundColor = _control.Background.ToSKColor();
 			var headerRect = new SKRect(_rect.Left + padding.Left,
 										_rect.Top + padding.Top,
 										_rect.Left + padding.Left + tabHeaderWidth,

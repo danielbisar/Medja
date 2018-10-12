@@ -52,6 +52,7 @@
     <Compile Include="Controls\Animation\ControlAnimation.cs" />
     <Compile Include="Controls\Button.cs" />
     <Compile Include="Controls\CheckBox.cs" />
+    <Compile Include="Controls\ContentArranger.cs" />
     <Compile Include="Controls\ContentControl.cs" />
     <Compile Include="Controls\Control.cs" />
     <Compile Include="Controls\Control3D.cs" />
@@ -74,9 +75,9 @@
     <Compile Include="MedjaMath.cs" />
     <Compile Include="Performance\FramesPerSecondCounter.cs" />
     <Compile Include="Primitives\Color.cs" />
-    <Compile Include="Primitives\MPosition.cs" />
+    <Compile Include="Primitives\MRect.cs" />
     <Compile Include="Primitives\Point.cs" />
-    <Compile Include="Primitives\Position.cs" />
+    <Compile Include="Primitives\Rect.cs" />
     <Compile Include="Primitives\Size.cs" />
     <Compile Include="Primitives\Thickness.cs" />
     <Compile Include="Primitives\Vector2D.cs" />

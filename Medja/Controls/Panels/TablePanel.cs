@@ -5,7 +5,7 @@ namespace Medja.Controls
 {
 	public class TablePanel : Panel
 	{
-		private readonly List<Position> _positions;
+		private readonly List<Rect> _positions;
 		private bool _refreshPositions;
 		
 		public List<RowDefinition> Rows { get; }
@@ -13,7 +13,7 @@ namespace Medja.Controls
 
 		public TablePanel()
 		{
-			_positions = new List<Position>();
+			_positions = new List<Rect>();
 			_refreshPositions = true;
 			Rows = new List<RowDefinition>();
 			Columns = new List<ColumnDefinition>();

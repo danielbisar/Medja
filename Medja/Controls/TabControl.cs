@@ -109,33 +109,13 @@ namespace Medja.Controls
 		public override void Arrange(Size availableSize)
 		{
 			base.Arrange(availableSize);
-
-			if (Content != null)
-			{
-				var pos = Content.Position;
-
-				pos.X = Position.X + Padding.Left;
-				pos.Y = Position.Y + Padding.Top + HeaderHeight;
-				ArrangeContent();
-			}
-		}
-
-		protected override void ArrangeContent()
-		{
-			if (Content != null)
-			{
-				var pos = Content.Position;
-
-				pos.Width = Position.Width - Padding.LeftAndRight;
-
-				var availableHeight = Position.Height - Padding.TopAndBottom - HeaderHeight;
-
-				pos.Height = Content.VerticalAlignment == VerticalAlignment.Top
-					|| Content.VerticalAlignment == VerticalAlignment.Bottom
-					? pos.Height : availableHeight;
-
-				Content.Arrange(new Size(pos.Width, pos.Height));
-			}
+			
+			var area = Rect.Subtract(Position, Margin);
+			area.Subtract(Padding);
+			area.SubtractTop(HeaderHeight);
+			
+			ContentArranger.Position(area);
+			ContentArranger.Stretch(area);
 		}
 	}
 }

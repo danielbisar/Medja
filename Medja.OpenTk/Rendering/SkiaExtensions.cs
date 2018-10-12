@@ -21,7 +21,7 @@ namespace Medja.OpenTk.Rendering
 		/// </summary>
 		/// <returns>The SKPoint.</returns>
 		/// <param name="position">Position.</param>
-		public static SKPoint ToSKPoint(this MPosition position)
+		public static SKPoint ToSKPoint(this MRect position)
 		{
 			return new SKPoint(position.X, position.Y);
 		}
@@ -31,7 +31,7 @@ namespace Medja.OpenTk.Rendering
 		/// </summary>
 		/// <returns>The SKRect.</returns>
 		/// <param name="position">Position.</param>
-		public static SKRect ToSKRect(this MPosition position)
+		public static SKRect ToSKRect(this MRect position)
 		{
 			return new SKRect(position.X, position.Y, position.Width + position.X, position.Height + position.Y);
 		}

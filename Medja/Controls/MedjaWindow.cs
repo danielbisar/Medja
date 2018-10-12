@@ -1,4 +1,5 @@
 ﻿using System;
+using Medja.Debug;
 using Medja.Primitives;
 
 namespace Medja.Controls
@@ -21,6 +22,19 @@ namespace Medja.Controls
 			PropertyTitle = new Property<string>();
 		}
 
+		protected override void OnContentChanged(object sender, PropertyChangedEventArgs eventArgs)
+		{
+			base.OnContentChanged(sender, eventArgs);
+
+			var content = eventArgs.NewValue as Control;
+
+			if (content == null)
+				return;
+
+			content.HorizontalAlignment = HorizontalAlignment.Stretch;
+			content.VerticalAlignment = VerticalAlignment.Stretch;
+		}
+
 		public override void Arrange(Size availableSize)
 		{
 			//base.Arrange(availableSize);
@@ -28,40 +42,15 @@ namespace Medja.Controls
 			// this doesn't make sense for windows, because their position
 			// is relative to the desktop and the controls position relative
 			// to the window
-
-			if (Content != null)
-			{
-				var pos = Content.Position;
-				var margin = Content.Margin;
-
-				if (Content.HorizontalAlignment == HorizontalAlignment.Right)
-					pos.X = pos.Width - (Padding.Right + margin.Right);
-				else
-					pos.X = Padding.Left + margin.Left;
-
-				if (Content.VerticalAlignment == VerticalAlignment.Bottom)
-					pos.Y = Position.Height - (pos.Height + Padding.Bottom + margin.Bottom);
-				else
-					pos.Y = Padding.Top + margin.Top;
-				
-				ArrangeContent();
-			}
-		}
-		
-		protected override void ArrangeContent()
-		{
-			if (Content == null) 
-				return;
 			
-			var pos = Content.Position;
-
-			if(Content.HorizontalAlignment == HorizontalAlignment.Stretch || Content.HorizontalAlignment == HorizontalAlignment.None)
-				pos.Width = Position.Width - (Padding.LeftAndRight + Margin.LeftAndRight);
-
-			if (Content.VerticalAlignment == VerticalAlignment.Stretch || Content.VerticalAlignment == VerticalAlignment.None)
-				pos.Height = Position.Height - (Padding.TopAndBottom + Margin.TopAndBottom);
-
-			Content.Arrange(new Size(pos.Width, pos.Height));
+			var area = new Rect(0, 0, availableSize.Width, availableSize.Height);
+			area.Subtract(Margin);
+			area.Subtract(Padding);
+			
+			ContentArranger.Position(area);
+			ContentArranger.Stretch(area);
+			
+			Console.WriteLine(new ControlTreeStringBuilder(this).GetTree());
 		}
 
 		public virtual void Close()

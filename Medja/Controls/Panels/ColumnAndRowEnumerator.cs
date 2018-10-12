@@ -24,7 +24,7 @@ namespace Medja.Controls
         /// Gets the positions of each element based on the given row and column definitions.
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Position> GetPositions()
+        public IEnumerable<Rect> GetPositions()
         {
             _currentX = 0;
             _currentY = 0;
@@ -47,9 +47,9 @@ namespace Medja.Controls
             }
         }
 
-        private Position GetPosition(RowDefinition row, ColumnDefinition column, float columnWidth)
+        private Rect GetPosition(RowDefinition row, ColumnDefinition column, float columnWidth)
         {
-            return new Position
+            return new Rect
             {
                 Width = column.Width ?? columnWidth,
                 Height = row.Height,
