@@ -18,7 +18,7 @@ namespace Medja.Controls
 		/// Gets the position this item should be drawn at.
 		/// </summary>
 		/// <value>The position.</value>
-		public MPosition Position { get; }
+		public MRect Position { get; }
 		public Thickness Margin { get; }
 
 		public readonly Property<Color> PropertyBackground;
@@ -83,7 +83,7 @@ namespace Medja.Controls
 			AnimationManager = new AnimationManager();
 			AttachedProperties = new Dictionary<int, object>();
 			InputState = new InputState(this);
-			Position = new MPosition();
+			Position = new MRect();
 			Margin = new Thickness();
 			
 			PropertyBackground = new Property<Color>();

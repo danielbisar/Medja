@@ -5,6 +5,8 @@ namespace Medja.Controls
 {
 	public class ContentControl : Control
 	{
+		protected readonly ContentArranger ContentArranger;
+		
 		public readonly Property<Control> PropertyContent;
 		public Control Content
 		{
@@ -20,6 +22,8 @@ namespace Medja.Controls
 			PropertyContent.PropertyChanged += OnContentChanged;
 			Padding = new Thickness();
 			PropertyIsEnabled.PropertyChanged += OnIsEnabledChanged;
+			
+			ContentArranger = new ContentArranger();
 		}
 
 		protected virtual void OnContentChanged(object sender, PropertyChangedEventArgs eventArgs)
@@ -30,6 +34,7 @@ namespace Medja.Controls
 				content.Parent = null;
 
 			content = eventArgs.NewValue as Control;
+			ContentArranger.Control = content;
 			
 			if (content != null)
 				content.Parent = this;
@@ -53,39 +58,11 @@ namespace Medja.Controls
 		{
 			base.Arrange(availableSize);
 
-			if (Content != null)
-			{
-				var pos = Content.Position;
-				var margin = Content.Margin;
-
-				if (Content.HorizontalAlignment == HorizontalAlignment.Right)
-					pos.X = Position.X + pos.Width - (Padding.Right + margin.Right);
-				else
-					pos.X = Position.X + (Padding.Left + margin.Left);
-
-				if (Content.VerticalAlignment == VerticalAlignment.Bottom)
-					pos.Y = Position.Y + Position.Height - (pos.Height + Padding.Bottom + margin.Bottom);
-				else
-					pos.Y = Position.Y + (Padding.Top + margin.Top);
-				
-				ArrangeContent();
-			}
-		}
-
-		protected virtual void ArrangeContent()
-		{
-			if (Content == null) 
-				return;
+			var area = Rect.Subtract(Position, Margin);
+			area.Subtract(Padding);
 			
-			var pos = Content.Position;
-
-			if(Content.HorizontalAlignment == HorizontalAlignment.Stretch)
-				pos.Width = Position.Width - (Padding.LeftAndRight + Margin.LeftAndRight);
-
-			if (Content.VerticalAlignment == VerticalAlignment.Stretch)
-				pos.Height = Position.Height - (Padding.TopAndBottom + Margin.TopAndBottom);
-
-			Content.Arrange(new Size(pos.Width, pos.Height));
+			ContentArranger.Position(area);
+			ContentArranger.Stretch(area);
 		}
 
 		public override IEnumerable<Control> GetChildren()

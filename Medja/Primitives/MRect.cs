@@ -3,7 +3,7 @@
 	/// <summary>
 	/// M for MedjaObject
 	/// </summary>
-	public class MPosition : Position
+	public class MRect : Rect
 	{
 		public Property<float> PropertyX { get; }
 		public Property<float> PropertyY { get; }
@@ -34,7 +34,7 @@
 			set { PropertyHeight.Set(value); }
 		}
 
-		public MPosition()
+		public MRect()
 		{
 			PropertyX = new Property<float>();
 			PropertyY = new Property<float>();
