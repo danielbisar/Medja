@@ -54,7 +54,6 @@
     <Compile Include="Controls\CheckBox.cs" />
     <Compile Include="Controls\Container\ContentArranger.cs" />
     <Compile Include="Controls\Container\ContentControl.cs" />
-    <Compile Include="Controls\Container\ScrollingGrid.cs" />
     <Compile Include="Controls\Container\TabControl.cs" />
     <Compile Include="Controls\Control.cs" />
     <Compile Include="Controls\Control3D.cs" />
@@ -67,6 +66,7 @@
     <Compile Include="Controls\Panels\DockPanel.cs" />
     <Compile Include="Controls\Panels\HorizontalStackPanel.cs" />
     <Compile Include="Controls\Panels\Panel.cs" />
+    <Compile Include="Controls\Panels\ScrollingGrid.cs" />
     <Compile Include="Controls\Panels\VerticalStackPanel.cs" />
     <Compile Include="Controls\MedjaWindow.cs" />
     <Compile Include="Controls\MouseDraggedEventArgs.cs" />
