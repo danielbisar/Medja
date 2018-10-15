@@ -65,9 +65,9 @@ namespace Medja.Controls
             
             foreach (var child in Children)
             {
-                child.Position.X = column * columnWidth + column*SpacingX;
+                child.Position.X = Position.X + column * columnWidth + column*SpacingX;
                 child.Position.Width = columnWidth;
-                child.Position.Y = row * rowHeight + row*SpacingY;
+                child.Position.Y = Position.Y + row * rowHeight + row*SpacingY;
                 child.Position.Height = rowHeight;
 
                 column++;
