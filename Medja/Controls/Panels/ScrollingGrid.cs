@@ -59,15 +59,15 @@ namespace Medja.Controls
             area.Subtract(Padding);
 
             var columnWidth = area.Width / _columns - SpacingX / 2.0f;
-            var rowHeight = RowHeight ?? Children[0].Position.Height;
+            var rowHeight = (RowHeight ?? Children[0].Position.Height);
             var row = 0;
             var column = 0;
             
             foreach (var child in Children)
             {
-                child.Position.X = Position.X + column * columnWidth + column*SpacingX;
+                child.Position.X = Position.X + Margin.Left + Padding.Left + column * columnWidth + column*SpacingX;
                 child.Position.Width = columnWidth;
-                child.Position.Y = Position.Y + row * rowHeight + row*SpacingY;
+                child.Position.Y = Position.Y + Margin.Top + Padding.Top + row * rowHeight + row*SpacingY;
                 child.Position.Height = rowHeight;
 
                 column++;
