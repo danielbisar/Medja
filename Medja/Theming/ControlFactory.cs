@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using Medja.Reflection;
 using System.Reflection;
+using Medja.Controls;
+using Medja.Reflection;
 
-namespace Medja.Controls
+namespace Medja.Theming
 {
 	public class ControlFactory
 	{
@@ -24,6 +25,7 @@ namespace Medja.Controls
 			_factoryMethods.Add(typeof(DockPanel), CreateDockPanel);
 			_factoryMethods.Add(typeof(HorizontalStackPanel), CreateHorizontalStackPanel);
 			_factoryMethods.Add(typeof(InputBoxDialog), CreateInputBoxDialog);
+			_factoryMethods.Add(typeof(ScrollingGrid), CreateScrollingGrid);
 			_factoryMethods.Add(typeof(SimpleMessageDialog), CreateSimpleMessageDialog);
 			_factoryMethods.Add(typeof(TabControl), CreateTabControl);
 			_factoryMethods.Add(typeof(TextBox), CreateTextBox);
@@ -98,6 +100,11 @@ namespace Medja.Controls
 		protected virtual InputBoxDialog CreateInputBoxDialog()
 		{
 			return new InputBoxDialog(this);
+		}
+
+		protected virtual ScrollingGrid CreateScrollingGrid()
+		{
+			return new ScrollingGrid();
 		}
 
 		protected virtual SimpleMessageDialog CreateSimpleMessageDialog()

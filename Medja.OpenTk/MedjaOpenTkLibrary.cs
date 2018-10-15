@@ -5,6 +5,7 @@ using Medja.OpenTk.Rendering;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using Medja.OpenTk.Input;
+using Medja.Theming;
 
 namespace Medja.OpenTk
 {
