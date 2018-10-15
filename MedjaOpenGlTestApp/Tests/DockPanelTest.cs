@@ -2,6 +2,7 @@ using System;
 using Medja.Controls;
 using Medja.Debug;
 using Medja.Primitives;
+using Medja.Theming;
 
 namespace MedjaOpenGlTestApp.Tests
 {

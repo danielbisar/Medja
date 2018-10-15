@@ -52,11 +52,12 @@
     <Compile Include="Controls\Animation\ControlAnimation.cs" />
     <Compile Include="Controls\Button.cs" />
     <Compile Include="Controls\CheckBox.cs" />
-    <Compile Include="Controls\ContentArranger.cs" />
-    <Compile Include="Controls\ContentControl.cs" />
+    <Compile Include="Controls\Container\ContentArranger.cs" />
+    <Compile Include="Controls\Container\ContentControl.cs" />
+    <Compile Include="Controls\Container\ScrollingGrid.cs" />
+    <Compile Include="Controls\Container\TabControl.cs" />
     <Compile Include="Controls\Control.cs" />
     <Compile Include="Controls\Control3D.cs" />
-    <Compile Include="Controls\ControlFactory.cs" />
     <Compile Include="Controls\ControlTreeIterator.cs" />
     <Compile Include="Controls\Dialogs\ConfirmableDialog.cs" />
     <Compile Include="Controls\InputState.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="Property\PropertyValueStorage.cs" />
     <Compile Include="Property\ThreadSafeProperty.cs" />
     <Compile Include="ShutdownEventArgs.cs" />
+    <Compile Include="Theming\ControlFactory.cs" />
     <Compile Include="Theming\ControlRendererBase.cs" />
     <Compile Include="Theming\IControlRenderer.cs" />
     <Compile Include="Primitives\Visibility.cs" />
@@ -120,7 +122,6 @@
     <Compile Include="Controls\Dialogs\QuestionDialog.cs" />
     <Compile Include="Controls\Dialogs\SimpleMessageDialog.cs" />
     <Compile Include="Primitives\HorizontalAlignment.cs" />
-    <Compile Include="Controls\TabControl.cs" />
     <Compile Include="Controls\TabItem.cs" />
     <Compile Include="Controls\Panels\TablePanel.cs" />
     <Compile Include="Controls\Panels\RowDefinition.cs" />

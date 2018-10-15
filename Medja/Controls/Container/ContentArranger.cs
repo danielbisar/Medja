@@ -46,5 +46,18 @@ namespace Medja.Controls
 
             Control.Arrange(new Size(pos.Width, pos.Height));
         }
+
+        public void StretchWidth(Rect area)
+        {
+            if (Control == null) 
+                return;
+			
+            var pos = Control.Position;
+
+            if(Control.HorizontalAlignment == HorizontalAlignment.Stretch)
+                pos.Width = area.Width;
+            
+            Control.Arrange(new Size(pos.Width, pos.Height));
+        }
     }
 }
