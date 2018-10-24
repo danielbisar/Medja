@@ -79,7 +79,7 @@ namespace Medja.Controls
                 SideContent.Position.Width = SideContentWidth;
                 SideContent.Position.Height = Position.Height - Padding.TopAndBottom - Margin.TopAndBottom;
                 
-                SideContent.Arrange(new Size(_showMenuButton.Position.Width, _showMenuButton.Position.Height));
+                SideContent.Arrange(new Size(SideContent.Position.Width, SideContent.Position.Height));
             }
         }
     }
