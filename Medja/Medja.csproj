@@ -54,6 +54,7 @@
     <Compile Include="Controls\CheckBox.cs" />
     <Compile Include="Controls\Container\ContentArranger.cs" />
     <Compile Include="Controls\Container\ContentControl.cs" />
+    <Compile Include="Controls\Container\SideControlsContainer.cs" />
     <Compile Include="Controls\Container\TabControl.cs" />
     <Compile Include="Controls\Control.cs" />
     <Compile Include="Controls\Control3D.cs" />

@@ -26,6 +26,7 @@ namespace Medja.Theming
 			_factoryMethods.Add(typeof(HorizontalStackPanel), CreateHorizontalStackPanel);
 			_factoryMethods.Add(typeof(InputBoxDialog), CreateInputBoxDialog);
 			_factoryMethods.Add(typeof(ScrollingGrid), CreateScrollingGrid);
+			_factoryMethods.Add(typeof(SideControlsContainer), CreateSideControlContainer);
 			_factoryMethods.Add(typeof(SimpleMessageDialog), CreateSimpleMessageDialog);
 			_factoryMethods.Add(typeof(TabControl), CreateTabControl);
 			_factoryMethods.Add(typeof(TextBox), CreateTextBox);
@@ -105,6 +106,11 @@ namespace Medja.Theming
 		protected virtual ScrollingGrid CreateScrollingGrid()
 		{
 			return new ScrollingGrid();
+		}
+
+		protected virtual SideControlsContainer CreateSideControlContainer()
+		{
+			return new SideControlsContainer(this);
 		}
 
 		protected virtual SimpleMessageDialog CreateSimpleMessageDialog()

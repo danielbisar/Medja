@@ -43,6 +43,7 @@
     <Compile Include="Tests\DialogParentControlTest.cs" />
     <Compile Include="Tests\DockPanelTest.cs" />
     <Compile Include="Tests\ScrollingGrid.cs" />
+    <Compile Include="Tests\SideControlsContainerTest.cs" />
     <Compile Include="Tests\SimpleDockPanelTest.cs" />
     <Compile Include="Tests\TabControlTest.cs" />
   </ItemGroup>
