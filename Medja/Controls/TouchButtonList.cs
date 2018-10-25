@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using Medja.Primitives;
 using Medja.Theming;
 
@@ -9,6 +10,8 @@ namespace Medja.Controls
 	public class TouchButtonList<TItem> : ContentControl
 	{
 		private readonly Dictionary<Button, TItem> _buttonToItemMap;
+		private readonly Dictionary<TItem, Button> _itemToButtonMap;
+		
 		private readonly PagedListView<TItem> _visibleItems;
 		private readonly VerticalStackPanel _itemsStackPanel;
 		private readonly ControlFactory _controlFactory;
@@ -40,15 +43,43 @@ namespace Medja.Controls
 			set { _visibleItems.PageSize = value; }
 		}
 
+		/// <summary>
+		/// An event that is fired whenever any of the item buttons is clicked.
+		/// </summary>
 		public event EventHandler<TouchButtonClickedEventArgs> ButtonClicked;
+		
+		public readonly Property<bool> PropertyIsSelectable;
+		/// <summary>
+		/// If true the control supports selection via click of a button.
+		/// </summary>
+		public bool IsSelectable
+		{
+			get { return PropertyIsSelectable.Get(); }
+			set { PropertyIsSelectable.Set(value); }
+		}
+
+		public readonly Property<TItem> PropertySelectedItem;
+		/// <summary>
+		/// Gets or sets the selected item. You should also set <see cref="IsSelectable"/> to true.
+		/// </summary>
+		public TItem SelectedItem
+		{
+			get { return PropertySelectedItem.Get(); }
+			set { PropertySelectedItem.Set(value); }
+		}
 
 		public TouchButtonList(ControlFactory controlFactory)
 		{
+			PropertyIsSelectable = new Property<bool>();
+			PropertySelectedItem = new Property<TItem>();
+			PropertySelectedItem.PropertyChanged += OnSelectedItemChanged;
+			
 			_controlFactory = controlFactory ?? throw new ArgumentNullException(nameof(controlFactory));
 			_itemsStackPanel = _controlFactory.Create<VerticalStackPanel>();
 			_buttonUp = _controlFactory.Create<Button>();
 			_buttonDown = _controlFactory.Create<Button>();
 			_buttonToItemMap = new Dictionary<Button, TItem>();
+			_itemToButtonMap = new Dictionary<TItem, Button>();
 
 			Items = new List<TItem>();
 			_visibleItems = new PagedListView<TItem>(Items);
@@ -59,6 +90,27 @@ namespace Medja.Controls
 			};
 
 			CreateContent();
+		}
+
+		protected virtual void OnSelectedItemChanged(object sender, PropertyChangedEventArgs e)
+		{
+			var oldSelectedItem = (TItem)e.OldValue;
+			var newSelectedItem = (TItem)e.NewValue;
+
+			if (oldSelectedItem != null)
+			{
+				// we need to use try, because the button might not be visible
+				if(_itemToButtonMap.TryGetValue(oldSelectedItem, out var button))
+					button.IsSelected = false;
+			}
+
+			if (newSelectedItem != null)
+			{
+				// we need to use try, because the button might not be visible
+				// if user sets it manually
+				if(_itemToButtonMap.TryGetValue(newSelectedItem, out var button))
+					button.IsSelected = true;
+			}
 		}
 
 		private void CreateContent()
@@ -122,6 +174,12 @@ namespace Medja.Controls
 			UpdateItems();
 			UpdateButtons();
 		}
+		
+		private void UpdateButtons()
+		{
+			_buttonUp.IsEnabled = _visibleItems.CanMovePrevious();
+			_buttonDown.IsEnabled = _visibleItems.CanMoveNext();
+		}
 
 		private void UpdateItems()
 		{
@@ -132,12 +190,15 @@ namespace Medja.Controls
 
 			children.Clear();
 			_buttonToItemMap.Clear();
+			_itemToButtonMap.Clear();
 
 			foreach (var item in _visibleItems)
 			{
 				var button = CreateButtonForItem(item);
 				children.Add(button);
+				
 				_buttonToItemMap.Add(button, item);
+				_itemToButtonMap.Add(item, button);
 			}
 		}
 
@@ -147,19 +208,21 @@ namespace Medja.Controls
 			InitializeButtonFromItem(item, result);
 			result.InputState.MouseClicked += OnButtonClicked;
 
+			if (IsSelectable && ReferenceEquals(item, SelectedItem))
+				result.IsSelected = true;
+
 			return result;
 		}
 
 		private void OnButtonClicked(object sender, EventArgs e)
 		{
 			var inputState = sender as InputState;
-			NotifyButtonClicked((Button)inputState.Control);
-		}
+			var button = (Button) inputState.Control;
+			
+			NotifyButtonClicked(button);
 
-		private void UpdateButtons()
-		{
-			_buttonUp.IsEnabled = _visibleItems.CanMovePrevious();
-			_buttonDown.IsEnabled = _visibleItems.CanMoveNext();
+			if (IsSelectable)
+				SelectedItem = _buttonToItemMap[button];
 		}
 
 		private void NotifyButtonClicked(Button button)

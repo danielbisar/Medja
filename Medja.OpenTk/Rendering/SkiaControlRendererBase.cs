@@ -83,7 +83,7 @@ namespace Medja.OpenTk.Rendering
 		{
 			if (string.IsNullOrEmpty(text))
 				return;
-
+			
 			BeginText(font);
 
 			var width = _paint.MeasureText(text);
