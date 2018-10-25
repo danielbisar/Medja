@@ -46,6 +46,7 @@
     <Compile Include="Tests\SideControlsContainerTest.cs" />
     <Compile Include="Tests\SimpleDockPanelTest.cs" />
     <Compile Include="Tests\TabControlTest.cs" />
+    <Compile Include="Tests\TouchButtonListTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Medja\Medja.csproj">
