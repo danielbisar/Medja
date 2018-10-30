@@ -37,6 +37,26 @@ namespace Medja.Controls
 			Children.Remove(control);
 		}
 
+		/// <summary>
+		/// Removes the item that uses Dock.Fill if any.
+		/// </summary>
+		public void RemoveFillItem()
+		{
+			Control fillChild = null;
+
+			foreach (var kvp in _docks)
+			{
+				if (kvp.Value != Dock.Fill) 
+					continue;
+				
+				fillChild = kvp.Key;
+				break;
+			}
+			
+			if(fillChild != null)
+				Remove(fillChild);
+		}
+
 		public override void Arrange(Size availableSize)
 		{
 			var left = Position.X + Padding.Left;

@@ -74,6 +74,7 @@
     <Compile Include="Controls\Panels\VerticalStackPanel.cs" />
     <Compile Include="Controls\MedjaWindow.cs" />
     <Compile Include="Controls\MouseDraggedEventArgs.cs" />
+    <Compile Include="Controls\VerticalScrollBar.cs" />
     <Compile Include="Debug\ControlTreeStringBuilder.cs" />
     <Compile Include="IMedjaLibrary.cs" />
     <Compile Include="MedjaApplication.cs" />

@@ -57,7 +57,6 @@
     <Compile Include="Rendering\ComboBoxRenderer.cs" />
     <Compile Include="Rendering\OpenGLState.cs" />
     <Compile Include="Rendering\OpenTkRenderer.cs" />
-    <Compile Include="Rendering\ScrollableContainerRenderer.cs" />
     <Compile Include="Rendering\SkiaExtensions.cs" />
     <Compile Include="Rendering\SkiaGLLayer.cs" />
     <Compile Include="Rendering\ButtonRenderer.cs" />
@@ -66,6 +65,7 @@
     <Compile Include="Input\MouseState.cs" />
     <Compile Include="Input\OpenTkMouseHandler.cs" />
     <Compile Include="Rendering\VertexBufferObject.cs" />
+    <Compile Include="Rendering\VerticalScrollBarRenderer.cs" />
     <Compile Include="Window\OpenTkWindow.cs" />
     <Compile Include="Window\MedjaWindowExtensions.cs" />
     <Compile Include="Rendering\OpenGLProgram.cs" />

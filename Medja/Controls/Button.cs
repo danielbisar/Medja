@@ -12,6 +12,7 @@
 		public Button()
 		{
 			PropertyIsSelected = new Property<bool>();
+			InputState.OwnsMouseEvents = true;
 		}
 		
 		public override string ToString()

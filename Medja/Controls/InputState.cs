@@ -59,6 +59,17 @@ namespace Medja
 			get { return PropertyMouseWheelDelta.Get(); }
 			set { PropertyMouseWheelDelta.Set(value); }
 		}
+		
+		public readonly Property<bool> PropertyOwnsMouseEvents;
+		/// <summary>
+		/// Indicates that this control does not allow controls behind it to handle mouse events.
+		/// </summary>
+		public bool OwnsMouseEvents
+		{
+			get { return PropertyOwnsMouseEvents.Get(); }
+			set { PropertyOwnsMouseEvents.Set(value); }
+		}
+
 
 		public event EventHandler MouseClicked;
 		public event EventHandler<MouseDraggedEventArgs> MouseDragged;
@@ -75,6 +86,7 @@ namespace Medja
 			PropertyPointerPosition = new Property<Point>();
 			PropertyPointerPosition.PropertyChanged += OnPointerPositionChanged;
 			PropertyMouseWheelDelta = new Property<float>();
+			PropertyOwnsMouseEvents = new Property<bool>();
 
 			_dragThreshold = 5;
 		}

@@ -9,6 +9,7 @@ namespace Medja.Controls
         public ComboBox(ControlFactory controlFactory)
             : base(controlFactory)
         {
+            InputState.OwnsMouseEvents = true;
         }
     }
 }

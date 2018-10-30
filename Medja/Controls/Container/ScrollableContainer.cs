@@ -1,69 +1,91 @@
 using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using Medja.Primitives;
+using Medja.Theming;
 
 namespace Medja.Controls
 {
     public class ScrollableContainer : ContentControl
     {
-        public readonly Property<float> PropertyMaxHeight;
-        /// <summary>
-        /// Gets the maximum height (either the Height of this element or if the Content is bigger, the height
-        /// of the Content).
-        /// </summary>
-        public float MaxHeight
-        {
-            get { return PropertyMaxHeight.Get(); }
-            protected set { PropertyMaxHeight.Set(value); }
-        }
+        public readonly float ScrollBarWidth;
         
-        public readonly Property<float> PropertyVerticalScrollingPos;
-        public float VerticalScrollingPos
+        private readonly VerticalScrollBar _scrollBar;
+
+        public ScrollableContainer(ControlFactory controlFactory)
         {
-            get { return PropertyVerticalScrollingPos.Get(); }
-            set { PropertyVerticalScrollingPos.Set(value); }
+            _scrollBar = controlFactory.Create<VerticalScrollBar>();
+            ScrollBarWidth = _scrollBar.Position.Width;
+            InputState.PropertyMouseWheelDelta.PropertyChanged += OnMouseWheelMoved;
+            InputState.MouseDragged += OnMouseDragged;
+            InputState.PropertyIsLeftMouseDown.PropertyChanged += OnLeftMouseUp;
         }
 
-        public readonly Property<bool> PropertyCanScroll;
-        public bool CanScroll
+        private void OnLeftMouseUp(object sender, PropertyChangedEventArgs e)
         {
-            get { return PropertyCanScroll.Get(); }
-            set { PropertyCanScroll.Set(value); }
+            _startDragPos = null;
         }
 
+        private float? _startDragPos;
         
-        public ScrollableContainer()
+        protected virtual void OnMouseDragged(object sender, MouseDraggedEventArgs e)
         {
-            PropertyMaxHeight = new Property<float>();
-            PropertyMaxHeight.PropertyChanged += OnMaxHeightChanged;
-            PropertyVerticalScrollingPos = new Property<float>();
-            PropertyCanScroll = new Property<bool>();
+            if (!_startDragPos.HasValue)
+                _startDragPos = _scrollBar.Value;
+
+            UpdateScrollValue(_startDragPos.Value - e.Vector.Y);
         }
 
-        private void OnMaxHeightChanged(object sender, PropertyChangedEventArgs e)
+        private void UpdateScrollValue(float newValue)
         {
-            CanScroll = MaxHeight > Position.Height;
+            if (newValue > _scrollBar.MaxValue)
+                newValue = _scrollBar.MaxValue;
+
+            if (newValue < 0)
+                newValue = 0;
+            
+            _scrollBar.Value = newValue;
+            IsLayoutUpdated = false;
         }
 
-        // TODO
-        //public override Size Measure(Size availableSize)
-        
+        protected virtual void OnMouseWheelMoved(object sender, PropertyChangedEventArgs e)
+        {
+            var diff = (float) e.NewValue * -10;
+            var newValue = _scrollBar.Value + diff;
+
+            UpdateScrollValue(newValue);
+        }
+
         public override void Arrange(Size availableSize)
         {
             var area = Rect.Subtract(Position, Margin);
             area.Subtract(Padding);
+
+            _scrollBar.Position.X = area.X + area.Width - ScrollBarWidth;
+            _scrollBar.Position.Y = area.Y;
+            _scrollBar.Position.Height = area.Height;
             
-            area.Y += VerticalScrollingPos;
+            area.Width -= ScrollBarWidth;
+            area.Y -= _scrollBar.Value;
 			
             ContentArranger.Position(area);
             ContentArranger.Stretch(area);
 
             if (Content != null)
             {
-                MaxHeight = Math.Max(area.Height, Content.Position.Height);
+                _scrollBar.MaxValue = Math.Max(area.Height, Content.Position.Height - area.Height);
                 
-                if (VerticalScrollingPos > MaxHeight)
-                    VerticalScrollingPos = MaxHeight;
+                if (_scrollBar.Value > _scrollBar.MaxValue)
+                    _scrollBar.Value = _scrollBar.MaxValue;
             }
+        }
+
+        public override IEnumerable<Control> GetChildren()
+        {
+            if (Content != null)
+                yield return Content;
+
+            yield return _scrollBar;
         }
     }
 }

@@ -57,14 +57,6 @@ namespace Medja.OpenTk.Rendering
 			return result;
 		}
 
-		protected override ScrollableContainer CreateScrollableContainer()
-		{
-			var result = base.CreateScrollableContainer();
-			result.Renderer = new ScrollableContainerRenderer();
-
-			return result;
-		}
-
 		protected override SimpleMessageDialog CreateSimpleMessageDialog()
 		{
 			var result = base.CreateSimpleMessageDialog();
@@ -125,6 +117,16 @@ namespace Medja.OpenTk.Rendering
 		{
 			var result = base.CreateComboBox<T>();
 			result.Renderer = new ComboBoxRenderer();
+			result.Background = ColorMap.Primary;
+
+			return result;
+		}
+
+		protected override VerticalScrollBar CreateVerticalScrollBar()
+		{
+			var result = base.CreateVerticalScrollBar();
+			result.Renderer = new VerticalScrollBarRenderer();
+			result.Position.Width = 20;
 			result.Background = ColorMap.Primary;
 
 			return result;

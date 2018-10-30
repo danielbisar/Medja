@@ -15,13 +15,18 @@ namespace MedjaOpenGlTestApp.Tests
 
         public Control Create()
         {
-            var result = _controlFactory.Create<ScrollableContainer>();
-            result.Content = _controlFactory.Create<Control>(p =>
+            var textBlock = _controlFactory.Create<TextBlock>(p =>
             {
                 p.Background = Colors.Green;
                 p.Position.Height = 1500;
                 p.HorizontalAlignment = HorizontalAlignment.Stretch;
             });
+
+            for (int i = 0; i < 100; i++)
+                textBlock.Text += "Line " + i + "\n";
+            
+            var result = _controlFactory.Create<ScrollableContainer>();
+            result.Content = textBlock; 
             result.VerticalAlignment = VerticalAlignment.Stretch;
             result.HorizontalAlignment = HorizontalAlignment.Stretch;
 

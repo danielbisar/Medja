@@ -35,14 +35,14 @@ namespace Medja.Controls
 				Content.IsLayoutUpdated = (bool)e.NewValue;
 		}
 
-		protected virtual void OnContentChanged(object sender, PropertyChangedEventArgs eventArgs)
+		protected virtual void OnContentChanged(object sender, PropertyChangedEventArgs e)
 		{
-			var content = eventArgs.OldValue as Control;
+			var content = e.OldValue as Control;
 
 			if (content != null && content.Parent == this)
 				content.Parent = null;
 
-			content = eventArgs.NewValue as Control;
+			content = e.NewValue as Control;
 			ContentArranger.Control = content;
 			
 			if (content != null)
