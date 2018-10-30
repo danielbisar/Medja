@@ -17,6 +17,13 @@ namespace Medja.Controls
 			Children = new List<Control>();
 			Padding = new Thickness();
 			PropertyIsEnabled.PropertyChanged += OnIsEnabledChanged;
+			PropertyIsLayoutUpdated.PropertyChanged += OnIsLayoutUpdatedChanged;
+		}
+
+		private void OnIsLayoutUpdatedChanged(object sender, PropertyChangedEventArgs e)
+		{
+			foreach (var child in Children)
+				child.IsLayoutUpdated = (bool)e.NewValue;
 		}
 
 		private void OnIsEnabledChanged(object sender, PropertyChangedEventArgs eventArgs)
@@ -43,8 +50,7 @@ namespace Medja.Controls
 
 		public override IEnumerable<Control> GetChildren()
 		{
-			foreach (var control in Children)
-				yield return control;
+			return Children;
 		}
 
 		public override void UpdateAnimations()

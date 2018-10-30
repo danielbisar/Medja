@@ -18,6 +18,8 @@ namespace Medja.Controls
 
             foreach (var child in children)
             {
+                //yield return child;
+                
                 foreach (var control in GetAllControls(child))
                     yield return control;
             }

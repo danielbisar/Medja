@@ -59,8 +59,6 @@ namespace Medja.Controls
 		{
 			base.Arrange(availableSize);
 			
-			Console.WriteLine(new ControlTreeStringBuilder(this).GetTree());
-
 			if (IsDialogVisible && DialogControl != null)
 			{
 				var pos = DialogControl.Position;

@@ -41,8 +41,8 @@ namespace Medja.OpenTk
 				return;
 			}
 
-			Position.PropertyWidth.UnnotifiedSet(GameWindow.ClientRectangle.Width);
-			Position.PropertyHeight.UnnotifiedSet(GameWindow.ClientRectangle.Height);
+			Position.Width = GameWindow.ClientRectangle.Width;
+			Position.Height = GameWindow.ClientRectangle.Height;
 		}
 
 		private void OnGameWindowClosed(object sender, EventArgs e)
@@ -52,7 +52,7 @@ namespace Medja.OpenTk
 
 		public override void Close()
 		{
-			// prevent multiple calls of close which could occure by calling
+			// prevent multiple calls of close which could occur by calling
 			// close -> GameWindow.Close -> GameWindow.Closed event
 			if (!_calledClose)
 			{

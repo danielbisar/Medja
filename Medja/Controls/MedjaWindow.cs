@@ -21,7 +21,7 @@ namespace Medja.Controls
 		{
 			PropertyTitle = new Property<string>();
 		}
-
+		
 		protected override void OnContentChanged(object sender, PropertyChangedEventArgs eventArgs)
 		{
 			base.OnContentChanged(sender, eventArgs);
