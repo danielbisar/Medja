@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Medja.Controls.Animation;
 using Medja.Primitives;
 using Medja.Theming;
@@ -77,6 +78,13 @@ namespace Medja.Controls
 			get { return PropertyHorizontalAlignment.Get(); }
 			set { PropertyHorizontalAlignment.Set(value); }
 		}
+		
+		public readonly Property<bool> PropertyIsLayoutUpdated;
+		public bool IsLayoutUpdated
+		{
+			get { return PropertyIsLayoutUpdated.Get(); }
+			set { PropertyIsLayoutUpdated.Set(value); }
+		}
 
 		public Control()
 		{
@@ -84,6 +92,10 @@ namespace Medja.Controls
 			AttachedProperties = new Dictionary<int, object>();
 			InputState = new InputState(this);
 			Position = new MRect();
+			Position.PropertyHeight.PropertyChanged += OnPositionChanged;
+			Position.PropertyWidth.PropertyChanged += OnPositionChanged;
+			Position.PropertyX.PropertyChanged += OnPositionChanged;
+			Position.PropertyY.PropertyChanged += OnPositionChanged;
 			Margin = new Thickness();
 			
 			PropertyBackground = new Property<Color>();
@@ -99,6 +111,12 @@ namespace Medja.Controls
 			PropertyParent = new Property<Control>();
 			PropertyVerticalAlignment = new Property<VerticalAlignment>();
 			PropertyHorizontalAlignment = new Property<HorizontalAlignment>();
+			PropertyIsLayoutUpdated = new Property<bool>();
+		}
+
+		protected virtual void OnPositionChanged(object sender, PropertyChangedEventArgs e)
+		{
+			IsLayoutUpdated = false;
 		}
 
 		private void OnVisibilityChanged(object sender, PropertyChangedEventArgs eventArgs)
@@ -109,19 +127,9 @@ namespace Medja.Controls
 		public virtual void UpdateLayout()
 		{
 			UpdateAnimations();
-
-			var result = Measure(new Size(Position.Width, Position.Height));
-			Arrange(result);
-		}
-
-		/// <summary>
-		/// Measure how much space the current control needs. Default just returns available size.
-		/// </summary>
-		/// <returns>The measure.</returns>
-		/// <param name="availableSize">Available size.</param>
-		public virtual Size Measure(Size availableSize)
-		{
-			return availableSize;
+			Arrange(new Size(Position.Width, Position.Height));
+			
+			IsLayoutUpdated = true;
 		}
 
 		/// <summary>

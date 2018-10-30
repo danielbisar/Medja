@@ -25,6 +25,7 @@ namespace Medja.Theming
 			_factoryMethods.Add(typeof(DockPanel), CreateDockPanel);
 			_factoryMethods.Add(typeof(HorizontalStackPanel), CreateHorizontalStackPanel);
 			_factoryMethods.Add(typeof(InputBoxDialog), CreateInputBoxDialog);
+			_factoryMethods.Add(typeof(ScrollableContainer), CreateScrollableContainer);
 			_factoryMethods.Add(typeof(ScrollingGrid), CreateScrollingGrid);
 			_factoryMethods.Add(typeof(SideControlsContainer), CreateSideControlContainer);
 			_factoryMethods.Add(typeof(SimpleMessageDialog), CreateSimpleMessageDialog);
@@ -35,6 +36,10 @@ namespace Medja.Theming
 			_factoryMethods.Add(typeof(QuestionDialog), CreateQuestionDialog);
 			_factoryMethods.Add(typeof(VerticalStackPanel), CreateVerticalStackPanel);
 			_factoryMethods.Add(typeof(TablePanel), CreateTablePanel);
+			
+			// generic methods are not added here
+			// TouchButtonList<T>
+			// ComboBox<T>
 		}
 
 		protected void AddFactoryMethod<TControl>(Func<TControl> factory)
@@ -103,6 +108,11 @@ namespace Medja.Theming
 			return new InputBoxDialog(this);
 		}
 
+		protected virtual ScrollableContainer CreateScrollableContainer()
+		{
+			return new ScrollableContainer();
+		}
+		
 		protected virtual ScrollingGrid CreateScrollingGrid()
 		{
 			return new ScrollingGrid();
@@ -141,6 +151,11 @@ namespace Medja.Theming
 		protected virtual TouchButtonList<T> CreateTouchButtonList<T>()
 		{
 			return new TouchButtonList<T>(this);
+		}
+
+		protected virtual ComboBox<T> CreateComboBox<T>()
+		{
+			return new ComboBox<T>(this);
 		}
 
 		protected virtual QuestionDialog CreateQuestionDialog()

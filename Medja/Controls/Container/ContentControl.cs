@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Medja.Debug;
 using Medja.Primitives;
 
 namespace Medja.Controls
@@ -22,8 +24,15 @@ namespace Medja.Controls
 			PropertyContent.PropertyChanged += OnContentChanged;
 			Padding = new Thickness();
 			PropertyIsEnabled.PropertyChanged += OnIsEnabledChanged;
+			PropertyIsLayoutUpdated.PropertyChanged += OnIsLayoutUpdatedChanged;
 			
 			ContentArranger = new ContentArranger();
+		}
+
+		protected virtual void OnIsLayoutUpdatedChanged(object sender, PropertyChangedEventArgs e)
+		{
+			if (Content != null)
+				Content.IsLayoutUpdated = (bool)e.NewValue;
 		}
 
 		protected virtual void OnContentChanged(object sender, PropertyChangedEventArgs eventArgs)
@@ -44,14 +53,6 @@ namespace Medja.Controls
 		{
 			if (Content != null)
 				Content.IsEnabled = (bool)eventArgs.NewValue;
-		}
-
-		public override Size Measure(Size availableSize)
-		{
-			if (Content == null)
-				return base.Measure(availableSize);
-
-			return Content.Measure(availableSize);
 		}
 
 		public override void Arrange(Size availableSize)

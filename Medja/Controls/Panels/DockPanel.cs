@@ -37,14 +37,6 @@ namespace Medja.Controls
 			Children.Remove(control);
 		}
 
-		public override Size Measure(Size availableSize)
-		{
-			//foreach (var child in Children)
-			//    child.Measure(availableSize);
-
-			return availableSize;
-		}
-
 		public override void Arrange(Size availableSize)
 		{
 			var left = Position.X + Padding.Left;

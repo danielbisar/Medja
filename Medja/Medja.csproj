@@ -52,8 +52,11 @@
     <Compile Include="Controls\Animation\ControlAnimation.cs" />
     <Compile Include="Controls\Button.cs" />
     <Compile Include="Controls\CheckBox.cs" />
+    <Compile Include="Controls\ComboBox.cs" />
+    <Compile Include="Controls\ComboBoxBase.cs" />
     <Compile Include="Controls\Container\ContentArranger.cs" />
     <Compile Include="Controls\Container\ContentControl.cs" />
+    <Compile Include="Controls\Container\ScrollableContainer.cs" />
     <Compile Include="Controls\Container\SideControlsContainer.cs" />
     <Compile Include="Controls\Container\TabControl.cs" />
     <Compile Include="Controls\Control.cs" />

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Medja.Controls;
 using Medja.OpenTk.Rendering;
@@ -15,11 +16,14 @@ namespace Medja.OpenTk
 	public class MedjaOpenTkLibrary : IMedjaLibrary
 	{
 		private readonly FocusManager _focusManager;
+		private readonly List<Control> _controls;
+		
 		private MedjaWindow _medjaWindow;
 		private GameWindow _gameWindow;
 		private IRenderer _renderer;
 		private OpenTkMouseHandler _mouseHandler;
 		private OpenTKKeyboardHandler _keyboardHandler;
+		
 
 		public ControlFactory ControlFactory { get; }
 
@@ -35,6 +39,7 @@ namespace Medja.OpenTk
 			ControlFactory = factory ?? new OpenTkTheme();
 			RendererFactory = () => new OpenTkRenderer();
 			_focusManager = new FocusManager();
+			_controls = new List<Control>();
 		}
 
 		/// <inheritdoc />
@@ -57,6 +62,8 @@ namespace Medja.OpenTk
 				_gameWindow.Closed += OnWindowClosed;
 
 				_mouseHandler = new OpenTkMouseHandler(_medjaWindow, _gameWindow, _focusManager);
+				_mouseHandler.Controls = _controls;
+				
 				_keyboardHandler = new OpenTKKeyboardHandler(_medjaWindow, _gameWindow, _focusManager);
 
 				_gameWindow.Run(1 / 30.0);
@@ -83,17 +90,27 @@ namespace Medja.OpenTk
 
 		private void OnUpdateFrame(object sender, FrameEventArgs e)
 		{
-			_medjaWindow.UpdateLayout();
+			_controls.Clear();
+
+			Control highestControlNeedingLayouting = null;
+			
+			foreach (var control in _medjaWindow.GetAllControls())
+			{
+				if(highestControlNeedingLayouting == null && !control.IsLayoutUpdated)
+					highestControlNeedingLayouting = control;
+				
+				_controls.Add(control);
+			}
+			
+			if(highestControlNeedingLayouting != null)
+				highestControlNeedingLayouting.UpdateLayout();
 		}
 
 		private void OnRenderFrame(object sender, FrameEventArgs e)
 		{
 			AssureRenderer();
-
-			var controls = _medjaWindow.GetAllControls().ToList();
 			
-			_mouseHandler.Controls = controls;
-			_renderer.Render(controls);
+			_renderer.Render(_controls);
 
 			// display what was just drawn
 			_gameWindow.SwapBuffers();

@@ -8,8 +8,6 @@ namespace Medja.OpenTk.Rendering
 	{
 		private readonly SKPaint _mouseDownPaint;
 		private readonly SKPaint _mouseOverPaint;
-		private readonly SKPaint _disabledTextPaint;
-		private readonly SKPaint _textPaint;
 		private readonly SKPaint _selectedPaint;
 		private readonly SKPaint _defaultPaint;
 		
@@ -26,14 +24,6 @@ namespace Medja.OpenTk.Rendering
 			_mouseOverPaint = new SKPaint();
 			_mouseOverPaint.IsAntialias = true;
 			_mouseOverPaint.Color = ColorMap.Secondary.ToSKColor();
-			
-			_disabledTextPaint = new SKPaint();
-			_disabledTextPaint.IsAntialias = true;
-			_disabledTextPaint.Color = ColorMap.PrimaryLight.ToSKColor();
-			
-			_textPaint = new SKPaint();
-			_textPaint.IsAntialias = true;
-			_textPaint.Color = ColorMap.PrimaryText.ToSKColor();
 			
 			_selectedPaint = new SKPaint();
 			_selectedPaint.IsAntialias = true;
