@@ -77,24 +77,26 @@ namespace Medja.OpenTk
 				return;
 			
 			var position = e.Position;
-			Control relevantControl = null;
+			var relevantControls = new List<Control>();
 
+			// controls are in z-Order from back to front
 			foreach(var control in Controls)
 			{
 				if (control.IsEnabled
 					&& control.IsVisible
 					&& IsMouseOver(control, position))
-				{
-					relevantControl?.InputState.Clear();
-					relevantControl = control;
-				}
+					relevantControls.Add(control);
 				else
 					control.InputState.Clear();
 			}
 
-			// ApplyMouse only to the uppermost control
-			if (relevantControl != null)
-				ApplyMouse(relevantControl, e);
+			for (int i = relevantControls.Count - 1; i >= 0; i--)
+			{
+				ApplyMouse(relevantControls[i], e);
+
+				if (relevantControls[i].InputState.OwnsMouseEvents)
+					break;
+			}
 		}
 
 		private void ApplyMouse(Control control, MouseState mouseState)

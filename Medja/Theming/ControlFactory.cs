@@ -34,8 +34,9 @@ namespace Medja.Theming
 			_factoryMethods.Add(typeof(TextBlock), CreateTextBlock);
 			_factoryMethods.Add(typeof(ProgressBar), CreateProgressBar);
 			_factoryMethods.Add(typeof(QuestionDialog), CreateQuestionDialog);
-			_factoryMethods.Add(typeof(VerticalStackPanel), CreateVerticalStackPanel);
 			_factoryMethods.Add(typeof(TablePanel), CreateTablePanel);
+			_factoryMethods.Add(typeof(VerticalStackPanel), CreateVerticalStackPanel);
+			_factoryMethods.Add(typeof(VerticalScrollBar), CreateVerticalScrollBar);
 			
 			// generic methods are not added here
 			// TouchButtonList<T>
@@ -110,7 +111,7 @@ namespace Medja.Theming
 
 		protected virtual ScrollableContainer CreateScrollableContainer()
 		{
-			return new ScrollableContainer();
+			return new ScrollableContainer(this);
 		}
 		
 		protected virtual ScrollingGrid CreateScrollingGrid()
@@ -166,6 +167,11 @@ namespace Medja.Theming
 		protected virtual VerticalStackPanel CreateVerticalStackPanel()
 		{
 			return new VerticalStackPanel();
+		}
+
+		protected virtual VerticalScrollBar CreateVerticalScrollBar()
+		{
+			return new VerticalScrollBar();
 		}
 
 		public TControl Create<TControl>()
