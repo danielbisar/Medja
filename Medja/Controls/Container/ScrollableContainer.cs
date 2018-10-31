@@ -9,8 +9,9 @@ namespace Medja.Controls
     public class ScrollableContainer : ContentControl
     {
         public readonly float ScrollBarWidth;
-        
         private readonly VerticalScrollBar _scrollBar;
+        
+        private float? _startDragPos;
 
         public ScrollableContainer(ControlFactory controlFactory)
         {
@@ -31,8 +32,6 @@ namespace Medja.Controls
         {
             _startDragPos = null;
         }
-
-        private float? _startDragPos;
         
         protected virtual void OnMouseDragged(object sender, MouseDraggedEventArgs e)
         {
