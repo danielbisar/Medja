@@ -70,7 +70,6 @@ namespace Medja
 			set { PropertyOwnsMouseEvents.Set(value); }
 		}
 
-
 		public event EventHandler MouseClicked;
 		public event EventHandler<MouseDraggedEventArgs> MouseDragged;
 		public event EventHandler<KeyboardEventArgs> KeyPressed;
@@ -98,7 +97,8 @@ namespace Medja
 
 		private void OnPointerPositionChanged(object sender, PropertyChangedEventArgs eventArgs)
 		{
-			if (IsLeftMouseDown && MedjaMath.Distance(_mouseDownPointerPosition, PointerPosition) > _dragThreshold)
+			if (IsLeftMouseDown 
+				&& MedjaMath.Distance(_mouseDownPointerPosition, PointerPosition) > _dragThreshold)
 				IsDrag = true;
 			else
 				IsDrag = false;

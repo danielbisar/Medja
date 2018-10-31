@@ -51,6 +51,7 @@ namespace Medja.OpenTk
 		private readonly MedjaWindow _medjaWindow;
 		private readonly GameWindow _window;
 		private readonly FocusManager _focusManager;
+		private Control _currentDragControl;
 		
 		public List<Control> Controls { get; set; }
 
@@ -77,25 +78,34 @@ namespace Medja.OpenTk
 				return;
 			
 			var position = e.Position;
-			var relevantControls = new List<Control>();
 
-			// controls are in z-Order from back to front
-			foreach(var control in Controls)
+			if (e.IsLeftButtonDown && _currentDragControl != null)
 			{
-				if (control.IsEnabled
-					&& control.IsVisible
-					&& IsMouseOver(control, position))
-					relevantControls.Add(control);
-				else
+				ApplyMouse(_currentDragControl, e);
+				
+				foreach(var control in Controls.Where(p => p != _currentDragControl))
 					control.InputState.Clear();
 			}
-
-			for (int i = relevantControls.Count - 1; i >= 0; i--)
+			else
 			{
-				ApplyMouse(relevantControls[i], e);
+				if (!e.IsLeftButtonDown)
+					_currentDragControl = null;
+				
+				// controls are in z-Order from back to front, so we go through them in reverse order
+				for (int i = Controls.Count - 1; i >= 0; i--)
+				{
+					var control = Controls[i];
 
-				if (relevantControls[i].InputState.OwnsMouseEvents)
-					break;
+					if (control.IsEnabled && control.IsVisible && IsMouseOver(control, position))
+					{
+						ApplyMouse(control, e);
+
+						if (control.InputState.OwnsMouseEvents)
+							break;
+					}
+					else
+						control.InputState.Clear();
+				}
 			}
 		}
 
@@ -119,6 +129,9 @@ namespace Medja.OpenTk
 				inputState.PropertyMouseWheelDelta.NotifyPropertyChanged();
 			else
 				inputState.MouseWheelDelta = mouseState.WheelDelta;
+
+			if (inputState.IsDrag)
+				_currentDragControl = control;
 		}
 
 		private Medja.Primitives.Point ToMedjaPoint(Point position)
