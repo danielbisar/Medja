@@ -2,18 +2,18 @@
 {
 	public class ProgressBar : Control
 	{
-		public Property<float> MaxValueProperty;
+		public readonly Property<float> PropertyMaxValue;
 		public float MaxValue
 		{
-			get { return MaxValueProperty.Get(); }
-			set { MaxValueProperty.Set(value); }
+			get { return PropertyMaxValue.Get(); }
+			set { PropertyMaxValue.Set(value); }
 		}
 
-		public Property<float> ValueProperty;
+		public readonly Property<float> PropertyValue;
 		public float Value
 		{
-			get { return ValueProperty.Get(); }
-			set { ValueProperty.Set(value); }
+			get { return PropertyValue.Get(); }
+			set { PropertyValue.Set(value); }
 		}
 
 		public float Percentage
@@ -23,10 +23,10 @@
 
 		public ProgressBar()
 		{
-			MaxValueProperty = new Property<float>();
-			MaxValueProperty.UnnotifiedSet(100);
+			PropertyMaxValue = new Property<float>();
+			PropertyMaxValue.UnnotifiedSet(100);
 
-			ValueProperty = new Property<float>();
+			PropertyValue = new Property<float>();
 		}
 	}
 }
