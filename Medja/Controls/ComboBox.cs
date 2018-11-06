@@ -30,7 +30,7 @@ namespace Medja.Controls
             _itemsManager.ItemAdded += OnItemAdded;
             _itemsManager.ItemRemoved += OnItemRemoved;
         }
-
+        
         private void OnItemAdded(object sender, ItemEventArgs<TItem> e)
         {
             ItemsPanel.Children.Add(e.Control);
