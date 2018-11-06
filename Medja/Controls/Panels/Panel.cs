@@ -30,22 +30,33 @@ namespace Medja.Controls
 			ClippingArea.PropertyY.PropertyChanged += OnClippingAreaChanged;
 		}
 
-		private void OnChildrenCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+		protected virtual void OnChildrenCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
 		{
-			var isClippingEmpty = ClippingArea.IsEmpty;
-			
-			foreach (var item in e.NewItems.Cast<Control>())
+			if (e.NewItems != null)
 			{
-				if (!isClippingEmpty)
-					ForwardClippingArea(item);
-
-				if (!IsLayoutUpdated)
-					item.IsLayoutUpdated = false;
-
-				item.IsEnabled = IsEnabled;
-				
-				ForwardIsEnabled(item);
+				foreach (var item in e.NewItems.Cast<Control>())
+				{
+					OnItemAdded(item);
+				}
 			}
+			else if (e.Action == NotifyCollectionChangedAction.Reset)
+			{
+				foreach(var item in Children)
+					OnItemAdded(item);
+			}
+		}
+
+		protected virtual void OnItemAdded(Control child)
+		{
+			if(!ClippingArea.IsEmpty)
+				ForwardClippingArea(child);
+
+			if (!IsLayoutUpdated)
+				child.IsLayoutUpdated = false;
+
+			child.IsEnabled = IsEnabled;
+				
+			ForwardIsEnabled(child);
 		}
 
 		private void ForwardClippingArea(Control child)
