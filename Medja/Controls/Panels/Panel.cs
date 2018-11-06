@@ -44,15 +44,14 @@ namespace Medja.Controls
 				foreach(var item in Children)
 					OnItemAdded(item);
 			}
+
+			IsLayoutUpdated = false;
 		}
 
 		protected virtual void OnItemAdded(Control child)
 		{
 			if(!ClippingArea.IsEmpty)
 				ForwardClippingArea(child);
-
-			if (!IsLayoutUpdated)
-				child.IsLayoutUpdated = false;
 
 			child.IsEnabled = IsEnabled;
 				
