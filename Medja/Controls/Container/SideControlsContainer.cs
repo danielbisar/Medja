@@ -48,6 +48,7 @@ namespace Medja.Controls
         private void OnMenuButtonClicked(object sender, EventArgs e)
         {
             IsSideContentVisible = !IsSideContentVisible;
+            IsLayoutUpdated = false;
         }
 
         public override IEnumerable<Control> GetChildren()
@@ -65,19 +66,18 @@ namespace Medja.Controls
         {
             base.Arrange(availableSize);
 
-            if (!IsSideContentVisible)
-            {
-                _showMenuButton.Position.X = Position.X + availableSize.Width - (_showMenuButton.Position.Width + Padding.TopAndBottom + Margin.TopAndBottom);
-                _showMenuButton.Position.Y = Position.Y + Padding.Top + Margin.Top;
+            _showMenuButton.Position.X = Position.X + availableSize.Width - (_showMenuButton.Position.Width + Padding.TopAndBottom + Margin.TopAndBottom);
+            _showMenuButton.Position.Y = Position.Y + Padding.Top + Margin.Top;
                 
-                _showMenuButton.Arrange(new Size(_showMenuButton.Position.Width, _showMenuButton.Position.Height));
-            }
-            else if (SideContent != null)
+            _showMenuButton.Arrange(new Size(_showMenuButton.Position.Width, _showMenuButton.Position.Height));
+           
+            if (IsSideContentVisible && SideContent != null)
             {
-                SideContent.Position.X = Position.X + availableSize.Width - (SideContent.Position.Width + Padding.TopAndBottom + Margin.TopAndBottom);
-                SideContent.Position.Y =  Position.Y + Padding.Top + Margin.Top;
                 SideContent.Position.Width = SideContentWidth;
                 SideContent.Position.Height = Position.Height - Padding.TopAndBottom - Margin.TopAndBottom;
+                
+                SideContent.Position.X = Position.X + availableSize.Width - (SideContent.Position.Width + Padding.TopAndBottom + Margin.TopAndBottom);
+                SideContent.Position.Y =  Position.Y + Padding.Top + Margin.Top;
                 
                 SideContent.Arrange(new Size(SideContent.Position.Width, SideContent.Position.Height));
             }

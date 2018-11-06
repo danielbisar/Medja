@@ -34,6 +34,11 @@
 			set { PropertyHeight.Set(value); }
 		}
 
+		public bool IsEmpty
+		{
+			get { return X == 0 && Y == 0 && Width == 0 && Height == 0; }
+		}
+
 		public MRect()
 		{
 			PropertyX = new Property<float>();

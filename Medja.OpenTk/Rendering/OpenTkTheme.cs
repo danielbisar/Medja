@@ -116,7 +116,7 @@ namespace Medja.OpenTk.Rendering
 		protected override ComboBox<T> CreateComboBox<T>()
 		{
 			var result = base.CreateComboBox<T>();
-			result.Renderer = new ComboBoxRenderer();
+			result.Renderer = new ControlRenderer();
 			result.Background = ColorMap.Primary;
 
 			return result;
@@ -128,6 +128,14 @@ namespace Medja.OpenTk.Rendering
 			result.Renderer = new VerticalScrollBarRenderer();
 			result.Position.Width = 20;
 			result.Background = ColorMap.Primary;
+
+			return result;
+		}
+
+		protected override ScrollableContainer CreateScrollableContainer()
+		{
+			var result = base.CreateScrollableContainer();
+			result.Renderer = new ControlRenderer();
 
 			return result;
 		}

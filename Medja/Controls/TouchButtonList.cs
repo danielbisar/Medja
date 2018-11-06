@@ -200,6 +200,8 @@ namespace Medja.Controls
 				_buttonToItemMap.Add(button, item);
 				_itemToButtonMap.Add(item, button);
 			}
+
+			IsLayoutUpdated = false;
 		}
 
 		private Button CreateButtonForItem(TItem item)

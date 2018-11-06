@@ -54,7 +54,6 @@
     <Compile Include="MedjaOpenTkLibrary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rendering\CheckBoxRenderer.cs" />
-    <Compile Include="Rendering\ComboBoxRenderer.cs" />
     <Compile Include="Rendering\OpenGLState.cs" />
     <Compile Include="Rendering\OpenTkRenderer.cs" />
     <Compile Include="Rendering\SkiaExtensions.cs" />

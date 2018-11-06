@@ -64,6 +64,8 @@
     <Compile Include="Controls\ControlTreeIterator.cs" />
     <Compile Include="Controls\Dialogs\ConfirmableDialog.cs" />
     <Compile Include="Controls\InputState.cs" />
+    <Compile Include="Controls\ItemEventArgs.cs" />
+    <Compile Include="Controls\ItemsManager.cs" />
     <Compile Include="Controls\Panels\ColumnAndRowEnumerator.cs" />
     <Compile Include="Controls\Panels\ColumnDefinition.cs" />
     <Compile Include="Controls\Panels\Dock.cs" />

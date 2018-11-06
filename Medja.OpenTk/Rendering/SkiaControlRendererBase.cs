@@ -1,4 +1,5 @@
-﻿using Medja.Controls;
+﻿using System;
+using Medja.Controls;
 using Medja.Theming;
 using SkiaSharp;
 using Medja.Primitives;
@@ -42,9 +43,23 @@ namespace Medja.OpenTk.Rendering
 			{
 				_control = control;
 				_canvas = context;
+				
+				var hasClipping = !control.ClippingArea.IsEmpty;
+
+				if (hasClipping)
+				{
+					Console.WriteLine("Control with clipping: " + control.GetType() + " " + control.ClippingArea);
+					
+					_canvas.Save();
+					_canvas.ClipRect(control.ClippingArea.ToSKRect());
+				}
+
 				_rect = control.Position.ToSKRect();
 
 				InternalRender();
+				
+				if(hasClipping)
+					_canvas.Restore();
 			}
 			finally
 			{

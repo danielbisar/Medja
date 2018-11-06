@@ -88,6 +88,7 @@ namespace Medja.Controls
 					Content.HorizontalAlignment = HorizontalAlignment.Stretch;
 				
 				SelectedTab.IsSelected = true;
+				IsLayoutUpdated = false;
 			}
 		}
 
