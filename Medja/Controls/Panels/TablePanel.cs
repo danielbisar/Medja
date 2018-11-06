@@ -52,6 +52,8 @@ namespace Medja.Controls
 
 				childPos.X = pos.X + Position.X + child.Margin.Left;
 				childPos.Y = pos.Y + Position.Y + child.Margin.Right;
+				
+				child.Arrange(new Size(childPos.Width, childPos.Height));
 			}
 		}
 	}
