@@ -27,6 +27,17 @@
 			PropertyMaxValue.UnnotifiedSet(100);
 
 			PropertyValue = new Property<float>();
+			PropertyValue.PropertyChanged += OnValueChanged;
+		}
+
+		private void OnValueChanged(object sender, PropertyChangedEventArgs e)
+		{
+			var value = (float) e.NewValue;
+			
+			if (value > MaxValue)
+				Value = MaxValue;
+			else if (value < 0)
+				Value = 0;
 		}
 	}
 }

@@ -85,6 +85,8 @@ namespace Medja.Controls
 			get { return PropertyIsLayoutUpdated.Get(); }
 			set { PropertyIsLayoutUpdated.Set(value); }
 		}
+		
+		public MRect ClippingArea { get; }
 
 		public Control()
 		{
@@ -112,6 +114,8 @@ namespace Medja.Controls
 			PropertyVerticalAlignment = new Property<VerticalAlignment>();
 			PropertyHorizontalAlignment = new Property<HorizontalAlignment>();
 			PropertyIsLayoutUpdated = new Property<bool>();
+			
+			ClippingArea = new MRect();
 		}
 
 		protected virtual void OnPositionChanged(object sender, PropertyChangedEventArgs e)

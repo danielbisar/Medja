@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using Medja.Debug;
 using Medja.Primitives;
 using Medja.Theming;
 
@@ -8,7 +10,9 @@ namespace Medja.Controls
     {
         protected readonly ControlFactory ControlFactory;
 
-        private VerticalStackPanel _itemContainer;
+        protected VerticalStackPanel ItemsPanel;
+        protected ScrollableContainer ItemContainer;
+        protected TextBlock SelectedItemTextBlock;
         
         public readonly Property<bool> PropertyIsDropDownOpen;
         public bool IsDropDownOpen
@@ -16,12 +20,23 @@ namespace Medja.Controls
             get { return PropertyIsDropDownOpen.Get(); }
             set { PropertyIsDropDownOpen.Set(value); }
         }
+        
+        public readonly Property<float> PropertyDropDownHeight;
+        public float DropDownHeight
+        {
+            get { return PropertyDropDownHeight.Get(); }
+            set { PropertyDropDownHeight.Set(value); }
+        }
 
         public ComboBoxBase(ControlFactory controlFactory)
         {
             PropertyIsDropDownOpen = new Property<bool>();
+            PropertyDropDownHeight = new Property<float>();
+            DropDownHeight = 200;
             ControlFactory = controlFactory;
             Content = CreateContent();
+            PropertyBackground.PropertyChanged += (s, e) => ItemContainer.Background = (Color) e.NewValue;
+            InputState.OwnsMouseEvents = true;
         }
         
         private Control CreateContent()
@@ -31,23 +46,67 @@ namespace Medja.Controls
             button.Position.Width = 50;
             button.InputState.MouseClicked += OnDropDownButtonClicked;
 
-            var textBlock = ControlFactory.Create<TextBlock>();
-            textBlock.Text = "BLA";
+            SelectedItemTextBlock = ControlFactory.Create<TextBlock>();
             
             var dockPanel = ControlFactory.Create<DockPanel>();
             dockPanel.Add(Dock.Right, button);
-            dockPanel.Add(Dock.Fill, textBlock);
+            dockPanel.Add(Dock.Fill, SelectedItemTextBlock);
             dockPanel.VerticalAlignment = VerticalAlignment.Stretch;
             dockPanel.HorizontalAlignment = HorizontalAlignment.Stretch;
 
-            _itemContainer = ControlFactory.Create<VerticalStackPanel>();
+            ItemsPanel = ControlFactory.Create<VerticalStackPanel>();
+            ItemsPanel.HorizontalAlignment = HorizontalAlignment.Stretch;
+            ItemsPanel.VerticalAlignment = VerticalAlignment.Stretch;
+            ItemsPanel.ChildrenHeight = 50;
+            ItemsPanel.SpaceBetweenChildren = 5;
+
+            UpdateItemsPanel();
+            
+            ItemContainer = ControlFactory.Create<ScrollableContainer>();
+            ItemContainer.Content = ItemsPanel;
+            ItemContainer.Visibility = Visibility.Collapsed;
 
             return dockPanel;
+        }
+
+        protected void UpdateItemsPanel()
+        {
+            ItemsPanel.Position.Height = GetStackPanelHeight();
+            IsLayoutUpdated = false;
+        }
+
+        private float GetStackPanelHeight()
+        {
+            return (ItemsPanel.SpaceBetweenChildren + ItemsPanel.ChildrenHeight ?? 0) *
+                    ItemsPanel.Children.Count + ItemsPanel.Margin.TopAndBottom + ItemsPanel.Padding.TopAndBottom;
         }
 
         private void OnDropDownButtonClicked(object sender, EventArgs e)
         {
             IsDropDownOpen = !IsDropDownOpen;
+
+            if (IsDropDownOpen)
+                ItemContainer.Visibility = Visibility.Visible;
+        }
+
+        public override IEnumerable<Control> GetChildren()
+        {
+            foreach (var item in base.GetChildren())
+                yield return item;
+
+            if (IsDropDownOpen)
+                yield return ItemContainer;
+        }
+
+        public override void Arrange(Size availableSize)
+        {
+            base.Arrange(availableSize);
+
+            ItemContainer.Position.X = Position.X;
+            ItemContainer.Position.Y = Position.Y + Position.Height;
+            ItemContainer.Position.Width = Position.Width;
+            ItemContainer.Position.Height = DropDownHeight;
+            ItemContainer.Arrange(new Size(ItemContainer.Position.Width, ItemContainer.Position.Height));
         }
     }
 }

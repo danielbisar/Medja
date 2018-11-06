@@ -47,6 +47,8 @@ namespace Medja.Controls
 			
 			if (content != null)
 				content.Parent = this;
+
+			IsLayoutUpdated = false;
 		}
 
 		private void OnIsEnabledChanged(object sender, PropertyChangedEventArgs eventArgs)

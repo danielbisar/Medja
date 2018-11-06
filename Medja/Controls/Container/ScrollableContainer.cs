@@ -73,12 +73,19 @@ namespace Medja.Controls
             area.Y -= _scrollBar.Value;
 			
             ContentArranger.Position(area);
-            ContentArranger.Stretch(area);
+            ContentArranger.StretchWidth(area);
 
             if (Content != null)
             {
-                _scrollBar.MaxValue = Math.Max(area.Height, Content.Position.Height - area.Height);
+                Content.ClippingArea.X = area.X;
+                Content.ClippingArea.Y = Position.Y + Margin.Top + Padding.Top;
+                Content.ClippingArea.Height = area.Height;
+                Content.ClippingArea.Width = area.Width;
                 
+                Console.WriteLine("ScrollableContainer.Arrange - Clipping: " + Content.ClippingArea);
+                
+                _scrollBar.MaxValue = Math.Max(area.Height, Content.Position.Height - area.Height);
+               
                 if (_scrollBar.Value > _scrollBar.MaxValue)
                     _scrollBar.Value = _scrollBar.MaxValue;
             }

@@ -32,9 +32,9 @@ namespace Medja.OpenTk
 		{
 			return new MouseState
 			{
-					Position = e.Position,
-					IsLeftButtonDown = e.Mouse.LeftButton == ButtonState.Pressed,
-					IsMouseMove = true
+				Position = e.Position,
+				IsLeftButtonDown = e.Mouse.LeftButton == ButtonState.Pressed,
+				IsMouseMove = true
 			};
 		}
 		
@@ -42,9 +42,9 @@ namespace Medja.OpenTk
 		{
 			return new MouseState
 			{
-					Position = e.Position,
-					IsLeftButtonDown = e.Mouse.LeftButton == ButtonState.Pressed,
-					IsMouseMove = false
+				Position = e.Position,
+				IsLeftButtonDown = e.Mouse.LeftButton == ButtonState.Pressed,
+				IsMouseMove = false
 			};
 		}
 		

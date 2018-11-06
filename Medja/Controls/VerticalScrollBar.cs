@@ -1,10 +1,10 @@
 
+using System;
+
 namespace Medja.Controls
 {
     public class VerticalScrollBar : ProgressBar
     {
-        private float? _dragStartValue;
-        
         public VerticalScrollBar()
         {
             InputState.OwnsMouseEvents = true;
@@ -17,19 +17,12 @@ namespace Medja.Controls
             var isDown = e.NewValue as bool?;
 
             if (isDown == true)
-            {
-                Value = YToValue(InputState.PointerPosition.Y);
-            }
-            else
-                _dragStartValue = null;
+                Value = YToValue(InputState.PointerPosition.Y); 
         }
         
         private void OnMouseDragged(object sender, MouseDraggedEventArgs e)
         {
-            if (_dragStartValue == null)
-                _dragStartValue = Value;
-
-            Value = _dragStartValue.Value + YToValue(e.Vector.Y);
+            Value = YToValue(InputState.PointerPosition.Y);
         }
 
         private float YToValue(float y)
@@ -37,7 +30,8 @@ namespace Medja.Controls
             var relativeY = y - Position.Y;
             var percentage = relativeY / Position.Height;
 
-            return percentage * MaxValue;
+            var result = percentage * MaxValue;
+            return result;
         }
     }
 }

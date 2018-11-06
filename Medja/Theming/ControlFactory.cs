@@ -154,7 +154,7 @@ namespace Medja.Theming
 			return new TouchButtonList<T>(this);
 		}
 
-		protected virtual ComboBox<T> CreateComboBox<T>()
+		protected virtual ComboBox<T> CreateComboBox<T>() where T : class
 		{
 			return new ComboBox<T>(this);
 		}

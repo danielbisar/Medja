@@ -13,7 +13,7 @@ namespace MedjaOpenGlTestApp.Tests
             _controlFactory = controlFactory;
         }
 
-        public ContentControl Create()
+        public Control Create()
         {
             var result = _controlFactory.Create<ComboBox<string>>();
             result.Position.Height = 30;
@@ -23,13 +23,22 @@ namespace MedjaOpenGlTestApp.Tests
             /*result.InitializeButtonFromItem = (text, button) => button.Text = text;
             result.IsSelectable = true;
             result.PageSize = 5;*/
-            
-            /*for(int i = 0; i < 10; i++)
-                result.AddItem("Item " + i);*/
 
-            //result.SelectedItem = result.Items[2];
+            int i = 0;
             
-            return result;
+            for(; i < 10; i++)
+                result.AddItem("Item " + i);
+
+            var addItemButton = _controlFactory.Create<Button>();
+            addItemButton.InputState.MouseClicked += (s, e) => result.AddItem("New Item " + i++);
+            addItemButton.Text = "Add new item";
+
+            var stackPanel = _controlFactory.Create<VerticalStackPanel>();
+            stackPanel.SpaceBetweenChildren = 50;
+            stackPanel.Children.Add(result);
+            stackPanel.Children.Add(addItemButton);
+            
+            return stackPanel;
         }
     }
 }
