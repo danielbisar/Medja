@@ -17,10 +17,14 @@ namespace Medja.Controls
         {
             _scrollBar = controlFactory.Create<VerticalScrollBar>();
             _scrollBar.PropertyValue.PropertyChanged += OnScrollBarValueChanged;
+            
             ScrollBarWidth = _scrollBar.Position.Width;
-            InputState.PropertyMouseWheelDelta.PropertyChanged += OnMouseWheelMoved;
+            
             InputState.MouseDragged += OnMouseDragged;
+            InputState.PropertyMouseWheelDelta.PropertyChanged += OnMouseWheelMoved;
             InputState.PropertyIsLeftMouseDown.PropertyChanged += OnLeftMouseUp;
+            InputState.HandlesDrag = true;
+            InputState.OwnsMouseEvents = true;
         }
 
         private void OnScrollBarValueChanged(object sender, PropertyChangedEventArgs e)
@@ -81,8 +85,6 @@ namespace Medja.Controls
                 Content.ClippingArea.Y = Position.Y + Margin.Top + Padding.Top;
                 Content.ClippingArea.Height = area.Height;
                 Content.ClippingArea.Width = area.Width;
-                
-                Console.WriteLine("ScrollableContainer.Arrange - Clipping: " + Content.ClippingArea);
                 
                 _scrollBar.MaxValue = Math.Max(area.Height, Content.Position.Height - area.Height);
                

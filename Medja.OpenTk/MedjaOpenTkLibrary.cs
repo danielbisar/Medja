@@ -95,10 +95,8 @@ namespace Medja.OpenTk
 			_controls.Clear();
 
 			// call this every time to update the list of controls and eventual ZIndex changes
-			_controls.AddRange(_controlHierarchy.GetControls());
+			_controls.AddRange(_controlHierarchy.GetInRenderingOrder());
 			_controlHierarchy.UpdateLayout(); // trigger the layouting pass
-
-			Console.WriteLine(_controls.Select(p => p.ToString()).Aggregate((p1, p2) => { return p1 + ", " + p2; }));
 		}
 
 		private void OnRenderFrame(object sender, FrameEventArgs e)
@@ -114,7 +112,7 @@ namespace Medja.OpenTk
 		private void AssureRenderer()
 		{
 			if (_renderer == null)
-				_renderer = RendererFactory(); // TODO cannot be initialized without the window, but should also not have the null check here every call, for now seems fine
+				_renderer = RendererFactory();
 		}
 	}
 }

@@ -7,9 +7,10 @@ namespace Medja.Controls
     {
         public VerticalScrollBar()
         {
-            InputState.OwnsMouseEvents = true;
-            InputState.PropertyIsLeftMouseDown.PropertyChanged += OnIsLeftMouseDownChanged;
             InputState.MouseDragged += OnMouseDragged;
+            InputState.PropertyIsLeftMouseDown.PropertyChanged += OnIsLeftMouseDownChanged;
+            InputState.HandlesDrag = true;
+            InputState.OwnsMouseEvents = true;
         }
 
         private void OnIsLeftMouseDownChanged(object sender, PropertyChangedEventArgs e)

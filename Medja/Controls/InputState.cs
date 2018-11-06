@@ -69,6 +69,16 @@ namespace Medja
 			get { return PropertyOwnsMouseEvents.Get(); }
 			set { PropertyOwnsMouseEvents.Set(value); }
 		}
+		
+		public readonly Property<bool> PropertyHandlesDrag;
+		/// <summary>
+		/// Indicates whether this controls handles Drag&Drop or just ignores it.
+		/// </summary>
+		public bool HandlesDrag
+		{
+			get { return PropertyHandlesDrag.Get(); }
+			set { PropertyHandlesDrag.Set(value); }
+		}
 
 		public event EventHandler MouseClicked;
 		public event EventHandler<MouseDraggedEventArgs> MouseDragged;
@@ -86,6 +96,7 @@ namespace Medja
 			PropertyPointerPosition.PropertyChanged += OnPointerPositionChanged;
 			PropertyMouseWheelDelta = new Property<float>();
 			PropertyOwnsMouseEvents = new Property<bool>();
+			PropertyHandlesDrag = new Property<bool>();
 
 			_dragThreshold = 5;
 		}
