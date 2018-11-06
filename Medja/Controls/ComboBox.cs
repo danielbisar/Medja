@@ -16,6 +16,11 @@ namespace Medja.Controls
             get { return PropertySelectedItem.Get(); }
             set { PropertySelectedItem.Set(value); }
         }
+
+        public List<TItem> Items
+        {
+            get { return _itemsManager.Items; }
+        }
         
         public ComboBox(ControlFactory controlFactory)
             : base(controlFactory)

@@ -33,6 +33,7 @@ namespace Medja.Controls
         public SideControlsContainer(ControlFactory controlFactory)
         {
             PropertySideContent = new Property<Control>();
+            PropertySideContent.PropertyChanged += OnSideContentChanged;
             PropertySideContentWidth = new Property<float>();
             PropertyIsSideContentVisible = new Property<bool>();
 
@@ -43,6 +44,16 @@ namespace Medja.Controls
             _showMenuButton.InputState.MouseClicked += OnMenuButtonClicked;
             _showMenuButton.Position.Width = 50;
             _showMenuButton.Position.Height = 50;
+        }
+
+        private void OnSideContentChanged(object sender, PropertyChangedEventArgs e)
+        {
+            var control = e.NewValue as Control;
+
+            if (control == null)
+                return;
+
+            control.InputState.OwnsMouseEvents = true;
         }
 
         private void OnMenuButtonClicked(object sender, EventArgs e)
@@ -64,11 +75,10 @@ namespace Medja.Controls
 
         public override void Arrange(Size availableSize)
         {
-            base.Arrange(availableSize);
+            base.Arrange(new Size(availableSize.Width - _showMenuButton.Position.Width, availableSize.Height));
 
             _showMenuButton.Position.X = Position.X + availableSize.Width - (_showMenuButton.Position.Width + Padding.TopAndBottom + Margin.TopAndBottom);
             _showMenuButton.Position.Y = Position.Y + Padding.Top + Margin.Top;
-                
             _showMenuButton.Arrange(new Size(_showMenuButton.Position.Width, _showMenuButton.Position.Height));
            
             if (IsSideContentVisible && SideContent != null)

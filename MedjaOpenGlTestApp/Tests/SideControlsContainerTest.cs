@@ -16,11 +16,14 @@ namespace MedjaOpenGlTestApp.Tests
         public ContentControl Create()
         {
             var result = _controlFactory.Create<SideControlsContainer>();
-            result.Content = _controlFactory.Create<Control>(p =>
+            result.Content = _controlFactory.Create<TouchButtonList<string>>(p =>
             {
                 p.Background = Colors.Blue;
                 p.HorizontalAlignment = HorizontalAlignment.Stretch;
                 p.VerticalAlignment = VerticalAlignment.Stretch;
+                
+                for(int i = 0; i < 10; i++)
+                    p.AddItem("Item " + i);
             });
             result.SideContent = _controlFactory.Create<Control>(p =>
             {
