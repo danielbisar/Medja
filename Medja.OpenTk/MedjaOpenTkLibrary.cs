@@ -24,7 +24,7 @@ namespace Medja.OpenTk
 		private IRenderer _renderer;
 		private OpenTkMouseHandler _mouseHandler;
 		private OpenTKKeyboardHandler _keyboardHandler;
-		
+		private ControlHierarchy _controlHierarchy;
 
 		public ControlFactory ControlFactory { get; }
 
@@ -54,6 +54,7 @@ namespace Medja.OpenTk
 		{
 			_medjaWindow = application.MainWindow;
 			_gameWindow = ((OpenTkWindow)_medjaWindow).GameWindow;
+			_controlHierarchy = new ControlHierarchy(_medjaWindow);
 
 			using (_gameWindow)
 			{
@@ -93,18 +94,11 @@ namespace Medja.OpenTk
 		{
 			_controls.Clear();
 
-			Control highestControlNeedingLayouting = null;
-			
-			foreach (var control in _medjaWindow.GetAllControls())
-			{
-				if(highestControlNeedingLayouting == null && !control.IsLayoutUpdated)
-					highestControlNeedingLayouting = control;
-				
-				_controls.Add(control);
-			}
-			
-			if(highestControlNeedingLayouting != null)
-				highestControlNeedingLayouting.UpdateLayout();
+			// call this every time to update the list of controls and eventual ZIndex changes
+			_controls.AddRange(_controlHierarchy.GetControls());
+			_controlHierarchy.UpdateLayout(); // trigger the layouting pass
+
+			Console.WriteLine(_controls.Select(p => p.ToString()).Aggregate((p1, p2) => { return p1 + ", " + p2; }));
 		}
 
 		private void OnRenderFrame(object sender, FrameEventArgs e)

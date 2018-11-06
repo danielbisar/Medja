@@ -85,6 +85,16 @@ namespace Medja.Controls
 			get { return PropertyIsLayoutUpdated.Get(); }
 			set { PropertyIsLayoutUpdated.Set(value); }
 		}
+
+		public readonly Property<bool> PropertyIsTopMost;
+		/// <summary>
+		/// If set to true this control will be rendered above others (later).
+		/// </summary>
+		public bool IsTopMost
+		{
+			get { return PropertyIsTopMost.Get(); }
+			set { PropertyIsTopMost.Set(value); }
+		}
 		
 		public MRect ClippingArea { get; }
 
@@ -114,6 +124,8 @@ namespace Medja.Controls
 			PropertyVerticalAlignment = new Property<VerticalAlignment>();
 			PropertyHorizontalAlignment = new Property<HorizontalAlignment>();
 			PropertyIsLayoutUpdated = new Property<bool>();
+			
+			PropertyIsTopMost = new Property<bool>();
 			
 			ClippingArea = new MRect();
 		}
