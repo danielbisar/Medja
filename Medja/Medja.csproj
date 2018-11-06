@@ -61,7 +61,7 @@
     <Compile Include="Controls\Container\TabControl.cs" />
     <Compile Include="Controls\Control.cs" />
     <Compile Include="Controls\Control3D.cs" />
-    <Compile Include="Controls\ControlTreeIterator.cs" />
+    <Compile Include="Controls\ControlHierarchy.cs" />
     <Compile Include="Controls\Dialogs\ConfirmableDialog.cs" />
     <Compile Include="Controls\InputState.cs" />
     <Compile Include="Controls\ItemEventArgs.cs" />
@@ -83,6 +83,7 @@
     <Compile Include="MedjaMath.cs" />
     <Compile Include="Performance\FramesPerSecondCounter.cs" />
     <Compile Include="Primitives\Color.cs" />
+    <Compile Include="Primitives\MedjaValues.cs" />
     <Compile Include="Primitives\MRect.cs" />
     <Compile Include="Primitives\Point.cs" />
     <Compile Include="Primitives\Rect.cs" />

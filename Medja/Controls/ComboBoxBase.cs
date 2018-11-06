@@ -65,6 +65,7 @@ namespace Medja.Controls
             ItemContainer = ControlFactory.Create<ScrollableContainer>();
             ItemContainer.Content = ItemsPanel;
             ItemContainer.Visibility = Visibility.Collapsed;
+            ItemContainer.IsTopMost = true;
 
             return dockPanel;
         }
