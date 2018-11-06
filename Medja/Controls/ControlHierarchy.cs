@@ -22,7 +22,7 @@ namespace Medja.Controls
         /// Get all controls in rendering order.
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Control> GetControls()
+        public IEnumerable<Control> GetInRenderingOrder()
         {
             TopMostControlNeedingLayoutPass = null;
 

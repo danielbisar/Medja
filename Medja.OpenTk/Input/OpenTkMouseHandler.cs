@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using Medja.Controls;
@@ -22,10 +23,11 @@ namespace Medja.OpenTk
 		private static bool IsMouseOver(Control control, Point pos)
 		{
 			var childPos = control.Position;
+			
 			return pos.X >= childPos.X
 					&& pos.Y >= childPos.Y
-					&& pos.X <= (childPos.X + childPos.Width)
-					&& pos.Y <= (childPos.Y + childPos.Height);
+					&& pos.X <= childPos.X + childPos.Width
+					&& pos.Y <= childPos.Y + childPos.Height;
 		}
 		
 		private static MouseState GetInputState(MouseEventArgs e)
@@ -71,6 +73,21 @@ namespace Medja.OpenTk
 		{
 			ApplyMouseToControls(GetInputState(e));
 		}
+		
+		private void OnMouseMove(object sender, MouseMoveEventArgs e)
+		{
+			ApplyMouseToControls(GetInputState(e));
+		}
+
+		private void OnMouseUp(object sender, MouseButtonEventArgs e)
+		{
+			ApplyMouseToControls(GetInputState(e));
+		}
+
+		private void OnMouseWheel(object sender, MouseWheelEventArgs e)
+		{
+			ApplyMouseToControls(GetInputState(e));
+		}
 
 		private void ApplyMouseToControls(MouseState e)
 		{
@@ -100,7 +117,7 @@ namespace Medja.OpenTk
 					{
 						ApplyMouse(control, e);
 
-						if (control.InputState.OwnsMouseEvents)
+						if (_currentDragControl != null || control.InputState.OwnsMouseEvents && !control.InputState.IsDrag)
 							break;
 					}
 					else
@@ -130,28 +147,13 @@ namespace Medja.OpenTk
 			else
 				inputState.MouseWheelDelta = mouseState.WheelDelta;
 
-			if (inputState.IsDrag)
+			if (inputState.IsDrag && inputState.HandlesDrag)
 				_currentDragControl = control;
 		}
 
 		private Medja.Primitives.Point ToMedjaPoint(Point position)
 		{
 			return new Primitives.Point(position.X, position.Y);
-		}
-
-		private void OnMouseMove(object sender, MouseMoveEventArgs e)
-		{
-			ApplyMouseToControls(GetInputState(e));
-		}
-
-		private void OnMouseUp(object sender, MouseButtonEventArgs e)
-		{
-			ApplyMouseToControls(GetInputState(e));
-		}
-
-		private void OnMouseWheel(object sender, MouseWheelEventArgs e)
-		{
-			ApplyMouseToControls(GetInputState(e));
 		}
 	}
 }

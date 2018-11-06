@@ -48,8 +48,6 @@ namespace Medja.OpenTk.Rendering
 
 				if (hasClipping)
 				{
-					Console.WriteLine("Control with clipping: " + control.GetType() + " " + control.ClippingArea);
-					
 					_canvas.Save();
 					_canvas.ClipRect(control.ClippingArea.ToSKRect());
 				}
