@@ -46,7 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Binding\Binding.cs" />
-    <Compile Include="Binding\BindingFactory.cs" />
+    <Compile Include="Binding\BindingExtensions.cs" />
     <Compile Include="Controls\Animation\AnimationManager.cs" />
     <Compile Include="Controls\Animation\ColorAnimation.cs" />
     <Compile Include="Controls\Animation\ControlAnimation.cs" />

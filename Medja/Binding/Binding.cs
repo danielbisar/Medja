@@ -2,6 +2,12 @@
 
 namespace Medja
 {
+    /// <summary>
+    /// Represents the connection of one source property to a target property.
+    /// </summary>
+    /// <typeparam name="TTarget">The target value type.</typeparam>
+    /// <typeparam name="TSource">The source value type.</typeparam>
+    /// <remarks>Dispose the object to unregister the binding.</remarks>
     public class Binding<TTarget, TSource> : IDisposable
     {
         private Property<TTarget> _target;
