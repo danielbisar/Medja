@@ -92,11 +92,11 @@ namespace Medja.OpenTk
 
 		private void OnUpdateFrame(object sender, FrameEventArgs e)
 		{
+			// update controls every frame (f.e. a control was hidden and is now visible)
 			_controls.Clear();
-
-			// call this every time to update the list of controls and eventual ZIndex changes
 			_controls.AddRange(_controlHierarchy.GetInRenderingOrder());
-			_controlHierarchy.UpdateLayout(); // trigger the layouting pass
+			
+			_controlHierarchy.UpdateLayout();
 		}
 
 		private void OnRenderFrame(object sender, FrameEventArgs e)
