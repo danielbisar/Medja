@@ -149,7 +149,7 @@ namespace Medja.Theming
 			return new ProgressBar();
 		}
 
-		protected virtual TouchButtonList<T> CreateTouchButtonList<T>()
+		protected virtual TouchButtonList<T> CreateTouchButtonList<T>() where T : class
 		{
 			return new TouchButtonList<T>(this);
 		}

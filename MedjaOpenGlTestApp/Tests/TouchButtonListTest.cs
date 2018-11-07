@@ -1,3 +1,4 @@
+using System.Reflection;
 using Medja.Controls;
 using Medja.Primitives;
 using Medja.Theming;
@@ -18,10 +19,17 @@ namespace MedjaOpenGlTestApp.Tests
         {
             var touchButtonList1 = _controlFactory.Create<TouchButtonList<string>>(p =>
             {
-                p.InitializeButtonFromItem = (text, button) => button.Text = text;
+                p.InitButtonFromItem = (text, button) => button.Text = text;
                 p.IsSelectable = true;
                 p.PageSize = 5;
-            
+                p.ButtonClicked += (s, e) =>
+                {
+                    if(e.Item as string == "Remove some item")
+                        p.RemoveItem(p.SelectedItem);
+                };
+                
+                p.AddItem("Remove some item");
+                
                 for(int i = 0; i < 10; i++)
                     p.AddItem("Item " + i);
 

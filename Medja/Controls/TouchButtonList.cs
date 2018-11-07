@@ -7,30 +7,36 @@ using Medja.Theming;
 
 namespace Medja.Controls
 {
-	public class TouchButtonList<TItem> : ContentControl
+	public class TouchButtonList<TItem> : ContentControl 
+			where TItem : class
 	{
-		private readonly Dictionary<Button, TItem> _buttonToItemMap;
-		private readonly Dictionary<TItem, Button> _itemToButtonMap;
-		
 		private readonly PagedListView<TItem> _visibleItems;
 		private readonly VerticalStackPanel _itemsStackPanel;
 		private readonly ControlFactory _controlFactory;
 		private readonly Button _buttonUp;
 		private readonly Button _buttonDown;
+		private readonly ItemsManager<TItem> _itemsManager;
 
 		/// <summary>
 		/// The list of items. Do not use to add children. 
 		/// Use AddItem of this class instead.
 		/// </summary>
 		/// <value>The items.</value>
-		public List<TItem> Items { get; }
+		public IReadOnlyList<TItem> Items
+		{
+			get { return _itemsManager.Items; }
+		}
 
 		/// <summary>
 		/// Gets or sets the method that initializes the button from an item 
 		/// instance. By default this just sets button.Text = item.ToString();
 		/// </summary>
 		/// <value>The initialize button from item.</value>
-		public Action<TItem, Button> InitializeButtonFromItem { get; set; }
+		public Action<TItem, Button> InitButtonFromItem
+		{
+			get { return _itemsManager.InitButtonFromItem; }
+			set { _itemsManager.InitButtonFromItem = value; }
+		}
 
 		/// <summary>
 		/// Gets or sets the page size. This control displays PageSize amount
@@ -46,7 +52,11 @@ namespace Medja.Controls
 		/// <summary>
 		/// An event that is fired whenever any of the item buttons is clicked.
 		/// </summary>
-		public event EventHandler<TouchButtonClickedEventArgs> ButtonClicked;
+		public event EventHandler<TouchButtonClickedEventArgs> ButtonClicked
+		{
+			add { _itemsManager.ButtonClicked += value; }
+			remove { _itemsManager.ButtonClicked -= value; }
+		}
 		
 		public readonly Property<bool> PropertyIsSelectable;
 		/// <summary>
@@ -72,45 +82,19 @@ namespace Medja.Controls
 		{
 			PropertyIsSelectable = new Property<bool>();
 			PropertySelectedItem = new Property<TItem>();
-			PropertySelectedItem.PropertyChanged += OnSelectedItemChanged;
+			
+			_itemsManager = new ItemsManager<TItem>(controlFactory);
+			_itemsManager.PropertyIsSelectable.BindTo(PropertyIsSelectable);
+			_itemsManager.PropertySelectedItem.BindTo(PropertySelectedItem);
+			PropertySelectedItem.BindTo(_itemsManager.PropertySelectedItem);
 			
 			_controlFactory = controlFactory ?? throw new ArgumentNullException(nameof(controlFactory));
 			_itemsStackPanel = _controlFactory.Create<VerticalStackPanel>();
 			_buttonUp = _controlFactory.Create<Button>();
 			_buttonDown = _controlFactory.Create<Button>();
-			_buttonToItemMap = new Dictionary<Button, TItem>();
-			_itemToButtonMap = new Dictionary<TItem, Button>();
-
-			Items = new List<TItem>();
-			_visibleItems = new PagedListView<TItem>(Items);
-
-			InitializeButtonFromItem = (item, button) =>
-			{
-				button.Text = item.ToString();
-			};
-
+			_visibleItems = new PagedListView<TItem>(_itemsManager.Items);
+			
 			CreateContent();
-		}
-
-		protected virtual void OnSelectedItemChanged(object sender, PropertyChangedEventArgs e)
-		{
-			var oldSelectedItem = (TItem)e.OldValue;
-			var newSelectedItem = (TItem)e.NewValue;
-
-			if (oldSelectedItem != null)
-			{
-				// we need to use try, because the button might not be visible
-				if(_itemToButtonMap.TryGetValue(oldSelectedItem, out var button))
-					button.IsSelected = false;
-			}
-
-			if (newSelectedItem != null)
-			{
-				// we need to use try, because the button might not be visible
-				// if user sets it manually
-				if(_itemToButtonMap.TryGetValue(newSelectedItem, out var button))
-					button.IsSelected = true;
-			}
 		}
 
 		private void CreateContent()
@@ -141,14 +125,19 @@ namespace Medja.Controls
 
 		public void AddItem(TItem item)
 		{
-			Items.Add(item);
+			_itemsManager.AddItem(item);
 			UpdateItemsAndScrollingState();
 		}
 
 		public void RemoveItem(TItem item)
 		{
-			if (Items.Remove(item))
+			if (_itemsManager.RemoveItem(item))
+			{
+				if (ReferenceEquals(item, SelectedItem))
+					SelectedItem = default(TItem);
+				
 				UpdateItemsAndScrollingState();
+			}
 		}
 
 		public void ScrollUp()
@@ -184,58 +173,12 @@ namespace Medja.Controls
 		private void UpdateItems()
 		{
 			var children = _itemsStackPanel.Children;
-
-			foreach (var button in children.Cast<Button>())
-				button.InputState.MouseClicked -= OnButtonClicked;
-
 			children.Clear();
-			_buttonToItemMap.Clear();
-			_itemToButtonMap.Clear();
-
-			foreach (var item in _visibleItems)
-			{
-				var button = CreateButtonForItem(item);
-				children.Add(button);
-				
-				_buttonToItemMap.Add(button, item);
-				_itemToButtonMap.Add(item, button);
-			}
+			
+			foreach(var item in _visibleItems)
+				children.Add(_itemsManager.GetControlFromItem(item));
 
 			IsLayoutUpdated = false;
-		}
-
-		private Button CreateButtonForItem(TItem item)
-		{
-			var result = _controlFactory.Create<Button>();
-			InitializeButtonFromItem(item, result);
-			result.InputState.MouseClicked += OnButtonClicked;
-
-			if (IsSelectable && ReferenceEquals(item, SelectedItem))
-				result.IsSelected = true;
-
-			return result;
-		}
-
-		private void OnButtonClicked(object sender, EventArgs e)
-		{
-			var inputState = sender as InputState;
-			var button = (Button) inputState.Control;
-			
-			NotifyButtonClicked(button);
-
-			if (IsSelectable)
-				SelectedItem = _buttonToItemMap[button];
-		}
-
-		private void NotifyButtonClicked(Button button)
-		{
-			var item = GetItemFromButton(button);
-			ButtonClicked?.Invoke(this, new TouchButtonClickedEventArgs(button, item));
-		}
-
-		private TItem GetItemFromButton(Button button)
-		{
-			return _buttonToItemMap.GetOrDefault(button);
 		}
 	}
 }
