@@ -128,7 +128,7 @@ namespace Medja.Controls
 			var scrollButtonDockPanel = _controlFactory.Create<DockPanel>();
 			scrollButtonDockPanel.Add(Dock.Top, _buttonUp);
 			scrollButtonDockPanel.Add(Dock.Bottom, _buttonDown);
-			scrollButtonDockPanel.Position.Width = 60;
+			scrollButtonDockPanel.Position.Width = 70;
 			scrollButtonDockPanel.Padding.Left = 10;
 
 			mainDockPanel.Add(Dock.Right, scrollButtonDockPanel);

@@ -53,8 +53,6 @@ namespace Medja.Controls
 			if(!ClippingArea.IsEmpty)
 				ForwardClippingArea(child);
 
-			child.IsEnabled = IsEnabled;
-				
 			ForwardIsEnabled(child);
 		}
 

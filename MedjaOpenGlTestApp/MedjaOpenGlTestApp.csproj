@@ -39,6 +39,7 @@
     <Compile Include="OpenGlTestControl.cs" />
     <Compile Include="OpenGlTestControlRenderer.cs" />
     <Compile Include="TestAppTheme.cs" />
+    <Compile Include="Tests\ButtonTest.cs" />
     <Compile Include="Tests\ComboBoxTest.cs" />
     <Compile Include="Tests\ContentControlTest.cs" />
     <Compile Include="Tests\DialogParentControlTest.cs" />
