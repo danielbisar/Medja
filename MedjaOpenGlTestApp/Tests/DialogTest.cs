@@ -4,11 +4,11 @@ using Medja.Theming;
 
 namespace MedjaOpenGlTestApp.Tests
 {
-    public class DialogParentControlTest
+    public class DialogTest
     {
         private readonly ControlFactory _controlFactory;
 
-        public DialogParentControlTest(ControlFactory controlFactory)
+        public DialogTest(ControlFactory controlFactory)
         {
             _controlFactory = controlFactory;
         }
@@ -20,13 +20,11 @@ namespace MedjaOpenGlTestApp.Tests
             content.VerticalAlignment = VerticalAlignment.Stretch;
             content.HorizontalAlignment = HorizontalAlignment.Stretch;
 
+            var dialogParentControl = DialogService.CreateContainer(_controlFactory, content);
+            
             var dialog = _controlFactory.Create<QuestionDialog>();
             dialog.Message = "Really?";
-            
-            var dialogParentControl = _controlFactory.Create<DialogParentControl>();
-            dialogParentControl.Content = content;
-            dialogParentControl.DialogControl = dialog;
-            dialogParentControl.IsDialogVisible = true;
+            dialog.Show();
 
             return dialogParentControl;
         }
