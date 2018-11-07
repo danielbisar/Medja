@@ -53,6 +53,8 @@ namespace Medja.Controls
 
 			if (dialog != null)
 				dialog.DialogParent = this;
+
+			IsLayoutUpdated = false;
 		}
 
 		public override void Arrange(Size availableSize)
