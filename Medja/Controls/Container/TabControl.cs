@@ -33,7 +33,7 @@ namespace Medja.Controls
 
 		public TabControl()
 		{
-			HeaderHeight = 50;
+			HeaderHeight = 40;
 			_tabs = new List<TabItem>();
 			Tabs = _tabs.AsReadOnly();
 
