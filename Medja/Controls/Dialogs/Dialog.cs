@@ -1,4 +1,4 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
 
 namespace Medja.Controls
 {
@@ -10,6 +10,8 @@ namespace Medja.Controls
 			set { Parent = value; }
 		}
 
+		public event EventHandler Closed;
+		
 		public Dialog()
 		{
 		}
@@ -22,6 +24,7 @@ namespace Medja.Controls
 		public void Hide()
 		{
 			DialogService.Hide(this);
+			Closed?.Invoke(this, EventArgs.Empty);
 		}
 	}
 }

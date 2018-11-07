@@ -1,3 +1,4 @@
+using System.Threading;
 using Medja.Controls;
 using Medja.Primitives;
 using Medja.Theming;
@@ -24,6 +25,12 @@ namespace MedjaOpenGlTestApp.Tests
             
             var dialog = _controlFactory.Create<QuestionDialog>();
             dialog.Message = "Really?";
+            /*dialog.Closed += (s, e) =>
+            {
+                if(dialog.IsConfirmed)
+                    dialog.Show();
+            };*/
+            
             dialog.Show();
 
             return dialogParentControl;
