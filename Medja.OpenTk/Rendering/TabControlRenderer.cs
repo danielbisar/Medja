@@ -1,10 +1,19 @@
-﻿using Medja.Controls;
+﻿using System.Collections.Generic;
+using Medja.Controls;
+using Medja.Primitives;
 using SkiaSharp;
 
 namespace Medja.OpenTk.Rendering
 {
 	public class TabControlRenderer : SkiaControlRendererBase<TabControl>
 	{
+		private readonly Font _font;
+		
+		public TabControlRenderer()
+		{
+			_font = new Font();
+		}
+		
 		protected override void InternalRender()
 		{
 			var tabs = _control.Tabs;
@@ -20,11 +29,8 @@ namespace Medja.OpenTk.Rendering
 				_paint.Color = tab.IsSelected ? ColorMap.PrimaryLight.ToSKColor() : ColorMap.Primary.ToSKColor();
 				_canvas.DrawRect(headerRect, _paint);
 
-				_paint.Color = ColorMap.Primary.ToSKColor();
-				_canvas.DrawLine(headerRect.Right, headerRect.Top, headerRect.Right, headerRect.Bottom, _paint);
-
 				_paint.Color = ColorMap.PrimaryText.ToSKColor();
-				_canvas.RenderText(tab.Header, _paint, headerRect);
+				RenderText(tab.Header, _font, new SKPoint(headerRect.Left + 5, headerRect.Top + _paint.FontSpacing));
 
 				headerRect.Left += tabHeaderWidth;
 				headerRect.Right += tabHeaderWidth;

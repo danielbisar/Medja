@@ -115,7 +115,7 @@ namespace Medja.OpenTk.Rendering
 			_canvas.DrawText(text, pos, _paint);
 		}
 
-		private void BeginText(Font font)
+		protected void BeginText(Font font)
 		{
 			// TODO this is just a workaround
 			_paint.Typeface = DefaultTypeFace;
