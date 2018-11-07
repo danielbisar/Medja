@@ -16,14 +16,12 @@ namespace Medja.Controls
 
 		public void Show()
 		{
-			if (DialogParent != null)
-				DialogParent.IsDialogVisible = true;
+			DialogService.Show(this);
 		}
 		
 		public void Hide()
 		{
-			if (DialogParent != null)
-				DialogParent.IsDialogVisible = false;
+			DialogService.Hide(this);
 		}
 	}
 }

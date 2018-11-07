@@ -55,7 +55,7 @@ namespace Medja.Controls
 
 		private void OnOkButtonClicked(object sender, EventArgs e)
 		{
-			DialogParent.IsDialogVisible = false;
+			DialogService.Hide(this);
 		}
 	}
 }

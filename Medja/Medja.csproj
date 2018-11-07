@@ -63,6 +63,7 @@
     <Compile Include="Controls\Control3D.cs" />
     <Compile Include="Controls\ControlHierarchy.cs" />
     <Compile Include="Controls\Dialogs\ConfirmableDialog.cs" />
+    <Compile Include="Controls\Dialogs\DialogService.cs" />
     <Compile Include="Controls\InputState.cs" />
     <Compile Include="Controls\ItemEventArgs.cs" />
     <Compile Include="Controls\ItemsManager.cs" />
