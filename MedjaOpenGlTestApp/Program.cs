@@ -24,7 +24,7 @@ namespace MedjaOpenGlTestApp
 			var controlFactory = library.ControlFactory;
 			var application = MedjaApplication.Create(library);
 
-			var test = new ButtonTest(controlFactory);
+			//var test = new ButtonTest(controlFactory);
 			//var test = new ComboBoxTest(controlFactory);
 			//var test = new ContentControlTest(controlFactory);
 			//var test = new DialogParentControlTest(controlFactory);
@@ -34,7 +34,7 @@ namespace MedjaOpenGlTestApp
 			//var test = new SideControlsContainerTest(controlFactory);
 			//var test = new SimpleDockPanelTest(controlFactory);
 			//var test = new TabControlTest(controlFactory);
-			//var test = new TouchButtonListTest(controlFactory);
+			var test = new TouchButtonListTest(controlFactory);
 			
 			_window = application.CreateWindow();
 			_window.CenterOnScreen(800, 600);

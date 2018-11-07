@@ -17,7 +17,7 @@ namespace Medja.Controls
             set { PropertySelectedItem.Set(value); }
         }
 
-        public List<TItem> Items
+        public IReadOnlyList<TItem> Items
         {
             get { return _itemsManager.Items; }
         }
