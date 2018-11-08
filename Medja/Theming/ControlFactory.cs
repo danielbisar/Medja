@@ -204,5 +204,12 @@ namespace Medja.Theming
 
 			return result;
 		}
+		
+		// helpful overloads to make creation of simple controls easier
+
+		public TextBlock CreateTextBlock(string text)
+		{
+			return Create<TextBlock>(p => p.Text = text);
+		}
 	}
 }
