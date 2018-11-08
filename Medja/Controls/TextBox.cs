@@ -6,6 +6,7 @@
 		{
 			PropertyText.UnnotifiedSet(string.Empty);
 			InputState.KeyPressed += OnKeyPressed;
+			InputState.OwnsMouseEvents = true;
 		}
 
 		private void OnKeyPressed(object sender, KeyboardEventArgs e)
