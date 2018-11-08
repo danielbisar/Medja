@@ -86,6 +86,7 @@
     <Compile Include="MedjaMath.cs" />
     <Compile Include="Performance\FramesPerSecondCounter.cs" />
     <Compile Include="Primitives\Color.cs" />
+    <Compile Include="Primitives\Keys.cs" />
     <Compile Include="Primitives\MedjaValues.cs" />
     <Compile Include="Primitives\MRect.cs" />
     <Compile Include="Primitives\Point.cs" />

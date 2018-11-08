@@ -1,4 +1,5 @@
 ﻿using Medja.Controls;
+using Medja.Primitives;
 using OpenTK;
 using OpenTK.Input;
 
@@ -24,6 +25,10 @@ namespace Medja.OpenTk.Input
 		{
 			if (e.Key == Key.BackSpace)
 				NotifyKeyPressed('\b');
+			else if(e.Key == Key.Left)
+				NotifyKeyPressed((char)Keys.Left);
+			else if(e.Key == Key.Right)
+				NotifyKeyPressed((char)Keys.Right);
 		}
 
 		private void OnKeyPressed(object sender, KeyPressEventArgs e)
