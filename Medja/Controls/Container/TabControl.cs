@@ -39,6 +39,8 @@ namespace Medja.Controls
 
 			PropertySelectedTab = new Property<TabItem>();
 			PropertySelectedTab.PropertyChanged += OnSelectedTabChanged;
+			PropertySelectedTab.AffectsLayout(this);
+			
 			InputState.MouseClicked += OnMouseClicked;
 		}
 
@@ -88,7 +90,6 @@ namespace Medja.Controls
 					Content.HorizontalAlignment = HorizontalAlignment.Stretch;
 				
 				SelectedTab.IsSelected = true;
-				IsLayoutUpdated = false;
 			}
 		}
 

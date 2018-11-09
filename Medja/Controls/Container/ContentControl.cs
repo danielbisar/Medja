@@ -22,6 +22,8 @@ namespace Medja.Controls
 		{
 			PropertyContent = new Property<Control>();
 			PropertyContent.PropertyChanged += OnContentChanged;
+			PropertyContent.AffectsLayout(this);
+			
 			Padding = new Thickness();
 			PropertyIsEnabled.PropertyChanged += OnIsEnabledChanged;
 			PropertyIsLayoutUpdated.PropertyChanged += OnIsLayoutUpdatedChanged;
@@ -47,8 +49,6 @@ namespace Medja.Controls
 			
 			if (content != null)
 				content.Parent = this;
-
-			IsLayoutUpdated = false;
 		}
 
 		private void OnIsEnabledChanged(object sender, PropertyChangedEventArgs eventArgs)

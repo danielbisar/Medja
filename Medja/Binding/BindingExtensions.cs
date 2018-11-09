@@ -1,4 +1,5 @@
 using System;
+using Medja.Controls;
 
 namespace Medja
 {
@@ -58,6 +59,18 @@ namespace Medja
                                                                          Func<TSource, TTarget> converter)
         {
             return new Binding<TTarget, TSource>(target, source, converter);
+        }
+
+        /// <summary>
+        /// Tells the control that the layout needs to be updated every time given property changes.
+        /// </summary>
+        /// <param name="property">The property that affects the layout.</param>
+        /// <param name="control">The control that is affected by the layout. This should be the control
+        /// containing the property.</param>
+        /// <typeparam name="T">The properties value type.</typeparam>
+        public static void AffectsLayout<T>(this Property<T> property, Control control)
+        {
+            property.PropertyChanged += (s, e) => { control.IsLayoutUpdated = false; };
         }
     }
 }

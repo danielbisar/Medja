@@ -16,7 +16,7 @@ namespace Medja.Controls
         public ScrollableContainer(ControlFactory controlFactory)
         {
             _scrollBar = controlFactory.Create<VerticalScrollBar>();
-            _scrollBar.PropertyValue.PropertyChanged += OnScrollBarValueChanged;
+            _scrollBar.PropertyValue.AffectsLayout(this);
             
             ScrollBarWidth = _scrollBar.Position.Width;
             
@@ -25,11 +25,6 @@ namespace Medja.Controls
             InputState.PropertyIsLeftMouseDown.PropertyChanged += OnLeftMouseUp;
             InputState.HandlesDrag = true;
             InputState.OwnsMouseEvents = true;
-        }
-
-        private void OnScrollBarValueChanged(object sender, PropertyChangedEventArgs e)
-        {
-            IsLayoutUpdated = false;
         }
 
         private void OnLeftMouseUp(object sender, PropertyChangedEventArgs e)
