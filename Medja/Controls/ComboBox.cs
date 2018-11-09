@@ -45,6 +45,10 @@ namespace Medja.Controls
         private void OnItemRemoved(object sender, ItemEventArgs<TItem> e)
         {
             ItemsPanel.Children.Remove(e.Control);
+
+            if (SelectedItem == e.Item)
+                SelectedItem = null;
+            
             UpdateItemsPanel();
         }
 
@@ -61,6 +65,11 @@ namespace Medja.Controls
         public void AddRange(IEnumerable<TItem> items)
         {
             _itemsManager.AddRange(items);
+        }
+
+        public void Clear()
+        {
+            _itemsManager.Clear();
         }
 
         public bool RemoveItem(TItem item)

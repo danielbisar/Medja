@@ -33,10 +33,15 @@ namespace MedjaOpenGlTestApp.Tests
             addItemButton.InputState.MouseClicked += (s, e) => result.AddItem("New Item " + i++);
             addItemButton.Text = "Add new item";
 
+            var clearButton = _controlFactory.Create<Button>();
+            clearButton.InputState.MouseClicked += (s, e) => result.Clear();
+            clearButton.Text = "Clear";
+
             var stackPanel = _controlFactory.Create<VerticalStackPanel>();
             stackPanel.SpaceBetweenChildren = 50;
             stackPanel.Children.Add(result);
             stackPanel.Children.Add(addItemButton);
+            stackPanel.Children.Add(clearButton);
             
             return stackPanel;
         }
