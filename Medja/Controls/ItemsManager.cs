@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Medja.Theming;
 
 namespace Medja.Controls
@@ -175,6 +176,12 @@ namespace Medja.Controls
                 return control;
 
             return null;
+        }
+
+        public void Clear()
+        {
+            foreach (var item in Items.ToList())
+                RemoveItem(item);
         }
     }
 }
