@@ -4,13 +4,28 @@ namespace Medja.Controls
 {
     public class VerticalStackPanel : Panel
     {
-        public float SpaceBetweenChildren { get; set; }
-        public float? ChildrenHeight { get; set; }
+        public readonly Property<float> PropertySpaceBetweenChildren;
+        public float SpaceBetweenChildren
+        {
+            get { return PropertySpaceBetweenChildren.Get(); }
+            set { PropertySpaceBetweenChildren.Set(value); }
+        }
+        
+        public readonly Property<float?> PropertyChildrenHeight;
+        public float? ChildrenHeight
+        {
+            get { return PropertyChildrenHeight.Get(); }
+            set { PropertyChildrenHeight.Set(value); }
+        }
 
         public VerticalStackPanel()
         {
-            SpaceBetweenChildren = 10;
-            ChildrenHeight = null;
+            PropertySpaceBetweenChildren = new Property<float>();
+            PropertySpaceBetweenChildren.AffectsLayout(this);
+            PropertySpaceBetweenChildren.UnnotifiedSet(10);
+            
+            PropertyChildrenHeight = new Property<float?>();
+            PropertyChildrenHeight.AffectsLayout(this);
         }
 
         public override void Arrange(Size targetSize)

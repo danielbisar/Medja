@@ -30,6 +30,8 @@ namespace Medja.Controls
 		{
 			PropertyDialogControl = new Property<Dialog>();
 			PropertyDialogControl.PropertyChanged += OnDialogControlChanged;
+			PropertyDialogControl.AffectsLayout(this);
+			
 			PropertyIsDialogVisible = new Property<bool>();
 			PropertyIsDialogVisible.PropertyChanged += OnIsDialogVisibleChanged;
 			DialogPadding = new Thickness(100);
@@ -53,8 +55,6 @@ namespace Medja.Controls
 
 			if (dialog != null)
 				dialog.DialogParent = this;
-
-			IsLayoutUpdated = false;
 		}
 
 		public override void Arrange(Size availableSize)
