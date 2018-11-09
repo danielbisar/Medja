@@ -183,5 +183,10 @@ namespace Medja.Controls
             foreach (var item in Items.ToList())
                 RemoveItem(item);
         }
+
+        public void UpdateItem(TItem item)
+        {
+            InitButtonFromItem(item, _itemToButtonMap[item]);
+        }
     }
 }

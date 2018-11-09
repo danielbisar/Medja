@@ -180,5 +180,10 @@ namespace Medja.Controls
 
 			IsLayoutUpdated = false;
 		}
+
+		public void UpdateItem(TItem item)
+		{
+			_itemsManager.UpdateItem(item);
+		}
 	}
 }
