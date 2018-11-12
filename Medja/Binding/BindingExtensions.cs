@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.InteropServices;
 using Medja.Controls;
 
 namespace Medja
@@ -71,6 +72,27 @@ namespace Medja
         public static void AffectsLayout<T>(this Property<T> property, Control control)
         {
             property.PropertyChanged += (s, e) => { control.IsLayoutUpdated = false; };
+        }
+
+        /// <summary>
+        /// Creates a new TwoWayBinding.
+        /// </summary>
+        public static TwoWayBinding<TTarget, TSource> BindTwoWay<TTarget, TSource>(this Property<TTarget> targetProperty,
+                                                        Property<TSource> sourceProperty,
+                                                        Func<TSource, TTarget> sourceConverter,
+                                                        Func<TTarget, TSource> targetConverter)
+        {
+            return new TwoWayBinding<TTarget, TSource>(targetProperty, sourceProperty, sourceConverter,
+                                                       targetConverter);
+        }
+
+        public static TwoWayBinding<TTarget, TSource> BindTwoWay<TTarget, TSourceObject, TSource>(
+                this Property<TTarget> targetProperty, TSourceObject obj, Action<TSourceObject, TSource> setSourceValue,
+                Func<TSourceObject, TSource> getSourceValue, Func<TSource, TTarget> sourceConverter,
+                Func<TTarget, TSource> targetConverter)
+        {
+            var wrapper = new PropertyWrapper<TSourceObject, TSource>(obj, setSourceValue, getSourceValue);
+            return new TwoWayBinding<TTarget, TSource>(targetProperty, wrapper.PropertyValue, sourceConverter, targetConverter);
         }
     }
 }
