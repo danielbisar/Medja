@@ -38,6 +38,8 @@ namespace Medja.Controls
 			var innerContentControl = _controlFactory.Create<ContentControl>();
 			innerContentControl.Padding = new Thickness(10);
 			innerContentControl.Content = _messageTextBlock;
+			_messageTextBlock.HorizontalAlignment = HorizontalAlignment.Stretch;
+			_messageTextBlock.VerticalAlignment = VerticalAlignment.Stretch;
 
 			var buttons = _controlFactory.Create<DialogButtonsControl>();
 			buttons.Buttons = DialogButtons.Ok;
