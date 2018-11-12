@@ -51,8 +51,8 @@ namespace Medja.Controls
             PropertySelectedItem.PropertyChanged += OnSelectedItemChanged;
             
             _controlFactory = controlFactory ?? throw new ArgumentNullException(nameof(controlFactory));;
-            _buttonToItemMap = new Dictionary<Button, TItem>();
-            _itemToButtonMap = new Dictionary<TItem, Button>();
+            _buttonToItemMap = new Dictionary<Button, TItem>(new ReferenceEqualityComparer<Button>());
+            _itemToButtonMap = new Dictionary<TItem, Button>(new ReferenceEqualityComparer<TItem>());
             
             Items = new List<TItem>();
             

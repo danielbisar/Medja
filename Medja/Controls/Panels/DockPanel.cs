@@ -16,7 +16,7 @@ namespace Medja.Controls
 
 		public DockPanel()
 		{
-			_docks = new Dictionary<Control, Dock>();
+			_docks = new Dictionary<Control, Dock>(new ReferenceEqualityComparer<Control>());
 		}
 
 		public void Add(Dock dock, Control control)
