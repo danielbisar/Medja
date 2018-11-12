@@ -92,6 +92,8 @@ namespace Medja
                 Func<TTarget, TSource> targetConverter)
         {
             var wrapper = new PropertyWrapper<TSourceObject, TSource>(obj, setSourceValue, getSourceValue);
+            targetProperty.Set(sourceConverter(getSourceValue(obj)));
+            
             return new TwoWayBinding<TTarget, TSource>(targetProperty, wrapper.PropertyValue, sourceConverter, targetConverter);
         }
     }

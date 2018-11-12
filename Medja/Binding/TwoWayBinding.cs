@@ -7,7 +7,7 @@ namespace Medja
     /// </summary>
     /// <typeparam name="TTarget"></typeparam>
     /// <typeparam name="TSource"></typeparam>
-    public class TwoWayBinding<TTarget, TSource> : IDisposable
+    public class TwoWayBinding<TTarget, TSource> : BindingBase<TTarget, TSource>
     {
         private readonly Binding<TTarget, TSource> _sourceToTargetBinding;
         private readonly Binding<TSource, TTarget> _targetToSourceBinding;
@@ -18,7 +18,7 @@ namespace Medja
             _targetToSourceBinding = new Binding<TSource, TTarget>(source, target, targetConverter);
         }
         
-        public void Dispose()
+        public override void Dispose()
         {
             _sourceToTargetBinding.Dispose();
             _targetToSourceBinding.Dispose();

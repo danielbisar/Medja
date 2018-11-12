@@ -8,7 +8,7 @@ namespace Medja
     /// <typeparam name="TTarget">The target value type.</typeparam>
     /// <typeparam name="TSource">The source value type.</typeparam>
     /// <remarks>Dispose the object to unregister the binding.</remarks>
-    public class Binding<TTarget, TSource> : IDisposable
+    public class Binding<TTarget, TSource> : BindingBase<TTarget, TSource>
     {
         private Property<TTarget> _target;
         private Property<TSource> _source;
@@ -27,7 +27,7 @@ namespace Medja
             _target.Set(_sourceConverter(_source.Get()));
         }
 
-        public void Dispose()
+        public override void Dispose()
         {
             _source.PropertyChanged -= OnSourcePropertyChanged;
             _source = null;
