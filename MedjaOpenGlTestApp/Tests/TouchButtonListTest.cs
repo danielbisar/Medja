@@ -1,7 +1,10 @@
+using System;
 using System.Reflection;
+using System.Runtime.Remoting.Messaging;
 using Medja.Controls;
 using Medja.Primitives;
 using Medja.Theming;
+using Medja.Utils;
 using OpenTK.Platform.Windows;
 
 namespace MedjaOpenGlTestApp.Tests
@@ -17,46 +20,43 @@ namespace MedjaOpenGlTestApp.Tests
 
         public Control Create()
         {
-            var touchButtonList1 = _controlFactory.Create<TouchButtonList<string>>(p =>
+            var touchButtonList1 = _controlFactory.Create<TouchButtonList<MyItemType>>(p =>
             {
-                p.InitButtonFromItem = (text, button) => button.Text = text;
+                //p.InitButtonFromItem = (item, button) => button.Text = item.Name;
                 p.IsSelectable = true;
                 p.PageSize = 5;
                 p.ButtonClicked += (s, e) =>
                 {
-                    if(e.Item as string == "Remove some item")
+                    if((e.Item as MyItemType)?.Name == "Remove some item")
                         p.RemoveItem(p.SelectedItem);
                 };
                 
-                p.AddItem("Remove some item");
+                p.AddItem(new MyItemType { Name = "Remove some item"});
                 
                 for(int i = 0; i < 10; i++)
-                    p.AddItem("Item " + i);
+                    p.AddItem(MyItemType.Create());
 
                 p.SelectedItem = p.Items[2];
             });
 
-            var comboBox = _controlFactory.Create<ComboBox<string>>(p =>
-            {
-                p.HorizontalAlignment = HorizontalAlignment.Stretch;
-                p.Position.Height = 40;
-                
-                for(int i = 0; i < 10; i++)
-                    p.AddItem("2 Item " + i);
-
-                p.SelectedItem = p.Items[0];
-            });
-
-            var comboBoxContainer = _controlFactory.Create<ContentControl>();
-            comboBoxContainer.Content = comboBox;
-            
-
             var tablePanel = _controlFactory.Create<TablePanel>();
-            tablePanel.Columns.Add(new ColumnDefinition(350));
-            tablePanel.Columns.Add(new ColumnDefinition(350));
-            tablePanel.Rows.Add(new RowDefinition(500));
+            tablePanel.Columns.Add(new ColumnDefinition(700));
+            tablePanel.Columns.Add(new ColumnDefinition(100));
+            tablePanel.Rows.Add(new RowDefinition(300));
+            tablePanel.Rows.Add(new RowDefinition(30));
             tablePanel.Children.Add(touchButtonList1);
-            tablePanel.Children.Add(comboBoxContainer);
+            tablePanel.Children.Add(new Control());
+            tablePanel.Children.Add(new Control());
+            tablePanel.Children.Add(_controlFactory.Create<Button>(p =>
+            {
+                p.Text = "Change random item.";
+                p.InputState.MouseClicked += (s, e) =>
+                {
+                    var item = MyItemType.Random.NextItem(touchButtonList1.Items);
+                    item.Name = MyItemType.Random.NextString(10);
+                    touchButtonList1.UpdateItem(item);
+                };
+            }));
             
             return tablePanel;
             
@@ -65,6 +65,31 @@ namespace MedjaOpenGlTestApp.Tests
             _digitalInputs.Position.Width = 200;
             _digitalInputs.PropertySelectedItem.PropertyChanged += OnSelectedDigitalInputChanged;
             _digitalInputs.IsSelectable = true;*/
+        }
+
+        private class MyItemType
+        {
+            public static readonly Random Random = new Random();
+            
+            public string Name { get; set; }
+            public int N { get; set; }
+
+            public static MyItemType Create()
+            {
+                return new MyItemType
+                {
+                        Name = Random.NextString(10),
+                        N = Random.Next()
+                };
+            }
+
+            public override string ToString()
+            {
+                if (Name != null && Name.StartsWith("Remove"))
+                    return Name;
+                
+                return $"Item with Name = {Name} and N = {N}";
+            }
         }
     }
 }

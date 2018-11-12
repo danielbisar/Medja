@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Medja.Theming;
+using Medja.Utils;
 
 namespace Medja.Controls
 {
@@ -52,7 +53,7 @@ namespace Medja.Controls
             
             _controlFactory = controlFactory ?? throw new ArgumentNullException(nameof(controlFactory));;
             _buttonToItemMap = new Dictionary<Button, TItem>(new ReferenceEqualityComparer<Button>());
-            _itemToButtonMap = new Dictionary<TItem, Button>(new ReferenceEqualityComparer<TItem>());
+            _itemToButtonMap = new Dictionary<TItem, Button>(EqualityUtils.GetItemEqualityComparer<TItem>());
             
             Items = new List<TItem>();
             
@@ -137,7 +138,7 @@ namespace Medja.Controls
                 _itemToButtonMap.Remove(item);
                 _buttonToItemMap.Remove(button);
                 
-                ItemRemoved?.Invoke(this, new ItemEventArgs<TItem>(item, button));
+                ItemRemoved(this, new ItemEventArgs<TItem>(item, button));
 
                 return true;
             }
