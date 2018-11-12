@@ -103,6 +103,7 @@
     <Compile Include="Property\PropertyChangedEventHandler.cs" />
     <Compile Include="Property\PropertyValueStorage.cs" />
     <Compile Include="Property\ThreadSafeProperty.cs" />
+    <Compile Include="ReferenceEquallityComparer.cs" />
     <Compile Include="ShutdownEventArgs.cs" />
     <Compile Include="Theming\ControlFactory.cs" />
     <Compile Include="Theming\ControlRendererBase.cs" />
