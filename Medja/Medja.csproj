@@ -138,6 +138,8 @@
     <Compile Include="Controls\TabItem.cs" />
     <Compile Include="Controls\Panels\TablePanel.cs" />
     <Compile Include="Controls\Panels\RowDefinition.cs" />
+    <Compile Include="Utils\EqualityUtils.cs" />
+    <Compile Include="Utils\RandomExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
