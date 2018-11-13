@@ -54,7 +54,12 @@ namespace Medja.Controls
 		private void OnIsEnabledChanged(object sender, PropertyChangedEventArgs eventArgs)
 		{
 			if (Content != null)
-				Content.IsEnabled = (bool)eventArgs.NewValue;
+			{
+				if(IsEnabled)
+					Content.PropertyIsEnabled.ClearOverwrittenValue();
+				else
+					Content.PropertyIsEnabled.OverwriteSet(false);
+			}
 		}
 
 		public override void Arrange(Size availableSize)
