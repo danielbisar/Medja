@@ -9,14 +9,11 @@ namespace Medja.Controls
 {
 	public abstract class Panel : Control
 	{		
-		private readonly Dictionary<Property<bool>, PropertyValueStorage<bool>> _isEnabledValues;
-
 		public ObservableCollection<Control> Children { get; }
 		public Thickness Padding { get; set; }
 
 		protected Panel()
 		{
-			_isEnabledValues = new Dictionary<Property<bool>, PropertyValueStorage<bool>>();
 			Children = new ObservableCollection<Control>();
 			Children.CollectionChanged += OnChildrenCollectionChanged;
 			
@@ -91,16 +88,10 @@ namespace Medja.Controls
 
 		private void ForwardIsEnabled(Control child)
 		{
-			if (!_isEnabledValues.TryGetValue(child.PropertyIsEnabled, out var oldValue))
-			{
-				oldValue = new PropertyValueStorage<bool>(child.PropertyIsEnabled);
-				_isEnabledValues.Add(child.PropertyIsEnabled, oldValue);
-			}
-
-			if (!IsEnabled)
-				child.IsEnabled = false;
+			if (IsEnabled)
+				child.PropertyIsEnabled.ClearOverwrittenValue();
 			else
-				oldValue.Restore();
+				child.PropertyIsEnabled.OverwriteSet(false);
 		}
 
 		public override IEnumerable<Control> GetChildren()
