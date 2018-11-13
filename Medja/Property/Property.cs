@@ -5,8 +5,8 @@ namespace Medja
 	public class Property<T> : IProperty
 	{
 		// creating a static variable inside this class makes creation 3X as slow as currently
-		private readonly EqualityComparer<T> _comparer;
-		private T _value;
+		protected readonly EqualityComparer<T> Comparer;
+		protected T _value;
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
@@ -15,12 +15,12 @@ namespace Medja
 			// register empty handler, see thread safety in wiki
 			PropertyChanged += (s, e) => { };
 			// see EqualityComparerCache header for info why
-			_comparer = EqualityComparerCache<T>.Comparer;
+			Comparer = EqualityComparerCache<T>.Comparer;
 		}
 		
 		public void Set(T value)
 		{
-			if (_comparer.Equals(_value, value))
+			if (Comparer.Equals(_value, value))
 				return;
 
 			InternalSet(value);
@@ -46,7 +46,7 @@ namespace Medja
 		/// Gets the properties value.
 		/// </summary>
 		/// <returns></returns>
-		public T Get()
+		public virtual T Get()
 		{
 			return _value;
 		}
