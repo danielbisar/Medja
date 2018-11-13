@@ -63,7 +63,8 @@ namespace Medja.Controls
 		{
 			if (Position.X <= pointerPos.X && pointerPos.X <= Position.X + Position.Width)
 			{
-				if (Position.Y <= pointerPos.Y && pointerPos.Y <= Position.Y + HeaderHeight)
+				if (pointerPos.Y >= Position.Y
+				    && pointerPos.Y <= Position.Y + HeaderHeight)
 				{
 					var tabWidth = Position.Width / _tabs.Count;
 					var tabIndex = (int)(pointerPos.X / tabWidth);
@@ -119,9 +120,9 @@ namespace Medja.Controls
 		{
 			//base.Arrange(availableSize);
 			
-			var area = Rect.Subtract(Position, Margin);
-			area.Subtract(Padding);
+			var area = new Rect(Position.X, Position.Y, availableSize.Width, availableSize.Height);
 			area.SubtractTop(HeaderHeight);
+			area.Subtract(Padding);
 			
 			ContentArranger.Position(area);
 			ContentArranger.Stretch(area);

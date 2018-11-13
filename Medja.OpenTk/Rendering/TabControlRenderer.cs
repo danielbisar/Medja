@@ -16,13 +16,14 @@ namespace Medja.OpenTk.Rendering
 		
 		protected override void InternalRender()
 		{
+			RenderBackground();
+			
 			var tabs = _control.Tabs;
-			var padding = _control.Padding;
-			var tabHeaderWidth = (_rect.Width - padding.LeftAndRight) / tabs.Count;
-			var headerRect = new SKRect(_rect.Left + padding.Left,
-										_rect.Top + padding.Top,
-										_rect.Left + padding.Left + tabHeaderWidth,
-										_rect.Top + padding.Top + _control.HeaderHeight);
+			var tabHeaderWidth = _rect.Width / tabs.Count;
+			var headerRect = new SKRect(_rect.Left,
+										_rect.Top,
+										_rect.Left + tabHeaderWidth,
+										_rect.Top + _control.HeaderHeight);
 
 			foreach (var tab in tabs)
 			{

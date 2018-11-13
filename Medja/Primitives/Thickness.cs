@@ -39,5 +39,10 @@ namespace Medja.Primitives
         {
             Top = Bottom = Left = Right = value;
         }
+
+        public override string ToString()
+        {
+            return $"Left = {Left}, Top = {Top}, Right = {Right}, Bottom = {Bottom}";
+        }
     }
 }
