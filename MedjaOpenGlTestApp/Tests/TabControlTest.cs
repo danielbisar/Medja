@@ -22,8 +22,11 @@ namespace MedjaOpenGlTestApp.Tests
             tab2.Background = Colors.Blue;
             
             var result = _controlFactory.Create<TabControl>();
+            result.Background = Colors.White;
             result.AddTab(new TabItem("Tab1", tab1));
             result.AddTab(new TabItem("Tab2", tab2));
+            result.Margin.SetAll(50);
+            result.Padding.SetAll(50);
 
             return result;
         }
