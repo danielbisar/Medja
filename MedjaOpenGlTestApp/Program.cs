@@ -27,13 +27,13 @@ namespace MedjaOpenGlTestApp
 			//var test = new ButtonTest(controlFactory);
 			//var test = new ComboBoxTest(controlFactory);
 			//var test = new ContentControlTest(controlFactory);
-			//var test = new DialogTest(controlFactory);
+			var test = new DialogTest(controlFactory);
 			//var test = new DockPanelTest(controlFactory);
 			//var test = new ScrollableContainerTest(controlFactory);
 			//var test = new ScrollingGridTest(controlFactory);
 			//var test = new SideControlsContainerTest(controlFactory);
 			//var test = new SimpleDockPanelTest(controlFactory);
-			var test = new TabControlTest(controlFactory);
+			//var test = new TabControlTest(controlFactory);
 			//var test = new TextBoxTest(controlFactory);
 			//var test = new TouchButtonListTest(controlFactory);
 			

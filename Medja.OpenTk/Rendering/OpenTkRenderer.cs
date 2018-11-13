@@ -27,6 +27,8 @@ namespace Medja.OpenTk.Rendering
 			_previous3DControlCount = 0;
 
 			_skia = new SkiaGLLayer();
+			
+			// TODO remove 
 			_defaultTypeface = SKTypeface.FromFamilyName("Monospace", SKTypefaceStyle.Normal);
 
 			Before3D = InternalBefore3D;

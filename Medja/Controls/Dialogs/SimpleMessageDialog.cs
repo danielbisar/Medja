@@ -35,6 +35,8 @@ namespace Medja.Controls
 
 		private Control CreateContent()
 		{
+			_messageTextBlock.TextWrapping = TextWrapping.Auto;
+			
 			var innerContentControl = _controlFactory.Create<ContentControl>();
 			innerContentControl.Padding = new Thickness(10);
 			innerContentControl.Content = _messageTextBlock;

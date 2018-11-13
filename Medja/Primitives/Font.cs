@@ -1,4 +1,6 @@
-﻿namespace Medja.Primitives
+﻿using System;
+
+namespace Medja.Primitives
 {
 	public class Font
 	{
@@ -22,6 +24,8 @@
 			get { return PropertyStyle.Get(); }
 			set { PropertyStyle.Set(value); }
 		}
+		
+		public Func<string, float> GetWidth { get; set; }
 
 		public Font()
 		{

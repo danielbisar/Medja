@@ -58,6 +58,7 @@ namespace Medja.Controls
 		private Control CreateContent()
 		{
 			_messageTextBlock.Position.Height = 50;
+			_messageTextBlock.TextWrapping = TextWrapping.Auto;
 
 			var stackPanel = _controlFactory.Create<VerticalStackPanel>();
 			stackPanel.Padding = new Thickness(10);

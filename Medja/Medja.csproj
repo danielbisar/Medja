@@ -144,6 +144,8 @@
     <Compile Include="Controls\Panels\RowDefinition.cs" />
     <Compile Include="Utils\EqualityUtils.cs" />
     <Compile Include="Utils\RandomExtensions.cs" />
+    <Compile Include="Utils\StringBuilderExtensions.cs" />
+    <Compile Include="Utils\TextWrapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
