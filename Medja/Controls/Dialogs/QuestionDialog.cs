@@ -36,6 +36,7 @@ namespace Medja.Controls
 		private Control CreateContent()
 		{
 			_messageTextBlock.Position.Height = 100;
+			_messageTextBlock.TextWrapping = TextWrapping.Auto;
 
 			var buttons = _controlFactory.Create<DialogButtonsControl>();
 			buttons.Buttons = DialogButtons.OkCancel;

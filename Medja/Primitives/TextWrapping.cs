@@ -2,6 +2,13 @@
 {
 	public enum TextWrapping
 	{
-		None
+		/// <summary>
+		/// Does not wrap the text but remove chars that are too much and add ... instead. 
+		/// </summary>
+		Ellipses,
+		/// <summary>
+		/// Automatically wraps text, when the controls width is to low.
+		/// </summary>
+		Auto
 	}
 }

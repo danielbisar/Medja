@@ -9,7 +9,7 @@ namespace Medja.OpenTk.Rendering
 		{
 			var result = base.CreateButton();
 			result.Renderer = new ButtonRenderer();
-			result.Font.Name = "Sans";
+			result.Font.Name = "Monospace";
 			result.Position.Height = 50;
 
 			return result;
@@ -80,7 +80,7 @@ namespace Medja.OpenTk.Rendering
 			result.Renderer = new TextBoxRenderer();
 			result.Foreground = ColorMap.PrimaryText;
 			result.Background = ColorMap.Primary;
-			result.Font.Name = "Sans";
+			result.Font.Name = "Monospace";
 			result.Position.Height = 26;
 
 			return result;
@@ -91,7 +91,7 @@ namespace Medja.OpenTk.Rendering
 			var result = base.CreateTextBlock();
 			result.Renderer = new TextBlockRenderer();
 			result.Foreground = ColorMap.PrimaryText;
-			result.Font.Name = "Sans";
+			result.Font.Name = "Monospace";
 
 			return result;
 		}

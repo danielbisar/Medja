@@ -1,35 +1,40 @@
-﻿using System;
-using Medja.Controls;
+﻿using Medja.Controls;
+using SkiaSharp;
 
 namespace Medja.OpenTk.Rendering
 {
 	public class TextBlockRenderer : SkiaControlRendererBase<TextBlock>
 	{
+		private readonly SKPaint _textPaint;
+		private readonly SKPaint _textDisabledPaint;
+		
+		private bool _isControlInitialized;
+		
+		public TextBlockRenderer()
+		{
+			_textPaint = new SKPaint();
+			_textPaint.IsAntialias = true;
+			
+			_textDisabledPaint = new SKPaint();
+			_textDisabledPaint.IsAntialias = true;
+		}
+		
 		protected override void InternalRender()
 		{
 			RenderBackground();
 
-			if (string.IsNullOrWhiteSpace(_control.Text))
+			// IsLayoutUpdated = true is necessary to be able to call GetLines
+			if (string.IsNullOrWhiteSpace(_control.Text) || !_control.IsLayoutUpdated)
 				return;
 
-			var pos = _control.Position.ToSKPoint();
+			if (!_isControlInitialized)
+				InitControl();
 
-			//if (control.TextWrapping == Primitives.TextWrapping.None)
-			//{
-			//  // shorten the text to renderable length
-			//  while (paint.MeasureText(text) > rect.Width
-			//         && text.Length > 1)
-			//      text = text.Substring(0, text.Length - 2);
-			//}
-
-			_paint.Color = _control.IsEnabled
-				? _control.Foreground.ToSKColor()
-				: _control.Foreground.GetLighter(0.25f).ToSKColor();
-
-
-			var lines = _control.Text.Split(new[] { "\n\r", "\n", "\r" }, StringSplitOptions.None);
+			var paint = _control.IsEnabled ? _textPaint : _textDisabledPaint;
+			var lines = _control.GetLines();
 			var lineHeight = _paint.FontSpacing;
 
+			var pos = _control.Position.ToSKPoint();
 			// add the height also for the first line
 			// else it seems the text is drawn at a 
 			// too high position
@@ -37,10 +42,31 @@ namespace Medja.OpenTk.Rendering
 
 			for (int i = 0; i < lines.Length && pos.Y <= _rect.Bottom; i++)
 			{
-				RenderText(lines[i], _control.Font, pos);
+				_canvas.DrawText(lines[i], pos, paint);
 				pos.Y += lineHeight;
 			}
-			//paint.BreakText
+		}
+
+		private void InitControl()
+		{
+			var font = _control.Font;
+			
+			_textPaint.Typeface = SKTypeface.FromFamilyName(font.Name);
+			_textPaint.TextSize = font.Size;
+			_textPaint.Color = _control.Foreground.ToSKColor();
+
+			_textDisabledPaint.Typeface = _textPaint.Typeface;
+			_textDisabledPaint.TextSize = font.Size;
+			_textDisabledPaint.Color = _control.Foreground.GetLighter(0.25f).ToSKColor();
+
+			font.GetWidth = _textPaint.MeasureText;
+			
+			// TODO not supported scenarios:
+			// - changing of foreground color of the control
+			// - changing of any value in font of the control
+			// - using the actual font and size defined in the font object
+
+			_isControlInitialized = true;
 		}
 	}
 }
