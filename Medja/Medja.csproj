@@ -102,10 +102,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Property\EqualityComparerCache.cs" />
     <Compile Include="Property\IProperty.cs" />
+    <Compile Include="Property\OverwritableProperty.cs" />
     <Compile Include="Property\Property.cs" />
     <Compile Include="Property\PropertyChangedEventArgs.cs" />
     <Compile Include="Property\PropertyChangedEventHandler.cs" />
-    <Compile Include="Property\PropertyValueStorage.cs" />
     <Compile Include="Property\ThreadSafeProperty.cs" />
     <Compile Include="ReferenceEquallityComparer.cs" />
     <Compile Include="ShutdownEventArgs.cs" />

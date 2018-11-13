@@ -29,7 +29,7 @@ namespace Medja.Controls
 			set { PropertyBackground.Set(value); }
 		}
 
-		public readonly Property<bool> PropertyIsEnabled;
+		public readonly OverwritableProperty<bool> PropertyIsEnabled;
 		public bool IsEnabled
 		{
 			get { return PropertyIsEnabled.Get(); }
@@ -111,7 +111,7 @@ namespace Medja.Controls
 			Margin = new Thickness();
 			
 			PropertyBackground = new Property<Color>();
-			PropertyIsEnabled = new Property<bool>();
+			PropertyIsEnabled = new OverwritableProperty<bool>();
 			PropertyIsEnabled.UnnotifiedSet(true);
 			PropertyIsFocused = new Property<bool>();
 
