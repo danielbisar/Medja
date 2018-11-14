@@ -185,5 +185,10 @@ namespace Medja.Controls
 		{
 			_itemsManager.UpdateItem(item);
 		}
+
+		public void Clear()
+		{
+			_itemsManager.Clear();
+		}
 	}
 }
