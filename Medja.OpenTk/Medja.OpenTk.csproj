@@ -35,6 +35,14 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="OpenTK, Version=3.0.1.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4">
+      <HintPath>..\packages\OpenTK.3.0.1\lib\net20\OpenTK.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SkiaSharp, Version=1.60.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756">
+      <HintPath>..\packages\SkiaSharp.1.60.3\lib\net45\SkiaSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -44,12 +52,6 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="OpenTK">
-      <HintPath>..\packages\OpenTK.3.0.0\lib\net20\OpenTK.dll</HintPath>
-    </Reference>
-    <Reference Include="SkiaSharp">
-      <HintPath>..\packages\SkiaSharp.1.60.1\lib\net45\SkiaSharp.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MedjaOpenTkLibrary.cs" />
@@ -88,6 +90,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
     <None Include="libHarfBuzzSharp.so">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -95,12 +98,17 @@
     <None Include="libSkiaSharp.so">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="OpenTK.dll.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Input\" />
     <Folder Include="Window\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\packages\SkiaSharp.1.60.1\build\net45\SkiaSharp.targets" Condition="Exists('..\packages\SkiaSharp.1.60.1\build\net45\SkiaSharp.targets')" />
+  <Import Project="..\packages\SkiaSharp.1.60.3\build\net45\SkiaSharp.targets" Condition="Exists('..\packages\SkiaSharp.1.60.3\build\net45\SkiaSharp.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105.The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\SkiaSharp.1.60.3\build\net45\SkiaSharp.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SkiaSharp.1.60.3\build\net45\SkiaSharp.targets'))" />
+  </Target>
 </Project>
