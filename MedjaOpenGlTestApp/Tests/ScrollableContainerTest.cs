@@ -27,8 +27,6 @@ namespace MedjaOpenGlTestApp.Tests
             
             var result = _controlFactory.Create<ScrollableContainer>();
             result.Content = textBlock; 
-            result.VerticalAlignment = VerticalAlignment.Stretch;
-            result.HorizontalAlignment = HorizontalAlignment.Stretch;
 
             return result;
         }

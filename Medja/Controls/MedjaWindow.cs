@@ -21,22 +21,6 @@ namespace Medja.Controls
 		{
 			PropertyTitle = new Property<string>();
 		}
-		
-		protected override void OnContentChanged(object sender, PropertyChangedEventArgs e)
-		{
-			base.OnContentChanged(sender, e);
-
-			var content = e.NewValue as Control;
-
-			if (content == null)
-				return;
-
-			if (content.VerticalAlignment == VerticalAlignment.None)
-				content.VerticalAlignment = VerticalAlignment.Stretch;
-				
-			if (content.HorizontalAlignment == HorizontalAlignment.None)
-				content.HorizontalAlignment = HorizontalAlignment.Stretch;
-		}
 
 		public override void Arrange(Size availableSize)
 		{

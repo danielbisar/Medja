@@ -40,6 +40,14 @@ namespace Medja.Primitives
             Top = Bottom = Left = Right = value;
         }
 
+        public void SetFrom(Thickness thickness)
+        {
+            Left = thickness.Left;
+            Top = thickness.Top;
+            Right = thickness.Right;
+            Bottom = thickness.Bottom;
+        }
+
         public override string ToString()
         {
             return $"Left = {Left}, Top = {Top}, Right = {Right}, Bottom = {Bottom}";

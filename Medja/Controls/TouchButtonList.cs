@@ -117,8 +117,6 @@ namespace Medja.Controls
 
 			mainDockPanel.Add(Dock.Right, scrollButtonDockPanel);
 			mainDockPanel.Add(Dock.Fill, _itemsStackPanel);
-			mainDockPanel.VerticalAlignment = VerticalAlignment.Stretch;
-			mainDockPanel.HorizontalAlignment = HorizontalAlignment.Stretch;
 			
 			Content = mainDockPanel;
 		}

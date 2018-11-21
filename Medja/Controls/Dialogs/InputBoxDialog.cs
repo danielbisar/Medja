@@ -36,7 +36,7 @@ namespace Medja.Controls
 			_inputTextBox = _controlFactory.Create<TextBox>();
 			_inputTextBox.PropertyText.PropertyChanged += OnTextBoxTextChanged;
 
-			Padding = new Thickness(5);
+			Padding.SetAll(5);
 			Content = CreateContent();
 		}
 

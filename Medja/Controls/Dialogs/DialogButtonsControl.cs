@@ -45,9 +45,6 @@ namespace Medja.Controls
 			if (Buttons != DialogButtons.Ok)
 				buttonDockPanel.Add(Dock.Right, Button2);
 			
-			buttonDockPanel.VerticalAlignment = VerticalAlignment.Stretch;
-			buttonDockPanel.HorizontalAlignment = HorizontalAlignment.Stretch;
-
 			Content = buttonDockPanel;
 		}
 

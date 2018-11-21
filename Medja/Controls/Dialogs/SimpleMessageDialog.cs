@@ -24,7 +24,7 @@ namespace Medja.Controls
 			_controlFactory = controlFactory;
 			_messageTextBlock = _controlFactory.Create<TextBlock>();
 
-			Padding = new Thickness(5);
+			Padding.SetAll(5);
 			Content = CreateContent();
 		}
 
@@ -38,7 +38,7 @@ namespace Medja.Controls
 			_messageTextBlock.TextWrapping = TextWrapping.Auto;
 			
 			var innerContentControl = _controlFactory.Create<ContentControl>();
-			innerContentControl.Padding = new Thickness(10);
+			innerContentControl.Padding.SetAll(10);
 			innerContentControl.Content = _messageTextBlock;
 			_messageTextBlock.HorizontalAlignment = HorizontalAlignment.Stretch;
 			_messageTextBlock.VerticalAlignment = VerticalAlignment.Stretch;
