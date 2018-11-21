@@ -12,6 +12,6 @@ namespace Medja
 
         ControlFactory ControlFactory { get; }
 
-        void Run(MedjaApplication application);        
+        void Run(MedjaApplication application);      
     }
 }

@@ -1,17 +1,27 @@
 using System;
 using System.Diagnostics;
 
-namespace Medja.Performance
+namespace Medja.Utils
 {
+    /// <summary>
+    /// A class that counts the frames rendered per second.
+    /// </summary>
     public class FramesPerSecondCounter
     {
         private readonly Stopwatch _stopWatch;
-        private int _frameCount;        
-        private long _countTicks;
+        private readonly long _countTicks;
+        
+        private int _frameCount;
 
+        /// <summary>
+        /// The last counted FPS value.
+        /// </summary>
         public float FramesPerSecond {get; private set;}
 
-        public event EventHandler FramesCounted;
+        /// <summary>
+        /// Event that triggers when a new FPS value is calculated. (About every second)
+        /// </summary>
+        public event EventHandler<ValueEventArgs<float>> FramesCounted;
         
         public FramesPerSecondCounter()
         {
@@ -19,6 +29,9 @@ namespace Medja.Performance
             _countTicks = new TimeSpan(0,0,1).Ticks;
         }
 
+        /// <summary>
+        /// Call this method in your render loop.
+        /// </summary>
         public void Tick()
         {
             if(!_stopWatch.IsRunning)
@@ -37,9 +50,7 @@ namespace Medja.Performance
         private void NotifyFramesCounted()
         {
             FramesPerSecond = _frameCount / (float)(_stopWatch.ElapsedMilliseconds / 1000.0);
-
-            if(FramesCounted != null)
-                FramesCounted(this, EventArgs.Empty);
+            FramesCounted?.Invoke(this, new ValueEventArgs<float>(FramesPerSecond));
         }
     }
 }
