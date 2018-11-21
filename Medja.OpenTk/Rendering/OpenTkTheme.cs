@@ -92,6 +92,7 @@ namespace Medja.OpenTk.Rendering
 			result.Renderer = new TextBlockRenderer();
 			result.Foreground = ColorMap.PrimaryText;
 			result.Font.Name = "Monospace";
+			result.Position.Height = 23;
 
 			return result;
 		}
