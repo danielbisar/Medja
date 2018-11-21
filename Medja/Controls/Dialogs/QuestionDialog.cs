@@ -24,7 +24,7 @@ namespace Medja.Controls
 			_controlFactory = controlFactory;
 			_messageTextBlock = _controlFactory.Create<TextBlock>();
 
-			Padding = new Thickness(5);
+			Padding.SetAll(5);
 			Content = CreateContent();
 		}
 

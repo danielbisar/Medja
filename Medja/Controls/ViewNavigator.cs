@@ -34,9 +34,6 @@ namespace Medja.Controls
         public void SetView(TEnum value, Control control)
         {
             var actualControl = control ?? new Control();
-            actualControl.HorizontalAlignment = HorizontalAlignment.Stretch;
-            actualControl.VerticalAlignment = VerticalAlignment.Stretch;
-            
             _enumToViewMap[value] = actualControl;
 
             if (Equals(CurrentView, value))

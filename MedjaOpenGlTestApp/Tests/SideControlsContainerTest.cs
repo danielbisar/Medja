@@ -19,8 +19,6 @@ namespace MedjaOpenGlTestApp.Tests
             result.Content = _controlFactory.Create<TouchButtonList<string>>(p =>
             {
                 p.Background = Colors.Blue;
-                p.HorizontalAlignment = HorizontalAlignment.Stretch;
-                p.VerticalAlignment = VerticalAlignment.Stretch;
                 
                 for(int i = 0; i < 10; i++)
                     p.AddItem("Item " + i);
@@ -28,8 +26,6 @@ namespace MedjaOpenGlTestApp.Tests
             result.SideContent = _controlFactory.Create<Control>(p =>
             {
                 p.Background = Colors.Green;
-                p.HorizontalAlignment = HorizontalAlignment.Stretch;
-                p.VerticalAlignment = VerticalAlignment.Stretch;
             });
             
             return result;

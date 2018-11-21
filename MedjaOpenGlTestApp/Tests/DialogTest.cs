@@ -18,8 +18,6 @@ namespace MedjaOpenGlTestApp.Tests
         {
             var content = _controlFactory.Create<Control>();
             content.Background = Colors.Blue;
-            content.VerticalAlignment = VerticalAlignment.Stretch;
-            content.HorizontalAlignment = HorizontalAlignment.Stretch;
 
             var dialogParentControl = DialogService.CreateContainer(_controlFactory, content);
             

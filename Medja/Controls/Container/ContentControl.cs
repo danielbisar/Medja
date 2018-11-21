@@ -7,6 +7,15 @@ namespace Medja.Controls
 {
 	public class ContentControl : Control
 	{
+		private static void SetContentAlignment(Control content)
+		{
+			if (content.VerticalAlignment == VerticalAlignment.None)
+				content.VerticalAlignment = VerticalAlignment.Stretch;
+				
+			if (content.HorizontalAlignment == HorizontalAlignment.None)
+				content.HorizontalAlignment = HorizontalAlignment.Stretch;
+		}
+		
 		protected readonly ContentArranger ContentArranger;
 		
 		public readonly Property<Control> PropertyContent;
@@ -15,14 +24,29 @@ namespace Medja.Controls
 			get { return PropertyContent.Get(); }
 			set { PropertyContent.Set(value); }
 		}
+		
+		public readonly Property<bool> PropertyAutoSetContentAlignment;
 
-		public Thickness Padding { get; set; }
+		/// <summary>
+		/// Gets or sets whether Horizontal- and VerticalAlignment of the Control is set as Content is set to Stretch
+		/// automatically if it was set to None. If false no the alignment will not change.
+		/// </summary>
+		public bool AutoSetContentAlignment
+		{
+			get { return PropertyAutoSetContentAlignment.Get(); }
+			set { PropertyAutoSetContentAlignment.Set(value); }
+		}
+
+		public Thickness Padding { get; }
 
 		public ContentControl()
 		{
 			PropertyContent = new Property<Control>();
 			PropertyContent.PropertyChanged += OnContentChanged;
 			PropertyContent.AffectsLayout(this);
+			
+			PropertyAutoSetContentAlignment = new Property<bool>();
+			PropertyAutoSetContentAlignment.UnnotifiedSet(true);
 			
 			Padding = new Thickness();
 			PropertyIsEnabled.PropertyChanged += OnIsEnabledChanged;
@@ -46,9 +70,14 @@ namespace Medja.Controls
 
 			content = e.NewValue as Control;
 			ContentArranger.Control = content;
-			
+
 			if (content != null)
+			{
 				content.Parent = this;
+				
+				if(AutoSetContentAlignment)
+					SetContentAlignment(content);
+			}
 		}
 
 		private void OnIsEnabledChanged(object sender, PropertyChangedEventArgs eventArgs)
