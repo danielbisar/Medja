@@ -11,6 +11,11 @@ namespace Medja
     public class MedjaApplication
     {
         private static MedjaApplication _application;
+
+        public static MedjaApplication Instance
+        {
+            get { return _application; }
+        }
         
         /// <summary>
         /// Initializes the MedjaApplication, not thread-safe.
