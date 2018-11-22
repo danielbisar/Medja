@@ -1,4 +1,3 @@
-using System.Threading;
 using Medja.Controls;
 using Medja.Primitives;
 using Medja.Theming;

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Medja.Primitives
+﻿namespace Medja.Primitives
 {
     public class Thickness
     {
@@ -9,6 +7,8 @@ namespace Medja.Primitives
         public float Left { get; set; }
         public float Right { get; set; }
 
+        // TODO check performance implications of the calculation inside the getter (verify overall performance)
+        
         public float TopAndBottom { get { return Top + Bottom; } }
         public float LeftAndRight { get { return Left + Right; } }
 

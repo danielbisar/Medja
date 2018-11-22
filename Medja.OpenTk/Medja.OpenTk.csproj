@@ -68,6 +68,7 @@
     <Compile Include="Input\OpenTkMouseHandler.cs" />
     <Compile Include="Rendering\VertexBufferObject.cs" />
     <Compile Include="Rendering\VerticalScrollBarRenderer.cs" />
+    <Compile Include="Utils\PrimitivConverterExtensions.cs" />
     <Compile Include="Window\OpenTkWindow.cs" />
     <Compile Include="Window\MedjaWindowExtensions.cs" />
     <Compile Include="Rendering\OpenGLProgram.cs" />
@@ -84,6 +85,10 @@
     <Compile Include="Rendering\TabControlRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Medja.Utils\Medja.Utils.csproj">
+      <Project>{2f8f1833-e550-46d9-93c0-6bd5d1601776}</Project>
+      <Name>Medja.Utils</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Medja\Medja.csproj">
       <Project>{553cc0cc-b651-40d4-b047-b20873fe0399}</Project>
       <Name>Medja</Name>

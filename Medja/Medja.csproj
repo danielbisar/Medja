@@ -87,12 +87,12 @@
     <Compile Include="Debug\ControlTreeStringBuilder.cs" />
     <Compile Include="IMedjaLibrary.cs" />
     <Compile Include="MedjaApplication.cs" />
-    <Compile Include="MedjaMath.cs" />
     <Compile Include="Primitives\Color.cs" />
     <Compile Include="Primitives\Keys.cs" />
     <Compile Include="Primitives\MedjaValues.cs" />
     <Compile Include="Primitives\MRect.cs" />
     <Compile Include="Primitives\Point.cs" />
+    <Compile Include="Primitives\PrimitivConverterExtensions.cs" />
     <Compile Include="Primitives\Rect.cs" />
     <Compile Include="Primitives\Size.cs" />
     <Compile Include="Primitives\Thickness.cs" />
@@ -106,7 +106,6 @@
     <Compile Include="Property\PropertyChangedEventArgs.cs" />
     <Compile Include="Property\PropertyChangedEventHandler.cs" />
     <Compile Include="Property\ThreadSafeProperty.cs" />
-    <Compile Include="ReferenceEquallityComparer.cs" />
     <Compile Include="ShutdownEventArgs.cs" />
     <Compile Include="Theming\ControlFactory.cs" />
     <Compile Include="Theming\ControlRendererBase.cs" />
@@ -116,9 +115,7 @@
     <Compile Include="Controls\AttachedPropertyIdFactory.cs" />
     <Compile Include="Controls\TouchButtonList.cs" />
     <Compile Include="PagedListView.cs" />
-    <Compile Include="Reflection\ReflectionExtensions.cs" />
     <Compile Include="Controls\TouchButtonClickedEventArgs.cs" />
-    <Compile Include="IDictionaryExtensions.cs" />
     <Compile Include="Controls\Panels\Canvas.cs" />
     <Compile Include="Controls\TextBlock.cs" />
     <Compile Include="Primitives\TextWrapping.cs" />
@@ -143,10 +140,8 @@
     <Compile Include="Controls\Panels\RowDefinition.cs" />
     <Compile Include="Utils\EqualityUtils.cs" />
     <Compile Include="Utils\FramesPerSecondCounter.cs" />
-    <Compile Include="Utils\RandomExtensions.cs" />
-    <Compile Include="Utils\StringBuilderExtensions.cs" />
+    <Compile Include="Utils\MedjaUIMath.cs" />
     <Compile Include="Utils\TextWrapper.cs" />
-    <Compile Include="Utils\ValueEventArgs.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -158,9 +153,13 @@
     <None Include="Documentation\Controls.md" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Performance" />
-    <Folder Include="Reflection\" />
     <Folder Include="Controls\Dialogs\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Medja.Utils\Medja.Utils.csproj">
+      <Project>{2f8f1833-e550-46d9-93c0-6bd5d1601776}</Project>
+      <Name>Medja.Utils</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -4,11 +4,21 @@ using System.Text;
 
 namespace Medja.Utils
 {
+    /// <summary>
+    /// Some extensions for the Random class.
+    /// </summary>
     public static class RandomExtensions
     {
         public static readonly char[] WordCharsAndNumbers =
                 "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".ToCharArray();
         
+        /// <summary>
+        /// Returns a random <see cref="string"/>.
+        /// </summary>
+        /// <param name="random">The <see cref="Random"/> instance.</param>
+        /// <param name="length">The length of the resulting <see cref="string"/>.</param>
+        /// <returns>A random <see cref="string"/>.</returns>
+        /// <remarks><see cref="WordCharsAndNumbers"/> is used to generate the <see cref="string"/>.</remarks>
         public static string NextString(this Random random, int length)
         {
             var result = new StringBuilder(length);
@@ -23,7 +33,7 @@ namespace Medja.Utils
         }
 
         /// <summary>
-        /// Gets the next random item from the given list.
+        /// Gets a random item from the given list.
         /// </summary>
         /// <param name="random">The Random instance.</param>
         /// <param name="list">The list of items to use.</param>

@@ -55,6 +55,10 @@
     <Compile Include="Tests\TouchButtonListTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Medja.Utils\Medja.Utils.csproj">
+      <Project>{2f8f1833-e550-46d9-93c0-6bd5d1601776}</Project>
+      <Name>Medja.Utils</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Medja\Medja.csproj">
       <Project>{553CC0CC-B651-40D4-B047-B20873FE0399}</Project>
       <Name>Medja</Name>

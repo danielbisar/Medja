@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Medja.Controls;
-using Medja.Debug;
 using Medja.OpenTk.Rendering;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
