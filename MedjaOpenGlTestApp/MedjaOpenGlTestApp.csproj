@@ -59,13 +59,13 @@
       <Project>{2f8f1833-e550-46d9-93c0-6bd5d1601776}</Project>
       <Name>Medja.Utils</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Medja\Medja.csproj">
-      <Project>{553CC0CC-B651-40D4-B047-B20873FE0399}</Project>
-      <Name>Medja</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Medja.OpenTk\Medja.OpenTk.csproj">
       <Project>{910BC2C5-8A78-402F-B1E5-56C13B75E60E}</Project>
       <Name>Medja.OpenTk</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Medja\Medja.csproj">
+      <Project>{75d8712d-ef50-4a44-9b94-11045aa2d7a2}</Project>
+      <Name>Medja</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
