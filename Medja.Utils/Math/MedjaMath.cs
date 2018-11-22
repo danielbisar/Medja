@@ -51,5 +51,19 @@
            return intDiff <= ( 1 << maxDeltaBits );
            }
          */
+        
+        /// <summary>
+        /// Allows calculation of modulo with negative x values.
+        /// x mod m works for both positive and negative x (unlike x % m)
+        /// </summary>
+        /// <returns>The modulo.</returns>
+        /// <param name="x">Left hand value for modulo.</param>
+        /// <param name="m">Right hand value for modulo.</param>
+        public static int ExtendedModulo(this int x, int m)
+        {
+            return (x % m + m) % m;
+        }
+        
+        
     }
 }
