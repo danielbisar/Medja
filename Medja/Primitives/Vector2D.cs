@@ -24,7 +24,7 @@
 
         public override string ToString()
         {
-            return string.Format("Vector2D: {0},{1}", X, Y);
+            return $"Vector2D: {X},{Y}";
         }
     }
 }

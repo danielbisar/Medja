@@ -1,8 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using Medja.Controls;
+using Medja.OpenTk.Utils;
+using Medja.Utils.Math;
 using OpenTK;
 using OpenTK.Input;
 
@@ -137,12 +138,13 @@ namespace Medja.OpenTk
 			}
 
 			// order is important
-			inputState.PointerPosition = ToMedjaPoint(mouseState.Position);
+			inputState.PointerPosition = mouseState.Position.ToMedjaPoint();
 			inputState.IsMouseOver = true;
 			inputState.IsLeftMouseDown = mouseState.IsLeftButtonDown;
 
+			// compare with 0, because only if the value is exactly 0 we want to send the event
 			if (mouseState.WheelDelta != 0
-				&& MedjaMath.AboutEquals(inputState.MouseWheelDelta, mouseState.WheelDelta))
+				&& inputState.MouseWheelDelta.AboutEquals(mouseState.WheelDelta))
 				inputState.PropertyMouseWheelDelta.NotifyPropertyChanged();
 			else
 				inputState.MouseWheelDelta = mouseState.WheelDelta;
@@ -151,9 +153,6 @@ namespace Medja.OpenTk
 				_currentDragControl = control;
 		}
 
-		private Medja.Primitives.Point ToMedjaPoint(Point position)
-		{
-			return new Primitives.Point(position.X, position.Y);
-		}
+		
 	}
 }

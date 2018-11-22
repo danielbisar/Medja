@@ -2,10 +2,17 @@
 using System.Collections.Generic;
 using System.Reflection;
 using Medja.Controls;
-using Medja.Reflection;
+using Medja.Utils.Reflection;
 
 namespace Medja.Theming
 {
+	/// <summary>
+	/// A factory to create controls. The main prupose is to allow you to modify default settings, when creating any
+	/// medja control and to setup the renderer of each control.
+	/// </summary>
+	/// <remarks>There are some controls that use generics. The naming of the method is the same as for other controls.
+	/// If you have a class MyControl<T> the method would be named 'CreateMyControl<T>'. You cannot register generic
+	/// methods via AddFactoryMethod but the <see cref="Create{TControl}()"/> method will search via reflection.</remarks>
 	public class ControlFactory
 	{
 		private readonly Dictionary<Type, Func<object>> _factoryMethods;
@@ -205,11 +212,24 @@ namespace Medja.Theming
 			return result;
 		}
 		
-		// helpful overloads to make creation of simple controls easier
-
+		/// <summary>
+		/// Creates a text block with the given text.
+		/// </summary>
+		/// <param name="text"></param>
+		/// <returns></returns>
 		public TextBlock CreateTextBlock(string text)
 		{
 			return Create<TextBlock>(p => p.Text = text);
+		}
+
+		/// <summary>
+		/// Same as <see cref="CreateTextBlock()"/> but adds ": " to the text.
+		/// </summary>
+		/// <param name="text"></param>
+		/// <returns></returns>
+		public TextBlock CreateLabel(string text)
+		{
+			return CreateTextBlock(text + ": ");
 		}
 	}
 }

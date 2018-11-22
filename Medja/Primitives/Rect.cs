@@ -2,6 +2,12 @@
 {
     public class Rect
     {
+        /// <summary>
+        /// Substracts the given <see cref="Thickness"/> from the <see cref="Rect"/> and returns a new instance.
+        /// </summary>
+        /// <param name="rect"></param>
+        /// <param name="margin"></param>
+        /// <returns></returns>
         public static Rect Subtract(Rect rect, Thickness margin)
         {
             return new Rect
@@ -43,11 +49,6 @@
             X = point.X;
             Y = point.Y;
         }
-
-        public Point ToPoint()
-        {
-            return new Point(X, Y);
-        }
         
         public bool IsWithin(Point point)
         {
@@ -64,12 +65,7 @@
             Width -= thickness.LeftAndRight;
             Height -= thickness.TopAndBottom;
         }
-
-        public override string ToString()
-        {
-            return "X = " + X + ", Y = " + Y + ", Width = " + Width + ", Height = " + Height;
-        }
-
+        
         /// <summary>
         /// Subtracts the given value from the current rect.
         /// </summary>
@@ -78,6 +74,11 @@
         {
             Y += value;
             Height -= value;
+        }
+
+        public override string ToString()
+        {
+            return "X = " + X + ", Y = " + Y + ", Width = " + Width + ", Height = " + Height;
         }
     }
 }

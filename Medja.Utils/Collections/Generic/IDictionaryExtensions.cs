@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Medja
+namespace Medja.Utils.Collections.Generic
 {
 	public static class IDictionaryExtensions
 	{
@@ -15,10 +15,9 @@ namespace Medja
 		/// given key.</param>
 		/// <typeparam name="TKey">The key type parameter.</typeparam>
 		/// <typeparam name="TValue">The value type parameter.</typeparam>
-		public static TValue GetOrAdd<TKey, TValue>(
-			this IDictionary<TKey, TValue> dictionary,
-			TKey key,
-			Func<TKey, TValue> factory)
+		public static TValue GetOrAdd<TKey, TValue>(this IDictionary<TKey, TValue> dictionary,
+		                                            TKey key,
+		                                            Func<TKey, TValue> factory)
 		{
 			if (dictionary.TryGetValue(key, out var value))
 				return value;
@@ -45,7 +44,7 @@ namespace Medja
 			if (dictionary.TryGetValue(key, out result))
 				return result;
 
-			return default(TValue);
+			return default;
 		}
 	}
 }

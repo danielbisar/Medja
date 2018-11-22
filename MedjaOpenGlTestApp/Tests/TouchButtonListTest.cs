@@ -1,11 +1,7 @@
 using System;
-using System.Reflection;
-using System.Runtime.Remoting.Messaging;
 using Medja.Controls;
-using Medja.Primitives;
 using Medja.Theming;
 using Medja.Utils;
-using OpenTK.Platform.Windows;
 
 namespace MedjaOpenGlTestApp.Tests
 {

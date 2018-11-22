@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Medja.Controls;
+﻿using Medja.Controls;
 using Medja.Primitives;
 using SkiaSharp;
 
