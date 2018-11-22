@@ -90,7 +90,7 @@
       <Name>Medja.Utils</Name>
     </ProjectReference>
     <ProjectReference Include="..\Medja\Medja.csproj">
-      <Project>{553cc0cc-b651-40d4-b047-b20873fe0399}</Project>
+      <Project>{75d8712d-ef50-4a44-9b94-11045aa2d7a2}</Project>
       <Name>Medja</Name>
     </ProjectReference>
   </ItemGroup>

@@ -1,165 +1,20 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{553CC0CC-B651-40D4-B047-B20873FE0399}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>Medja</RootNamespace>
-    <AssemblyName>Medja</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <LangVersion>7.3</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Binding\Binding.cs" />
-    <Compile Include="Binding\BindingBase.cs" />
-    <Compile Include="Binding\BindingExtensions.cs" />
-    <Compile Include="Binding\Converters.cs" />
-    <Compile Include="Binding\PropertyWrapper.cs" />
-    <Compile Include="Binding\TwoWayBinding.cs" />
-    <Compile Include="Controls\Animation\AnimationManager.cs" />
-    <Compile Include="Controls\Animation\ColorAnimation.cs" />
-    <Compile Include="Controls\Animation\ControlAnimation.cs" />
-    <Compile Include="Controls\Button.cs" />
-    <Compile Include="Controls\CheckBox.cs" />
-    <Compile Include="Controls\ComboBox.cs" />
-    <Compile Include="Controls\ComboBoxBase.cs" />
-    <Compile Include="Controls\Container\ContentArranger.cs" />
-    <Compile Include="Controls\Container\ContentControl.cs" />
-    <Compile Include="Controls\Container\ScrollableContainer.cs" />
-    <Compile Include="Controls\Container\SideControlsContainer.cs" />
-    <Compile Include="Controls\Container\TabControl.cs" />
-    <Compile Include="Controls\Control.cs" />
-    <Compile Include="Controls\Control3D.cs" />
-    <Compile Include="Controls\ControlHierarchy.cs" />
-    <Compile Include="Controls\Dialogs\ConfirmableDialog.cs" />
-    <Compile Include="Controls\Dialogs\DialogService.cs" />
-    <Compile Include="Controls\InputState.cs" />
-    <Compile Include="Controls\ItemEventArgs.cs" />
-    <Compile Include="Controls\ItemsManager.cs" />
-    <Compile Include="Controls\Panels\ColumnAndRowEnumerator.cs" />
-    <Compile Include="Controls\Panels\ColumnDefinition.cs" />
-    <Compile Include="Controls\Panels\Dock.cs" />
-    <Compile Include="Controls\Panels\DockPanel.cs" />
-    <Compile Include="Controls\Panels\HorizontalStackPanel.cs" />
-    <Compile Include="Controls\Panels\Panel.cs" />
-    <Compile Include="Controls\Panels\ScrollingGrid.cs" />
-    <Compile Include="Controls\Panels\VerticalStackPanel.cs" />
-    <Compile Include="Controls\MedjaWindow.cs" />
-    <Compile Include="Controls\MouseDraggedEventArgs.cs" />
-    <Compile Include="Controls\VerticalScrollBar.cs" />
-    <Compile Include="Controls\ViewNavigator.cs" />
-    <Compile Include="Debug\ControlTreeStringBuilder.cs" />
-    <Compile Include="IMedjaLibrary.cs" />
-    <Compile Include="MedjaApplication.cs" />
-    <Compile Include="Primitives\Color.cs" />
-    <Compile Include="Primitives\Keys.cs" />
-    <Compile Include="Primitives\MedjaValues.cs" />
-    <Compile Include="Primitives\MRect.cs" />
-    <Compile Include="Primitives\Point.cs" />
-    <Compile Include="Primitives\PrimitivConverterExtensions.cs" />
-    <Compile Include="Primitives\Rect.cs" />
-    <Compile Include="Primitives\Size.cs" />
-    <Compile Include="Primitives\Thickness.cs" />
-    <Compile Include="Primitives\Vector2D.cs" />
-    <Compile Include="Primitives\VerticalAlignment.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Property\EqualityComparerCache.cs" />
-    <Compile Include="Property\IProperty.cs" />
-    <Compile Include="Property\OverwritableProperty.cs" />
-    <Compile Include="Property\Property.cs" />
-    <Compile Include="Property\PropertyChangedEventArgs.cs" />
-    <Compile Include="Property\PropertyChangedEventHandler.cs" />
-    <Compile Include="Property\ThreadSafeProperty.cs" />
-    <Compile Include="ShutdownEventArgs.cs" />
-    <Compile Include="Theming\ControlFactory.cs" />
-    <Compile Include="Theming\ControlRendererBase.cs" />
-    <Compile Include="Theming\IControlRenderer.cs" />
-    <Compile Include="Primitives\Visibility.cs" />
-    <Compile Include="Controls\ProgressBar.cs" />
-    <Compile Include="Controls\AttachedPropertyIdFactory.cs" />
-    <Compile Include="Controls\TouchButtonList.cs" />
-    <Compile Include="PagedListView.cs" />
-    <Compile Include="Controls\TouchButtonClickedEventArgs.cs" />
-    <Compile Include="Controls\Panels\Canvas.cs" />
-    <Compile Include="Controls\TextBlock.cs" />
-    <Compile Include="Primitives\TextWrapping.cs" />
-    <Compile Include="Primitives\Colors.cs" />
-    <Compile Include="Primitives\Font.cs" />
-    <Compile Include="Primitives\FontStyle.cs" />
-    <Compile Include="Controls\TextBox.cs" />
-    <Compile Include="Controls\TextControl.cs" />
-    <Compile Include="Controls\KeyboardEventArgs.cs" />
-    <Compile Include="Controls\FocusManager.cs" />
-    <Compile Include="Globalization.cs" />
-    <Compile Include="Controls\Dialogs\Dialog.cs" />
-    <Compile Include="Controls\Dialogs\DialogButtons.cs" />
-    <Compile Include="Controls\Dialogs\DialogButtonsControl.cs" />
-    <Compile Include="Controls\Dialogs\DialogParentControl.cs" />
-    <Compile Include="Controls\Dialogs\InputBoxDialog.cs" />
-    <Compile Include="Controls\Dialogs\QuestionDialog.cs" />
-    <Compile Include="Controls\Dialogs\SimpleMessageDialog.cs" />
-    <Compile Include="Primitives\HorizontalAlignment.cs" />
-    <Compile Include="Controls\TabItem.cs" />
-    <Compile Include="Controls\Panels\TablePanel.cs" />
-    <Compile Include="Controls\Panels\RowDefinition.cs" />
-    <Compile Include="Utils\EqualityUtils.cs" />
-    <Compile Include="Utils\FramesPerSecondCounter.cs" />
-    <Compile Include="Utils\MedjaUIMath.cs" />
-    <Compile Include="Utils\TextWrapper.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="Documentation\Binding.md" />
-    <None Include="Documentation\CodingGuideline.md" />
-    <None Include="Documentation\Compiler.md" />
-    <None Include="Documentation\CoreDesign.md" />
-    <None Include="Documentation\Properties.md" />
-    <None Include="Documentation\Controls.md" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controls\Dialogs\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Medja.Utils\Medja.Utils.csproj">
-      <Project>{2f8f1833-e550-46d9-93c0-6bd5d1601776}</Project>
-      <Name>Medja.Utils</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <LangVersion>latest</LangVersion>
+        <Authors>Daniel Klafft</Authors>
+        <Company>SprintWORX GmbH</Company>
+        <Copyright>Copyright © 2018</Copyright>
+        <Description>Cross platform UI library.</Description>
+        <Product>Medja</Product>
+        <NeutralLanguage>en</NeutralLanguage>
+        <AssemblyVersion>0.2.53.0</AssemblyVersion>
+        <FileVersion>0.2.53.0</FileVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Medja.Utils\Medja.Utils.csproj" />
+    </ItemGroup>
+
 </Project>
