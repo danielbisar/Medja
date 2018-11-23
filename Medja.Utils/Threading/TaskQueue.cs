@@ -2,6 +2,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Threading;
 using System.Threading.Tasks;
+using Medja.Utils.Collections.Concurrent;
 
 namespace Medja.Utils.Threading
 {
@@ -20,10 +21,16 @@ namespace Medja.Utils.Threading
     ///
     /// ...
     /// </example>
-    public class TaskQueue<TResult>
+    public class TaskQueue<TResult> : IDisposable
     {
         private readonly ConcurrentQueue<Task<TResult>> _taskQueue;
         private readonly AutoResetEvent _waitHandle;
+        private int _isDisposed;
+
+        public bool IsDisposed
+        {
+            get { return _isDisposed == 1; }
+        }
 
         public TaskQueue()
         {
@@ -39,6 +46,9 @@ namespace Medja.Utils.Threading
         /// <returns>The task that was created and enqueued.</returns>
         public Task<TResult> Enqueue(Func<object, TResult> action, object state)
         {
+            if (IsDisposed)
+                throw new ObjectDisposedException(nameof(TaskQueue<TResult>));
+            
             var task = new Task<TResult>(action, state);
             
             _taskQueue.Enqueue(task);
@@ -55,10 +65,22 @@ namespace Medja.Utils.Threading
         /// <param name="action">The action to perform for each task.</param>
         public void WaitAndHandleTasks(Action<Task<TResult>> action)
         {
+            if (IsDisposed)
+                throw new ObjectDisposedException(nameof(TaskQueue<TResult>));
+            
             _waitHandle.WaitOne();
 
-            while (_taskQueue.TryDequeue(out var task))
+            while (_isDisposed != 1 && _taskQueue.TryDequeue(out var task))
                 action(task);
+        }
+
+        public void Dispose()
+        {
+            if (Interlocked.Exchange(ref _isDisposed, 1) == 0)
+            {
+                _taskQueue.Clear();
+                _waitHandle.Dispose();
+            }
         }
     }
 }
