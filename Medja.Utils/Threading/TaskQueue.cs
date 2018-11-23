@@ -78,8 +78,9 @@ namespace Medja.Utils.Threading
         {
             if (Interlocked.Exchange(ref _isDisposed, 1) == 0)
             {
-                _taskQueue.Clear();
+                _taskQueue.TryDequeueAll(p => p?.Dispose());
                 _waitHandle.Dispose();
+                _taskQueue.TryDequeueAll(p => p?.Dispose());
             }
         }
     }

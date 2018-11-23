@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Concurrent;
 
 namespace Medja.Utils.Collections.Concurrent
@@ -5,16 +6,15 @@ namespace Medja.Utils.Collections.Concurrent
     public static class ConcurrentQueueExtensions
     {
         /// <summary>
-        /// Clears all items in the queue. NOTE: does not necessarily result in an empty queue but can be helpful
-        /// if you want to remove (almost) all elements. If you can assure no enqueue is called during or after the
-        /// call of Clear the queue will be empty.
+        /// Calls TryDequeue as long as it returns true and executes dequeueAction per item.
         /// </summary>
         /// <param name="queue"></param>
         /// <typeparam name="T"></typeparam>
-        public static void Clear<T>(this ConcurrentQueue<T> queue)
+        public static void TryDequeueAll<T>(this ConcurrentQueue<T> queue, Action<T> dequeueAction)
         {
             while (queue.TryDequeue(out var result))
             {
+                dequeueAction(result);
             }
         }
     }
