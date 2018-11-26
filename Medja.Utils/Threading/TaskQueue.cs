@@ -119,6 +119,11 @@ namespace Medja.Utils.Threading
                 _cancellationTokenSource.Dispose();
                 
                 _taskQueue.TryDequeueAll(DisposeIfCompleted);
+                
+                // it seems that mono has a bug here, so we need to call _waitHandle.Set before calling
+                // Dispose, else _waitHandle would still block forever
+                _waitHandle.Set();
+                
                 _waitHandle.Dispose();
                 _taskQueue.TryDequeueAll(DisposeIfCompleted);
             }
