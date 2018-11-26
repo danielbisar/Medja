@@ -23,8 +23,15 @@ namespace Medja.Utils.Threading
     /// </example>
     public class TaskQueue<TResult> : IDisposable
     {
+        private static void DisposeIfCompleted(Task task)
+        {
+            if(task.IsCompleted)
+                task.Dispose();
+        }
+        
         private readonly ConcurrentQueue<Task<TResult>> _taskQueue;
         private readonly AutoResetEvent _waitHandle;
+        private readonly CancellationTokenSource _cancellationTokenSource;
         private int _isDisposed;
 
         public bool IsDisposed
@@ -36,20 +43,20 @@ namespace Medja.Utils.Threading
         {
             _taskQueue = new ConcurrentQueue<Task<TResult>>();
             _waitHandle = new AutoResetEvent(false);
+            _cancellationTokenSource = new CancellationTokenSource();
         }
 
         /// <summary>
-        /// Enqueues the given action onto the queue.
+        /// Enqueues the given function onto the queue.
         /// </summary>
-        /// <param name="action">The action to perform.</param>
+        /// <param name="func">The function to execute.</param>
         /// <param name="state">The state object (any param you want to pass)</param>
         /// <returns>The task that was created and enqueued.</returns>
-        public Task<TResult> Enqueue(Func<object, TResult> action, object state)
+        public Task<TResult> Enqueue(Func<object, TResult> func, object state)
         {
-            if (IsDisposed)
-                throw new ObjectDisposedException(nameof(TaskQueue<TResult>));
+            AssureNotDisposed();
             
-            var task = new Task<TResult>(action, state);
+            var task = new Task<TResult>(func, state, _cancellationTokenSource.Token);
             
             _taskQueue.Enqueue(task);
             
@@ -58,29 +65,52 @@ namespace Medja.Utils.Threading
 
             return task;
         }
-
+        
         /// <summary>
-        /// Waits until a task is enqueued and calls the action (can occur multiple times).
+        /// Enqueues the given function onto the queue.
         /// </summary>
-        /// <param name="action">The action to perform for each task.</param>
-        public void WaitAndHandleTasks(Action<Task<TResult>> action)
+        /// <param name="func">The function to execute.</param>
+        /// <returns>The functions result.</returns>
+        public Task<TResult> Enqueue(Func<TResult> func)
+        {
+            return Enqueue(state => func(), null);
+        }
+
+        private void AssureNotDisposed()
         {
             if (IsDisposed)
                 throw new ObjectDisposedException(nameof(TaskQueue<TResult>));
+        }
+
+        /// <summary>
+        /// Waits until a task is enqueued and executes it on the current thread. This method executes the task
+        /// synchronously.
+        /// </summary>
+        public void WaitAndExecuteAll()
+        {
+            AssureNotDisposed();
             
             _waitHandle.WaitOne();
 
-            while (_isDisposed != 1 && _taskQueue.TryDequeue(out var task))
-                action(task);
+            while (_isDisposed != 1
+                    && !_cancellationTokenSource.IsCancellationRequested
+                    && _taskQueue.TryDequeue(out var task))
+            {
+                task.RunSynchronously();
+                DisposeIfCompleted(task);
+            }
         }
 
         public void Dispose()
         {
             if (Interlocked.Exchange(ref _isDisposed, 1) == 0)
             {
-                _taskQueue.TryDequeueAll(p => p?.Dispose());
+                _cancellationTokenSource.Cancel();
+                _cancellationTokenSource.Dispose();
+                
+                _taskQueue.TryDequeueAll(DisposeIfCompleted);
                 _waitHandle.Dispose();
-                _taskQueue.TryDequeueAll(p => p?.Dispose());
+                _taskQueue.TryDequeueAll(DisposeIfCompleted);
             }
         }
     }
