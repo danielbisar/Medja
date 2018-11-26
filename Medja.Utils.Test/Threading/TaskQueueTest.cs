@@ -124,5 +124,15 @@ namespace Medja.Utils.Test.Threading
             foreach (var task in tasks)
                 AssertIsTaskDisposed(task);
         }
+
+        [Fact]
+        public void NoExceptionsThrownOnExecutingThread()
+        {
+            var taskQueue = new TaskQueue<bool>();
+            var task = taskQueue.Enqueue(() => throw new InvalidOperationException());
+
+            taskQueue.WaitAndExecuteAll();
+            Assert.IsType<AggregateException>(task.Exception);
+        }
     }
 }
