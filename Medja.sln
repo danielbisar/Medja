@@ -30,8 +30,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ZeroMq", "ZeroMq", "{426E7D
 		libs\ZeroMQ\zeromq.md = libs\ZeroMQ\zeromq.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Medja.Test", "Medja.Test\Medja.Test.csproj", "{6DBCA767-F27A-4D25-A2A6-3E63B2251362}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Medja.OpenTk.Test", "Medja.OpenTk.Test\Medja.OpenTk.Test.csproj", "{0A0BA084-6CB9-43C5-A6B0-6B8E7C833893}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedjaOpenGlTestApp", "MedjaOpenGlTestApp\MedjaOpenGlTestApp.csproj", "{FE458487-F2DF-4C14-890F-73770D04BA83}"
@@ -52,10 +50,6 @@ Global
 		{910BC2C5-8A78-402F-B1E5-56C13B75E60E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{910BC2C5-8A78-402F-B1E5-56C13B75E60E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{910BC2C5-8A78-402F-B1E5-56C13B75E60E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6DBCA767-F27A-4D25-A2A6-3E63B2251362}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6DBCA767-F27A-4D25-A2A6-3E63B2251362}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6DBCA767-F27A-4D25-A2A6-3E63B2251362}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6DBCA767-F27A-4D25-A2A6-3E63B2251362}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0A0BA084-6CB9-43C5-A6B0-6B8E7C833893}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0A0BA084-6CB9-43C5-A6B0-6B8E7C833893}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A0BA084-6CB9-43C5-A6B0-6B8E7C833893}.Release|Any CPU.ActiveCfg = Release|Any CPU
