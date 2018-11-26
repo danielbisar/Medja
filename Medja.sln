@@ -40,6 +40,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Medja.Utils", "Medja.Utils\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Medja", "Medja\Medja.csproj", "{75D8712D-EF50-4A44-9B94-11045AA2D7A2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Medja.Utils.Test", "Medja.Utils.Test\Medja.Utils.Test.csproj", "{05F0A57C-E2EF-48CA-825B-51345D902CA7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -70,6 +72,10 @@ Global
 		{75D8712D-EF50-4A44-9B94-11045AA2D7A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{75D8712D-EF50-4A44-9B94-11045AA2D7A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{75D8712D-EF50-4A44-9B94-11045AA2D7A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05F0A57C-E2EF-48CA-825B-51345D902CA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05F0A57C-E2EF-48CA-825B-51345D902CA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05F0A57C-E2EF-48CA-825B-51345D902CA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05F0A57C-E2EF-48CA-825B-51345D902CA7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
