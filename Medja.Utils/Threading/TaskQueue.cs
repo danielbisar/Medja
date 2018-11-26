@@ -39,6 +39,16 @@ namespace Medja.Utils.Threading
             get { return _isDisposed == 1; }
         }
 
+        /// <summary>
+        /// A cancellation token source that should be used if you are waiting for any task the is enqueue here.
+        ///
+        /// task.Wait(taskQueue.CancellationTokenSource.Token) else not executed tasks will wait forever.
+        /// </summary>
+        public CancellationTokenSource CancellationTokenSource
+        {
+            get { return _cancellationTokenSource; }
+        }
+
         public TaskQueue()
         {
             _taskQueue = new ConcurrentQueue<Task<TResult>>();
