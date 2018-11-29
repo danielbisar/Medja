@@ -18,5 +18,18 @@ namespace Medja.Utils
         {
             return arraySegment.Array == null || arraySegment.Count == 0;
         }
+
+        /// <summary>
+        /// Uses <see cref="BitConverter.ToInt32"/> if the segment has at least 4 bytes left.
+        /// </summary>
+        /// <param name="arraySegment">The <see cref="ArraySegment{Byte}"/>.</param>
+        /// <returns></returns>
+        public static int ToInt32(this ArraySegment<byte> arraySegment)
+        {
+            if (arraySegment.Count < 4)
+                return 0;
+
+            return BitConverter.ToInt32(arraySegment.Array, arraySegment.Offset);
+        }
     }
 }
