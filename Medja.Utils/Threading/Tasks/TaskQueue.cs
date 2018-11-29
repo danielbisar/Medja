@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Medja.Utils.Collections.Concurrent;
 
-namespace Medja.Utils.Threading
+namespace Medja.Utils.Threading.Tasks
 {
     /// <summary>
     /// A simple task queue to allow execution of actions on a specific thread. Basically this works a very simple Dispatcher.

@@ -3,10 +3,10 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Medja.Utils.Threading;
+using Medja.Utils.Threading.Tasks;
 using Xunit;
 
-namespace Medja.Utils.Test.Threading
+namespace Medja.Utils.Test.Threading.Tasks
 {
     public class TaskQueueTest
     {

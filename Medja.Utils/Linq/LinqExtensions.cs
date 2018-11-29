@@ -6,6 +6,27 @@ namespace Medja.Utils.Linq
 {
     public static class LinqExtensions
     {
+        /// <summary>
+        /// Calls <see cref="Enumerable.ToArray{TSource}"/> only if the given <see cref="IEnumerable{T}"/> is not
+        /// already an array, otherwise it just returns the casted <see cref="source"/>.
+        /// </summary>
+        /// <param name="source">The source object.</param>
+        /// <typeparam name="T">The items type.</typeparam>
+        /// <returns><see cref="source"/> if it is an array or the result of <see cref="Enumerable.ToArray{TSource}"/>.
+        /// </returns>
+        public static T[] AssureIsArray<T>(this IEnumerable<T> source)
+        {
+            if (source is T[] array)
+                return array;
+
+            return source.ToArray();
+        }
+        
+        /// <summary>
+        /// Sums up all uints.
+        /// </summary>
+        /// <param name="values">The values.</param>
+        /// <returns>The sum.</returns>
         public static uint Sum(this IEnumerable<uint> values)
         {
             uint result = 0;
