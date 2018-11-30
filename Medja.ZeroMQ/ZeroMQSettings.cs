@@ -8,6 +8,9 @@ namespace Medja.ZeroMQ
     /// <remarks>Implemented as struct so we can assure that references will not change the values.</remarks>
     public struct ZeroMQSettings
     {
+        /// <summary>
+        /// A default timeout for REPLY/RESPONSE - REQUEST connections.
+        /// </summary>
         public static readonly int CommandReceiveTimeout = 750;
         
         /// <summary>

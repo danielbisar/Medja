@@ -8,7 +8,7 @@ namespace Medja.ZeroMQ
 	public static class ZeroMQExtensions
 	{
 		/// <summary>
-		/// Write the specified bytes into the frame.
+		/// Writes the specified bytes into the frame. (Shortcut for <see cref="ZFrame.Write(byte[],int,int)"/>)
 		/// </summary>
 		/// <param name="frame">Frame.</param>
 		/// <param name="data">Data.</param>

@@ -18,17 +18,27 @@ namespace Medja.ZeroMQ
         private volatile bool _isDisposed;
         
         private volatile bool _goingToDispose;
+        /// <summary>
+        /// Is true if the <see cref="Dispose"/> was called from another thread. This flags the socket to be disposed
+        /// as soon as any of the sockets methods are called. 
+        /// </summary>
         public bool GoingToDispose
         {
             get { lock(_goingToDisposeLock) return _goingToDispose; }
             set { lock(_goingToDisposeLock) _goingToDispose = value; }
         }
 
+        /// <summary>
+        /// True if in the raw communication a byte prefix is used.
+        /// </summary>
         public bool HasMessagePrefix
         {
             get { return _settings.MessagePrefix != null && _settings.MessagePrefix.Length > 0; }
         }
 
+        /// <summary>
+        /// <see cref="ZSocket.ReceiveMore"/>.
+        /// </summary>
         public bool ReceiveMore
         {
             get
@@ -47,9 +57,21 @@ namespace Medja.ZeroMQ
             get { return _managedThreadId == Thread.CurrentThread.ManagedThreadId; }
         }
 
-        public event EventHandler Disposing;
+        /// <summary>
+        /// Gets notified whenever Dispose was called, no matter on the status of the object.
+        /// </summary>
         public event EventHandler DisposeWasCalled;
+        
+        /// <summary>
+        /// Gets notified when the internal socket is actually disposed.
+        /// </summary>
+        public event EventHandler Disposing;
 
+        /// <summary>
+        /// Creates a new instance.
+        /// </summary>
+        /// <param name="settings">The settings to use to create the socket.</param>
+        /// <remarks>Every instance automatically registers itself to <see cref="ZeroMQManager"/>.</remarks>
         public ZeroMQSocket(ZeroMQSettings settings)
         {
             _settings = settings;
@@ -89,6 +111,10 @@ namespace Medja.ZeroMQ
                 throw new ObjectDisposedException(nameof(ZeroMQSocket));
         }
 
+        /// <summary>
+        /// Sends the given bytes. Prepended by the <see cref="ZeroMQSettings.MessagePrefix"/> if any is set.
+        /// </summary>
+        /// <param name="bytes">The bytes to send.</param>
         public void Send(params byte[] bytes)
         {
             AssurePreconditionsAndHandleDispose();
@@ -111,6 +137,11 @@ namespace Medja.ZeroMQ
             }
         }
 
+        /// <summary>
+        /// Receives bytes. If <see cref="ZeroMQSettings.MessagePrefix"/> was set, the offset of the returned
+        /// <see cref="ArraySegment{T}"/> will be configured to start after the prefix.
+        /// </summary>
+        /// <returns>An array segment pointing to the actual message start.</returns>
         public ArraySegment<byte> Receive()
         {
             AssurePreconditionsAndHandleDispose();
