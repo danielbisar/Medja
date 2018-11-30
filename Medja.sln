@@ -42,7 +42,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Medja.Utils.Test", "Medja.U
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Medja.Test", "Medja.Test\Medja.Test.csproj", "{993FF5FB-7E79-4370-9825-29E85FA6E27E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Medja.ZeroMQ", "Medja.ZeroMQ\Medja.ZeroMQ.csproj", "{ADB412A3-AE3A-413F-83F9-B6122CE751CB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Medja.ZeroMQ", "Medja.ZeroMQ\Medja.ZeroMQ.csproj", "{255E149D-DD6C-4E09-8606-4528AEEFA84B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -78,10 +78,10 @@ Global
 		{993FF5FB-7E79-4370-9825-29E85FA6E27E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{993FF5FB-7E79-4370-9825-29E85FA6E27E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{993FF5FB-7E79-4370-9825-29E85FA6E27E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{ADB412A3-AE3A-413F-83F9-B6122CE751CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ADB412A3-AE3A-413F-83F9-B6122CE751CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ADB412A3-AE3A-413F-83F9-B6122CE751CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ADB412A3-AE3A-413F-83F9-B6122CE751CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{255E149D-DD6C-4E09-8606-4528AEEFA84B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{255E149D-DD6C-4E09-8606-4528AEEFA84B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{255E149D-DD6C-4E09-8606-4528AEEFA84B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{255E149D-DD6C-4E09-8606-4528AEEFA84B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
