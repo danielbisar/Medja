@@ -121,15 +121,47 @@ namespace Medja.ZeroMQ
 
             try
             {
-                var messagePrefix = _settings.MessagePrefix ?? new byte[0];
+                var messagePrefix = _settings.MessagePrefix;
             
-                using (var frame = ZFrame.Create(bytes.Length + messagePrefix.Length))
+                using (var frame = CreateZFrame(messagePrefix, bytes))
                 {
-                    frame.Write(messagePrefix);
-                    frame.Write(bytes);
-
-                    _socket.Send(frame);
+                    Send(frame);
                 }
+            }
+            finally
+            {
+                DisposeIfRequested();
+            }
+        }
+
+        private ZFrame CreateZFrame(byte[] header, byte[] data)
+        {
+            header = header ?? new byte[0];
+            var frame = ZFrame.Create(header.Length + data.Length);
+
+            try
+            {
+                frame.Write(header);
+                frame.Write(data);
+            }
+            catch
+            {
+                frame.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Sends the given frame.
+        /// </summary>
+        /// <param name="frame">The <see cref="ZFrame"/> to send.</param>
+        /// <param name="flags">The <see cref="ZSocketFlags"/>.</param>
+        public void Send(ZFrame frame, ZSocketFlags? flags = null)
+        {
+            AssurePreconditionsAndHandleDispose();
+
+            try
+            {
+                _socket.Send(frame, flags ?? ZSocketFlags.None);
             }
             finally
             {
