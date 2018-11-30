@@ -143,10 +143,13 @@ namespace Medja.ZeroMQ
             {
                 frame.Write(header);
                 frame.Write(data);
+
+                return frame;
             }
             catch
             {
                 frame.Dispose();
+                throw;
             }
         }
 
