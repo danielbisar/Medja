@@ -112,11 +112,7 @@ namespace Medja.Utils.Test.Collections.Concurrent
             for (int i = 0; i < 100; i++)
                 concurrentHashSet.Add(i);
 
-            Parallel.For(0, 100, i =>
-            {
-                concurrentHashSet.Remove(concurrentHashSet.First());
-            });
-            
+            Parallel.ForEach(concurrentHashSet, item => concurrentHashSet.Remove(item));
             Assert.Empty(concurrentHashSet);
         }
     }
