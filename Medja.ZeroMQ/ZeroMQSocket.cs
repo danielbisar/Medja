@@ -224,7 +224,7 @@ namespace Medja.ZeroMQ
         /// });
         ///
         /// For sockets that are created on the MainThread and only used there (synchronious calls), Dispose will be
-        /// called from <see cref="ZeroMQManager.Destroy"/>. 
+        /// called from <see cref="ZeroMQManager.Dispose"/>. 
         /// </summary>
         public void Dispose()
         {
