@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="ZeroMQ" Version="4.1.0.26" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Medja.Utils\Medja.Utils.csproj" />
+    </ItemGroup>
+
+</Project>
