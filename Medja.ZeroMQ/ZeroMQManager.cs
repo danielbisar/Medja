@@ -7,7 +7,8 @@ using ZeroMQ;
 namespace Medja.ZeroMQ
 {
     /// <summary>
-    /// ZeroMQ is a bitch regarding closing, so this helper assures everything is going clean.
+    /// It is not easy to make sure ZeroMQ is disposed correctly in an multithread environment. This class acts as
+    /// registry for any ZeroMQSocket instance created.
     /// </summary>
     public class ZeroMQManager : IDisposable
     {
@@ -20,7 +21,7 @@ namespace Medja.ZeroMQ
         
         private readonly ConcurrentHashSet<ZeroMQSocket> _sockets;
 
-        public ZeroMQManager()
+        private ZeroMQManager()
         {
             _sockets = new ConcurrentHashSet<ZeroMQSocket>(new ReferenceEqualityComparer<ZeroMQSocket>());
         }
@@ -62,6 +63,11 @@ namespace Medja.ZeroMQ
                 socket.Disposing -= OnSocketDisposing;
         }
 
+        /// <summary>
+        /// Disposes all known sockets (or at least notify that they are should be disposed as soon as possible). Then
+        /// it calls Shutdown and Dispose on ZContext.Current. This should lead any blocking socket to release the
+        /// block and throw an exception (internal <see cref="ZeroMQSocket"/>).
+        /// </summary>
         public void Dispose()
         {
             Trace.WriteLine(nameof(ZeroMQManager) + "." + nameof(Dispose));

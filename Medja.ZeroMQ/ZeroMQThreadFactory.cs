@@ -19,19 +19,20 @@ namespace Medja.ZeroMQ
         /// <see cref="ZeroMQSocket"/> methods) then you should release return from the method on call of onDispose.
         /// The callback is not guaranteed to be executed on any specific thread but is guaranteed to be
         /// executed.</param>
-        /// <returns></returns>
+        /// <returns>The <see cref="Thread"/>.</returns>
         public static Thread StartThread(ZeroMQSettings settings, Action<ZeroMQSocket> loopCallback, Action onDispose = null)
         {
+            var identifier = $"{(settings.IsServer ? "Server" : "Client")}(ThreadId = {Thread.CurrentThread.ManagedThreadId}): {settings.Endpoint}";
+            
             void OnDisposeWasCalled(object sender, EventArgs e)
             {
                 onDispose?.Invoke();
             }
             
-            var identifier = settings.Endpoint + " as " + (settings.IsServer ? "Server" : "Client");
-            
             var thread = new Thread(() =>
             {
-                Trace.WriteLine(identifier + ": Create new thread for ZeroMQSocket " + Thread.CurrentThread.ManagedThreadId);
+                TraceThreadStart(identifier);
+                
                 var socket = new ZeroMQSocket(settings);
                 
                 // the event is helpful if you onDispose will release a WaitHandle or something like that
@@ -47,24 +48,44 @@ namespace Medja.ZeroMQ
                 }
                 catch (ObjectDisposedException ode)
                 {
-                    Trace.WriteLine(identifier + ": Socket was already disposed...");
+                    TraceObjectDisposedException(identifier);
                 }
                 catch (ZException ze)
                 {
-                    Trace.WriteLine(identifier + ": " + ze);
+                    TraceZException(identifier, ze);
                 }
                 finally
                 {
                     socket.Dispose();
                     socket.DisposeWasCalled -= OnDisposeWasCalled;
                     
-                    Trace.WriteLine($"{identifier}: Thread {Thread.CurrentThread.ManagedThreadId} done.");
+                    TraceThreadEnd(identifier);
                 }
             });
             
             thread.Start();
 
             return thread;
+        }
+
+        private static void TraceThreadStart(string identifier)
+        {
+            Trace.WriteLine($"{identifier}: Thread {Thread.CurrentThread.ManagedThreadId} started for {nameof(ZeroMQSocket)}");
+        }
+
+        private static void TraceObjectDisposedException(string identifier)
+        {
+            Trace.WriteLine($"{identifier}: Caught {nameof(ObjectDisposedException)}.");
+        }
+        
+        private static void TraceZException(string identifier, ZException zException)
+        {
+            Trace.WriteLine($"{identifier}: Caught {nameof(ZException)}: {zException}.");
+        }
+
+        private static void TraceThreadEnd(string identifier)
+        {
+            Trace.WriteLine($"{identifier}: Thread done.");
         }
     }
 }
