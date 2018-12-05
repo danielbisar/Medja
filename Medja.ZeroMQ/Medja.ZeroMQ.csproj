@@ -2,6 +2,15 @@
 
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
+        <LangVersion>latest</LangVersion>
+        <Authors>Daniel Klafft</Authors>
+        <Company>SprintWORX GmbH</Company>
+        <Copyright>Copyright © 2018</Copyright>
+        <Description>Cross platform .NET ZeroMQ library.</Description>
+        <Product>Medja.ZeroMQ</Product>
+        <NeutralLanguage>en</NeutralLanguage>
+        <AssemblyVersion>0.2.60.0</AssemblyVersion>
+        <FileVersion>0.2.60.0</FileVersion>
     </PropertyGroup>
 
     <ItemGroup>

@@ -32,8 +32,7 @@ namespace Medja.ZeroMQ
 
             // this must be called at least before closing the ZContext
             // since we don't want any other behavior yet, we setup
-            // the socket always with Linger = 0
-            result.Linger = new TimeSpan(0); // do not linger when socket is closed
+            result.Linger = new TimeSpan(1000);
             
             if(settings.ReceiveTimeout.HasValue)
                 result.ReceiveTimeout = TimeSpan.FromMilliseconds(settings.ReceiveTimeout.Value);
