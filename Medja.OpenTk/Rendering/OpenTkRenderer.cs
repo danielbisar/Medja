@@ -4,6 +4,9 @@ using Medja.Controls;
 using SkiaSharp;
 using OpenTK.Graphics.OpenGL;
 using System;
+using System.Linq;
+using System.Text;
+using Medja.Theming;
 
 namespace Medja.OpenTk.Rendering
 {
@@ -12,32 +15,16 @@ namespace Medja.OpenTk.Rendering
 	/// </summary>
 	public class OpenTkRenderer : IRenderer
 	{
-		private SkiaGLLayer _skia;
+		private readonly SkiaGLLayer _skia;
 		private SKCanvas _canvas;
 		private readonly SKTypeface _defaultTypeface;
 
-		private int _previous3DControlCount;
-		private int _previous2DControlCount;
-
-		public Action Before3D { get; set; }
-
 		public OpenTkRenderer()
 		{
-			_previous2DControlCount = 0;
-			_previous3DControlCount = 0;
-
 			_skia = new SkiaGLLayer();
 			
 			// TODO remove 
-			_defaultTypeface = SKTypeface.FromFamilyName("Monospace", SKTypefaceStyle.Normal);
-
-			Before3D = InternalBefore3D;
-		}
-
-		private void InternalBefore3D()
-		{
-			GL.ClearColor(Color.Gray);
-			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
+			_defaultTypeface = SKTypeface.FromFamilyName("Monospace");
 		}
 
 		public void SetSize(Rectangle rectangle)
@@ -47,41 +34,41 @@ namespace Medja.OpenTk.Rendering
 
 		public void Render(IEnumerable<Control> controls)
 		{
-			// we don't expect the controls to change a lot, so we cache at least the size of the lists
-			var controls3d = new List<Control3D>(_previous3DControlCount);
-			var controls2d = new List<Control>(_previous2DControlCount);
+			_skia.Canvas.Clear();
 
+			var previousWas3DControl = false;
+			var state = new OpenGLState();
+			
+			state.Save();
+			_skia.ResetContext();
+			_canvas = _skia.Canvas;
+			
 			foreach (var control in controls)
 			{
-				if (control.IsVisible)
+				var is3DControl = control is Control3D;
+
+				if (is3DControl && !previousWas3DControl)
 				{
-					if (control is Control3D control3d)
-						controls3d.Add(control3d);
-					else
-						controls2d.Add(control);
+					_canvas.Flush();
+					state.Restore();
 				}
-			}
-
-			_previous3DControlCount = controls3d.Count;
-			_previous2DControlCount = controls2d.Count;
-
-			Before3D();
-
-			foreach (var control3d in controls3d)
-				Render(control3d);
-
-			OpenGLState.KeepState(() =>
-			{
-				_skia.ResetContext();
-				_canvas = _skia.Canvas;
-
-				foreach (var control in controls2d)
+				else if (!is3DControl && previousWas3DControl)
 				{
+					state.Save();
+					_skia.ResetContext();
+					_canvas = _skia.Canvas;
+				}
+				
+				if(is3DControl)
+					OpenGLState.KeepState(() => Render(control));
+				else
 					Render(control);
-				}
 
-				_canvas.Flush();
-			});
+				previousWas3DControl = is3DControl;
+			}
+			
+			_canvas.Flush();
+			state.TryRestore();
 		}
 
 		private void Render(Control control)
@@ -92,12 +79,19 @@ namespace Medja.OpenTk.Rendering
 			if (!control.IsVisible)
 				return;
 
-			var skiaRenderer = control.Renderer as ISkiaRenderer;
+			var renderer = control.Renderer;
 
-			if (skiaRenderer != null)
+			if (renderer == null)
+				return;
+
+			if (renderer is ISkiaRenderer skiaRenderer)
 			{
 				skiaRenderer.DefaultTypeFace = _defaultTypeface;
 				skiaRenderer.Render(_canvas, control);
+			}
+			else if (renderer is IControlRenderer controlRenderer)
+			{
+				controlRenderer.Render(_canvas, control);
 			}
 		}
 

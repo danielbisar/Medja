@@ -44,14 +44,22 @@ namespace Medja.OpenTk.Rendering
             if(!_isSaved)
                 throw new InvalidOperationException("First call save.");
 
-            GL.PopClientAttrib();
-            GL.DepthMask(_isDepthBufferWriteEnabled);
-            EnableOrDisable(EnableCap.DepthTest, _isDepthTestEnabled);
-            GL.UseProgram(_progamId);
-            EnableOrDisable(EnableCap.ProgramPointSize, _isProgramPointSizeEnabled);
-            GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
+            TryRestore();
+        }
 
-            _isSaved = false;
+        public void TryRestore()
+        {
+            if (_isSaved)
+            {
+                GL.PopClientAttrib();
+                GL.DepthMask(_isDepthBufferWriteEnabled);
+                EnableOrDisable(EnableCap.DepthTest, _isDepthTestEnabled);
+                GL.UseProgram(_progamId);
+                EnableOrDisable(EnableCap.ProgramPointSize, _isProgramPointSizeEnabled);
+                GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
+
+                _isSaved = false;
+            }
         }
 
         private void EnableOrDisable(EnableCap cap, bool value)

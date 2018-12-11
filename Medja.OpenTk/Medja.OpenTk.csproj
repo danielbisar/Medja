@@ -56,33 +56,32 @@
   <ItemGroup>
     <Compile Include="MedjaOpenTkLibrary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Rendering\CheckBoxRenderer.cs" />
     <Compile Include="Rendering\OpenGLState.cs" />
     <Compile Include="Rendering\OpenTkRenderer.cs" />
+    <Compile Include="Rendering\Renderer\ButtonRenderer.cs" />
+    <Compile Include="Rendering\Renderer\CheckBoxRenderer.cs" />
+    <Compile Include="Rendering\Renderer\ControlRenderer.cs" />
+    <Compile Include="Rendering\Renderer\ProgressBarRenderer.cs" />
+    <Compile Include="Rendering\Renderer\SkiaControlRendererBase.cs" />
+    <Compile Include="Rendering\Renderer\TabControlRenderer.cs" />
+    <Compile Include="Rendering\Renderer\TextBlockRenderer.cs" />
+    <Compile Include="Rendering\Renderer\TextBoxRenderer.cs" />
+    <Compile Include="Rendering\Renderer\VerticalScrollBarRenderer.cs" />
     <Compile Include="Rendering\SkiaExtensions.cs" />
     <Compile Include="Rendering\SkiaGLLayer.cs" />
-    <Compile Include="Rendering\ButtonRenderer.cs" />
     <Compile Include="Rendering\IRenderer.cs" />
     <Compile Include="Rendering\OpenTkTheme.cs" />
     <Compile Include="Input\MouseState.cs" />
     <Compile Include="Input\OpenTkMouseHandler.cs" />
     <Compile Include="Rendering\VertexBufferObject.cs" />
-    <Compile Include="Rendering\VerticalScrollBarRenderer.cs" />
     <Compile Include="Utils\PrimitivConverterExtensions.cs" />
     <Compile Include="Window\OpenTkWindow.cs" />
     <Compile Include="Window\MedjaWindowExtensions.cs" />
     <Compile Include="Rendering\OpenGLProgram.cs" />
     <Compile Include="Rendering\OpenGLShader.cs" />
-    <Compile Include="Rendering\ProgressBarRenderer.cs" />
-    <Compile Include="Rendering\ControlRenderer.cs" />
-    <Compile Include="Rendering\TextBlockRenderer.cs" />
-    <Compile Include="Rendering\SkiaControlRendererBase.cs" />
-    <Compile Include="Rendering\TextBoxRenderer.cs" />
     <Compile Include="Input\OpenTKKeyboardHandler.cs" />
     <Compile Include="Rendering\ColorMap.cs" />
-    <Compile Include="Rendering\TypefaceCache.cs" />
     <Compile Include="Rendering\ISkiaRenderer.cs" />
-    <Compile Include="Rendering\TabControlRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Medja.Utils\Medja.Utils.csproj">

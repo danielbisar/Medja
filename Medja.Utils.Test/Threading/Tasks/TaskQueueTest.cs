@@ -159,7 +159,7 @@ namespace Medja.Utils.Test.Threading.Tasks
                 var executionThread = new Thread(ExecuteTasks);
                 executionThread.Start(taskQueue);
 
-                Assert.True(task.Wait(10));
+                Assert.True(task.Wait(100));
             }
         }
 
