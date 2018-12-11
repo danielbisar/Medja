@@ -32,6 +32,14 @@ namespace Medja.OpenTk.Rendering
 			return result;
 		}
 
+		protected override ContentControl CreateContentControl()
+		{
+			var result = base.CreateContentControl();
+			result.Renderer = new ControlRenderer();
+
+			return result;
+		}
+
 		protected override Dialog CreateDialog()
 		{
 			var result = base.CreateDialog();
@@ -53,6 +61,14 @@ namespace Medja.OpenTk.Rendering
 			var result = base.CreateInputBoxDialog();
 			result.Renderer = new ControlRenderer();
 			result.Background = ColorMap.Primary;
+
+			return result;
+		}
+
+		protected override ScrollingGrid CreateScrollingGrid()
+		{
+			var result = base.CreateScrollingGrid();
+			result.Renderer = new ControlRenderer();
 
 			return result;
 		}

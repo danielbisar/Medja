@@ -19,6 +19,7 @@ namespace MedjaOpenGlTestApp.Tests
             scrollingGrid.SpacingX = 10;
             scrollingGrid.SpacingY = 10;
             scrollingGrid.RowHeight = 200;
+            scrollingGrid.Background = Colors.LightGray;
 
             for (int i = 0; i < 4; i++)
             {

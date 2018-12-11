@@ -10,10 +10,21 @@ namespace MedjaOpenGlTestApp
 {
 	public class OpenGlTestControlRenderer : ControlRendererBase<object, OpenGlTestControl>
 	{
+		// TODO regarding the viewport setup: make a base class that can be used by other controls that automatically setup the viewport
+		
+		private static readonly Random _rnd = new Random();
+		
 		private VertextBufferObject _vbo;
+		private float _rotation = 1;
+		
+		private static double GetRandomNumber(double minimum, double maximum)
+		{ 
+			return _rnd.NextDouble() * (maximum - minimum) + minimum;
+		}
 
 		public OpenGlTestControlRenderer()
 		{
+			_rotation = (float) GetRandomNumber(1, 100);
 			var vertices = new List<Vector3>();
 
 			for (int i = 0; i <= 10; i++)
@@ -28,17 +39,17 @@ namespace MedjaOpenGlTestApp
 
 					vertices.Add(vt);
 
-					Console.Write(vt + ", ");
+					//Console.Write(vt + ", ");
 				}
 
-				Console.WriteLine();
+				//Console.WriteLine();
 			}
 
 			vertices = ReorderPointsForQuads(vertices, 100);
 
 			_vbo = new VertextBufferObject();
 			_vbo.UpdateData(vertices);
-			//_vbo.VertexDrawLimit = 1000;
+			//_vbo.VertexDrawLimit = 1000;*/
 		}
 
 		private List<Vector3> ReorderPointsForQuads(List<Vector3> vertices, int xyItemCount)
@@ -61,17 +72,28 @@ namespace MedjaOpenGlTestApp
 			return result;
 		}
 
-		private float _rotation = 1;
-
 		protected override void Render(object context, OpenGlTestControl control)
 		{
+			GL.Enable(EnableCap.DepthTest);
+			GL.Enable(EnableCap.ScissorTest);
+
+			GL.Viewport((int)control.Position.X, (int)control.Position.Y, (int)control.Position.Width, (int)control.Position.Height);
+			GL.Scissor((int)control.Position.X, (int)control.Position.Y, (int)control.Position.Width, (int)control.Position.Height);
+			
+			//GL.ClearStencil(0);
+			GL.ClearColor(0, 0, 0, 0);
+			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
+			
 			GL.MatrixMode(MatrixMode.Modelview);
 			GL.LoadIdentity();
 			GL.Rotate(_rotation += 1, new Vector3(0, 1, 0));
 
 			GL.Translate(new Vector3(-0.5f, -0.5f, 1.0f));
 			GL.Color4(Color4.White);
+			
 			_vbo.Draw(PrimitiveType.Quads);
+			
+			GL.Disable(EnableCap.ScissorTest);
 		}
 	}
 }

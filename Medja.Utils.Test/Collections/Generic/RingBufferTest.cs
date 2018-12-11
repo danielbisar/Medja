@@ -242,9 +242,6 @@ namespace Medja.Utils.Test.Collections.Generic
 			Assert.Equal(10, ringBuffer.Count);
 			Assert.Equal(10, items.Length);
 
-			foreach (var item in items)
-				Console.WriteLine(item);
-
 			for (int i = 0; i < items.Length; i++)
 				Assert.Equal(i, items[i]);
 		}
@@ -262,9 +259,6 @@ namespace Medja.Utils.Test.Collections.Generic
 
 			Assert.Equal(10, ringBuffer.Count);
 			Assert.Equal(5, items.Length);
-
-			foreach (var item in items)
-				Console.WriteLine(item);
 
 			for (int i = 0; i < items.Length; i++)
 				Assert.Equal(i, items[i]);
@@ -296,9 +290,6 @@ namespace Medja.Utils.Test.Collections.Generic
 			Assert.Equal(2, items.Length);
 			Assert.Equal(5, ringBuffer.Count);
 
-			foreach (var item in items)
-				Console.WriteLine(item);
-
 			for (int i = 0; i < items.Length; i++)
 				Assert.Equal(i, items[i]);
 		}
@@ -312,9 +303,6 @@ namespace Medja.Utils.Test.Collections.Generic
 				ringBuffer.Push(i);
 
 			var items = ringBuffer.FromHead().Where(p => p > 5).ToList();
-
-			foreach (var item in items)
-				Console.WriteLine(item);
 
 			Assert.Equal(9, items[0]);
 			Assert.Equal(8, items[1]);
@@ -332,9 +320,6 @@ namespace Medja.Utils.Test.Collections.Generic
 				ringBuffer.Push(i);
 
 			var items = ringBuffer.FromHead().ToList();
-
-			foreach (var item in items)
-				Console.WriteLine(item);
 
 			Assert.Equal(9, items[0]);
 			Assert.Equal(8, items[1]);

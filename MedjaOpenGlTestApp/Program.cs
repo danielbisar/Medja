@@ -4,6 +4,7 @@ using Medja.OpenTk;
 using Medja.OpenTk.Rendering;
 using OpenTK.Graphics.OpenGL;
 using Medja.Primitives;
+using Medja.Theming;
 using MedjaOpenGlTestApp.Tests;
 
 namespace MedjaOpenGlTestApp
@@ -31,7 +32,8 @@ namespace MedjaOpenGlTestApp
 			//var test = new SimpleDockPanelTest(controlFactory);
 			//var test = new TabControlTest(controlFactory);
 			//var test = new TextBoxTest(controlFactory);
-			var test = new TouchButtonListTest(controlFactory);
+			//var test = new TouchButtonListTest(controlFactory);
+			var test = new Control3DTest(controlFactory);
 			
 			_window = application.CreateWindow();
 			_window.CenterOnScreen(800, 600);
@@ -45,20 +47,7 @@ namespace MedjaOpenGlTestApp
 		private static IRenderer CreateRenderer()
 		{
 			var openTkRenderer = new OpenTkRenderer();
-			openTkRenderer.Before3D = SetupOpenGl;
-
 			return openTkRenderer;
-		}
-
-		private static void SetupOpenGl()
-		{
-			GL.Enable(EnableCap.CullFace);
-			GL.CullFace(CullFaceMode.Back);
-			GL.Enable(EnableCap.DepthTest);
-
-			var color = _window.Background;
-			GL.ClearColor(color.Red, color.Green, color.Blue, 1.0f);
-			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
 		}
 	}
 }
