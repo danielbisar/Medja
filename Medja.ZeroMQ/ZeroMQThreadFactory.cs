@@ -46,7 +46,7 @@ namespace Medja.ZeroMQ
                         loopCallback(socket);
                     }
                 }
-                catch (ObjectDisposedException ode)
+                catch (ObjectDisposedException)
                 {
                     TraceObjectDisposedException(identifier);
                 }
