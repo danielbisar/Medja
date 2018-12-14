@@ -4,20 +4,21 @@ using OpenTK.Graphics.OpenGL;
 
 namespace Medja.OpenTk.Rendering
 {
-	public class SkiaGLLayer : IDisposable
+	/// <summary>
+	/// Acts as glue between OpenTK and SkiaSharp (uses the existing OpenGL context and creates a SkiaSurface from it)
+	/// </summary>
+	/// <remarks>Before rendering call <see cref="Resize"/> at least once.</remarks>
+	public class SkiaGlLayer : IDisposable
 	{
 		public readonly GRContext _grContext;
-		public GRBackendRenderTargetDesc _renderTarget;
+		public GRBackendRenderTarget _renderTarget;
 		public SKSurface _surface;
 
 		public SKCanvas Canvas { get; private set; }
 
-		public SkiaGLLayer()
+		public SkiaGlLayer()
 		{
-			_grContext = GRContext.Create(GRBackend.OpenGL);
-			_renderTarget = CreateRenderTarget();
-
-			//UpdateSurface();
+			_grContext = GRContext.CreateGl();
 		}
 
 		public void ResetContext()
@@ -27,23 +28,19 @@ namespace Medja.OpenTk.Rendering
 
 		public void Resize(int width, int height)
 		{
-			_renderTarget.Width = width;
-			_renderTarget.Height = height;
-
+			_renderTarget?.Dispose();
+			_renderTarget = CreateRenderTarget(width, height);
 			UpdateSurface();
 		}
 
 		private void UpdateSurface()
 		{
-			if (Canvas != null)
-				Canvas.Dispose();
+			Canvas?.Dispose();
+			_surface?.Dispose();
 
-			if (_surface != null)
-			    _surface.Dispose();
-			
 			OpenGLState.KeepState(() => 
 			{
-				_surface = SKSurface.Create(_grContext, _renderTarget);
+				_surface = SKSurface.Create(_grContext, _renderTarget, GRSurfaceOrigin.BottomLeft, GetColorType());
                 Canvas = _surface.Canvas;
                 ResetContext();
             });
@@ -51,37 +48,41 @@ namespace Medja.OpenTk.Rendering
 
 		public void Dispose()
 		{
-			if (Canvas != null)
-				Canvas.Dispose();
-
-			if (_surface != null)
-				_surface.Dispose();
-
+			Canvas?.Dispose();
+			_surface?.Dispose();
+			_renderTarget?.Dispose();
 			_grContext.Dispose();
 		}
 
-		private GRBackendRenderTargetDesc CreateRenderTarget()
+		/// <summary>
+		/// Creates the <see cref="GRBackendRenderTarget"/> based on the current OpenGL values.
+		/// </summary>
+		/// <param name="width">The width the target should have.</param>
+		/// <param name="height">The height the target should have.</param>
+		/// <returns>The <see cref="GRBackendRenderTarget"/>.</returns>
+		private GRBackendRenderTarget CreateRenderTarget(int width, int height)
 		{
-			int frameBuffer;
-			int stencil;
-			int samples;
-			int bufferWidth = 0;
-			int bufferHeight = 0;
+			GL.GetInteger(GetPName.FramebufferBinding, out var fboId);
+			GL.GetInteger(GetPName.Samples, out var sampleCount);
+			GL.GetInteger(GetPName.StencilBits, out var stencilBits);
+			
+			var glInfo = new GRGlFramebufferInfo((uint)fboId, GetColorType().ToGlSizedFormat());
+			var renderTarget = new GRBackendRenderTarget(width, height, sampleCount, stencilBits, glInfo);
 
-			GL.GetInteger(GetPName.FramebufferBinding, out frameBuffer);
-			GL.GetInteger(GetPName.StencilBits, out stencil);
-			GL.GetInteger(GetPName.Samples, out samples);
+			return renderTarget;
+		}
 
-			return new GRBackendRenderTargetDesc
-			{
-				Width = bufferWidth,
-				Height = bufferHeight,
-				Config = GRPixelConfig.Bgra8888,
-				Origin = GRSurfaceOrigin.BottomLeft,
-				SampleCount = samples,
-				StencilBits = stencil,
-				RenderTargetHandle = (IntPtr)frameBuffer,
-			};
+		private SKColorType GetColorType()
+		{
+			// TODO operation system specific implementation
+			// SKImageInfo.PlatformColorType should theoretically return a valid value but doesn't
+			// get the color bit values from OpenGL via
+			/*GL.GetInteger(GetPName.RedBits, out var red);
+			GL.GetInteger(GetPName.GreenBits, out var green);
+			GL.GetInteger(GetPName.BlueBits, out var blue);
+			GL.GetInteger(GetPName.AlphaBits, out var alpha);*/
+
+			return SKColorType.Rgba8888;
 		}
 	}
 }
