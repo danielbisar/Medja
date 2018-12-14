@@ -25,18 +25,22 @@ namespace MedjaOpenGlTestApp.Tests
                 controls[i].Margin.SetAll(10);
             }
 
-            var ct = _controlFactory.Create<ScrollingGrid>();
-            ct.SpacingX = 10;
-            ct.SpacingY = 10;
-            ct.RowHeight = 200;
-            ct.Background = Colors.LightGray;
-            ct.Margin.SetAll(10);
-            ct.Children.Add(controls[0]);
-            ct.Children.Add(controls[1]);
-            ct.Children.Add(controls[2]);
-            ct.Children.Add(controls[3]);
+            var scrollingGrid = _controlFactory.Create<ScrollingGrid>();
+            scrollingGrid.SpacingX = 10;
+            scrollingGrid.SpacingY = 10;
+            scrollingGrid.RowHeight = 200;
+            scrollingGrid.Background = Colors.LightGray;
+            scrollingGrid.Margin.SetAll(10);
+            scrollingGrid.Children.Add(controls[0]);
+            scrollingGrid.Children.Add(controls[1]);
+            scrollingGrid.Children.Add(controls[2]);
+            scrollingGrid.Children.Add(controls[3]);
+            
+            // doesn't make too much sense, just for testing
+            var dockPanel = _controlFactory.Create<DockPanel>();
+            dockPanel.Add(Dock.Fill, scrollingGrid);
 
-            return ct;
+            return dockPanel;
         }
     }
 }

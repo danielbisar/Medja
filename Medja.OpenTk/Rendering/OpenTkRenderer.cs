@@ -15,13 +15,13 @@ namespace Medja.OpenTk.Rendering
 	/// </summary>
 	public class OpenTkRenderer : IRenderer
 	{
-		private readonly SkiaGLLayer _skia;
+		private readonly SkiaGlLayer _skia;
 		private SKCanvas _canvas;
 		private readonly SKTypeface _defaultTypeface;
 
 		public OpenTkRenderer()
 		{
-			_skia = new SkiaGLLayer();
+			_skia = new SkiaGlLayer();
 			
 			// TODO remove 
 			_defaultTypeface = SKTypeface.FromFamilyName("Monospace");
