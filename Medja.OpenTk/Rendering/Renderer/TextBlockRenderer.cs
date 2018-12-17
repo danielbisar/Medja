@@ -59,7 +59,7 @@ namespace Medja.OpenTk.Rendering
 			_textDisabledPaint.TextSize = font.Size;
 			_textDisabledPaint.Color = _control.Foreground.GetLighter(0.25f).ToSKColor();
 
-			font.GetWidth = _textPaint.MeasureText;
+			font.GetWidth = GetTextWidth;
 			
 			// TODO not supported scenarios:
 			// - changing of foreground color of the control
@@ -67,6 +67,11 @@ namespace Medja.OpenTk.Rendering
 			// - using the actual font and size defined in the font object
 
 			_isControlInitialized = true;
+		}
+
+		private float GetTextWidth(string text)
+		{
+			return GetTextWidth(_textPaint, text);
 		}
 	}
 }

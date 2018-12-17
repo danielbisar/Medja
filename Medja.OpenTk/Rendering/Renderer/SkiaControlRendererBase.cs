@@ -130,5 +130,14 @@ namespace Medja.OpenTk.Rendering
 
 			//_paint.TextSize = font.Size;
 		}
+
+		protected float GetTextWidth(SKPaint paint, string text)
+		{
+			// paint.MeasureText throws an exception on text = null
+			if (string.IsNullOrEmpty(text))
+				return 0;
+
+			return paint.MeasureText(text);
+		}
 	}
 }
