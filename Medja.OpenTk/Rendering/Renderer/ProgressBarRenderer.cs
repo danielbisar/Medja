@@ -5,6 +5,11 @@ namespace Medja.OpenTk.Rendering
 {
 	public class ProgressBarRenderer : SkiaControlRendererBase<ProgressBar>
 	{
+		public ProgressBarRenderer(ProgressBar control) 
+		: base(control)
+		{
+		}
+		
 		protected override void InternalRender()
 		{
 			_paint.Color = SKColors.Black;

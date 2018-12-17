@@ -26,32 +26,30 @@ namespace Medja.OpenTk.Rendering
 		/// </summary>
 		protected SKRect _rect;
 
-		protected TControl _control;
-
 		public SKTypeface DefaultTypeFace { get; set; }
 
-		public SkiaControlRendererBase()
+		public SkiaControlRendererBase(TControl control)
+			: base(control)
 		{
 			_paint = new SKPaint();
 			_paint.IsAntialias = true;
 		}
 
-		protected override void Render(SKCanvas context, TControl control)
+		protected override void Render(SKCanvas context)
 		{
 			try
 			{
-				_control = control;
 				_canvas = context;
 				
-				var hasClipping = !control.ClippingArea.IsEmpty;
+				var hasClipping = !_control.ClippingArea.IsEmpty;
 
 				if (hasClipping)
 				{
 					_canvas.Save();
-					_canvas.ClipRect(control.ClippingArea.ToSKRect());
+					_canvas.ClipRect(_control.ClippingArea.ToSKRect());
 				}
 
-				_rect = control.Position.ToSKRect();
+				_rect = _control.Position.ToSKRect();
 
 				InternalRender();
 				
@@ -61,7 +59,6 @@ namespace Medja.OpenTk.Rendering
 			finally
 			{
 				_canvas = null;
-				_control = null;
 			}
 		}
 

@@ -10,7 +10,8 @@ namespace Medja.OpenTk.Rendering
 		
 		private bool _isControlInitialized;
 		
-		public TextBlockRenderer()
+		public TextBlockRenderer(TextBlock control)
+		: base(control)
 		{
 			_textPaint = new SKPaint();
 			_textPaint.IsAntialias = true;

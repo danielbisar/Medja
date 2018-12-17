@@ -8,7 +8,8 @@ namespace Medja.OpenTk.Rendering
 	{
 		private readonly Font _font;
 		
-		public TabControlRenderer()
+		public TabControlRenderer(TabControl control)
+			:base(control)
 		{
 			_font = new Font();
 		}

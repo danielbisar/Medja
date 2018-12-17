@@ -7,7 +7,8 @@ namespace Medja.OpenTk.Rendering
     {
         private readonly SKPaint _fillPaint;
         
-        public VerticalScrollBarRenderer()
+        public VerticalScrollBarRenderer(VerticalScrollBar control)
+        : base(control)
         {
             _fillPaint = new SKPaint();
             _fillPaint.IsAntialias = true;

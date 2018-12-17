@@ -12,7 +12,7 @@ namespace MedjaOpenGlTestApp
 		protected virtual OpenGlTestControl CreateOpenGlTestControl()
 		{
 			var result = new OpenGlTestControl();
-			result.Renderer = new OpenGlTestControlRenderer();
+			result.Renderer = new OpenGlTestControlRenderer(result);
 
 			return result;
 		}

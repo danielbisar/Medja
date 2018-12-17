@@ -8,7 +8,7 @@ namespace Medja.OpenTk.Rendering
 		protected override Button CreateButton()
 		{
 			var result = base.CreateButton();
-			result.Renderer = new ButtonRenderer();
+			result.Renderer = new ButtonRenderer(result);
 			result.Font.Name = "Monospace";
 			result.Position.Height = 50;
 
@@ -18,7 +18,7 @@ namespace Medja.OpenTk.Rendering
 		protected override CheckBox CreateCheckBox()
 		{
 			var result = base.CreateCheckBox();
-			result.Renderer = new CheckBoxRenderer();
+			result.Renderer = new CheckBoxRenderer(result);
 			result.Position.Height = 26;
 			
 			return result;
@@ -27,7 +27,7 @@ namespace Medja.OpenTk.Rendering
 		protected override Control CreateControl()
 		{
 			var result = base.CreateControl();
-			result.Renderer = new ControlRenderer();
+			result.Renderer = new ControlRenderer(result);
 
 			return result;
 		}
@@ -35,7 +35,7 @@ namespace Medja.OpenTk.Rendering
 		protected override ContentControl CreateContentControl()
 		{
 			var result = base.CreateContentControl();
-			result.Renderer = new ControlRenderer();
+			result.Renderer = new ControlRenderer(result);
 
 			return result;
 		}
@@ -43,7 +43,7 @@ namespace Medja.OpenTk.Rendering
 		protected override Dialog CreateDialog()
 		{
 			var result = base.CreateDialog();
-			result.Renderer = new ControlRenderer();
+			result.Renderer = new ControlRenderer(result);
 
 			return result;
 		}
@@ -59,7 +59,7 @@ namespace Medja.OpenTk.Rendering
 		protected override InputBoxDialog CreateInputBoxDialog()
 		{
 			var result = base.CreateInputBoxDialog();
-			result.Renderer = new ControlRenderer();
+			result.Renderer = new ControlRenderer(result);
 			result.Background = ColorMap.Primary;
 
 			return result;
@@ -68,7 +68,7 @@ namespace Medja.OpenTk.Rendering
 		protected override ScrollingGrid CreateScrollingGrid()
 		{
 			var result = base.CreateScrollingGrid();
-			result.Renderer = new ControlRenderer();
+			result.Renderer = new ControlRenderer(result);
 
 			return result;
 		}
@@ -76,7 +76,7 @@ namespace Medja.OpenTk.Rendering
 		protected override SimpleMessageDialog CreateSimpleMessageDialog()
 		{
 			var result = base.CreateSimpleMessageDialog();
-			result.Renderer = new ControlRenderer();
+			result.Renderer = new ControlRenderer(result);
 			result.Background = ColorMap.Primary;
 
 			return result;
@@ -85,7 +85,7 @@ namespace Medja.OpenTk.Rendering
 		protected override TabControl CreateTabControl()
 		{
 			var result = base.CreateTabControl();
-			result.Renderer = new TabControlRenderer();
+			result.Renderer = new TabControlRenderer(result);
 
 			return result;
 		}
@@ -93,7 +93,7 @@ namespace Medja.OpenTk.Rendering
 		protected override TextBox CreateTextBox()
 		{
 			var result = base.CreateTextBox();
-			result.Renderer = new TextBoxRenderer();
+			result.Renderer = new TextBoxRenderer(result);
 			result.Foreground = ColorMap.PrimaryText;
 			result.Background = ColorMap.Primary;
 			result.Font.Name = "Monospace";
@@ -105,7 +105,7 @@ namespace Medja.OpenTk.Rendering
 		protected override TextBlock CreateTextBlock()
 		{
 			var result = base.CreateTextBlock();
-			result.Renderer = new TextBlockRenderer();
+			result.Renderer = new TextBlockRenderer(result);
 			result.Foreground = ColorMap.PrimaryText;
 			result.Font.Name = "Monospace";
 			result.Position.Height = 23;
@@ -116,7 +116,7 @@ namespace Medja.OpenTk.Rendering
 		protected override ProgressBar CreateProgressBar()
 		{
 			var result = base.CreateProgressBar();
-			result.Renderer = new ProgressBarRenderer();
+			result.Renderer = new ProgressBarRenderer(result);
 
 			return result;
 		}
@@ -124,7 +124,7 @@ namespace Medja.OpenTk.Rendering
 		protected override QuestionDialog CreateQuestionDialog()
 		{
 			var result = base.CreateQuestionDialog();
-			result.Renderer = new ControlRenderer();
+			result.Renderer = new ControlRenderer(result);
 			result.Background = ColorMap.Primary;
 
 			return result;
@@ -133,7 +133,7 @@ namespace Medja.OpenTk.Rendering
 		protected override ComboBox<T> CreateComboBox<T>()
 		{
 			var result = base.CreateComboBox<T>();
-			result.Renderer = new ControlRenderer();
+			result.Renderer = new ControlRenderer(result);
 			result.Background = ColorMap.Primary;
 
 			return result;
@@ -142,7 +142,7 @@ namespace Medja.OpenTk.Rendering
 		protected override VerticalScrollBar CreateVerticalScrollBar()
 		{
 			var result = base.CreateVerticalScrollBar();
-			result.Renderer = new VerticalScrollBarRenderer();
+			result.Renderer = new VerticalScrollBarRenderer(result);
 			result.Position.Width = 20;
 			result.Background = ColorMap.Primary;
 
@@ -152,7 +152,7 @@ namespace Medja.OpenTk.Rendering
 		protected override ScrollableContainer CreateScrollableContainer()
 		{
 			var result = base.CreateScrollableContainer();
-			result.Renderer = new ControlRenderer();
+			result.Renderer = new ControlRenderer(result);
 
 			return result;
 		}

@@ -87,11 +87,11 @@ namespace Medja.OpenTk.Rendering
 			if (renderer is ISkiaRenderer skiaRenderer)
 			{
 				skiaRenderer.DefaultTypeFace = _defaultTypeface;
-				skiaRenderer.Render(_canvas, control);
+				skiaRenderer.Render(_canvas);
 			}
 			else if (renderer is IControlRenderer controlRenderer)
 			{
-				controlRenderer.Render(_canvas, control);
+				controlRenderer.Render(_canvas);
 			}
 		}
 
