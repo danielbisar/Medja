@@ -5,6 +5,12 @@ namespace Medja.OpenTk.Rendering
 {
     public class CheckBoxRenderer : SkiaControlRendererBase<CheckBox>
     {
+        public CheckBoxRenderer(CheckBox checkBox)
+            : base(checkBox)
+        {
+            
+        }
+        
         protected override void InternalRender()
         {
             RenderBackground();

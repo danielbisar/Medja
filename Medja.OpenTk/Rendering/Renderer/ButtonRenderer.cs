@@ -10,7 +10,8 @@ namespace Medja.OpenTk.Rendering
 		private readonly SKPaint _selectedPaint;
 		private readonly SKPaint _defaultPaint;
 		
-		public ButtonRenderer()
+		public ButtonRenderer(Button button)
+			: base(button)
 		{
 			_defaultPaint = new SKPaint();
 			_defaultPaint.IsAntialias = true;

@@ -4,6 +4,6 @@ namespace Medja.Theming
 {
 	public interface IControlRenderer
     {
-		void Render(object context, Control control);
+		void Render(object context);
     }
 }

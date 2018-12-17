@@ -21,7 +21,7 @@ namespace MedjaOpenGlTestApp.Tests
             for (int i = 0; i < 4; i++)
             {
                 controls[i] = new OpenGlTestControl();
-                controls[i].Renderer = new OpenGlTestControlRenderer();
+                controls[i].Renderer = new OpenGlTestControlRenderer(controls[i]);
                 controls[i].Margin.SetAll(10);
             }
 

@@ -12,14 +12,13 @@ namespace Medja.OpenTk.Rendering
     public abstract class OpenTKControlRendererBase<TControl> : ControlRendererBase<SKCanvas, TControl> 
             where TControl : Control
     {
-        protected TControl _control;
-        
         /// <summary>
         /// Set the clear buffer mask, is used in <see cref="Clear"/>.
         /// </summary>
         protected ClearBufferMask _clearBufferMask;
 
-        public OpenTKControlRendererBase()
+        public OpenTKControlRendererBase(TControl control)
+            : base(control)
         {
             _clearBufferMask = ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit |
                     ClearBufferMask.StencilBufferBit;
@@ -29,11 +28,8 @@ namespace Medja.OpenTk.Rendering
         /// Basic implementation what happens if you render a control with OpenTK.
         /// </summary>
         /// <param name="context">Is ignored.</param>
-        /// <param name="control">The control that should be rendered. Saved into <see cref="_control"/>.</param>
-        protected override void Render(SKCanvas context, TControl control)
+        protected override void Render(SKCanvas context)
         {
-            _control = control;
-            
             Setup3D();
             InternalRender();
             Reset3D();

@@ -19,7 +19,8 @@ namespace MedjaOpenGlTestApp
 		private readonly VertextBufferObject _vbo;
 		private float _rotation;
 		
-		public OpenGlTestControlRenderer()
+		public OpenGlTestControlRenderer(OpenGlTestControl control)
+		: base(control)
 		{
 			_rotation = (float) GetRandomNumber(1, 100);
 			var vertices = new List<Vector3>();

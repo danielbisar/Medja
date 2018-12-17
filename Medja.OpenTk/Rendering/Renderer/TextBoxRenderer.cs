@@ -9,7 +9,8 @@ namespace Medja.OpenTk.Rendering
 	{
 		private readonly Stopwatch _caretStopWatch;
 
-		public TextBoxRenderer()
+		public TextBoxRenderer(TextBox textBox)
+		: base(textBox)
 		{
 			_caretStopWatch = Stopwatch.StartNew();
 		}
