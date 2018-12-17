@@ -16,7 +16,7 @@ namespace Medja.Controls
 		/// <value>The tabs.</value>
 		public IReadOnlyList<TabItem> Tabs { get; }
 
-		public Property<TabItem> PropertySelectedTab;
+		public readonly Property<TabItem> PropertySelectedTab;
 		public TabItem SelectedTab
 		{
 			get { return PropertySelectedTab.Get(); }
@@ -78,7 +78,7 @@ namespace Medja.Controls
 
 		protected virtual void OnSelectedTabChanged(object sender, PropertyChangedEventArgs eventArgs)
 		{
-			if (SelectedTab == null)
+			if (SelectedTab == null || SelectedTab.Content == null)
 				Content = null;
 			else
 			{
@@ -96,9 +96,12 @@ namespace Medja.Controls
 
 		public virtual void AddTab(TabItem tabItem)
 		{
+			if(tabItem == null)
+				throw new ArgumentNullException(nameof(tabItem));
+			
 			_tabs.Add(tabItem);
 
-			if (_tabs.Count == 1)
+			if (_tabs.Count > 0 && !_tabs.Contains(SelectedTab))
 				SelectedTab = _tabs[0];
 		}
 
