@@ -8,10 +8,21 @@ namespace Medja
     /// </summary>
     public interface IMedjaLibrary
     {
+        /// <summary>
+        /// Gets the current <see cref="ControlFactory"/>. This allows theming of the UI.
+        /// </summary>
+        ControlFactory ControlFactory { get; }
+        
+        /// <summary>
+        /// Creates a new window; currently we support basically just one.
+        /// </summary>
+        /// <returns>The new <see cref="MedjaWindow"/> instance.</returns>
         MedjaWindow CreateWindow();
 
-        ControlFactory ControlFactory { get; }
-
-        void Run(MedjaApplication application);      
+        /// <summary>
+        /// Enters the Main-Loop of the program. Do not call this method directly but call <see cref="MedjaApplication.Run"/> instead.
+        /// </summary>
+        /// <param name="application">The current <see cref="MedjaApplication"/> instance.</param>
+        void Run(MedjaApplication application);
     }
 }

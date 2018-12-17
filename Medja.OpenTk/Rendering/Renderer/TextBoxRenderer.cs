@@ -20,14 +20,8 @@ namespace Medja.OpenTk.Rendering
 
 			var pos = _control.Position.ToSKPoint();
 			var padding = new Thickness(5, 0);
-
-			//if (control.TextWrapping == Primitives.TextWrapping.None)
-			//{
-			//  // shorten the text to renderable length
-			//  while (paint.MeasureText(text) > rect.Width
-			//         && text.Length > 1)
-			//      text = text.Substring(0, text.Length - 2);
-			//}
+			
+			// TODO textwrapping (use class TextWrapper)
 			
 			_paint.Color = _control.IsEnabled
 				? _control.Foreground.ToSKColor()
@@ -40,15 +34,13 @@ namespace Medja.OpenTk.Rendering
 
 			if (_control.IsFocused && _caretStopWatch.ElapsedTicks % 10000000 <= 5000000)
 			{
-				var textLength = _paint.MeasureText(_control.Text);
+				var textLength = GetTextWidth(_paint, _control.Text);
 				var caretLeft = _rect.Left + textLength;
 				var top = _rect.Top + _paint.FontSpacing - _paint.TextSize;
 				var bottom = top + _paint.FontSpacing;
 
 				_canvas.DrawLine(new SKPoint(caretLeft, top), new SKPoint(caretLeft, bottom), _paint);
 			}
-			
-			//paint.BreakText
 		}
 
 		private void RenderBottomLine()
