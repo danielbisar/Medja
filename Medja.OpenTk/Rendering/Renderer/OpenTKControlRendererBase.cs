@@ -16,12 +16,14 @@ namespace Medja.OpenTk.Rendering
         /// Set the clear buffer mask, is used in <see cref="Clear"/>.
         /// </summary>
         protected ClearBufferMask _clearBufferMask;
+        protected int[] _originalViewport;
 
         public OpenTKControlRendererBase(TControl control)
             : base(control)
         {
             _clearBufferMask = ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit |
                     ClearBufferMask.StencilBufferBit;
+            _originalViewport = new int[4];
         }
 
         /// <summary>
@@ -47,9 +49,16 @@ namespace Medja.OpenTk.Rendering
             GL.Enable(EnableCap.ScissorTest);
 
             var position = _control.Position;
+
+            // precondtion: viewport was setup for full screen height before using this method
+            GL.GetInteger(GetPName.Viewport, _originalViewport);
+
+            // OpenGL expects the viewport to be defined with y as the lower point of the control
+            // and its coordinates are turned upside down
+            var translatedY = _originalViewport[3] - (position.Y + position.Height);
             
-            GL.Viewport((int)position.X, (int)position.Y, (int)position.Width, (int)position.Height);
-            GL.Scissor((int)position.X, (int)position.Y, (int)position.Width, (int)position.Height);
+            GL.Viewport((int)position.X, (int)translatedY, (int)position.Width, (int)position.Height);
+            GL.Scissor((int)position.X, (int)translatedY, (int)position.Width, (int)position.Height);
 			
             Clear();
         }
@@ -75,6 +84,8 @@ namespace Medja.OpenTk.Rendering
         {
             GL.Disable(EnableCap.ScissorTest);
             GL.Disable(EnableCap.DepthTest);
+            
+            GL.Viewport(_originalViewport[0], _originalViewport[1], _originalViewport[2], _originalViewport[3]);
         }
     }
 }

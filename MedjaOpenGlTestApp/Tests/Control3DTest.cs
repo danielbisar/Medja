@@ -16,12 +16,15 @@ namespace MedjaOpenGlTestApp.Tests
         
         public Control Create()
         {
-            var controls = new OpenGlTestControl[4];
+            var controls = new Control[4];
 
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 3; i++)
             {
-                controls[i] = new OpenGlTestControl();
-                controls[i].Renderer = new OpenGlTestControlRenderer(controls[i]);
+                var openglctrl =new OpenGlTestControl();
+                controls[i] = openglctrl;
+                controls[i].Renderer = new OpenGlTestControlRenderer(openglctrl);
+
+                //controls[i] = _controlFactory.Create<Button>();
                 controls[i].Margin.SetAll(10);
             }
 
@@ -31,10 +34,9 @@ namespace MedjaOpenGlTestApp.Tests
             scrollingGrid.RowHeight = 200;
             scrollingGrid.Background = Colors.LightGray;
             scrollingGrid.Margin.SetAll(10);
-            scrollingGrid.Children.Add(controls[0]);
-            scrollingGrid.Children.Add(controls[1]);
-            scrollingGrid.Children.Add(controls[2]);
-            scrollingGrid.Children.Add(controls[3]);
+            
+            for(int i = 0; i < controls.Length && controls[i] != null; i++)
+                scrollingGrid.Children.Add(controls[i]);
             
             // doesn't make too much sense, just for testing
             var dockPanel = _controlFactory.Create<DockPanel>();
