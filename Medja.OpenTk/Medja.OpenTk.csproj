@@ -103,9 +103,6 @@
     <Folder Include="Window\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="libHarfBuzzSharp.so">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="libSkiaSharp.so">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
