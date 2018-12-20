@@ -75,16 +75,6 @@ namespace Medja.Utils.Threading.Tasks
 
             return task;
         }
-        
-        /// <summary>
-        /// Enqueues the given function onto the queue.
-        /// </summary>
-        /// <param name="func">The function to execute.</param>
-        /// <returns>The functions result.</returns>
-        public Task<TResult> Enqueue(Func<TResult> func)
-        {
-            return Enqueue(state => func(), null);
-        }
 
         private void AssureNotDisposed()
         {
@@ -102,6 +92,16 @@ namespace Medja.Utils.Threading.Tasks
             
             _waitHandle.WaitOne();
 
+            ExecuteAll();
+        }
+
+        /// <summary>
+        /// Executes all tasks currently placed inside the queue.
+        /// </summary>
+        public void ExecuteAll()
+        {
+            AssureNotDisposed();
+            
             while (_isDisposed != 1
                     && !_cancellationTokenSource.IsCancellationRequested
                     && _taskQueue.TryDequeue(out var task))

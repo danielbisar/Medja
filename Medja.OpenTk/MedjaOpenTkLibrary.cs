@@ -6,6 +6,7 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using Medja.OpenTk.Input;
 using Medja.Theming;
+using Medja.Utils.Threading.Tasks;
 
 namespace Medja.OpenTk
 {
@@ -25,6 +26,8 @@ namespace Medja.OpenTk
 		private ControlHierarchy _controlHierarchy;
 
 		public ControlFactory ControlFactory { get; }
+		
+		public TaskQueue<object> TaskQueue { get; }
 
 		/// <summary>
 		/// Gets or sets the function that is used to create the renderer. 
@@ -39,6 +42,7 @@ namespace Medja.OpenTk
 			RendererFactory = () => new OpenTkRenderer();
 			_focusManager = new FocusManager();
 			_controls = new List<Control>();
+			TaskQueue = new TaskQueue<object>();
 		}
 
 		/// <inheritdoc />
@@ -95,6 +99,9 @@ namespace Medja.OpenTk
 			_controls.AddRange(_controlHierarchy.GetInRenderingOrder());
 			
 			_controlHierarchy.UpdateLayout();
+			
+			// executes all task requested by anyone in the requested order
+			TaskQueue.ExecuteAll();
 		}
 
 		private void OnRenderFrame(object sender, FrameEventArgs e)
