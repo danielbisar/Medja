@@ -31,6 +31,10 @@ namespace Medja
         }
 
         private readonly IMedjaLibrary _library;
+        public IMedjaLibrary Library
+        {
+            get { return _library; }
+        }
 
         private MedjaWindow _mainWindow;
         public MedjaWindow MainWindow
