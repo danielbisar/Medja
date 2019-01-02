@@ -25,9 +25,12 @@ namespace MedjaOpenGlTestApp
 			_rotation = (float) GetRandomNumber(1, 100);
 			var vertices = new List<Vector3>();
 
-			for (int i = 0; i <= 10; i++)
+			var depth = 1000;
+			var width = 1000;
+			
+			for (int i = 0; i <= depth; i++)
 			{
-				for (int j = 0; j < 100; j++)
+				for (int j = 0; j < width; j++)
 				{
 					var x = j / 100.0f;
 					var y = (float)Math.Sin(x * Math.PI);
@@ -39,7 +42,7 @@ namespace MedjaOpenGlTestApp
 				}
 			}
 
-			vertices = ReorderPointsForQuads(vertices, 100);
+			vertices = ReorderPointsForQuads(vertices, width);
 
 			_vbo = new VertextBufferObject();
 			_vbo.UpdateData(vertices);
@@ -75,7 +78,7 @@ namespace MedjaOpenGlTestApp
 			GL.Translate(new Vector3(-0.5f, -0.5f, 1.0f));
 			GL.Color4(Color4.White);
 			
-			_vbo.Draw(PrimitiveType.Quads);
+			_vbo.Draw(PrimitiveType.Points);
 		}
 	}
 }

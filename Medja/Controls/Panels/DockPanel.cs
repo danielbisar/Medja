@@ -13,6 +13,7 @@ namespace Medja.Controls
 	/// </summary>
 	public class DockPanel : Panel
 	{
+		private static readonly int MarkLayoutDirtyHelperId = AttachedPropertyIdFactory.NewId();
 		private readonly Dictionary<Control, Dock> _docks;
 
 		public DockPanel()
@@ -24,18 +25,27 @@ namespace Medja.Controls
 		{
 			_docks.Add(control, dock);
 			Children.Add(control);
+			
+			var helper = control.PropertyVisibility.AffectsLayout(this);
+			control.SetAttachedProperty(MarkLayoutDirtyHelperId, helper);
 		}
 
 		public void Insert(Dock dock, Control control, int index)
 		{
 			_docks.Add(control, dock);
 			Children.Insert(index, control);
+			
+			var helper = control.PropertyVisibility.AffectsLayout(this);
+			control.SetAttachedProperty(MarkLayoutDirtyHelperId, helper);
 		}
 
 		public void Remove(Control control)
 		{
 			_docks.Remove(control);
 			Children.Remove(control);
+
+			var markLayoutDirtyHelper = control.GetAttachedProperty<IDisposable>(MarkLayoutDirtyHelperId);
+			markLayoutDirtyHelper?.Dispose();
 		}
 
 		/// <summary>

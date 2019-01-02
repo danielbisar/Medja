@@ -18,7 +18,7 @@ namespace MedjaOpenGlTestApp.Tests
         {
             var controls = new Control[4];
 
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 1; i++)
             {
                 var openglctrl =new OpenGlTestControl();
                 controls[i] = openglctrl;

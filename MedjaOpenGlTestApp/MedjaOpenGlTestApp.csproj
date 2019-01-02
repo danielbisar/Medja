@@ -59,6 +59,7 @@
     <Compile Include="Tests\TabControlTest.cs" />
     <Compile Include="Tests\TextBoxTest.cs" />
     <Compile Include="Tests\TouchButtonListTest.cs" />
+    <Compile Include="Tests\VisibilityTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Medja.OpenTk\Medja.OpenTk.csproj">
