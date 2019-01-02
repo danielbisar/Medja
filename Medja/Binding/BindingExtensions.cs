@@ -68,9 +68,9 @@ namespace Medja
         /// <param name="control">The control that is affected by the layout. This should be the control
         /// containing the property.</param>
         /// <typeparam name="T">The properties value type.</typeparam>
-        public static void AffectsLayout<T>(this Property<T> property, Control control)
+        public static MarkLayoutDirtyHelper<T> AffectsLayout<T>(this Property<T> property, Control control)
         {
-            property.PropertyChanged += (s, e) => { control.IsLayoutUpdated = false; };
+            return new MarkLayoutDirtyHelper<T>(control, property);
         }
 
         /// <summary>
