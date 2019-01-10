@@ -27,7 +27,7 @@ namespace Medja.Controls
             _enumToViewMap = new Dictionary<TEnum, Control>();
             
             PropertyCurrentView = new Property<TEnum>();
-            PropertyCurrentView.PropertyChanged += OnPropertyChanged;
+            PropertyCurrentView.PropertyChanged += OnCurrentViewChanged;
         }
 
         public void SetView(TEnum value, Control control)
@@ -39,9 +39,15 @@ namespace Medja.Controls
                 Content = actualControl;
         }
         
-        private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void OnCurrentViewChanged(object sender, PropertyChangedEventArgs e)
         {
+            if(Content != null && Content is INavigationView navigationView)
+                navigationView.OnHideView();
+            
             Content = _enumToViewMap[CurrentView];
+            
+            if(Content != null && Content is INavigationView shownNavigationView)
+                shownNavigationView.OnShowView();
         }
     }
 }
