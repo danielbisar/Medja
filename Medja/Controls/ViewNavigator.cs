@@ -36,16 +36,30 @@ namespace Medja.Controls
             _enumToViewMap[value] = actualControl;
 
             if (Equals(CurrentView, value))
+            {
+                InvokeOnHideView();
                 Content = actualControl;
+                InvokeOnShowView();
+            }
         }
         
         private void OnCurrentViewChanged(object sender, PropertyChangedEventArgs e)
         {
-            if(Content != null && Content is INavigationView navigationView)
-                navigationView.OnHideView();
+            InvokeOnHideView();
             
             Content = _enumToViewMap[CurrentView];
             
+            InvokeOnShowView();
+        }
+
+        private void InvokeOnHideView()
+        {
+            if(Content != null && Content is INavigationView navigationView)
+                navigationView.OnHideView();
+        }
+
+        private void InvokeOnShowView()
+        {
             if(Content != null && Content is INavigationView shownNavigationView)
                 shownNavigationView.OnShowView();
         }
