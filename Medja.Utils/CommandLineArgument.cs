@@ -14,7 +14,7 @@ namespace Medja.Utils
         public Action<ArraySegment<string>> Action { get; set; }
         
         /// <summary>
-        /// Action that is used for positional arguments, otherwise Action will be used.
+        /// Action that is used for positional arguments.
         /// </summary>
         public Action<string> PositionalAction { get; set; }
 

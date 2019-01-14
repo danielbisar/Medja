@@ -128,8 +128,9 @@ namespace Medja.Utils
                     {
                         Console.WriteLine("Unknown argument: " + arg);
                         _helpArgument?.Action(EmptyForwardedArguments);
-                        return;
                     }
+                    
+                    return;
                 }
 
                 ArraySegment<string> forwardedArguments;
