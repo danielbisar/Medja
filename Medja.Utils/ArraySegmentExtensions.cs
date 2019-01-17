@@ -23,7 +23,7 @@ namespace Medja.Utils
         /// Uses <see cref="BitConverter.ToInt32"/> if the segment has at least 4 bytes left.
         /// </summary>
         /// <param name="arraySegment">The <see cref="ArraySegment{Byte}"/>.</param>
-        /// <returns></returns>
+        /// <returns>0 if less than 4 bytes are left, else the converter value.</returns>
         public static int ToInt32(this ArraySegment<byte> arraySegment)
         {
             if (arraySegment.Count < 4)
