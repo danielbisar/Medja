@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using Medja;
 using Medja.Controls;
 using Medja.OpenTk;
@@ -6,7 +8,9 @@ using Medja.OpenTk.Rendering;
 using OpenTK.Graphics.OpenGL;
 using Medja.Primitives;
 using Medja.Theming;
+using Medja.Utils;
 using MedjaOpenGlTestApp.Tests;
+using MedjaOpenGlTestApp.Tests.Performance;
 using OpenTK;
 using SkiaSharp;
 
