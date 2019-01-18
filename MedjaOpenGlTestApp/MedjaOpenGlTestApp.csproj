@@ -52,7 +52,8 @@
     <Compile Include="Tests\DialogTest.cs" />
     <Compile Include="Tests\DockPanelTest.cs" />
     <Compile Include="Tests\MultithreadingTest.cs" />
-    <Compile Include="Tests\Performance\BytesToInt32.cs" />
+    <Compile Include="Tests\Performance\BytesToInt32PerfTest.cs" />
+    <Compile Include="Tests\Performance\SequentialFileNamePerfTest.cs" />
     <Compile Include="Tests\ScrollableContainerTest.cs" />
     <Compile Include="Tests\ScrollingGridTest.cs" />
     <Compile Include="Tests\SideControlsContainerTest.cs" />

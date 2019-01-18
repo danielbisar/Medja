@@ -5,7 +5,7 @@ using Medja.Utils;
 
 namespace MedjaOpenGlTestApp.Tests.Performance
 {
-    public class BytesToInt32
+    public class BytesToInt32PerfTest
     {
         // BitConverter.ToInt32 direct call - for loop
         // Conversion took: 00:00:00.7743267
