@@ -22,6 +22,13 @@ namespace MedjaOpenGlTestApp
 
 		public static void Main(string[] args)
 		{
+			var sequentialFileNamesPerfTest = new SequentialFileNamePerfTest();
+			sequentialFileNamesPerfTest.Run();
+			sequentialFileNamesPerfTest.Run();
+			sequentialFileNamesPerfTest.Run();
+
+			return;
+			
 			var library = new MedjaOpenTkLibrary(new TestAppTheme());
 			library.RendererFactory = CreateRenderer;
 

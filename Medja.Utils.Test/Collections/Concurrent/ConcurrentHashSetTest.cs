@@ -20,7 +20,9 @@ namespace Medja.Utils.Test.Collections.Concurrent
             Assert.Collection(concurrentHashSet, i => Assert.Equal(1, i));
             
             concurrentHashSet.Add(2);
-            Assert.Collection(concurrentHashSet, i => Assert.Equal(1, i), i => Assert.Equal(2, i));
+            Assert.Collection(concurrentHashSet, 
+                              i => Assert.Equal(1, i), 
+                              i => Assert.Equal(2, i));
             
             concurrentHashSet.Remove(1);
             Assert.Collection(concurrentHashSet, i => Assert.Equal(2, i));
