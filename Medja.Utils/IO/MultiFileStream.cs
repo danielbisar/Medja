@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace Medja.Utils.IO
 {
@@ -12,57 +10,89 @@ namespace Medja.Utils.IO
     /// </summary>
     public class MultiFileStream : Stream
     {
-        private readonly FileMode _fileMode;
-        private readonly long _maxFileSize;
         private readonly SequentialFileNames _sequentialFileNames;
+        private readonly MultiFileStreamSettings _settings;
 
         // the currently used internal stream
         private Stream _currentStream;
         private bool _isDisposed;
         private int _fileNameIndex;
-        
-        public override bool CanRead { get; }
+
+        public override bool CanRead
+        {
+            get { return _currentStream?.CanRead ?? false; }
+        }
 
         public override bool CanSeek
         {
-            get { return _currentStream.CanSeek; }
+            get { return false; }
         }
 
         public override bool CanWrite
         {
-            get { return _currentStream.CanWrite; }
+            get { return _currentStream?.CanWrite ?? false; }
         }
-        
-        public override long Length { get; }
-        public override long Position { get; set; }
+
+        private long _length;
+        /// <summary>
+        /// Gets the length. Currently this only returns the sum of all files that existed when the
+        /// <see cref="MultiFileStream"/> was created. TODO: implement correct behavior in class. 
+        /// </summary>
+        public override long Length
+        {
+            get { return _length; }
+        }
+
+        private long _position;
+        /// <summary>
+        /// Gets the position inside the stream(s). Seeking is currently not supported.
+        /// </summary>
+        public override long Position
+        {
+            get { return _position;}
+            set { throw new NotSupportedException(); }
+        }
 
         /// <summary>
         /// Creates a new instance.
         /// </summary>
-        /// <param name="baseFileName">The base filename. Each file gets a suffix starting from .0 until .N</param>
-        /// <param name="fileMode">The <see cref="FileMode"/>.</param>
-        /// <param name="maxFileSize">The maximum size of a single file. Is ignored for <see cref="FileMode.Open"/>.</param>
-        public MultiFileStream(string baseFileName, FileMode fileMode, long maxFileSize)
+        /// <param name="settings"></param>
+        public MultiFileStream(MultiFileStreamSettings settings)
         {
-            if (fileMode != FileMode.OpenOrCreate && fileMode != FileMode.Open)
-                throw new ArgumentOutOfRangeException(nameof(fileMode), fileMode, "The given mode is not supported.");
-            
-            if(fileMode != FileMode.Open && maxFileSize < 1)
-                throw new ArgumentOutOfRangeException(nameof(maxFileSize), maxFileSize, "Must be >= 1 except for FileMode.Open.");
+            _settings = settings ?? throw new ArgumentNullException(nameof(settings));
+            _settings.Validate();
 
-            _fileMode = fileMode;
-            _maxFileSize = maxFileSize;
-            _sequentialFileNames = new SequentialFileNames(baseFileName);
+            _sequentialFileNames = new SequentialFileNames(settings.BaseName);
             _fileNameIndex = -1;
 
-            VerifyExistingFiles();
+            PrepareFilesAndNames();
             
             OpenNextStream(true);
         }
 
-        private void VerifyExistingFiles()
+        private void PrepareFilesAndNames()
         {
             _sequentialFileNames.Load();
+
+            var fileMode = _settings.FileMode;
+            
+            if (fileMode == FileMode.Create)
+            {
+                foreach(var fileName in _sequentialFileNames.FileNames)
+                    File.Delete(fileName);
+                
+                _sequentialFileNames.Clear();
+            }
+            else if (fileMode == FileMode.Open && _sequentialFileNames.FileNames.Count == 0)
+            {
+                throw new FileNotFoundException("Could not find any file matching the specified base file name.", _sequentialFileNames.BaseName);
+            }
+            else if(fileMode == FileMode.CreateNew && _sequentialFileNames.FileNames.Count != 0)
+                throw new IOException("Files with the given baseFileName already exist.");
+
+            foreach (var fileName in _sequentialFileNames.FileNames)
+                _length += new FileInfo(fileName).Length;
+            
             _fileNameIndex = -1;
         }
 
@@ -76,7 +106,7 @@ namespace Medja.Utils.IO
 
             if (_fileNameIndex == _sequentialFileNames.FileNames.Count)
             {
-                if(!allowNewFile || _fileMode == FileMode.Open)
+                if(!allowNewFile || _settings.FileMode == FileMode.Open)
                     throw new EndOfStreamException();
                 
                 fileName = _sequentialFileNames.AddNext();
@@ -89,7 +119,10 @@ namespace Medja.Utils.IO
 
         private Stream OpenStream(string fileName)
         {
-            return File.Open(fileName, _fileMode);
+            var fileAccess = _settings.FileAccess ??
+                    (_settings.FileMode == FileMode.Append ? FileAccess.Write : FileAccess.ReadWrite);
+            
+            return new FileStream(fileName, _settings.FileMode, fileAccess, FileShare.None, _settings.BufferSize, _settings.FileOptions);
         }
 
         /// <summary>
@@ -111,13 +144,21 @@ namespace Medja.Utils.IO
             // both Position and Length are properties in FileStream that use calculations
             var pos = _currentStream.Position;
             var len = _currentStream.Length;
+            int readBytes;
             
             if (pos + count <= len)
-                return _currentStream.Read(buffer, offset, count);
-            
-            var readBytes = (int) (len - pos);
+            {
+                readBytes = _currentStream.Read(buffer, offset, count);
+                _position += readBytes;
+                
+                return readBytes;
+            }
+
+            readBytes = (int) (len - pos);
             readBytes = _currentStream.Read(buffer, offset, readBytes);
 
+            _position += readBytes;
+            
             // no more files to read from left
             if (_fileNameIndex == _sequentialFileNames.FileNames.Count - 1)
                 return readBytes;
@@ -148,14 +189,18 @@ namespace Medja.Utils.IO
         {
             // both Position and Length are properties in FileStream that use calculations
             var pos = _currentStream.Position;
-            
-            if(pos + count <= _maxFileSize)
+
+            if (pos + count <= _settings.MaxFileSize)
+            {
                 _currentStream.Write(buffer, offset, count);
+                _position += count;
+            }
             else
             {
-                var leftBytesForCurrentStream = (int)(_maxFileSize - pos);
+                var leftBytesForCurrentStream = (int)(_settings.MaxFileSize - pos);
                 _currentStream.Write(buffer, offset, leftBytesForCurrentStream);
 
+                _position += leftBytesForCurrentStream;
                 offset += leftBytesForCurrentStream;
                 count -= leftBytesForCurrentStream;
 
@@ -173,8 +218,11 @@ namespace Medja.Utils.IO
                 base.Dispose(disposing);
 
                 if (_currentStream != null)
+                {
                     _currentStream.Dispose();
-                
+                    _currentStream = null;
+                }
+
                 _isDisposed = true;
             }
         }

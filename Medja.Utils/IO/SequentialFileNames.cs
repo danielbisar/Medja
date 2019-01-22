@@ -11,6 +11,16 @@ namespace Medja.Utils.IO
     public class SequentialFileNames
     {
         private readonly string _baseName;
+
+        /// <summary>
+        /// Gets the <see cref="BaseName"/>. This is the suffix of the file names generated including the path
+        /// (can be relative).
+        /// </summary>
+        public string BaseName
+        {
+            get { return _baseName; }
+        }
+
         private readonly List<string> _fileNames;
         public IReadOnlyList<string> FileNames
         {
