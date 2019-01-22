@@ -26,7 +26,8 @@ namespace Medja.Utils
 
         public bool MoveNext()
         {
-            return _i++ < _arguments.Count;
+            _i++;
+            return _i < _arguments.Count;
         }
 
         public void Reset()

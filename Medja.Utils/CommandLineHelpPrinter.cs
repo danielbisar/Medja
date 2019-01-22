@@ -34,7 +34,7 @@ namespace Medja.Utils
 
             var sortedArguments = _parser.Arguments.OrderBy(p => p.LongForm);
             //var argumentFormat = string.Format("{{0,-{0}}}\t{{1,-{1}}}", firstColumnWidth, 80 - firstColumnWidth);
-            var argumentDescFormat = "{0,-" + (80 - firstColumnWidth).ToString() + "}";
+            var argumentDescFormat = "{0,-" + (80 - firstColumnWidth) + "}";
 
             foreach (var argument in sortedArguments)
             {
@@ -49,6 +49,9 @@ namespace Medja.Utils
 
                     addedLength += 2 + argument.ShortForm.Length;
                 }
+
+                if (argument.HasValue)
+                    sb.Append(GetValueString(argument));
 
                 if (argument.HasSubArguments)
                 {
@@ -81,12 +84,20 @@ namespace Medja.Utils
             if (!string.IsNullOrEmpty(argument.ShortForm))
                 result += 2 + argument.ShortForm.Length;
 
+            if (argument.HasValue)
+                result += GetValueString(argument).Length;
+
             // 1 for " " before the <option> string
             if (argument.HasSubArguments)
                 result += 1 + SubArgumentStr.Length;
 
             // at least 10 chars for the first column
             return System.Math.Max(10, result);
+        }
+
+        private string GetValueString(CommandLineArgument argument)
+        {
+            return "=" + (argument.ValueString ?? "value");
         }
     }
 }
