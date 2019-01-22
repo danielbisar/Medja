@@ -8,9 +8,14 @@ namespace Medja.Utils.Test
 {
     public class MultiFileStreamTest
     {
-        private IReadOnlyList<string> WriteFiles(string baseName, long maxFileSize, byte bufferSize)
+        private IReadOnlyList<string> WriteFiles(string baseName, long maxFileSize, byte bufferSize, FileMode fileMode = FileMode.OpenOrCreate)
         {
-            using (var multiFileStream = new MultiFileStream(baseName, FileMode.OpenOrCreate, maxFileSize))
+            using (var multiFileStream = new MultiFileStream(new MultiFileStreamSettings
+            {
+                    BaseName = baseName,
+                    FileMode = fileMode,
+                    MaxFileSize = maxFileSize
+            }))
             {
                 var buffer = new byte[bufferSize];
 
@@ -26,13 +31,13 @@ namespace Medja.Utils.Test
             }
         }
         
-        private void WriteTest(string baseName, long maxFileSize, byte bufferSize, Action<IReadOnlyList<string>> assertFiles)
+        private void WriteTest(string baseName, long maxFileSize, byte bufferSize, Action<IReadOnlyList<string>> assertFiles, FileMode fileMode = FileMode.OpenOrCreate)
         {
             IReadOnlyList<string> fileNames = null;
             
             try
             {
-                fileNames = WriteFiles(baseName, maxFileSize, bufferSize);
+                fileNames = WriteFiles(baseName, maxFileSize, bufferSize, fileMode);
                 assertFiles(fileNames);
             }
             finally
@@ -63,7 +68,10 @@ namespace Medja.Utils.Test
             
             WriteFiles(baseName, 10, 30);
 
-            using (var multiFileStream = new MultiFileStream(baseName, FileMode.Open, 0))
+            using (var multiFileStream = new MultiFileStream(new MultiFileStreamSettings
+            {
+                    BaseName = baseName, FileMode = FileMode.Open
+            }))
             {
                 var buffer = new byte[5];
                 var readBytes = multiFileStream.Read(buffer);
@@ -82,7 +90,10 @@ namespace Medja.Utils.Test
             
             WriteFiles(baseName, 10, 30);
 
-            using (var multiFileStream = new MultiFileStream(baseName, FileMode.Open, 0))
+            using (var multiFileStream = new MultiFileStream(new MultiFileStreamSettings
+            {
+                    BaseName = baseName, FileMode = FileMode.Open
+            }))
             {
                 var buffer = new byte[10];
                 var readBytes = multiFileStream.Read(buffer);
@@ -101,7 +112,10 @@ namespace Medja.Utils.Test
             
             WriteFiles(baseName, 10, 30);
 
-            using (var multiFileStream = new MultiFileStream(baseName, FileMode.Open, 0))
+            using (var multiFileStream = new MultiFileStream(new MultiFileStreamSettings
+            {
+                    BaseName = baseName, FileMode = FileMode.Open
+            }))
             {
                 var buffer = new byte[30];
                 var readBytes = multiFileStream.Read(buffer);
@@ -158,13 +172,72 @@ namespace Medja.Utils.Test
 
             var baseName = "./canWrite";
             
-            using (multiFileStream = new MultiFileStream(baseName, FileMode.OpenOrCreate, 10))
+            using (multiFileStream = new MultiFileStream(new MultiFileStreamSettings
+            {
+                    BaseName = baseName, FileMode = FileMode.OpenOrCreate,
+                    MaxFileSize = 10
+            }))
             {
                 Assert.True(multiFileStream.CanWrite);
             }
             
             File.Delete(baseName + ".0");
             Assert.False(multiFileStream.CanWrite);
+        }
+
+        [Fact]
+        public void FileModeCreateTest()
+        {
+            var baseName = "./fileModeCreateTest";
+            
+            WriteTest(baseName, 10, 10*3, fileNames =>
+            {
+                Assert.Collection(fileNames, 
+                                  p => Assert.Equal(baseName+".0",p),
+                                  p => Assert.Equal(baseName+".1",p),
+                                  p => Assert.Equal(baseName+".2",p));
+            }, FileMode.Create);
+            
+            File.Create(baseName + ".0").Dispose();
+            File.Create(baseName + ".1").Dispose();
+            
+            WriteTest(baseName, 10, 10*3, fileNames =>
+            {
+                Assert.Collection(fileNames, 
+                                  p => Assert.Equal(baseName+".0",p),
+                                  p => Assert.Equal(baseName+".1",p),
+                                  p => Assert.Equal(baseName+".2",p));
+            }, FileMode.Create);
+        }
+        
+        [Fact]
+        public void FileModeCreateNewTest()
+        {
+            var baseName = "./fileModeCreateNewTest";
+            File.Create(baseName + ".0").Dispose();
+
+            Assert.Throws<IOException>(() => 
+            {
+                using (var multiFileStream = new MultiFileStream(new MultiFileStreamSettings
+                {
+                        BaseName = baseName,
+                        FileMode = FileMode.CreateNew
+                }))
+                {
+                    // we should never reach that point
+                    Assert.False(multiFileStream.CanWrite);
+                }
+            });
+            
+            File.Delete(baseName + ".0");
+            
+            WriteTest(baseName, 10, 10*3, fileNames =>
+            {
+                Assert.Collection(fileNames, 
+                                  p => Assert.Equal(baseName+".0",p),
+                                  p => Assert.Equal(baseName+".1",p),
+                                  p => Assert.Equal(baseName+".2",p));
+            }, FileMode.CreateNew);
         }
     }
 }
