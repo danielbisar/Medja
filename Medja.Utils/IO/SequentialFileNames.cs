@@ -52,7 +52,8 @@ namespace Medja.Utils.IO
         {
             Clear();
 
-            var files = new FileInfo(_baseName).Directory.GetFiles(_baseName + "*");
+            var baseFileInfo = new FileInfo(_baseName);
+            var files = baseFileInfo.Directory.GetFiles(baseFileInfo.Name + "*");
             var numbers = new List<int>(files.Length);
 
             foreach (var fileInfo in files)
