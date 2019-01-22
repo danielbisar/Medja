@@ -64,10 +64,14 @@ namespace Medja.Utils.IO
                 if(lastIndexOfDot == -1)
                     continue;
                 
+                // ignore other files names (f.e. baseName = 'abc.' and found file is 'abc..0')
+                if(baseFileInfo.Name.Length-1 != lastIndexOfDot)
+                    continue;
+                
                 if(!int.TryParse(name.Substring(lastIndexOfDot + 1), out var n))
                     continue;
 
-                _fileNames.Add(name);
+                _fileNames.Add(fileInfo.FullName);
                 numbers.Add(n);
             }
             
