@@ -32,7 +32,7 @@ namespace Medja.Utils.IO
             if(string.IsNullOrWhiteSpace(baseName))
                 throw new ArgumentException("May not be null or empty or whitespaces.",nameof(baseName));
             
-            _baseName = baseName + ".";
+            _baseName = baseName;
             _fileNames = new List<string>();
         }
 
@@ -42,7 +42,9 @@ namespace Medja.Utils.IO
         /// <returns>The added file name.</returns>
         public string AddNext()
         {
-            var fileName = new FileInfo(_baseName).FullName + _fileNames.Count;
+            // it seems .net core has a bug that will lead to new FileInfo(_baseName).FullName if the '.' is 
+            // included in _baseName FullName would omit it.
+            var fileName = new FileInfo(_baseName).FullName + "." + _fileNames.Count;
             _fileNames.Add(fileName);
 
             return fileName;
@@ -52,7 +54,7 @@ namespace Medja.Utils.IO
         {
             Clear();
 
-            var baseFileInfo = new FileInfo(_baseName);
+            var baseFileInfo = new FileInfo(_baseName + ".");
             var files = baseFileInfo.Directory.GetFiles(baseFileInfo.Name + "*");
             var numbers = new List<int>(files.Length);
 
