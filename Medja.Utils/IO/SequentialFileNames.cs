@@ -42,7 +42,7 @@ namespace Medja.Utils.IO
         /// <returns>The added file name.</returns>
         public string AddNext()
         {
-            var fileName = _baseName + _fileNames.Count;
+            var fileName = new FileInfo(_baseName).FullName + _fileNames.Count;
             _fileNames.Add(fileName);
 
             return fileName;
