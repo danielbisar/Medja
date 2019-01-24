@@ -10,13 +10,13 @@ namespace Medja.Utils.IO
     /// </summary>
     public class MultiFileStream : Stream
     {
-        private readonly SequentialFileNames _sequentialFileNames;
         private readonly MultiFileStreamSettings _settings;
-
+        private readonly MultiFileManager _multiFileManager;
+        private string _currentFileName;
+        
         // the currently used internal stream
         private Stream _currentStream;
         private bool _isDisposed;
-        private int _fileNameIndex;
 
         public override bool CanRead
         {
@@ -25,7 +25,7 @@ namespace Medja.Utils.IO
 
         public override bool CanSeek
         {
-            get { return false; }
+            get { return _currentStream != null; }
         }
 
         public override bool CanWrite
@@ -33,14 +33,13 @@ namespace Medja.Utils.IO
             get { return _currentStream?.CanWrite ?? false; }
         }
 
-        private long _length;
         /// <summary>
         /// Gets the length. Currently this only returns the sum of all files that existed when the
         /// <see cref="MultiFileStream"/> was created. TODO: implement correct behavior in class. 
         /// </summary>
         public override long Length
         {
-            get { return _length; }
+            get { return _multiFileManager.Length; }
         }
 
         private long _position;
@@ -50,7 +49,7 @@ namespace Medja.Utils.IO
         public override long Position
         {
             get { return _position;}
-            set { throw new NotSupportedException(); }
+            set { Seek(value, SeekOrigin.Begin); }
         }
 
         /// <summary>
@@ -62,8 +61,7 @@ namespace Medja.Utils.IO
             _settings = settings ?? throw new ArgumentNullException(nameof(settings));
             _settings.Validate();
 
-            _sequentialFileNames = new SequentialFileNames(settings.BaseName);
-            _fileNameIndex = -1;
+            _multiFileManager = new MultiFileManager(_settings.BaseName);
 
             PrepareFilesAndNames();
             
@@ -72,47 +70,33 @@ namespace Medja.Utils.IO
 
         private void PrepareFilesAndNames()
         {
-            _sequentialFileNames.Load();
+            _multiFileManager.Load();
 
             var fileMode = _settings.FileMode;
             
             if (fileMode == FileMode.Create)
-            {
-                foreach(var fileName in _sequentialFileNames.FileNames)
-                    File.Delete(fileName);
-                
-                _sequentialFileNames.Clear();
-            }
-            else if (fileMode == FileMode.Open && _sequentialFileNames.FileNames.Count == 0)
-            {
-                throw new FileNotFoundException("Could not find any file matching the specified base file name.", _sequentialFileNames.BaseName);
-            }
-            else if(fileMode == FileMode.CreateNew && _sequentialFileNames.FileNames.Count != 0)
-                throw new IOException("Files with the given baseFileName already exist.");
-
-            foreach (var fileName in _sequentialFileNames.FileNames)
-                _length += new FileInfo(fileName).Length;
-            
-            _fileNameIndex = -1;
+                _multiFileManager.DeleteAll();
+            else if (fileMode == FileMode.Open && _multiFileManager.FileCount == 0)
+                throw new FileNotFoundException("Could not find any file matching the specified base file name.", _multiFileManager.BaseName);
+            else if(fileMode == FileMode.CreateNew && _multiFileManager.FileCount != 0)
+                throw new IOException("Files with the given BaseName already exist.");
         }
 
         private void OpenNextStream(bool allowNewFile)
         {
             _currentStream?.Dispose();
 
-            _fileNameIndex++;
-
             string fileName;
 
-            if (_fileNameIndex == _sequentialFileNames.FileNames.Count)
+            if (!_multiFileManager.HasNext())
             {
-                if(!allowNewFile || _settings.FileMode == FileMode.Open)
+                if (!allowNewFile || _settings.FileMode == FileMode.Open)
                     throw new EndOfStreamException();
-                
-                fileName = _sequentialFileNames.AddNext();
+
+                fileName = _multiFileManager.CreateNext();
             }
             else
-                fileName = _sequentialFileNames.FileNames[_fileNameIndex];
+                fileName = _multiFileManager.GetNext();
             
             _currentStream = OpenStream(fileName);
         }
@@ -121,6 +105,7 @@ namespace Medja.Utils.IO
         {
             var fileAccess = _settings.FileAccess ??
                     (_settings.FileMode == FileMode.Append ? FileAccess.Write : FileAccess.ReadWrite);
+            _currentFileName = fileName;
             
             return new FileStream(fileName, _settings.FileMode, fileAccess, FileShare.None, _settings.BufferSize, _settings.FileOptions);
         }
@@ -131,7 +116,7 @@ namespace Medja.Utils.IO
         /// <returns>An array of all used files names belonging to this stream.</returns>
         public IReadOnlyList<string> GetFileNames()
         {
-            return _sequentialFileNames.FileNames;
+            return _multiFileManager.FileNames;
         }
 
         public override void Flush()
@@ -160,7 +145,7 @@ namespace Medja.Utils.IO
             _position += readBytes;
             
             // no more files to read from left
-            if (_fileNameIndex == _sequentialFileNames.FileNames.Count - 1)
+            if (!_multiFileManager.HasNext())
                 return readBytes;
             
             offset += readBytes;
@@ -176,8 +161,36 @@ namespace Medja.Utils.IO
         {
             if(!CanSeek)
                 throw new InvalidOperationException();
+
+            long newPosition;
+
+            if (origin == SeekOrigin.Begin)
+                newPosition = offset;
+            else if (origin == SeekOrigin.Current)
+                newPosition = _position + offset;
+            else // if(origin == SeekOrigin.End)
+                newPosition = Length + offset;
             
-            throw new NotImplementedException();
+            if(newPosition >= Length || newPosition < 0)
+                throw new IOException();
+
+            var relativeBytes = _multiFileManager.SetFileAtPos(newPosition);
+            
+            if(relativeBytes == -1)
+                throw new IOException();
+            
+            _position = newPosition;
+
+            var fileName = _multiFileManager.GetCurrentFileName();
+
+            if (fileName != _currentFileName)
+            {
+                _currentStream?.Dispose();
+                _currentStream = OpenStream(fileName);
+            }
+            
+            _currentStream.Position = relativeBytes;
+            return _position;
         }
 
         public override void SetLength(long value)
@@ -188,18 +201,20 @@ namespace Medja.Utils.IO
         public override void Write(byte[] buffer, int offset, int count)
         {
             // both Position and Length are properties in FileStream that use calculations
-            var pos = _currentStream.Position;
+            var streamPos = _currentStream.Position;
 
-            if (pos + count <= _settings.MaxFileSize)
+            if (streamPos + count <= _settings.MaxFileSize)
             {
                 _currentStream.Write(buffer, offset, count);
+                _multiFileManager.SetCurrentFileLength(_currentStream.Length);
                 _position += count;
             }
             else
             {
-                var leftBytesForCurrentStream = (int)(_settings.MaxFileSize - pos);
+                var leftBytesForCurrentStream = (int)(_settings.MaxFileSize - streamPos);
                 _currentStream.Write(buffer, offset, leftBytesForCurrentStream);
-
+                _multiFileManager.SetCurrentFileLength(_currentStream.Length);
+                
                 _position += leftBytesForCurrentStream;
                 offset += leftBytesForCurrentStream;
                 count -= leftBytesForCurrentStream;

@@ -131,13 +131,14 @@ namespace Medja.Utils.Test
         public void WriteMultiOverflowBufferTest()
         {
             var baseName = "./multiOverflowBuffer";
+            var fullBaseName = new FileInfo(baseName).FullName;
             
             WriteTest(baseName, 10, 10*3, fileNames =>
             {
                 Assert.Collection(fileNames, 
-                                  p => Assert.Equal(baseName+".0",p),
-                                  p => Assert.Equal(baseName+".1",p),
-                                  p => Assert.Equal(baseName+".2",p));
+                                  p => Assert.Equal(fullBaseName+".0",p),
+                                  p => Assert.Equal(fullBaseName+".1",p),
+                                  p => Assert.Equal(fullBaseName+".2",p));
             });
         }
         
@@ -145,11 +146,12 @@ namespace Medja.Utils.Test
         public void WriteSmallerBufferTest()
         {
             var baseName = "./smallerBuffer";
+            var fullBaseName = new FileInfo(baseName).FullName;
             
             WriteTest(baseName, 100, 10, fileNames =>
             {
                 Assert.Collection(fileNames, 
-                                  p => Assert.Equal(baseName+".0",p));
+                                  p => Assert.Equal(fullBaseName+".0",p));
             });
         }
         
@@ -157,11 +159,12 @@ namespace Medja.Utils.Test
         public void WriteFileSizeBufferTest()
         {
             var baseName = "./fileSizeBuffer";
+            var fullBaseName = new FileInfo(baseName).FullName;
             
             WriteTest(baseName, 100, 100, fileNames =>
             {
                 Assert.Collection(fileNames, 
-                                  p => Assert.Equal(baseName+".0",p));
+                                  p => Assert.Equal(fullBaseName+".0",p));
             });
         }
 
@@ -189,24 +192,26 @@ namespace Medja.Utils.Test
         public void FileModeCreateTest()
         {
             var baseName = "./fileModeCreateTest";
+            var fullBaseName = new FileInfo(baseName).FullName;
             
             WriteTest(baseName, 10, 10*3, fileNames =>
             {
+                
                 Assert.Collection(fileNames, 
-                                  p => Assert.Equal(baseName+".0",p),
-                                  p => Assert.Equal(baseName+".1",p),
-                                  p => Assert.Equal(baseName+".2",p));
+                                  p => Assert.Equal(fullBaseName+".0",p),
+                                  p => Assert.Equal(fullBaseName+".1",p),
+                                  p => Assert.Equal(fullBaseName+".2",p));
             }, FileMode.Create);
             
-            File.Create(baseName + ".0").Dispose();
-            File.Create(baseName + ".1").Dispose();
+            File.Create(fullBaseName + ".0").Dispose();
+            File.Create(fullBaseName + ".1").Dispose();
             
             WriteTest(baseName, 10, 10*3, fileNames =>
             {
                 Assert.Collection(fileNames, 
-                                  p => Assert.Equal(baseName+".0",p),
-                                  p => Assert.Equal(baseName+".1",p),
-                                  p => Assert.Equal(baseName+".2",p));
+                                  p => Assert.Equal(fullBaseName+".0",p),
+                                  p => Assert.Equal(fullBaseName+".1",p),
+                                  p => Assert.Equal(fullBaseName+".2",p));
             }, FileMode.Create);
         }
         
@@ -214,6 +219,7 @@ namespace Medja.Utils.Test
         public void FileModeCreateNewTest()
         {
             var baseName = "./fileModeCreateNewTest";
+            var fullBaseName = new FileInfo(baseName).FullName;
             File.Create(baseName + ".0").Dispose();
 
             Assert.Throws<IOException>(() => 
@@ -234,10 +240,66 @@ namespace Medja.Utils.Test
             WriteTest(baseName, 10, 10*3, fileNames =>
             {
                 Assert.Collection(fileNames, 
-                                  p => Assert.Equal(baseName+".0",p),
-                                  p => Assert.Equal(baseName+".1",p),
-                                  p => Assert.Equal(baseName+".2",p));
+                                  p => Assert.Equal(fullBaseName+".0",p),
+                                  p => Assert.Equal(fullBaseName+".1",p),
+                                  p => Assert.Equal(fullBaseName+".2",p));
             }, FileMode.CreateNew);
+        }
+
+        [Fact]
+        public void SeekTest()
+        {
+            var baseName = "./seekTest";
+            var fileNames = WriteFiles(baseName, 100, 255, FileMode.CreateNew);
+
+            try
+            {
+                using (var multiFileStream = new MultiFileStream(new MultiFileStreamSettings
+                {
+                        BaseName = baseName,
+                        FileMode = FileMode.Open,
+                        FileAccess = FileAccess.Read
+                }))
+                {
+                    Assert.True(multiFileStream.CanSeek);
+                
+                    var buffer = new byte[3];
+                
+                    multiFileStream.Seek(100, SeekOrigin.Begin);
+                    multiFileStream.Read(buffer);
+                
+                    Assert.Collection(buffer, 
+                                      b => Assert.Equal(100, b),
+                                      b => Assert.Equal(101, b),
+                                      b => Assert.Equal(102, b));
+
+                    multiFileStream.Seek(-103, SeekOrigin.Current);
+                    multiFileStream.Read(buffer);
+                
+                    Assert.Collection(buffer, 
+                                      b => Assert.Equal(0, b),
+                                      b => Assert.Equal(1, b),
+                                      b => Assert.Equal(2, b));
+                
+                    multiFileStream.Seek(-3, SeekOrigin.End);
+                    multiFileStream.Read(buffer);
+                    
+                    Assert.Collection(buffer, 
+                                      b => Assert.Equal(252, b),
+                                      b => Assert.Equal(253, b),
+                                      b => Assert.Equal(254, b));
+                }
+            }
+            finally
+            {
+                DeleteFiles(fileNames);
+            }
+        }
+
+        private void DeleteFiles(IEnumerable<string> fileNames)
+        {
+            foreach(var fileName in fileNames)
+                File.Delete(fileName);
         }
     }
 }
