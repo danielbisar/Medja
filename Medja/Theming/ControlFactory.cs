@@ -36,6 +36,7 @@ namespace Medja.Theming
 			_factoryMethods.Add(typeof(ScrollingGrid), CreateScrollingGrid);
 			_factoryMethods.Add(typeof(SideControlsContainer), CreateSideControlContainer);
 			_factoryMethods.Add(typeof(SimpleMessageDialog), CreateSimpleMessageDialog);
+			_factoryMethods.Add(typeof(Slider), CreateSlider);
 			_factoryMethods.Add(typeof(TabControl), CreateTabControl);
 			_factoryMethods.Add(typeof(TextBox), CreateTextBox);
 			_factoryMethods.Add(typeof(TextBlock), CreateTextBlock);
@@ -134,6 +135,11 @@ namespace Medja.Theming
 		protected virtual SimpleMessageDialog CreateSimpleMessageDialog()
 		{
 			return new SimpleMessageDialog(this);
+		}
+
+		protected virtual Slider CreateSlider()
+		{
+			return new Slider();
 		}
 
 		protected virtual TabControl CreateTabControl()

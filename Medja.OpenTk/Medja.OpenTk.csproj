@@ -64,6 +64,7 @@
     <Compile Include="Rendering\Renderer\OpenTKControlRendererBase.cs" />
     <Compile Include="Rendering\Renderer\ProgressBarRenderer.cs" />
     <Compile Include="Rendering\Renderer\SkiaControlRendererBase.cs" />
+    <Compile Include="Rendering\Renderer\SliderRenderer.cs" />
     <Compile Include="Rendering\Renderer\TabControlRenderer.cs" />
     <Compile Include="Rendering\Renderer\TextBlockRenderer.cs" />
     <Compile Include="Rendering\Renderer\TextBoxRenderer.cs" />

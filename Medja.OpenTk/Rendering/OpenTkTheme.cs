@@ -82,6 +82,15 @@ namespace Medja.OpenTk.Rendering
 			return result;
 		}
 
+		protected override Slider CreateSlider()
+		{
+			var result = base.CreateSlider();
+			result.Renderer = new SliderRenderer(result);
+			result.Position.Height = 30;
+
+			return result;
+		}
+
 		protected override TabControl CreateTabControl()
 		{
 			var result = base.CreateTabControl();

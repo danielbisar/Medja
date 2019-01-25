@@ -22,13 +22,6 @@ namespace MedjaOpenGlTestApp
 
 		public static void Main(string[] args)
 		{
-			var sequentialFileNamesPerfTest = new SequentialFileNamePerfTest();
-			sequentialFileNamesPerfTest.Run();
-			sequentialFileNamesPerfTest.Run();
-			sequentialFileNamesPerfTest.Run();
-
-			return;
-			
 			var library = new MedjaOpenTkLibrary(new TestAppTheme());
 			library.RendererFactory = CreateRenderer;
 
@@ -46,10 +39,11 @@ namespace MedjaOpenGlTestApp
 			//var test = new ScrollingGridTest(controlFactory);
 			//var test = new SideControlsContainerTest(controlFactory);
 			//var test = new SimpleDockPanelTest(controlFactory);
+			var test = new SliderTest(controlFactory);
 			//var test = new TabControlTest(controlFactory);
 			//var test = new TextBoxTest(controlFactory);
 			//var test = new TouchButtonListTest(controlFactory);
-			var test = new VisibilityTest(controlFactory);
+			//var test = new VisibilityTest(controlFactory);
 			
 			_window = application.CreateWindow();
 			_window.CenterOnScreen(800, 600);

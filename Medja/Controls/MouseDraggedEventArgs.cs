@@ -5,9 +5,17 @@ namespace Medja.Controls
 {
     public class MouseDraggedEventArgs : EventArgs
     {
-        private Lazy<Vector2D> _vector;
+        private readonly Lazy<Vector2D> _vector;
         public Vector2D Vector { get { return _vector.Value; } }
+        
+        /// <summary>
+        /// The starting point of the drag operation.
+        /// </summary>
         public Point Source { get; }
+        
+        /// <summary>
+        /// The current point of the drag operation.
+        /// </summary>
         public Point Target { get; }
 
         public MouseDraggedEventArgs(Point source, Point target)
