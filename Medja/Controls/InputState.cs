@@ -73,7 +73,7 @@ namespace Medja
 		
 		public readonly Property<bool> PropertyHandlesDrag;
 		/// <summary>
-		/// Indicates whether this controls handles Drag&Drop or just ignores it.
+		/// Indicates whether this controls handles Drag&amp;Drop or just ignores it.
 		/// </summary>
 		public bool HandlesDrag
 		{
