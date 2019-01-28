@@ -1,4 +1,6 @@
-﻿using Medja.Primitives;
+﻿using System;
+using Medja.Controls.Images;
+using Medja.Primitives;
 using SkiaSharp;
 
 namespace Medja.OpenTk.Rendering
@@ -34,6 +36,17 @@ namespace Medja.OpenTk.Rendering
 		public static SKRect ToSKRect(this MRect position)
 		{
 			return new SKRect(position.X, position.Y, position.Width + position.X, position.Height + position.Y);
+		}
+
+		public static SKColorType ToSkColorType(this PixelFormat pixelFormat)
+		{
+			switch (pixelFormat)
+			{
+				case PixelFormat.RGBA32:
+					return SKColorType.Rgba8888;
+				default:
+					throw new ArgumentOutOfRangeException(nameof(pixelFormat), pixelFormat, null);
+			}
 		}
 	}
 }

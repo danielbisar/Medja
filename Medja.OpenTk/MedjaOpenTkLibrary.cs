@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using Medja.Controls;
+using Medja.Controls.Images;
 using Medja.OpenTk.Rendering;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
@@ -28,6 +30,8 @@ namespace Medja.OpenTk
 
 		public ControlFactory ControlFactory { get; }
 		
+		public BitmapFactory BitmapFactory { get; }
+		
 		public TaskQueue<object> TaskQueue { get; }
 
 		/// <summary>
@@ -44,6 +48,7 @@ namespace Medja.OpenTk
 			_focusManager = new FocusManager();
 			_controls = new List<Control>();
 			TaskQueue = new TaskQueue<object>();
+			BitmapFactory = new SkiaBitmapFactory();
 		}
 
 		/// <inheritdoc />

@@ -31,6 +31,8 @@ namespace Medja.Theming
 			_factoryMethods.Add(typeof(DialogParentControl), CreateDialogParentControl);
 			_factoryMethods.Add(typeof(DockPanel), CreateDockPanel);
 			_factoryMethods.Add(typeof(HorizontalStackPanel), CreateHorizontalStackPanel);
+			_factoryMethods.Add(typeof(Image), CreateImage);
+			_factoryMethods.Add(typeof(ImageButton), CreateImageButton);
 			_factoryMethods.Add(typeof(InputBoxDialog), CreateInputBoxDialog);
 			_factoryMethods.Add(typeof(ScrollableContainer), CreateScrollableContainer);
 			_factoryMethods.Add(typeof(ScrollingGrid), CreateScrollingGrid);
@@ -112,6 +114,16 @@ namespace Medja.Theming
 			return new HorizontalStackPanel();
 		}
 
+		protected virtual Image CreateImage()
+		{
+			return new Image();
+		}
+
+		protected virtual ImageButton CreateImageButton()
+		{
+			return new ImageButton(this);
+		}
+		
 		protected virtual InputBoxDialog CreateInputBoxDialog()
 		{
 			return new InputBoxDialog(this);

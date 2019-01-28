@@ -1,6 +1,6 @@
 ﻿namespace Medja.Controls
 {
-	public class Button : TextControl
+	public class Button : TextControl, IButton
 	{
 		public readonly Property<bool> PropertyIsSelected;
 		public bool IsSelected
