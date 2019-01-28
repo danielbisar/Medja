@@ -56,6 +56,14 @@ namespace Medja.OpenTk.Rendering
 			return result;
 		}
 
+		protected override Image CreateImage()
+		{
+			var result = base.CreateImage();
+			result.Renderer = new ImageRenderer(result);
+			
+			return result;
+		}
+
 		protected override InputBoxDialog CreateInputBoxDialog()
 		{
 			var result = base.CreateInputBoxDialog();
