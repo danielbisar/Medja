@@ -27,7 +27,7 @@ namespace Medja.OpenTk
             if(targetImageInfo.IsEmpty)
                 throw new Exception("Could not load the image.");
             
-            targetImageInfo.ColorType = SKColorType.Rgba8888;
+            //targetImageInfo.ColorType = SKColorType.Rgba8888;
             
             var skBitmap = SKBitmap.Decode(fileName, targetImageInfo);
             var bitmap = new Bitmap(_nextId++, fileName, skBitmap.Bytes, PixelFormat.RGBA32, skBitmap.Width, skBitmap.Height);

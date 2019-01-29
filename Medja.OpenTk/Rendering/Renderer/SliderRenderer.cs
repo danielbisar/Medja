@@ -1,3 +1,4 @@
+using System;
 using Medja.Controls;
 using SkiaSharp;
 
@@ -27,8 +28,9 @@ namespace Medja.OpenTk.Rendering
         protected override void InternalRender()
         {
             var y = _rect.MidY;
-            var divider = _control.MaxValue - _control.MinValue;
-            var percentage = divider == 0 ? 0 : _control.Value / divider;
+            var distance = _control.MaxValue - _control.MinValue;
+            var value = _control.Value - _control.MinValue;
+            var percentage = distance == 0 ? 0 : value / distance;
 			
             _canvas.DrawLine(_rect.Left, y, _rect.Right, y, _barPaint);
             _canvas.DrawCircle(new SKPoint(_rect.Left + _rect.Width * percentage, _rect.MidY), 10, _positionPaint);
