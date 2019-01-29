@@ -54,8 +54,16 @@ namespace Medja.Controls
         {
             var width = Position.Width;
             var mouseWidthPos = x - Position.X;
+            var mousePercentage = mouseWidthPos / width;
+            var distance = MaxValue - MinValue;
+            var newValue = distance * mousePercentage + MinValue;
 
-            Value = (MaxValue - MinValue) * (mouseWidthPos / width);
+            if (newValue < MinValue)
+                newValue = MinValue;
+            else if (newValue > MaxValue)
+                newValue = MaxValue;
+
+            Value = newValue;
         }
     }
 }

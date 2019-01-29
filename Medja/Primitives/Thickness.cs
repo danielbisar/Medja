@@ -40,6 +40,16 @@
             Top = Bottom = Left = Right = value;
         }
 
+        public void SetLeftAndRight(float value)
+        {
+            Left = Right = value;
+        }
+
+        public void SetTopAndBotton(float value)
+        {
+            Top = Bottom = value;
+        }
+
         public void SetFrom(Thickness thickness)
         {
             Left = thickness.Left;
