@@ -110,7 +110,7 @@ namespace Medja
 		private void OnPointerPositionChanged(object sender, PropertyChangedEventArgs eventArgs)
 		{
 			if (IsLeftMouseDown 
-				&& MedjaUIMath.Distance(_mouseDownPointerPosition, PointerPosition) > _dragThreshold)
+				&& _mouseDownPointerPosition.Distance(PointerPosition) > _dragThreshold)
 				IsDrag = true;
 			else
 				IsDrag = false;
