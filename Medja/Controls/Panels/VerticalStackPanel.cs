@@ -43,12 +43,15 @@ namespace Medja.Controls
 
                 var childPos = child.Position;
                 
-                if(child.HorizontalAlignment != HorizontalAlignment.Left 
-                        && child.HorizontalAlignment != HorizontalAlignment.Right)
+                if(child.HorizontalAlignment != HorizontalAlignment.Left
+                && child.HorizontalAlignment != HorizontalAlignment.Right
+                && child.HorizontalAlignment != HorizontalAlignment.Center)
                     childPos.Width = width - child.Margin.LeftAndRight;
 
                 if(child.HorizontalAlignment == HorizontalAlignment.Right)
                     childPos.X = curX + width - childPos.Width;
+                else if (child.HorizontalAlignment == HorizontalAlignment.Center)
+                    childPos.X = (width - childPos.Width) / 2.0f;
                 else
                     childPos.X = curX + child.Margin.Left;
                 

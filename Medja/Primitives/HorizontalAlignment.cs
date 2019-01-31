@@ -5,6 +5,7 @@
 		None,
 		Left,
 		Right,
-		Stretch
+		Stretch,
+		Center
 	}
 }
