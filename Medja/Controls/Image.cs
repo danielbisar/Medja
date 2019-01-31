@@ -30,6 +30,15 @@ namespace Medja.Controls
             PropertyPath.PropertyChanged += OnPathChanged;
         }
 
+        public void SizeToContent()
+        {
+            if (Bitmap == null)
+                return;
+
+            Position.Width = Bitmap.Width;
+            Position.Height = Bitmap.Height;
+        }
+
         private void OnPathChanged(object sender, PropertyChangedEventArgs e)
         {
             Bitmap = MedjaApplication.Instance.Library.BitmapFactory.Get((string) e.NewValue);
