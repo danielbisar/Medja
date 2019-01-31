@@ -63,6 +63,7 @@
     <Compile Include="Tests\TabControlTest.cs" />
     <Compile Include="Tests\TextBoxTest.cs" />
     <Compile Include="Tests\TouchButtonListTest.cs" />
+    <Compile Include="Tests\VerticalStackPanelTest.cs" />
     <Compile Include="Tests\VisibilityTest.cs" />
   </ItemGroup>
   <ItemGroup>
