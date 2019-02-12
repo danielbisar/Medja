@@ -1,16 +1,21 @@
-﻿using System;
-using Medja.Primitives;
+﻿using Medja.Primitives;
 using Medja.Theming;
 
 namespace Medja.Controls
 {
+	/// <summary>
+	/// A dialog that displays an input box to the user.
+	/// </summary>
 	public class InputBoxDialog : ConfirmableDialog
 	{
-		private readonly ControlFactory _controlFactory;
-		private readonly TextBlock _messageTextBlock;
-		private readonly TextBox _inputTextBox;
+		private TextBlock _messageTextBlock;
+		private TextBox _inputTextBox;
 
 		public readonly Property<string> PropertyMessage;
+		
+		/// <summary>
+		/// Gets or sets the message that is display to the user.
+		/// </summary>
 		public string Message
 		{
 			get { return PropertyMessage.Get(); }
@@ -18,6 +23,9 @@ namespace Medja.Controls
 		}
 
 		public readonly Property<string> PropertyInputText;
+		/// <summary>
+		/// Gets or sets the value of the <see cref="TextBox"/> of the dialog.
+		/// </summary>
 		public string InputText
 		{
 			get { return PropertyInputText.Get(); }
@@ -25,19 +33,12 @@ namespace Medja.Controls
 		}
 
 		public InputBoxDialog(ControlFactory controlFactory)
+		: base(controlFactory)
 		{
 			PropertyMessage = new Property<string>();
 			PropertyMessage.PropertyChanged += OnTextChanged;
 			PropertyInputText = new Property<string>();
 			PropertyInputText.PropertyChanged += OnInputTextChanged;
-
-			_controlFactory = controlFactory;
-			_messageTextBlock = _controlFactory.Create<TextBlock>();
-			_inputTextBox = _controlFactory.Create<TextBox>();
-			_inputTextBox.PropertyText.PropertyChanged += OnTextBoxTextChanged;
-
-			Padding.SetAll(5);
-			Content = CreateContent();
 		}
 
 		private void OnTextBoxTextChanged(object sender, PropertyChangedEventArgs eventArgs)
@@ -55,39 +56,24 @@ namespace Medja.Controls
 			_messageTextBlock.Text = Message;
 		}
 
-		private Control CreateContent()
+		protected override Control CreateContent()
 		{
+			_messageTextBlock = _controlFactory.Create<TextBlock>();
+			_inputTextBox = _controlFactory.Create<TextBox>();
+			_inputTextBox.PropertyText.PropertyChanged += OnTextBoxTextChanged;
+			
 			_messageTextBlock.Position.Height = 50;
 			_messageTextBlock.TextWrapping = TextWrapping.Auto;
-
+			
 			var stackPanel = _controlFactory.Create<VerticalStackPanel>();
 			stackPanel.Padding = new Thickness(10);
 			stackPanel.Children.Add(_messageTextBlock);
 			stackPanel.Children.Add(_inputTextBox);
-
-			var buttons = _controlFactory.Create<DialogButtonsControl>();
-			buttons.Buttons = DialogButtons.OkCancel;
-			buttons.CreateContent();
-			buttons.Button1.InputState.MouseClicked += OnOkButtonClicked;
-			buttons.Button2.InputState.MouseClicked += OnCancelButtonClicked;
-
-			var dockPanel = _controlFactory.Create<DockPanel>();
-			dockPanel.Add(Dock.Bottom, buttons);
-			dockPanel.Add(Dock.Fill, stackPanel);
-			dockPanel.VerticalAlignment = VerticalAlignment.Stretch;
-			dockPanel.HorizontalAlignment = HorizontalAlignment.Stretch;
-
-			return dockPanel;
-		}
-
-		private void OnCancelButtonClicked(object sender, EventArgs e)
-		{
-			Dismiss();
-		}
-
-		private void OnOkButtonClicked(object sender, EventArgs e)
-		{
-			Confirm();
+			
+			var result = (DockPanel)base.CreateContent();
+			result.Add(Dock.Fill, stackPanel);
+			
+			return result;
 		}
 	}
 }
