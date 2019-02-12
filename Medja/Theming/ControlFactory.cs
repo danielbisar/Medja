@@ -7,12 +7,13 @@ using Medja.Utils.Reflection;
 namespace Medja.Theming
 {
 	/// <summary>
-	/// A factory to create controls. The main prupose is to allow you to modify default settings, when creating any
-	/// medja control and to setup the renderer of each control.
+	/// All controls should be created via an instance of a control factory. The main purpose is to allow theming and
+	/// using different <see cref="IControlRenderer"/>s.
 	/// </summary>
 	/// <remarks>There are some controls that use generics. The naming of the method is the same as for other controls.
-	/// If you have a class MyControl<T> the method would be named 'CreateMyControl<T>'. You cannot register generic
-	/// methods via AddFactoryMethod but the <see cref="Create{TControl}()"/> method will search via reflection.</remarks>
+	/// If you have a class MyControl&lt;T&gt; the method would be named 'CreateMyControl&lt;T&gt;'. You cannot register
+	/// generic methods via AddFactoryMethod but the <see cref="Create{TControl}()"/> method will search via reflection.
+	/// </remarks>
 	public class ControlFactory
 	{
 		private readonly Dictionary<Type, Func<object>> _factoryMethods;
@@ -21,9 +22,11 @@ namespace Medja.Theming
 		{
 			_factoryMethods = new Dictionary<Type, Func<object>>();
 
+			// add in alphabetical order
 			_factoryMethods.Add(typeof(Button), CreateButton);
 			_factoryMethods.Add(typeof(Canvas), CreateCanvas);
 			_factoryMethods.Add(typeof(CheckBox), CreateCheckBox);
+			_factoryMethods.Add(typeof(ConfirmableDialog), CreateConfirmableDialog);
 			_factoryMethods.Add(typeof(Control), CreateControl);
 			_factoryMethods.Add(typeof(ContentControl), CreateContentControl);
 			_factoryMethods.Add(typeof(Dialog), CreateDialog);
@@ -34,12 +37,14 @@ namespace Medja.Theming
 			_factoryMethods.Add(typeof(Image), CreateImage);
 			_factoryMethods.Add(typeof(ImageButton), CreateImageButton);
 			_factoryMethods.Add(typeof(InputBoxDialog), CreateInputBoxDialog);
+			_factoryMethods.Add(typeof(MedjaWindow), CreateMedjaWindow);
 			_factoryMethods.Add(typeof(ScrollableContainer), CreateScrollableContainer);
 			_factoryMethods.Add(typeof(ScrollingGrid), CreateScrollingGrid);
 			_factoryMethods.Add(typeof(SideControlsContainer), CreateSideControlContainer);
 			_factoryMethods.Add(typeof(SimpleMessageDialog), CreateSimpleMessageDialog);
 			_factoryMethods.Add(typeof(Slider), CreateSlider);
 			_factoryMethods.Add(typeof(TabControl), CreateTabControl);
+			_factoryMethods.Add(typeof(TabItem), CreateTabItem);
 			_factoryMethods.Add(typeof(TextBox), CreateTextBox);
 			_factoryMethods.Add(typeof(TextBlock), CreateTextBlock);
 			_factoryMethods.Add(typeof(ProgressBar), CreateProgressBar);
@@ -53,11 +58,88 @@ namespace Medja.Theming
 			// ComboBox<T>
 		}
 
+		/// <summary>
+		/// Allows you to add factory methods from your sub class.
+		/// </summary>
+		/// <param name="factory">The factory method.</param>
+		/// <typeparam name="TControl">The result type of your factory method.</typeparam>
 		protected void AddFactoryMethod<TControl>(Func<TControl> factory)
 			where TControl : Control
 		{
 			_factoryMethods.Add(typeof(TControl), factory);
 		}
+		
+		/// <summary>
+		/// Creates a new instance of the given type.
+		/// </summary>
+		/// <typeparam name="TControl">The controls type.</typeparam>
+		/// <returns>The new instance of the control.</returns>
+		public TControl Create<TControl>()
+			where TControl : Control
+		{
+			var type = typeof(TControl);
+
+			if (type.IsGenericType)
+			{
+				// todo maybe we can avoid using reflection by using new() keyword as generic parameter constraint  
+				var genericTypeArguments = type.GenericTypeArguments;
+
+				if (genericTypeArguments.Length != 1)
+					throw new ArgumentException("only generic types with one generic parameter are supported");
+
+				var typeName = type.GetNameWithoutGenericArity();
+				var methodName = "Create" + typeName;
+				var method = GetType().GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Instance);
+				
+				if(method == null)
+					throw new InvalidOperationException($"The method with the name {methodName} was not found.");
+				
+				var genericMethod = method.MakeGenericMethod(type.GenericTypeArguments);
+
+				return (TControl)genericMethod.Invoke(this, null);
+			}
+
+			return (TControl)_factoryMethods[typeof(TControl)]();
+		}
+
+		/// <summary>
+		/// Creates a new instance of the given type.
+		/// </summary>
+		/// <param name="applyCustomStyle">Action that is executed after create the new instance.
+		/// Allows you to set parameters on the control with a shorter syntax.</param>
+		/// <typeparam name="TControl">The controls type.</typeparam>
+		/// <returns>The new instance of the control.</returns>
+		public TControl Create<TControl>(Action<TControl> applyCustomStyle)
+			where TControl : Control
+		{
+			var result = Create<TControl>();
+			applyCustomStyle(result);
+
+			return result;
+		}
+
+		/// <summary>
+		/// Gets if the given control type can be created from this factory. Doesn't work for generic types yet.
+		/// </summary>
+		/// <typeparam name="TControl">The controls type.</typeparam>
+		/// <returns>true if a factory method is registered for the given type.</returns>
+		public bool HasControl<TControl>()
+			where TControl: Control
+		{
+			return HasControl(typeof(TControl));
+		}
+
+		/// <summary>
+		/// Gets if the given control type can be created from this factory. Doesn't work for generic types yet.
+		/// </summary>
+		/// <param name="type">The controls type.</param>
+		/// <returns>true if a factory method is registered for the given type.</returns>
+		public bool HasControl(Type type)
+		{
+			return _factoryMethods.ContainsKey(type);
+		}
+		
+		// create methods in alphabetical order
 		
 		protected virtual TablePanel CreateTablePanel()
 		{
@@ -77,6 +159,11 @@ namespace Medja.Theming
 		protected virtual CheckBox CreateCheckBox()
 		{
 			return new CheckBox();
+		}
+
+		protected virtual ConfirmableDialog CreateConfirmableDialog()
+		{
+			return new ConfirmableDialog(this);
 		}
 
 		protected virtual Control CreateControl()
@@ -129,6 +216,11 @@ namespace Medja.Theming
 			return new InputBoxDialog(this);
 		}
 
+		protected virtual MedjaWindow CreateMedjaWindow()
+		{
+			return new MedjaWindow();
+		}
+
 		protected virtual ScrollableContainer CreateScrollableContainer()
 		{
 			return new ScrollableContainer(this);
@@ -157,6 +249,11 @@ namespace Medja.Theming
 		protected virtual TabControl CreateTabControl()
 		{
 			return new TabControl();
+		}
+
+		protected virtual TabItem CreateTabItem()
+		{
+			return new TabItem();
 		}
 
 		protected virtual TextBox CreateTextBox()
@@ -197,57 +294,6 @@ namespace Medja.Theming
 		protected virtual VerticalScrollBar CreateVerticalScrollBar()
 		{
 			return new VerticalScrollBar();
-		}
-
-		public TControl Create<TControl>()
-			where TControl : Control
-		{
-			var type = typeof(TControl);
-
-			if (type.IsGenericType)
-			{
-				var genericTypeArguments = type.GenericTypeArguments;
-
-				if (genericTypeArguments.Length != 1)
-					throw new ArgumentException("only generic types with one generic parameter are supported");
-
-				var typeName = type.GetNameWithoutGenericArity();
-				var method = GetType().GetMethod("Create" + typeName, BindingFlags.NonPublic | BindingFlags.Instance);
-				var genericMethod = method.MakeGenericMethod(type.GenericTypeArguments);
-
-				return (TControl)genericMethod.Invoke(this, null);
-			}
-
-			return (TControl)_factoryMethods[typeof(TControl)]();
-		}
-
-		public TControl Create<TControl>(Action<TControl> applyCustomStyle)
-			where TControl : Control
-		{
-			var result = Create<TControl>();
-			applyCustomStyle(result);
-
-			return result;
-		}
-		
-		/// <summary>
-		/// Creates a text block with the given text.
-		/// </summary>
-		/// <param name="text"></param>
-		/// <returns></returns>
-		public TextBlock CreateTextBlock(string text)
-		{
-			return Create<TextBlock>(p => p.Text = text);
-		}
-
-		/// <summary>
-		/// Same as <see cref="CreateTextBlock()"/> but adds ": " to the text.
-		/// </summary>
-		/// <param name="text"></param>
-		/// <returns></returns>
-		public TextBlock CreateLabel(string text)
-		{
-			return CreateTextBlock(text + ": ");
 		}
 	}
 }
