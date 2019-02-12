@@ -1,7 +1,7 @@
 using System.Text;
 using Medja.Controls;
 
-namespace Medja.Debug
+namespace Medja.Utils
 {
     public class ControlTreeStringBuilder
     {
