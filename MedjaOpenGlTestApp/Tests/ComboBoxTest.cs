@@ -6,9 +6,9 @@ namespace MedjaOpenGlTestApp.Tests
 {
     public class ComboBoxTest
     {
-        private readonly ControlFactory _controlFactory;
+        private readonly IControlFactory _controlFactory;
 
-        public ComboBoxTest(ControlFactory controlFactory)
+        public ComboBoxTest(IControlFactory controlFactory)
         {
             _controlFactory = controlFactory;
         }

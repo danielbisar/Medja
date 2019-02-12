@@ -6,7 +6,7 @@ namespace Medja.Controls
 {
 	public class SimpleMessageDialog : Dialog
 	{
-		private readonly ControlFactory _controlFactory;
+		private readonly IControlFactory _controlFactory;
 		private readonly TextBlock _messageTextBlock;
 
 		public readonly Property<string> PropertyText;
@@ -16,7 +16,7 @@ namespace Medja.Controls
 			set { PropertyText.Set(value); }
 		}
 
-		public SimpleMessageDialog(ControlFactory controlFactory)
+		public SimpleMessageDialog(IControlFactory controlFactory)
 		{
 			PropertyText = new Property<string>();
 			PropertyText.PropertyChanged += OnTextChanged;

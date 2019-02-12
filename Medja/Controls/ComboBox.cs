@@ -20,7 +20,7 @@ namespace Medja.Controls
             get { return _itemsManager.Items; }
         }
         
-        public ComboBox(ControlFactory controlFactory)
+        public ComboBox(IControlFactory controlFactory)
             : base(controlFactory)
         {
             PropertySelectedItem = new Property<TItem>();

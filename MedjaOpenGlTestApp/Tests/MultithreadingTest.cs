@@ -9,10 +9,10 @@ namespace MedjaOpenGlTestApp.Tests
 {
     public class MultithreadingTest
     {
-        private readonly ControlFactory _controlFactory;
+        private readonly IControlFactory _controlFactory;
         private TextBlock _control;
 
-        public MultithreadingTest(ControlFactory controlFactory)
+        public MultithreadingTest(IControlFactory controlFactory)
         {
             _controlFactory = controlFactory;
         }

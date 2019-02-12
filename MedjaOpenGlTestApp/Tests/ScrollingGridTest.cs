@@ -6,9 +6,9 @@ namespace MedjaOpenGlTestApp.Tests
 {
     public class ScrollingGridTest
     {
-        private readonly ControlFactory _controlFactory;
+        private readonly IControlFactory _controlFactory;
 
-        public ScrollingGridTest(ControlFactory controlFactory)
+        public ScrollingGridTest(IControlFactory controlFactory)
         {
             _controlFactory = controlFactory;
         }

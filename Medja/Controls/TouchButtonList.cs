@@ -9,7 +9,7 @@ namespace Medja.Controls
 	{
 		private readonly PagedListView<TItem> _visibleItems;
 		private readonly VerticalStackPanel _itemsStackPanel;
-		private readonly ControlFactory _controlFactory;
+		private readonly IControlFactory _controlFactory;
 		private readonly Button _buttonUp;
 		private readonly Button _buttonDown;
 		private readonly ItemsManager<TItem> _itemsManager;
@@ -75,7 +75,7 @@ namespace Medja.Controls
 			set { PropertySelectedItem.Set(value); }
 		}
 
-		public TouchButtonList(ControlFactory controlFactory)
+		public TouchButtonList(IControlFactory controlFactory)
 		{
 			PropertyIsSelectable = new Property<bool>();
 			PropertySelectedItem = new Property<TItem>();

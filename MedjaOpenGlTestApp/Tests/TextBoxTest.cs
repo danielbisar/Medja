@@ -5,9 +5,9 @@ namespace MedjaOpenGlTestApp.Tests
 {
     public class TextBoxTest
     {
-        private readonly ControlFactory _controlFactory;
+        private readonly IControlFactory _controlFactory;
 
-        public TextBoxTest(ControlFactory controlFactory)
+        public TextBoxTest(IControlFactory controlFactory)
         {
             _controlFactory = controlFactory;
         }

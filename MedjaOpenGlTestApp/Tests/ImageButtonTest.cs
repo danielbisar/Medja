@@ -7,9 +7,9 @@ namespace MedjaOpenGlTestApp.Tests
 {
     public class ImageButtonTest
     {
-        private readonly ControlFactory _controlFactory;
+        private readonly IControlFactory _controlFactory;
 
-        public ImageButtonTest(ControlFactory controlFactory)
+        public ImageButtonTest(IControlFactory controlFactory)
         {
             _controlFactory = controlFactory;
         }

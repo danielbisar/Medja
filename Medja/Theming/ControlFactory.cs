@@ -14,7 +14,7 @@ namespace Medja.Theming
 	/// If you have a class MyControl&lt;T&gt; the method would be named 'CreateMyControl&lt;T&gt;'. You cannot register
 	/// generic methods via AddFactoryMethod but the <see cref="Create{TControl}()"/> method will search via reflection.
 	/// </remarks>
-	public class ControlFactory
+	public class ControlFactory : IControlFactory
 	{
 		private readonly Dictionary<Type, Func<object>> _factoryMethods;
 

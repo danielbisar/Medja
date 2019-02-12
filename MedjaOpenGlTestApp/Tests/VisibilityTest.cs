@@ -6,9 +6,9 @@ namespace MedjaOpenGlTestApp.Tests
 {
     public class VisibilityTest
     {
-        private readonly ControlFactory _controlFactory;
+        private readonly IControlFactory _controlFactory;
 
-        public VisibilityTest(ControlFactory controlFactory)
+        public VisibilityTest(IControlFactory controlFactory)
         {
             _controlFactory = controlFactory;
         }

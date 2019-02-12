@@ -32,7 +32,7 @@ namespace Medja.Controls
 			set { PropertyInputText.Set(value); }
 		}
 
-		public InputBoxDialog(ControlFactory controlFactory)
+		public InputBoxDialog(IControlFactory controlFactory)
 		: base(controlFactory)
 		{
 			PropertyMessage = new Property<string>();
