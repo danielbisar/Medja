@@ -1,14 +1,18 @@
-﻿namespace Medja.Controls
+﻿using System.Threading;
+
+namespace Medja.Controls
 {
+	/// <summary>
+	/// Provides ids for attached properties.
+	/// </summary>
 	public static class AttachedPropertyIdFactory
 	{
 		private static int _nextId;
-		private static readonly object _lock = new object();
 
 		public static int NewId()
 		{
-			lock (_lock)
-				return _nextId++;
+			var newValue = Interlocked.Increment(ref _nextId);
+			return newValue;
 		}
 	}
 }
