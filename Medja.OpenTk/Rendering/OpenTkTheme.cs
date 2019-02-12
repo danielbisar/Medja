@@ -73,6 +73,13 @@ namespace Medja.OpenTk.Rendering
 			return result;
 		}
 
+		protected override NumericKeypad CreateNumericKeypad()
+		{
+			var result = base.CreateNumericKeypad();
+			result.Background = ColorMap.Primary;
+			return result;
+		}
+
 		protected override ScrollingGrid CreateScrollingGrid()
 		{
 			var result = base.CreateScrollingGrid();

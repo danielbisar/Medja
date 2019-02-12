@@ -34,6 +34,7 @@ namespace Medja.Theming
 			_factoryMethods.Add(typeof(Image), CreateImage);
 			_factoryMethods.Add(typeof(ImageButton), CreateImageButton);
 			_factoryMethods.Add(typeof(InputBoxDialog), CreateInputBoxDialog);
+			_factoryMethods.Add(typeof(NumericKeypad), CreateNumericKeypad);
 			_factoryMethods.Add(typeof(ScrollableContainer), CreateScrollableContainer);
 			_factoryMethods.Add(typeof(ScrollingGrid), CreateScrollingGrid);
 			_factoryMethods.Add(typeof(SideControlsContainer), CreateSideControlContainer);
@@ -127,6 +128,11 @@ namespace Medja.Theming
 		protected virtual InputBoxDialog CreateInputBoxDialog()
 		{
 			return new InputBoxDialog(this);
+		}
+		
+		protected virtual NumericKeypad CreateNumericKeypad()
+		{
+			return new NumericKeypad(this);
 		}
 
 		protected virtual ScrollableContainer CreateScrollableContainer()
