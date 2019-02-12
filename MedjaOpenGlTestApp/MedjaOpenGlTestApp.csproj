@@ -53,6 +53,7 @@
     <Compile Include="Tests\DockPanelTest.cs" />
     <Compile Include="Tests\ImageButtonTest.cs" />
     <Compile Include="Tests\MultithreadingTest.cs" />
+    <Compile Include="Tests\NumericKeypadTest.cs" />
     <Compile Include="Tests\Performance\BytesToInt32PerfTest.cs" />
     <Compile Include="Tests\Performance\SequentialFileNamePerfTest.cs" />
     <Compile Include="Tests\ScrollableContainerTest.cs" />
