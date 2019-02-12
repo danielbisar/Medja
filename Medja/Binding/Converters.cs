@@ -1,5 +1,8 @@
-namespace Medja
+namespace Medja.Binding
 {
+    /// <summary>
+    /// Provides some default converters for binding.
+    /// </summary>
     public static class Converters
     {
         public static int ToInt(string value)
