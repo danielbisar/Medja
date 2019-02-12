@@ -6,14 +6,14 @@ using Medja.Utils.Threading.Tasks;
 namespace Medja
 {
     /// <summary>
-    /// Represents the connection point between Medja and the actual used UI framework.
+    /// Represents the connection point between Medja and the actual used rendering layer.
     /// </summary>
     public interface IMedjaLibrary
     {
         /// <summary>
         /// Gets the current <see cref="ControlFactory"/>. This allows theming of the UI.
         /// </summary>
-        ControlFactory ControlFactory { get; }
+        IControlFactory ControlFactory { get; }
         
         /// <summary>
         /// Gets the current <see cref="BitmapFactory"/>.

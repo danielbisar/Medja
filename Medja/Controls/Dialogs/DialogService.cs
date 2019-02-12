@@ -17,7 +17,7 @@ namespace Medja.Controls
             _lock = new object();
         }
 
-        public static DialogParentControl CreateContainer(ControlFactory controlFactory, Control content)
+        public static DialogParentControl CreateContainer(IControlFactory controlFactory, Control content)
         {
             lock (_lock)
             {

@@ -6,9 +6,9 @@ namespace MedjaOpenGlTestApp.Tests
 {
     public class ScrollableContainerTest
     {
-        private readonly ControlFactory _controlFactory;
+        private readonly IControlFactory _controlFactory;
 
-        public ScrollableContainerTest(ControlFactory controlFactory)
+        public ScrollableContainerTest(IControlFactory controlFactory)
         {
             _controlFactory = controlFactory;
         }

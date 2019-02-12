@@ -6,9 +6,9 @@ namespace MedjaOpenGlTestApp.Tests
 {
     public class SimpleDockPanelTest
     {
-        private readonly ControlFactory _controlFactory;
+        private readonly IControlFactory _controlFactory;
 
-        public SimpleDockPanelTest(ControlFactory controlFactory)
+        public SimpleDockPanelTest(IControlFactory controlFactory)
         {
             _controlFactory = controlFactory;
         }

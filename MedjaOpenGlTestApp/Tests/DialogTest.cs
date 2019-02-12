@@ -6,9 +6,9 @@ namespace MedjaOpenGlTestApp.Tests
 {
     public class DialogTest
     {
-        private readonly ControlFactory _controlFactory;
+        private readonly IControlFactory _controlFactory;
 
-        public DialogTest(ControlFactory controlFactory)
+        public DialogTest(IControlFactory controlFactory)
         {
             _controlFactory = controlFactory;
         }

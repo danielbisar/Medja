@@ -30,7 +30,7 @@ namespace Medja.Controls
             set { PropertyIsSideContentVisible.Set(value); }
         }
         
-        public SideControlsContainer(ControlFactory controlFactory)
+        public SideControlsContainer(IControlFactory controlFactory)
         {
             PropertySideContent = new Property<Control>();
             PropertySideContent.PropertyChanged += OnSideContentChanged;

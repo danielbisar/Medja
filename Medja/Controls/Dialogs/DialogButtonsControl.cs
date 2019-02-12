@@ -5,7 +5,7 @@ namespace Medja.Controls
 {
 	public class DialogButtonsControl : ContentControl
 	{
-		private readonly ControlFactory _factory;
+		private readonly IControlFactory _factory;
 		public DialogButtons Buttons { get; set; }
 
 		public Button Button1 { get; protected set; }
@@ -25,7 +25,7 @@ namespace Medja.Controls
 			set { _buttonHeight = value; }
 		}
 
-		public DialogButtonsControl(ControlFactory factory)
+		public DialogButtonsControl(IControlFactory factory)
 		{
 			_factory = factory;
 			_buttonWidth = 100;
