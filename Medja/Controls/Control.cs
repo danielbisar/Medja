@@ -137,7 +137,6 @@ namespace Medja.Controls
 
 		private void OnVisibilityChanged(object sender, PropertyChangedEventArgs eventArgs)
 		{
-			Console.WriteLine(this + " Visibility changed: " + eventArgs.NewValue + " IsVisible = " + (Visibility == Visibility.Visible));
 			PropertyIsVisible.Set(Visibility == Visibility.Visible);
 		}
 
