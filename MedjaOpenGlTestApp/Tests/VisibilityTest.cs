@@ -17,24 +17,39 @@ namespace MedjaOpenGlTestApp.Tests
         {
             var bottomButton = _controlFactory.Create<Button>(p =>
             {
-                p.Text = "Botton";
+                p.Text = "Bottom";
                 p.Visibility = Visibility.Collapsed;
+            });
+
+            var leftButton = _controlFactory.Create<Button>(p =>
+            {
+                p.Text = "Left";
+                p.Position.Width = 200;
+            });
+            
+            var rightButton = _controlFactory.Create<Button>(p =>
+            {
+                p.Text = "Right";
+                p.Position.Width = 200;
+            });
+
+            var toggleVisibilityButton = _controlFactory.Create<Button>(p =>
+            {
+                p.Text = "Toggle left button visibility";
+                p.InputState.MouseClicked += (s, e) =>
+                {
+                    leftButton.Visibility = leftButton.IsVisible 
+                        ? Visibility.Collapsed 
+                        : Visibility.Visible;
+                };
             });
             
             var result = _controlFactory.Create<DockPanel>();
-            result.Add(Dock.Top, _controlFactory.Create<Button>(p =>
-            {
-                p.Text = "Top (toggle visibility)";
-                p.InputState.MouseClicked += (s, e) =>
-                {
-                    bottomButton.Visibility = bottomButton.IsVisible 
-                            ? Visibility.Collapsed 
-                            : Visibility.Visible;
-                };
-            }));
+            result.Add(Dock.Top, _controlFactory.Create<Button>(p => p.Text = "Top"));
+            result.Add(Dock.Top, toggleVisibilityButton);
             result.Add(Dock.Bottom, bottomButton);
-            result.Add(Dock.Left, _controlFactory.Create<Button>(p => p.Text = "Left"));
-            result.Add(Dock.Right, _controlFactory.Create<Button>(p => p.Text = "Right"));
+            result.Add(Dock.Left, leftButton);
+            result.Add(Dock.Right, rightButton);
             result.Add(Dock.Fill, _controlFactory.Create<Button>(p => p.Text = "Fill"));
 
             return result;
