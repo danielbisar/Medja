@@ -20,6 +20,10 @@ namespace Medja.Controls
 		/// </summary>
 		/// <value>The position.</value>
 		public MRect Position { get; }
+		
+		/// <summary>
+		/// Defines the outer border, where no rendering occurs.
+		/// </summary>
 		public Thickness Margin { get; }
 
 		public readonly Property<Color> PropertyBackground;

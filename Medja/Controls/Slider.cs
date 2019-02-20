@@ -1,4 +1,5 @@
 using System;
+using Medja.Primitives;
 
 namespace Medja.Controls
 {
@@ -27,12 +28,20 @@ namespace Medja.Controls
             get { return PropertyValue.Get(); }
             set { PropertyValue.Set(value); }
         }
+        
+        public readonly Property<Color> PropertyForeground;
+        public Color Foreground
+        {
+            get { return PropertyForeground.Get(); }
+            set { PropertyForeground.Set(value); }
+        }
 
         public Slider()
         {
             PropertyMinValue = new Property<float>();
             PropertyMaxValue = new Property<float>();
             PropertyValue = new Property<float>();
+            PropertyForeground = new Property<Color>();
 
             InputState.MouseClicked += OnMouseClicked;
             InputState.HandlesDrag = true;

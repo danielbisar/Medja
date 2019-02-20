@@ -15,7 +15,7 @@ namespace Medja.OpenTk.Rendering
 			if (color == null)
 				return new SKColor(0, 0, 0, 0xFF);
 
-			return new SKColor((byte)(0xFF * color.Red), (byte)(0xFF * color.Green), (byte)(0xFF * color.Blue));
+			return new SKColor((byte)(0xFF * color.Red), (byte)(0xFF * color.Green), (byte)(0xFF * color.Blue), (byte)(0xFF * color.Alpha));
 		}
 
 		/// <summary>

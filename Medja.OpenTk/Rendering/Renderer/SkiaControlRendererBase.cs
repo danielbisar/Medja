@@ -35,6 +35,14 @@ namespace Medja.OpenTk.Rendering
 			_paint.IsAntialias = true;
 		}
 
+		protected SKPaint CreatePaint()
+		{
+			var result = new SKPaint();
+			result.IsAntialias = true;
+
+			return result;
+		}
+
 		protected override void Render(SKCanvas context)
 		{
 			try
@@ -88,7 +96,7 @@ namespace Medja.OpenTk.Rendering
 			_paint.IsStroke = false;
 		}
 
-		protected void RenderTextCentered(string text, Font font)
+		protected void RenderTextCentered(string text, Font font, int yCorrection = 0)
 		{
 			if (string.IsNullOrEmpty(text))
 				return;
@@ -98,7 +106,7 @@ namespace Medja.OpenTk.Rendering
 			var width = _paint.MeasureText(text);
 			var height = _paint.TextSize;
 
-			_canvas.DrawText(text, _rect.MidX - width / 2, _rect.MidY + height / 2, _paint);
+			_canvas.DrawText(text, _rect.MidX - width / 2, (_rect.MidY + height / 2) - yCorrection, _paint);
 		}
 
 		protected void RenderText(string text, Font font, SKPoint pos)
