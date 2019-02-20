@@ -30,14 +30,15 @@ namespace Medja.Controls
 			set { PropertyTextWrapping.Set(value); }
 		}
 
-		public readonly Property<Color> PropertyForeground;
-		public Color Foreground
+		public readonly Property<Color> PropertyTextColor;
+		public Color TextColor
 		{
-			get { return PropertyForeground.Get(); }
-			set { PropertyForeground.Set(value); }
+			get { return PropertyTextColor.Get(); }
+			set { PropertyTextColor.Set(value); }
 		}
 
 		public Font Font { get; }
+		public Thickness Padding { get; }
 
 		public TextControl()
 		{
@@ -52,8 +53,10 @@ namespace Medja.Controls
 					InvalidateLines();
 			};
 			
-			PropertyForeground = new Property<Color>();
-			PropertyForeground.UnnotifiedSet(Colors.Black);
+			PropertyTextColor = new Property<Color>();
+			PropertyTextColor.UnnotifiedSet(Colors.Black);
+			
+			Padding = new Thickness();
 
 			Font = new Font();
 			_linesNeedUpdate = true;
@@ -83,7 +86,7 @@ namespace Medja.Controls
 				wrapper.GetWidth = Font.GetWidth;
 				wrapper.TextWrapping = TextWrapping;
 
-				_lines = wrapper.Wrap(Text, Position.Width);
+				_lines = wrapper.Wrap(Text, Position.Width - Padding.LeftAndRight);
 				_linesNeedUpdate = false;
 			}
 

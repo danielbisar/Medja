@@ -7,7 +7,7 @@
 		/// </summary>
 		Ellipses,
 		/// <summary>
-		/// Automatically wraps text, when the controls width is to low.
+		/// Automatically wraps text, when the controls width is too low.
 		/// </summary>
 		Auto
 	}

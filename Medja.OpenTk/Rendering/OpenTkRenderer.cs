@@ -24,7 +24,8 @@ namespace Medja.OpenTk.Rendering
 			_skia = new SkiaGlLayer();
 			
 			// TODO remove 
-			_defaultTypeface = SKTypeface.FromFamilyName("Monospace");
+			//_defaultTypeface = SKTypeface.FromFamilyName("Monospace");
+			_defaultTypeface = SKTypeface.FromFamilyName("Roboto");
 		}
 
 		public void SetSize(Rectangle rectangle)

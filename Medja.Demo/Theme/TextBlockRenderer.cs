@@ -1,18 +1,25 @@
 ﻿using Medja.Controls;
 using SkiaSharp;
+using Medja.OpenTk.Rendering;
+using Medja.Primitives;
 
-namespace Medja.OpenTk.Rendering
+namespace Medja.Demo
 {
 	public class TextBlockRenderer : SkiaControlRendererBase<TextBlock>
 	{
+		private readonly SKPaint _defaultBackgroundPaint;
 		private readonly SKPaint _textPaint;
 		private readonly SKPaint _textDisabledPaint;
 		
 		private bool _isControlInitialized;
 		
 		public TextBlockRenderer(TextBlock control)
-		: base(control)
+			: base(control)
 		{
+			_defaultBackgroundPaint = CreatePaint();
+			_defaultBackgroundPaint.Color = control.Background.ToSKColor();
+			_defaultBackgroundPaint.ImageFilter = SKImageFilter.CreateDropShadow(4,4,4,4, new SKColor(0,0,0,100), SKDropShadowImageFilterShadowMode.DrawShadowAndForeground);
+			
 			_textPaint = new SKPaint();
 			_textPaint.IsAntialias = true;
 			
@@ -22,7 +29,7 @@ namespace Medja.OpenTk.Rendering
 		
 		protected override void InternalRender()
 		{
-			RenderBackground();
+			_canvas.DrawRoundRect(_rect, 3, 3, _defaultBackgroundPaint);	
 
 			// IsLayoutUpdated = true is necessary to be able to call GetLines
 			if (string.IsNullOrWhiteSpace(_control.Text) || !_control.IsLayoutUpdated)
@@ -33,14 +40,15 @@ namespace Medja.OpenTk.Rendering
 
 			var paint = _control.IsEnabled ? _textPaint : _textDisabledPaint;
 			var lines = _control.GetLines();
-			var lineHeight = _paint.FontSpacing;
+			var lineHeight = paint.TextSize * 1.3f;
 
 			var pos = _control.Position.ToSKPoint();
 			// add the height also for the first line
 			// else it seems the text is drawn at a 
 			// too high position
-			pos.Y += lineHeight;
-
+			pos.Y += paint.TextSize + _control.Padding.Top;
+			pos.X += _control.Padding.Left;
+			
 			for (int i = 0; i < lines.Length && pos.Y <= _rect.Bottom; i++)
 			{
 				_canvas.DrawText(lines[i], pos, paint);
