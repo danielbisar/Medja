@@ -1,5 +1,6 @@
 ﻿using Medja.Controls;
 using Medja.OpenTk;
+using Medja.OpenTk.Rendering;
 using Medja.Primitives;
 
 namespace Medja.Demo
@@ -16,6 +17,7 @@ namespace Medja.Demo
         public Program()
         {
             var library = new MedjaOpenTkLibrary(new DemoTheme());
+            library.RendererFactory = () => new OpenTkRenderer("Roboto");
             _application = MedjaApplication.Create(library);
         }
 

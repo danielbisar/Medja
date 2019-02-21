@@ -19,13 +19,12 @@ namespace Medja.OpenTk.Rendering
 		private SKCanvas _canvas;
 		private readonly SKTypeface _defaultTypeface;
 
-		public OpenTkRenderer()
+		public OpenTkRenderer(string fontFamilyName = null)
 		{
 			_skia = new SkiaGlLayer();
-			
-			// TODO remove 
-			//_defaultTypeface = SKTypeface.FromFamilyName("Monospace");
-			_defaultTypeface = SKTypeface.FromFamilyName("Roboto");
+
+			// todo clean font usage implementation for all controls
+			_defaultTypeface = SKTypeface.FromFamilyName(fontFamilyName ?? "Monospace");
 		}
 
 		public void SetSize(Rectangle rectangle)
