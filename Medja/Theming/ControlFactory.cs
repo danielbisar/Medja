@@ -7,12 +7,13 @@ using Medja.Utils.Reflection;
 namespace Medja.Theming
 {
 	/// <summary>
-	/// A factory to create controls. The main prupose is to allow you to modify default settings, when creating any
-	/// medja control and to setup the renderer of each control.
+	/// Factory class for all controls in Medja. Connects the Control with its Renderer and allows applying of
+	/// default values.
 	/// </summary>
 	/// <remarks>There are some controls that use generics. The naming of the method is the same as for other controls.
-	/// If you have a class MyControl<T> the method would be named 'CreateMyControl<T>'. You cannot register generic
-	/// methods via AddFactoryMethod but the <see cref="Create{TControl}()"/> method will search via reflection.</remarks>
+	/// If you have a class MyControl&lt;T&gt; the method would be named 'CreateMyControl&lt;T&gt;'. You cannot register
+	/// generic methods via AddFactoryMethod but the <see cref="Create{TControl}()"/> method will search via
+	/// reflection.</remarks>
 	public class ControlFactory
 	{
 		private readonly Dictionary<Type, Func<object>> _factoryMethods;
