@@ -9,6 +9,11 @@
 		/// <summary>
 		/// Automatically wraps text, when the controls width is too low.
 		/// </summary>
-		Auto
+		Auto,
+		
+		/// <summary>
+		/// Does nothing.
+		/// </summary>
+		None
 	}
 }

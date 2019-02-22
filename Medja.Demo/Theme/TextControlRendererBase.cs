@@ -63,6 +63,9 @@ namespace Medja.Demo
         
         protected virtual void DrawText()
         {
+            _canvas.Save();
+            _canvas.ClipRect(_control.TextClippingArea.ToSKRect());
+            
             _currentTextPaint = _control.IsEnabled ? _textPaint : _textDisabledPaint;
             var pos = _control.Position.ToSKPoint();
             // add the height also for the first line
@@ -76,6 +79,8 @@ namespace Medja.Demo
             if (string.IsNullOrEmpty(_control.Text))
                 return;
             
+            // todo check if multiline is allowed
+            
             var lines = _control.GetLines();
             var lineHeight = _currentTextPaint.TextSize * 1.3f;
 
@@ -84,6 +89,8 @@ namespace Medja.Demo
                 DrawTextLine(lines[i], pos);
                 pos.Y += lineHeight;
             }
+            
+            _canvas.Restore();
         }
 
         private void DrawTextLine(string text, SKPoint pos)
