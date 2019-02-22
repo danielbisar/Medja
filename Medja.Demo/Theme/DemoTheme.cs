@@ -39,16 +39,6 @@ namespace Medja.Demo
             return result;
         }
 
-        protected override Slider CreateSlider()
-        {
-            var result = base.CreateSlider();
-            result.Background = DemoThemeValues.ControlBackground;
-            result.Foreground = DemoThemeValues.PrimaryTextColor;
-            result.Renderer = new SliderRenderer(result);
-
-            return result;
-        }
-
         protected override ProgressBar CreateProgressBar()
         {
             var result = base.CreateProgressBar();
@@ -60,14 +50,36 @@ namespace Medja.Demo
 
             return result;
         }
+        
+        protected override Slider CreateSlider()
+        {
+            var result = base.CreateSlider();
+            result.Background = DemoThemeValues.ControlBackground;
+            result.Foreground = DemoThemeValues.PrimaryTextColor;
+            result.Renderer = new SliderRenderer(result);
+
+            return result;
+        }
+
+        protected override TextBox CreateTextBox()
+        {
+            var result = base.CreateTextBox();
+            result.Background = DemoThemeValues.ControlBackground;
+            result.TextColor = DemoThemeValues.PrimaryTextColor;
+            result.Renderer = new TextBoxRenderer(result);
+            result.Position.Height = 37;
+            result.Padding.Top = 9;
+            result.Padding.Left = 10;
+
+            return result;
+        }
 
         protected override TextBlock CreateTextBlock()
         {
             var result = base.CreateTextBlock();
             result.Background = Colors.White;
             result.TextColor = Colors.Black;
-            result.Padding.SetLeftAndRight(5);
-            result.Padding.SetTopAndBotton(5);
+            result.Padding.SetAll(5);
             
             result.Renderer = new TextBlockRenderer(result);
             

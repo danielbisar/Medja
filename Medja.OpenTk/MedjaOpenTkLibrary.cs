@@ -43,7 +43,7 @@ namespace Medja.OpenTk
 		{
 			ControlFactory = factory ?? new OpenTkTheme();
 			RendererFactory = () => new OpenTkRenderer();
-			_focusManager = new FocusManager();
+			_focusManager = FocusManager.Default;
 			_controls = new List<Control>();
 			TaskQueue = new TaskQueue<object>();
 			BitmapFactory = new SkiaBitmapFactory();
