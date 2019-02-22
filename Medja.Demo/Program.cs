@@ -53,7 +53,7 @@ namespace Medja.Demo
             disabledButton.IsEnabled = false;
 
             var buttonStackPanel = controlFactory.Create<HorizontalStackPanel>();
-            buttonStackPanel.ChildrenWidth = 100;
+            buttonStackPanel.ChildrenWidth = 150;
             buttonStackPanel.SpaceBetweenChildren = 50;
             buttonStackPanel.Children.Add(button);
             buttonStackPanel.Children.Add(touchedButton);
@@ -104,7 +104,7 @@ namespace Medja.Demo
             textBlock.Position.Height = 75;
 
             var checkBoxStackPanel = controlFactory.Create<HorizontalStackPanel>();
-            checkBoxStackPanel.ChildrenWidth = 100;
+            checkBoxStackPanel.ChildrenWidth = 150;
             checkBoxStackPanel.SpaceBetweenChildren = 50;
             checkBoxStackPanel.Children.Add(checkBox);
             checkBoxStackPanel.Children.Add(checkedCheckBox);

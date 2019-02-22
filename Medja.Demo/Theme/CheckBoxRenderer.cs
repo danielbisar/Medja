@@ -4,10 +4,10 @@ using SkiaSharp;
 
 namespace Medja.Demo
 {
-    public class CheckBoxRenderer : SkiaControlRendererBase<CheckBox>
+    public class CheckBoxRenderer : TextControlRendererBase<CheckBox>
     {
         private readonly SKPaint _defaultBackgroundPaint;
-        private readonly SKPaint _disabledUncheckdBackgroundPaint;
+        private readonly SKPaint _disabledUncheckedBackgroundPaint;
         private readonly SKPaint _checkedBackgroundPaint;
         private readonly SKPaint _disabledCheckedBackgroundPaint;
         private readonly SKPaint _checkMarkPaint;
@@ -19,9 +19,9 @@ namespace Medja.Demo
             _defaultBackgroundPaint.Color = control.Background.ToSKColor();
             _defaultBackgroundPaint.ImageFilter = DemoThemeValues.DropShadow;
             
-            _disabledUncheckdBackgroundPaint = CreatePaint();
-            _disabledUncheckdBackgroundPaint.Color = control.Background.GetDisabled().ToSKColor();
-            _disabledUncheckdBackgroundPaint.ImageFilter = DemoThemeValues.DropShadowDisabled;
+            _disabledUncheckedBackgroundPaint = CreatePaint();
+            _disabledUncheckedBackgroundPaint.Color = control.Background.GetDisabled().ToSKColor();
+            _disabledUncheckedBackgroundPaint.ImageFilter = DemoThemeValues.DropShadowDisabled;
 
             _checkedBackgroundPaint = CreatePaint();
             _checkedBackgroundPaint.Color = DemoThemeValues.PrimaryColor.ToSKColor(); // todo control.F.ToSKColor();
@@ -39,7 +39,7 @@ namespace Medja.Demo
             // todo update colors on change - required for all renders; find a good clean solution
         }
 
-        protected override void InternalRender()
+        protected override void DrawTextControlBackground()
         {
             SKPaint backgroundPaint = null;
             
@@ -54,9 +54,8 @@ namespace Medja.Demo
             {
                 backgroundPaint = _control.IsChecked
                     ? _disabledCheckedBackgroundPaint
-                    : _disabledUncheckdBackgroundPaint;
+                    : _disabledUncheckedBackgroundPaint;
             }
-                
             
             var checkMarkBorder = new SKRect(_rect.Left, _rect.Top, _rect.Left + _rect.Height, _rect.Bottom);
             _canvas.DrawRoundRect(checkMarkBorder, 2, 2, backgroundPaint);
@@ -72,11 +71,6 @@ namespace Medja.Demo
                     _canvas.DrawPath(checkMarkPath, _checkMarkPaint);
                 }
             }
-
-            // todo implement a better way to draw text; it should include caching of the font, color and size
-            // maybe a simple class for rendering text?
-            _paint.Color = _control.IsEnabled ? _control.TextColor.ToSKColor() : _control.TextColor.GetDisabled().ToSKColor();
-            RenderText(_control.Text, _control.Font, new SKPoint(checkMarkBorder.Right+5, checkMarkBorder.MidY + _paint.TextSize / 2.2f));
         }
     }
 }

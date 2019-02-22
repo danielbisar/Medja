@@ -4,7 +4,7 @@ using SkiaSharp;
 
 namespace Medja.Demo
 {
-    public class ButtonRenderer : SkiaControlRendererBase<Button>
+    public class ButtonRenderer : TextControlRendererBase<Button>
     {
         private readonly SKPaint _defaultBackgroundPaint;
         private readonly SKPaint _disabledBackgroundPaint;
@@ -19,16 +19,16 @@ namespace Medja.Demo
 
             _disabledBackgroundPaint = CreatePaint();
             _disabledBackgroundPaint.Color = control.Background.GetDisabled().ToSKColor();
-            //_disabledBackgroundPaint.ImageFilter = DemoThemeValues.DropShadowDisabled;
+            _disabledBackgroundPaint.ImageFilter = DemoThemeValues.DropShadowDisabled;
             
             _clickBackgroundPaint = CreatePaint();
             _clickBackgroundPaint.Color = control.Background.ToSKColor();
-            //_clickBackgroundPaint.ImageFilter = DemoThemeValues.DropShadowElevated;
+            _clickBackgroundPaint.ImageFilter = DemoThemeValues.DropShadowElevated;
             ;
             // todo update colors on change - required for all renders; find a good clean solution
         }
 
-        protected override void InternalRender()
+        protected override void DrawTextControlBackground()
         {
             var backgroundPaint = _defaultBackgroundPaint;
 
@@ -38,11 +38,6 @@ namespace Medja.Demo
                 backgroundPaint = _clickBackgroundPaint;
             
             _canvas.DrawRoundRect(_rect, 3, 3, backgroundPaint);
-
-            // todo implement a better way to draw text; it should include caching of the font, color and size
-            // maybe a simple class for rendering text?
-            _paint.Color = _control.IsEnabled ? _control.TextColor.ToSKColor() : _control.TextColor.GetDisabled().ToSKColor();
-            RenderTextCentered(_control.Text, _control.Font);
         }
     }
 }

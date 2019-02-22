@@ -25,22 +25,6 @@ namespace Medja.Demo
             _caretStopWatch = Stopwatch.StartNew();
         }
 
-        protected override SKPaint CreateTextPaint()
-        {
-            var result = CreatePaint();
-            result.Color = DemoThemeValues.PrimaryTextColor.ToSKColor();
-
-            return result;
-        }
-
-        protected override SKPaint CreateTextDisabledPaint()
-        {
-            var result = CreatePaint();
-            result.Color = DemoThemeValues.PrimaryTextColor.GetDisabled().ToSKColor();
-
-            return result;
-        }
-
         protected override void DrawTextControlBackground()
         {
             _canvas.DrawRoundRect(_rect, 3, 3, _textBoxBackground);
