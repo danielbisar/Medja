@@ -1,3 +1,4 @@
+using System;
 using Medja.Controls;
 using Medja.OpenTk.Rendering;
 using SkiaSharp;
@@ -9,6 +10,7 @@ namespace Medja.Demo
     {
         protected readonly SKPaint _textPaint;
         protected readonly SKPaint _textDisabledPaint;
+        private SKPaint _currentTextPaint;
         
         private bool _isControlInitialized;
         protected float StartingY;
@@ -20,8 +22,28 @@ namespace Medja.Demo
             _textDisabledPaint = CreateTextDisabledPaint();
         }
 
-        protected abstract SKPaint CreateTextPaint();
-        protected abstract SKPaint CreateTextDisabledPaint();
+        protected virtual SKPaint CreateTextPaint()
+        {
+            // todo update on control.Font change
+            var font = _control.Font;
+            
+            var result = CreatePaint();
+            result.Color = _control.TextColor.ToSKColor();
+            result.Typeface = font.Name == null ? DefaultTypeFace : SKTypeface.FromFamilyName(font.Name);
+            result.TextSize = font.Size;
+
+            return result;
+        }
+
+        protected virtual SKPaint CreateTextDisabledPaint()
+        {
+            var result = CreatePaint();
+            result.Typeface = _textPaint.Typeface;
+            result.TextSize = _textPaint.TextSize;
+            result.Color = _control.TextColor.GetDisabled().ToSKColor();
+
+            return result;
+        }
 
         protected override void InternalRender()
         {
@@ -41,13 +63,13 @@ namespace Medja.Demo
         
         protected virtual void DrawText()
         {
-            var paint = _control.IsEnabled ? _textPaint : _textDisabledPaint;
+            _currentTextPaint = _control.IsEnabled ? _textPaint : _textDisabledPaint;
             var pos = _control.Position.ToSKPoint();
             // add the height also for the first line
             // else it seems the text is drawn at a 
             // too high position
-            pos.Y += paint.TextSize + _control.Padding.Top;
-            pos.X += _control.Padding.Left;
+            
+            pos.Y += _currentTextPaint.TextSize + _control.Padding.Top;
 
             StartingY = pos.Y;
 
@@ -55,27 +77,36 @@ namespace Medja.Demo
                 return;
             
             var lines = _control.GetLines();
-            var lineHeight = paint.TextSize * 1.3f;
-			
+            var lineHeight = _currentTextPaint.TextSize * 1.3f;
+
             for (int i = 0; i < lines.Length && pos.Y <= _rect.Bottom; i++)
             {
-                _canvas.DrawText(lines[i], pos, paint);
+                DrawTextLine(lines[i], pos);
                 pos.Y += lineHeight;
             }
         }
-        
+
+        private void DrawTextLine(string text, SKPoint pos)
+        {
+            switch (_control.TextAlignment)
+            {
+                case TextAlignment.Left:
+                    _canvas.DrawText(text, pos.X + _control.Padding.Left, pos.Y, _currentTextPaint);
+                    break;
+                case TextAlignment.Right:
+                    _canvas.DrawText(text, _rect.Right - _control.Padding.Right - GetTextWidth(text), pos.Y, _currentTextPaint);
+                    break;
+                case TextAlignment.Center:
+                    _canvas.DrawText(text, _rect.MidX - GetTextWidth(text) / 2, pos.Y, _currentTextPaint);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
         private void InitControl()
         {
             var font = _control.Font;
-			
-            _textPaint.Typeface = font.Name == null ? DefaultTypeFace : SKTypeface.FromFamilyName(font.Name);
-            _textPaint.TextSize = font.Size;
-            _textPaint.Color = _control.TextColor.ToSKColor();
-
-            _textDisabledPaint.Typeface = _textPaint.Typeface;
-            _textDisabledPaint.TextSize = font.Size;
-            _textDisabledPaint.Color = _control.TextColor.GetDisabled().ToSKColor();
-
             font.GetWidth = GetTextWidth;
 			
             // TODO not supported scenarios:
@@ -88,7 +119,7 @@ namespace Medja.Demo
 
         private float GetTextWidth(string text)
         {
-            return GetTextWidth(_textPaint, text);
+            return GetTextWidth(_currentTextPaint, text);
         }
     }
 }

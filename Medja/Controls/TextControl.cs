@@ -37,12 +37,20 @@ namespace Medja.Controls
 			set { PropertyTextColor.Set(value); }
 		}
 
+		public readonly Property<TextAlignment> PropertyTextAlignment;
+		public TextAlignment TextAlignment
+		{
+			get { return PropertyTextAlignment.Get(); }
+			set { PropertyTextAlignment.Set(value);}
+		}
+
 		public Font Font { get; }
 		public Thickness Padding { get; }
 
 		public TextControl()
 		{
 			PropertyText = new Property<string>();
+			PropertyTextAlignment = new Property<TextAlignment>();
 			PropertyTextWrapping = new Property<TextWrapping>();
 			
 			PropertyText.PropertyChanged += (s, e) => InvalidateLines();

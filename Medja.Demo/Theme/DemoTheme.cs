@@ -13,6 +13,9 @@ namespace Medja.Demo
             result.TextColor = DemoThemeValues.PrimaryTextColor;
             result.Position.Height = 40;
             //result.Position.Width = 100;
+            result.TextAlignment = TextAlignment.Center;
+            result.Padding.Top = 9;
+            result.Padding.SetLeftAndRight(0);
 
             result.Renderer = new ButtonRenderer(result);
             
@@ -25,6 +28,7 @@ namespace Medja.Demo
             result.Background = DemoThemeValues.ControlBackground;
             result.TextColor = DemoThemeValues.PrimaryTextColor;
             result.Position.Height = 19;
+            result.Padding.Left = 27;
             
             result.Renderer = new CheckBoxRenderer(result);
 
@@ -66,10 +70,11 @@ namespace Medja.Demo
             var result = base.CreateTextBox();
             result.Background = DemoThemeValues.ControlBackground;
             result.TextColor = DemoThemeValues.PrimaryTextColor;
-            result.Renderer = new TextBoxRenderer(result);
             result.Position.Height = 37;
             result.Padding.Top = 9;
-            result.Padding.Left = 10;
+            result.Padding.SetLeftAndRight(10);
+            
+            result.Renderer = new TextBoxRenderer(result);
 
             return result;
         }
