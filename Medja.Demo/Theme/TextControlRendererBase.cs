@@ -78,8 +78,10 @@ namespace Medja.Demo
             StartingY = pos.Y;
 
             if (string.IsNullOrEmpty(_control.Text))
+            {
+                _canvas.Restore();
                 return;
-            
+            }
             // todo check if multiline is allowed
             
             var lines = _control.GetLines();
