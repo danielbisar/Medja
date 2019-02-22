@@ -13,7 +13,8 @@ namespace Medja.Demo
         private SKPaint _currentTextPaint;
         
         private bool _isControlInitialized;
-        protected float StartingY;
+        protected float StartingY { get; private set; }
+        protected float XOffset { get; set; }
         
         public TextControlRendererBase(T control) 
             : base(control)
@@ -98,13 +99,13 @@ namespace Medja.Demo
             switch (_control.TextAlignment)
             {
                 case TextAlignment.Left:
-                    _canvas.DrawText(text, pos.X + _control.Padding.Left, pos.Y, _currentTextPaint);
+                    _canvas.DrawText(text, pos.X + _control.Padding.Left + XOffset, pos.Y, _currentTextPaint);
                     break;
                 case TextAlignment.Right:
-                    _canvas.DrawText(text, _rect.Right - _control.Padding.Right - GetTextWidth(text), pos.Y, _currentTextPaint);
+                    _canvas.DrawText(text, _rect.Right - _control.Padding.Right - GetTextWidth(text) + XOffset, pos.Y, _currentTextPaint);
                     break;
                 case TextAlignment.Center:
-                    _canvas.DrawText(text, _rect.MidX - GetTextWidth(text) / 2, pos.Y, _currentTextPaint);
+                    _canvas.DrawText(text, _rect.MidX - GetTextWidth(text) / 2 + XOffset, pos.Y, _currentTextPaint);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
