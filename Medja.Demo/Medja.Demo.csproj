@@ -52,6 +52,8 @@
     <Compile Include="Theme\ProgressBarRenderer.cs" />
     <Compile Include="Theme\SliderRenderer.cs" />
     <Compile Include="Theme\TextBlockRenderer.cs" />
+    <Compile Include="Theme\TextBoxRenderer.cs" />
+    <Compile Include="Theme\TextControlRendererBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Medja.OpenTk\Medja.OpenTk.csproj">

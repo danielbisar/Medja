@@ -77,6 +77,24 @@ namespace Medja.Demo
             var slider = controlFactory.Create<Slider>();
             slider.MaxValue = 100;
             slider.Value = 75;
+
+            var textBox = controlFactory.Create<TextBox>();
+            textBox.Text = "TextBox";
+
+            var textBoxDisabled = controlFactory.Create<TextBox>();
+            textBoxDisabled.IsEnabled = false;
+            textBoxDisabled.Text = "disabled";
+
+            var textBoxFocused = controlFactory.Create<TextBox>();
+            textBoxFocused.Text = "focused";
+            FocusManager.Default.SetFocus(textBoxFocused);
+
+            var textBoxStackPanel = controlFactory.Create<HorizontalStackPanel>();
+            textBoxStackPanel.ChildrenWidth = 150;
+            textBoxStackPanel.SpaceBetweenChildren = 50;
+            textBoxStackPanel.Children.Add(textBox);
+            textBoxStackPanel.Children.Add(textBoxDisabled);
+            textBoxStackPanel.Children.Add(textBoxFocused);
             
             var textBlock = controlFactory.Create<TextBlock>();
             textBlock.TextWrapping = TextWrapping.Auto;
@@ -100,6 +118,7 @@ namespace Medja.Demo
             result.Children.Add(checkBoxStackPanel);
             result.Children.Add(progressBar);
             result.Children.Add(slider);
+            result.Children.Add(textBoxStackPanel);
             result.Children.Add(textBlock);
             
             return result;

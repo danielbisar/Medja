@@ -96,17 +96,21 @@ namespace Medja.OpenTk.Rendering
 			_paint.IsStroke = false;
 		}
 
-		protected void RenderTextCentered(string text, Font font, int yCorrection = 0)
+		protected void RenderTextCentered(string text, Font font)
 		{
 			if (string.IsNullOrEmpty(text))
 				return;
 			
 			BeginText(font);
 
+			var fontMetrics = _paint.FontMetrics; // actually calls GetFontMetrics
+			
 			var width = _paint.MeasureText(text);
-			var height = _paint.TextSize;
+			var height = fontMetrics.Bottom - fontMetrics.Top;
+			// see:
+			// https://stackoverflow.com/questions/27631736/meaning-of-top-ascent-baseline-descent-bottom-and-leading-in-androids-font
 
-			_canvas.DrawText(text, _rect.MidX - width / 2, (_rect.MidY + height / 2) - yCorrection, _paint);
+			_canvas.DrawText(text, _rect.MidX - width / 2, _rect.MidY + height / 2, _paint);
 		}
 
 		protected void RenderText(string text, Font font, SKPoint pos)
