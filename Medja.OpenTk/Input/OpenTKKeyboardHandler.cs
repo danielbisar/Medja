@@ -25,6 +25,8 @@ namespace Medja.OpenTk.Input
 		{
 			if (e.Key == Key.BackSpace)
 				NotifyKeyPressed('\b');
+			else if(e.Key == Key.Delete)
+				NotifyKeyPressed((char) Keys.Delete);
 			else if(e.Key == Key.Left)
 				NotifyKeyPressed((char)Keys.Left);
 			else if(e.Key == Key.Right)
