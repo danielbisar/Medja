@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics;
 using Medja.Controls;
 using Medja.OpenTk.Rendering;
@@ -40,6 +41,9 @@ namespace Medja.Demo
                 var caretLeft = _rect.Left + _control.Padding.Left + textWidth;
                 var top = StartingY - _textPaint.TextSize;
                 var bottom = top + _textPaint.FontSpacing;
+                var maxX = _rect.Right - _control.Padding.Right;
+
+                caretLeft = Math.Min(caretLeft, maxX);
 
                 _canvas.DrawLine(new SKPoint(caretLeft, top), 
                     new SKPoint(caretLeft, bottom), 
