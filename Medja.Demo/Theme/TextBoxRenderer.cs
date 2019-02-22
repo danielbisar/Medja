@@ -43,6 +43,13 @@ namespace Medja.Demo
                 var bottom = top + _textPaint.FontSpacing;
                 var maxX = _rect.Right - _control.Padding.Right;
 
+                if (caretLeft > maxX)
+                {
+                    var distance = caretLeft - maxX;
+                    
+                    
+                }
+                
                 caretLeft = Math.Min(caretLeft, maxX);
 
                 _canvas.DrawLine(new SKPoint(caretLeft, top), 

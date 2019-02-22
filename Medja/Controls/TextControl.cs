@@ -46,6 +46,8 @@ namespace Medja.Controls
 
 		public Font Font { get; }
 		public Thickness Padding { get; }
+		
+		public MRect TextClippingArea { get; }
 
 		public TextControl()
 		{
@@ -65,6 +67,7 @@ namespace Medja.Controls
 			PropertyTextColor.UnnotifiedSet(Colors.Black);
 			
 			Padding = new Thickness();
+			TextClippingArea = new MRect();
 
 			Font = new Font();
 			_linesNeedUpdate = true;
@@ -99,6 +102,16 @@ namespace Medja.Controls
 			}
 
 			return _lines;
+		}
+
+		public override void Arrange(Size availableSize)
+		{
+			base.Arrange(availableSize);
+			
+			TextClippingArea.X = Position.X + Padding.Left;
+			TextClippingArea.Y = Position.Y + Padding.Top;
+			TextClippingArea.Width = Position.Width - Padding.LeftAndRight;
+			TextClippingArea.Height = Position.Height - Padding.TopAndBottom;
 		}
 	}
 }
