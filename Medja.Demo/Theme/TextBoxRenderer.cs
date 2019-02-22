@@ -33,22 +33,24 @@ namespace Medja.Demo
 
         protected override void DrawText()
         {
+            var textWidth = GetTextWidth(_textPaint, _control.Text);
+            var caretLeft = _rect.Left + _control.Padding.Left + textWidth;
+            var maxX = _rect.Right - _control.Padding.Right;
+
+            if (caretLeft > maxX)
+            {
+                var distance = caretLeft - maxX;
+                XOffset = -distance;
+            }
+            else
+                XOffset = 0;
+            
             base.DrawText();
             
             if (_control.IsFocused && _caretStopWatch.ElapsedTicks % 10000000 <= 5000000)
             {
-                var textWidth = GetTextWidth(_textPaint, _control.Text);
-                var caretLeft = _rect.Left + _control.Padding.Left + textWidth;
                 var top = StartingY - _textPaint.TextSize;
                 var bottom = top + _textPaint.FontSpacing;
-                var maxX = _rect.Right - _control.Padding.Right;
-
-                if (caretLeft > maxX)
-                {
-                    var distance = caretLeft - maxX;
-                    
-                    
-                }
                 
                 caretLeft = Math.Min(caretLeft, maxX);
 
