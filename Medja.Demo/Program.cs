@@ -121,6 +121,8 @@ namespace Medja.Demo
             result.Children.Add(textBoxStackPanel);
             result.Children.Add(textBlock);
             
+            // todo combobox
+            
             return result;
         }
     }
