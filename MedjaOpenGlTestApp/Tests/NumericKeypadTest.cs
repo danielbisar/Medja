@@ -25,7 +25,7 @@ namespace MedjaOpenGlTestApp.Tests
                 });
             result.IsDialogVisible = true;
             
-            
+             
             return result;
         }
     }
