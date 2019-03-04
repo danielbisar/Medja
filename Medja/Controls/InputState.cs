@@ -15,7 +15,7 @@ namespace Medja
 		/// Defines the threshold in pixel that is used for a drag operation (the min. distance the mouse must move to indicate a drag)
 		/// </summary>
 		private readonly double _dragThreshold;
-		private Point _mouseDownPointerPosition;
+		private Point _pointerDownPosition;
 
 		/// <summary>
 		/// Gets the control this InputState belongs to.
@@ -81,8 +81,15 @@ namespace Medja
 			set { PropertyHandlesDrag.Set(value); }
 		}
 
-		public event EventHandler MouseClicked;
-		public event EventHandler<MouseDraggedEventArgs> MouseDragged;
+		/// <summary>
+		/// A touch or mouse device clicked the control.
+		/// </summary>
+		public event EventHandler Clicked;
+		
+		/// <summary>
+		/// A touch or mouse device dragged inside the control.
+		/// </summary>
+		public event EventHandler<MouseDraggedEventArgs> Dragged;
 		public event EventHandler<KeyboardEventArgs> KeyPressed;
 
 		public InputState(Control control)
@@ -110,7 +117,7 @@ namespace Medja
 		private void OnPointerPositionChanged(object sender, PropertyChangedEventArgs eventArgs)
 		{
 			if (IsLeftMouseDown 
-				&& _mouseDownPointerPosition.Distance(PointerPosition) > _dragThreshold)
+				&& _pointerDownPosition.Distance(PointerPosition) > _dragThreshold)
 				IsDrag = true;
 			else
 				IsDrag = false;
@@ -121,14 +128,14 @@ namespace Medja
 
 		private void NotifyMouseDragged()
 		{
-			if (MouseDragged != null)
-				MouseDragged(this, new MouseDraggedEventArgs(_mouseDownPointerPosition, PointerPosition));
+			if (Dragged != null)
+				Dragged(this, new MouseDraggedEventArgs(_pointerDownPosition, PointerPosition));
 		}
 
 		private void OnIsLeftMouseDownChanged(object sender, PropertyChangedEventArgs eventArgs)
 		{
 			if (IsLeftMouseDown)
-				_mouseDownPointerPosition = PointerPosition;
+				_pointerDownPosition = PointerPosition;
 
 			if (!_isClearing && !IsLeftMouseDown && !IsDrag)
 				NotifyClicked();
@@ -136,8 +143,8 @@ namespace Medja
 
 		private void NotifyClicked()
 		{
-			if (MouseClicked != null)
-				MouseClicked(this, EventArgs.Empty);
+			if (Clicked != null)
+				Clicked(this, EventArgs.Empty);
 		}
 
 		public void Clear()

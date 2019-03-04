@@ -41,10 +41,10 @@ namespace Medja.Controls
 			PropertySelectedTab.PropertyChanged += OnSelectedTabChanged;
 			PropertySelectedTab.AffectsLayout(this);
 			
-			InputState.MouseClicked += OnMouseClicked;
+			InputState.Clicked += OnClicked;
 		}
 
-		protected virtual void OnMouseClicked(object sender, EventArgs e)
+		protected virtual void OnClicked(object sender, EventArgs e)
 		{
 			var pointerPos = InputState.PointerPosition;
 
