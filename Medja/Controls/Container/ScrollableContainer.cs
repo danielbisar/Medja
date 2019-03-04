@@ -19,7 +19,7 @@ namespace Medja.Controls
             
             ScrollBarWidth = _scrollBar.Position.Width;
             
-            InputState.MouseDragged += OnMouseDragged;
+            InputState.Dragged += OnDragged;
             InputState.PropertyMouseWheelDelta.PropertyChanged += OnMouseWheelMoved;
             InputState.PropertyIsLeftMouseDown.PropertyChanged += OnLeftMouseUp;
             InputState.HandlesDrag = true;
@@ -31,7 +31,7 @@ namespace Medja.Controls
             _startDragPos = null;
         }
         
-        protected virtual void OnMouseDragged(object sender, MouseDraggedEventArgs e)
+        protected virtual void OnDragged(object sender, MouseDraggedEventArgs e)
         {
             if (!_startDragPos.HasValue)
                 _startDragPos = _scrollBar.Value;

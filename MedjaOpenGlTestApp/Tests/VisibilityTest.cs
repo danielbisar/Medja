@@ -36,7 +36,7 @@ namespace MedjaOpenGlTestApp.Tests
             var toggleVisibilityButton = _controlFactory.Create<Button>(p =>
             {
                 p.Text = "Toggle left button visibility";
-                p.InputState.MouseClicked += (s, e) =>
+                p.InputState.Clicked += (s, e) =>
                 {
                     leftButton.Visibility = leftButton.IsVisible 
                         ? Visibility.Collapsed 

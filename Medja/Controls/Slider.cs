@@ -43,18 +43,18 @@ namespace Medja.Controls
             PropertyValue = new Property<float>();
             PropertyForeground = new Property<Color>();
 
-            InputState.MouseClicked += OnMouseClicked;
+            InputState.Clicked += OnClicked;
             InputState.HandlesDrag = true;
             InputState.OwnsMouseEvents = true;
-            InputState.MouseDragged += OnMouseDragged;
+            InputState.Dragged += OnDragged;
         }
 
-        protected virtual void OnMouseDragged(object sender, MouseDraggedEventArgs e)
+        protected virtual void OnDragged(object sender, MouseDraggedEventArgs e)
         {
             ApplyMousePos(e.Target.X);
         }
 
-        protected virtual void OnMouseClicked(object sender, EventArgs e)
+        protected virtual void OnClicked(object sender, EventArgs e)
         {
             ApplyMousePos(InputState.PointerPosition.X);
         }
