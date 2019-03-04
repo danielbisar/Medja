@@ -7,6 +7,7 @@
 		public static readonly Color Green = new Color(0, 1, 0);
 		public static readonly Color Gray = new Color(0.5f, 0.5f, 0.5f);
 		public static readonly Color LightGray = new Color(0.3f, 0.3f, 0.3f);
+		public static readonly Color OrangeYellow = Color.FromHexStr("#FFCC00");
 		public static readonly Color Red = new Color(1, 0, 0);
 		public static readonly Color White = new Color(1, 1, 1);
 
@@ -15,6 +16,7 @@
 			Black,
 			Blue,
 			Green,
+			OrangeYellow,
 			Gray,
 			LightGray,
 			Red,
