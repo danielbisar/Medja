@@ -11,58 +11,63 @@ namespace Medja.Controls
     public class NumericKeypad : ContentControl
     {
         private readonly ControlFactory _controlFactory;
-        private readonly StringBuilder _stringBuilder;
-
+        private TextBox _textBox;
+        
         public NumericKeypad(ControlFactory controlFactory)
         {
             _controlFactory = controlFactory;
-            _stringBuilder = new StringBuilder();
             
             Content = CreateContent();
         }
 
-        public Control CreateContent()
+        private Control CreateContent()
         {
-            var placeholder = new Control(); 
+            var placeholder = new Control();
 
-            var result = _controlFactory.Create<TablePanel>();
-            result.Rows.Add(new RowDefinition(100));
-            result.Rows.Add(new RowDefinition(100));
-            result.Rows.Add(new RowDefinition(100));
-            result.Rows.Add(new RowDefinition(100));
-            result.Columns.Add(new ColumnDefinition(50));
-            result.Columns.Add(new ColumnDefinition(50));
-            result.Columns.Add(new ColumnDefinition(50));
-            result.Columns.Add(new ColumnDefinition(50));
+            _textBox = _controlFactory.Create<TextBox>();
+            
+            var keyboard = _controlFactory.Create<TablePanel>();
+            keyboard.Rows.Add(new RowDefinition(100));
+            keyboard.Rows.Add(new RowDefinition(100));
+            keyboard.Rows.Add(new RowDefinition(100));
+            keyboard.Rows.Add(new RowDefinition(100));
+            keyboard.Columns.Add(new ColumnDefinition(50));
+            keyboard.Columns.Add(new ColumnDefinition(50));
+            keyboard.Columns.Add(new ColumnDefinition(50));
+            keyboard.Columns.Add(new ColumnDefinition(50));
 
-            AddNumericButton(result.Children, "7");
-            AddNumericButton(result.Children, "8");
-            AddNumericButton(result.Children, "9");
+            AddNumericButton(keyboard.Children, "7");
+            AddNumericButton(keyboard.Children, "8");
+            AddNumericButton(keyboard.Children, "9");
 
             var backspaceButton = CreateButton("<|");
             backspaceButton.InputState.MouseClicked += OnBackspaceButtonClicked;
-            result.Children.Add(backspaceButton);
+            keyboard.Children.Add(backspaceButton);
             
-            AddNumericButton(result.Children, "4");
-            AddNumericButton(result.Children, "5");
-            AddNumericButton(result.Children, "6");
+            AddNumericButton(keyboard.Children, "4");
+            AddNumericButton(keyboard.Children, "5");
+            AddNumericButton(keyboard.Children, "6");
 
             var clearButton = CreateButton("Clear");
             clearButton.InputState.MouseClicked += OnClearButtonClicked;
-            result.Children.Add(clearButton);
+            keyboard.Children.Add(clearButton);
 
-            AddNumericButton(result.Children, "1");
-            AddNumericButton(result.Children, "2");
-            AddNumericButton(result.Children, "3");
+            AddNumericButton(keyboard.Children, "1");
+            AddNumericButton(keyboard.Children, "2");
+            AddNumericButton(keyboard.Children, "3");
 
-            result.Children.Add(placeholder);
-            result.Children.Add(CreateButton("X"));
+            keyboard.Children.Add(placeholder);
+            keyboard.Children.Add(CreateButton("X"));
 
-            AddNumericButton(result.Children, "0");
+            AddNumericButton(keyboard.Children, "0");
 
-            result.Children.Add(CreateButton("X"));
+            keyboard.Children.Add(CreateButton("X"));
             
-            return result;
+            var dock = _controlFactory.Create<DockPanel>();
+            dock.Add(Dock.Top, _textBox);
+            dock.Add(Dock.Fill, keyboard);
+            
+            return dock;
         }
 
         private void AddNumericButton(ICollection<Control> collection, string text)
@@ -82,31 +87,28 @@ namespace Medja.Controls
             return result;
         }
 
-        private Button RegisterClick(Button button, EventHandler eventHandler)
-        {
-            button.InputState.MouseClicked += eventHandler;
-            return button;
-        }
-
         private void OnNumericButtonClicked(object sender, EventArgs e)
         {
             var inputState = (InputState) sender;
             var button = (Button)inputState.Control;
             
-            _stringBuilder.Append(button.Text);
-
-            Console.WriteLine(_stringBuilder.ToString());
+            _textBox.Text += button.Text;
         }
 
         private void OnClearButtonClicked(object sender, EventArgs e)
         {
-            _stringBuilder.Clear();
+            _textBox.Text = "";
         }
 
         private void OnBackspaceButtonClicked(object sender, EventArgs e)
         {
-            _stringBuilder.Length--;
+            var text = _textBox.Text;
+            
+            if (text.Length <= 0) 
+                return;
+            
+            _textBox.Text = text.Substring(0 , text.Length-1);
         }
-
+        
     }
 }
