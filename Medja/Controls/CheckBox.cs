@@ -14,10 +14,10 @@ namespace Medja.Controls
         public CheckBox()
         {
             PropertyIsChecked = new Property<bool>();
-            InputState.MouseClicked += OnMouseClicked;
+            InputState.Clicked += OnClicked;
         }
 
-        private void OnMouseClicked(object sender, EventArgs e)
+        private void OnClicked(object sender, EventArgs e)
         {
             IsChecked = !IsChecked;
         }

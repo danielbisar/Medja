@@ -35,6 +35,14 @@ namespace Medja.OpenTk.Rendering
 			_paint.IsAntialias = true;
 		}
 
+		protected SKPaint CreatePaint()
+		{
+			var result = new SKPaint();
+			result.IsAntialias = true;
+
+			return result;
+		}
+
 		protected override void Render(SKCanvas context)
 		{
 			try
@@ -95,8 +103,12 @@ namespace Medja.OpenTk.Rendering
 			
 			BeginText(font);
 
+			var fontMetrics = _paint.FontMetrics; // actually calls GetFontMetrics
+			
 			var width = _paint.MeasureText(text);
-			var height = _paint.TextSize;
+			var height = fontMetrics.Bottom - fontMetrics.Top;
+			// see:
+			// https://stackoverflow.com/questions/27631736/meaning-of-top-ascent-baseline-descent-bottom-and-leading-in-androids-font
 
 			_canvas.DrawText(text, _rect.MidX - width / 2, _rect.MidY + height / 2, _paint);
 		}

@@ -14,12 +14,19 @@ namespace Medja
         private Property<TSource> _source;
         private Func<TSource, TTarget> _sourceConverter;
 
+        /// <summary>
+        /// Creates a new instance.
+        /// </summary>
+        /// <param name="target">The target property (will be updated on change of source)</param>
+        /// <param name="source">The source property (updates the target on change)</param>
+        /// <param name="sourceConverter">Function that converts the source value to the target value. Default p => p.</param>
         public Binding(Property<TTarget> target, Property<TSource> source, Func<TSource, TTarget> sourceConverter)
         {
-            source.PropertyChanged += OnSourcePropertyChanged;
             _source = source;
+            _source.PropertyChanged += OnSourcePropertyChanged;
+            
             _target = target;
-            _sourceConverter = sourceConverter;
+            _sourceConverter = sourceConverter ?? throw new ArgumentNullException(nameof(sourceConverter));
         }        
 
         private void OnSourcePropertyChanged(object sender, PropertyChangedEventArgs eventArgs)
@@ -27,6 +34,9 @@ namespace Medja
             _target.Set(_sourceConverter(_source.Get()));
         }
 
+        /// <summary>
+        /// Clears the connection between source and target property.
+        /// </summary>
         public override void Dispose()
         {
             _source.PropertyChanged -= OnSourcePropertyChanged;

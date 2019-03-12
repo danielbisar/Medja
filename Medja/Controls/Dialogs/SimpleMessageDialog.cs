@@ -46,7 +46,7 @@ namespace Medja.Controls
 			var buttons = _controlFactory.Create<DialogButtonsControl>();
 			buttons.Buttons = DialogButtons.Ok;
 			buttons.CreateContent();
-			buttons.Button1.InputState.MouseClicked += OnOkButtonClicked;
+			buttons.Button1.InputState.Clicked += OnOkButtonClicked;
 
 			var dockPanel = _controlFactory.Create<DockPanel>();
 			dockPanel.Add(Dock.Bottom, buttons);

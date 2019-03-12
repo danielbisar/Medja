@@ -64,7 +64,10 @@ namespace Medja.Controls
 			var content = e.OldValue as Control;
 
 			if (content != null && content.Parent == this)
+			{
 				content.Parent = null;
+				content.PropertyIsEnabled.ClearOverwrittenValue();
+			}
 
 			content = e.NewValue as Control;
 			ContentArranger.Control = content;
@@ -76,9 +79,16 @@ namespace Medja.Controls
 				if(AutoSetContentAlignment)
 					SetContentAlignment(content);
 			}
+			
+			UpdateContentIsEnabled();
 		}
 
 		private void OnIsEnabledChanged(object sender, PropertyChangedEventArgs eventArgs)
+		{
+			UpdateContentIsEnabled();
+		}
+
+		private void UpdateContentIsEnabled()
 		{
 			if (Content != null)
 			{

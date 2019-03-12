@@ -43,7 +43,7 @@ namespace Medja.Controls
             var button = ControlFactory.Create<Button>();
             button.Text = "ˇ";
             button.Position.Width = 50;
-            button.InputState.MouseClicked += OnDropDownButtonClicked;
+            button.InputState.Clicked += OnDropDownButtonClicked;
 
             SelectedItemTextBlock = ControlFactory.Create<TextBlock>();
             

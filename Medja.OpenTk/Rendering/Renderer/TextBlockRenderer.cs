@@ -52,13 +52,13 @@ namespace Medja.OpenTk.Rendering
 		{
 			var font = _control.Font;
 			
-			_textPaint.Typeface = SKTypeface.FromFamilyName(font.Name);
+			_textPaint.Typeface = font.Name == null ? DefaultTypeFace : SKTypeface.FromFamilyName(font.Name);
 			_textPaint.TextSize = font.Size;
-			_textPaint.Color = _control.Foreground.ToSKColor();
+			_textPaint.Color = _control.TextColor.ToSKColor();
 
 			_textDisabledPaint.Typeface = _textPaint.Typeface;
 			_textDisabledPaint.TextSize = font.Size;
-			_textDisabledPaint.Color = _control.Foreground.GetLighter(0.25f).ToSKColor();
+			_textDisabledPaint.Color = _control.TextColor.GetDisabled().ToSKColor();
 
 			font.GetWidth = GetTextWidth;
 			

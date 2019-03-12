@@ -118,7 +118,7 @@ namespace Medja.OpenTk.Rendering
 		{
 			var result = base.CreateTextBox();
 			result.Renderer = new TextBoxRenderer(result);
-			result.Foreground = ColorMap.PrimaryText;
+			result.TextColor = ColorMap.PrimaryText;
 			result.Background = ColorMap.Primary;
 			result.Font.Name = "Monospace";
 			result.Position.Height = 26;
@@ -130,7 +130,7 @@ namespace Medja.OpenTk.Rendering
 		{
 			var result = base.CreateTextBlock();
 			result.Renderer = new TextBlockRenderer(result);
-			result.Foreground = ColorMap.PrimaryText;
+			result.TextColor = ColorMap.PrimaryText;
 			result.Font.Name = "Monospace";
 			result.Position.Height = 23;
 

@@ -5,7 +5,7 @@ namespace Medja.Controls
     {
         public VerticalScrollBar()
         {
-            InputState.MouseDragged += OnMouseDragged;
+            InputState.Dragged += OnDragged;
             InputState.PropertyIsLeftMouseDown.PropertyChanged += OnIsLeftMouseDownChanged;
             InputState.HandlesDrag = true;
             InputState.OwnsMouseEvents = true;
@@ -19,7 +19,7 @@ namespace Medja.Controls
                 Value = YToValue(InputState.PointerPosition.Y); 
         }
         
-        private void OnMouseDragged(object sender, MouseDraggedEventArgs e)
+        private void OnDragged(object sender, MouseDraggedEventArgs e)
         {
             Value = YToValue(InputState.PointerPosition.Y);
         }

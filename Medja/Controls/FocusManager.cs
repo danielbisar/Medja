@@ -2,6 +2,13 @@
 {
 	public class FocusManager
 	{
+		public static FocusManager Default { get; }
+
+		static FocusManager()
+		{
+			Default = new FocusManager();
+		}
+		
 		private Control _currentlyFocusedControl;
 
 		public void SetFocus(Control control)

@@ -30,18 +30,29 @@ namespace Medja.Controls
 			set { PropertyTextWrapping.Set(value); }
 		}
 
-		public readonly Property<Color> PropertyForeground;
-		public Color Foreground
+		public readonly Property<Color> PropertyTextColor;
+		public Color TextColor
 		{
-			get { return PropertyForeground.Get(); }
-			set { PropertyForeground.Set(value); }
+			get { return PropertyTextColor.Get(); }
+			set { PropertyTextColor.Set(value); }
+		}
+
+		public readonly Property<TextAlignment> PropertyTextAlignment;
+		public TextAlignment TextAlignment
+		{
+			get { return PropertyTextAlignment.Get(); }
+			set { PropertyTextAlignment.Set(value);}
 		}
 
 		public Font Font { get; }
+		public Thickness Padding { get; }
+		
+		public MRect TextClippingArea { get; }
 
 		public TextControl()
 		{
 			PropertyText = new Property<string>();
+			PropertyTextAlignment = new Property<TextAlignment>();
 			PropertyTextWrapping = new Property<TextWrapping>();
 			
 			PropertyText.PropertyChanged += (s, e) => InvalidateLines();
@@ -52,8 +63,11 @@ namespace Medja.Controls
 					InvalidateLines();
 			};
 			
-			PropertyForeground = new Property<Color>();
-			PropertyForeground.UnnotifiedSet(Colors.Black);
+			PropertyTextColor = new Property<Color>();
+			PropertyTextColor.UnnotifiedSet(Colors.Black);
+			
+			Padding = new Thickness();
+			TextClippingArea = new MRect();
 
 			Font = new Font();
 			_linesNeedUpdate = true;
@@ -83,11 +97,21 @@ namespace Medja.Controls
 				wrapper.GetWidth = Font.GetWidth;
 				wrapper.TextWrapping = TextWrapping;
 
-				_lines = wrapper.Wrap(Text, Position.Width);
+				_lines = wrapper.Wrap(Text, Position.Width - Padding.LeftAndRight);
 				_linesNeedUpdate = false;
 			}
 
 			return _lines;
+		}
+
+		public override void Arrange(Size availableSize)
+		{
+			base.Arrange(availableSize);
+			
+			TextClippingArea.X = Position.X + Padding.Left;
+			TextClippingArea.Y = Position.Y + Padding.Top;
+			TextClippingArea.Width = Position.Width - Padding.LeftAndRight;
+			TextClippingArea.Height = Position.Height - Padding.TopAndBottom;
 		}
 	}
 }
