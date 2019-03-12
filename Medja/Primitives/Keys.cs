@@ -8,6 +8,7 @@ namespace Medja.Primitives
         Left = 37,
         Up = 38,
         Right = 39,
-        Down = 40
+        Down = 40,
+        Delete = 127
     }
 }

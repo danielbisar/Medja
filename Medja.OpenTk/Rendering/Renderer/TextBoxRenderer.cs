@@ -25,8 +25,8 @@ namespace Medja.OpenTk.Rendering
 			// TODO textwrapping (use class TextWrapper)
 			
 			_paint.Color = _control.IsEnabled
-				? _control.Foreground.ToSKColor()
-				: _control.Foreground.GetLighter(0.25f).ToSKColor();
+				? _control.TextColor.ToSKColor()
+				: _control.TextColor.GetLighter(0.25f).ToSKColor();
 
 			_rect.Left += padding.Left;
 			pos.Y += _paint.FontSpacing + padding.Top;

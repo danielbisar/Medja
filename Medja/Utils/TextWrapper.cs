@@ -19,6 +19,8 @@ namespace Medja.Utils
                     return WrapToEllipses(text, maxWidth);
                 case TextWrapping.Auto:
                     return AutoWrap(text, maxWidth);
+                case TextWrapping.None:
+                    return new []{text};
                 default:
                     throw new ArgumentOutOfRangeException(nameof(TextWrapping));
             }

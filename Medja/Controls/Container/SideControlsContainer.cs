@@ -41,7 +41,7 @@ namespace Medja.Controls
             
             _showMenuButton = controlFactory.Create<Button>();
             _showMenuButton.Text = "=";
-            _showMenuButton.InputState.MouseClicked += OnMenuButtonClicked;
+            _showMenuButton.InputState.Clicked += OnMenuButtonClicked;
             _showMenuButton.Position.Width = 50;
             _showMenuButton.Position.Height = 50;
         }

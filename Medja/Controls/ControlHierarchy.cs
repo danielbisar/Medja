@@ -57,8 +57,13 @@ namespace Medja.Controls
                 isTopMost = true;
             }
             else
-                yield return control;
-            
+            {
+                if(control.IsVisible)
+                    yield return control;
+                else
+                    yield break;
+            }
+
             var children = control.GetChildren();
 
             foreach (var child in children)

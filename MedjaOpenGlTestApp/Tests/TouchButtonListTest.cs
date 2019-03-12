@@ -46,7 +46,7 @@ namespace MedjaOpenGlTestApp.Tests
             tablePanel.Children.Add(_controlFactory.Create<Button>(p =>
             {
                 p.Text = "Change random item.";
-                p.InputState.MouseClicked += (s, e) =>
+                p.InputState.Clicked += (s, e) =>
                 {
                     var item = MyItemType.Random.NextItem(touchButtonList1.Items);
                     item.Name = MyItemType.Random.NextString(10);

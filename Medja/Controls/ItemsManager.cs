@@ -109,7 +109,7 @@ namespace Medja.Controls
         {
             var result = _controlFactory.Create<Button>();
             InitButtonFromItem(item, result);
-            result.InputState.MouseClicked += OnButtonClicked;
+            result.InputState.Clicked += OnButtonClicked;
 
             if (IsSelectable && ReferenceEquals(item, SelectedItem))
                 result.IsSelected = true;
@@ -134,7 +134,7 @@ namespace Medja.Controls
             {
                 var button = _itemToButtonMap[item];
 
-                button.InputState.MouseClicked -= OnButtonClicked;
+                button.InputState.Clicked -= OnButtonClicked;
                 
                 _itemToButtonMap.Remove(item);
                 _buttonToItemMap.Remove(button);
