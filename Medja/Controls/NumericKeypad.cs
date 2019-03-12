@@ -27,8 +27,8 @@ namespace Medja.Controls
             _textBox = _controlFactory.Create<TextBox>();
             
             var keyboard = _controlFactory.Create<TablePanel>();
-            int rowHeight = 90;
-            int rowWidth = 50;
+            var rowHeight = 90;
+            var rowWidth = 50;
             keyboard.Rows.Add(new RowDefinition(rowHeight));
             keyboard.Rows.Add(new RowDefinition(rowHeight));
             keyboard.Rows.Add(new RowDefinition(rowHeight));
