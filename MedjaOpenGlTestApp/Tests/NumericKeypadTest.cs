@@ -17,14 +17,30 @@ namespace MedjaOpenGlTestApp.Tests
 
         public Control Create()
         {
+            var textBox = _controlFactory.Create<TextBox>();
+            textBox.Text = "2345";
+
+            var button = _controlFactory.Create<Button>();
+            button.Text = "OpenInput";
+            
+            
+            var stackPanel = _controlFactory.Create<VerticalStackPanel>();
+            stackPanel.Children.Add(textBox);
+            stackPanel.Children.Add(button);
+            
             var result = _controlFactory.Create<DialogParentControl>();
-            result.Content = _controlFactory.Create<Control>(p => p.Background = Colors.Red);  // background
+            result.Content = stackPanel;
             result.DialogControl = _controlFactory.Create<QuestionDialog>(p =>
                 {
                     p.Content = _controlFactory.Create<NumericKeypad>();
                 });
-            result.IsDialogVisible = true;
+
+            button.InputState.MouseClicked += (s, e) =>
+            {
+                result.IsDialogVisible = true;                
+            };
             
+                     
              
             return result;
         }
