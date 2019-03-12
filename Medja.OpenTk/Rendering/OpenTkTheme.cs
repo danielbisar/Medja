@@ -76,7 +76,18 @@ namespace Medja.OpenTk.Rendering
 		protected override NumericKeypad CreateNumericKeypad()
 		{
 			var result = base.CreateNumericKeypad();
+			result.Renderer = new ControlRenderer(result);
 			result.Background = ColorMap.Primary;
+			
+			return result;
+		}
+		
+		protected override NumericKeypadDialog CreateNumericKeypadDialog()
+		{
+			var result = base.CreateNumericKeypadDialog();
+			result.Renderer = new ControlRenderer(result);
+			result.Background = ColorMap.Primary;
+			
 			return result;
 		}
 

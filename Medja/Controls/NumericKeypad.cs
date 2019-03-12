@@ -43,7 +43,7 @@ namespace Medja.Controls
             AddNumericButton(keyboard.Children, "9");
 
             var backspaceButton = CreateButton("<x");
-            backspaceButton.InputState.MouseClicked += OnBackspaceButtonClicked;
+            backspaceButton.InputState.Clicked += OnBackspaceButtonClicked;
             keyboard.Children.Add(backspaceButton);
             
             AddNumericButton(keyboard.Children, "4");
@@ -51,7 +51,7 @@ namespace Medja.Controls
             AddNumericButton(keyboard.Children, "6");
 
             var clearButton = CreateButton("Clear");
-            clearButton.InputState.MouseClicked += OnClearButtonClicked;
+            clearButton.InputState.Clicked += OnClearButtonClicked;
             keyboard.Children.Add(clearButton);
 
             AddNumericButton(keyboard.Children, "1");
@@ -77,7 +77,7 @@ namespace Medja.Controls
             collection.Add(_controlFactory.Create<Button>(p => 
             {
                 p.Text = text;
-                p.InputState.MouseClicked += OnNumericButtonClicked;                
+                p.InputState.Clicked += OnNumericButtonClicked;                
             }));
         }
 

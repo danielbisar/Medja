@@ -37,6 +37,7 @@ namespace Medja.Theming
 			_factoryMethods.Add(typeof(ImageButton), CreateImageButton);
 			_factoryMethods.Add(typeof(InputBoxDialog), CreateInputBoxDialog);
 			_factoryMethods.Add(typeof(NumericKeypad), CreateNumericKeypad);
+			_factoryMethods.Add(typeof(NumericKeypadDialog), CreateNumericKeypadDialog);
 			_factoryMethods.Add(typeof(ScrollableContainer), CreateScrollableContainer);
 			_factoryMethods.Add(typeof(ScrollingGrid), CreateScrollingGrid);
 			_factoryMethods.Add(typeof(SideControlsContainer), CreateSideControlContainer);
@@ -84,7 +85,7 @@ namespace Medja.Theming
 
 		protected virtual ConfirmableDialog CreateConfirmableDialog()
 		{
-			return new ConfirmableDialog();
+			return new ConfirmableDialog(this);
 		}
 
 		protected virtual Control CreateControl()
@@ -142,6 +143,11 @@ namespace Medja.Theming
 			return new NumericKeypad(this);
 		}
 
+		protected virtual NumericKeypadDialog CreateNumericKeypadDialog()
+		{
+			return new NumericKeypadDialog(this);
+		}
+		
 		protected virtual ScrollableContainer CreateScrollableContainer()
 		{
 			return new ScrollableContainer(this);

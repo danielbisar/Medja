@@ -23,24 +23,17 @@ namespace MedjaOpenGlTestApp.Tests
             var button = _controlFactory.Create<Button>();
             button.Text = "OpenInput";
             
-            
             var stackPanel = _controlFactory.Create<VerticalStackPanel>();
             stackPanel.Children.Add(textBox);
             stackPanel.Children.Add(button);
-            
-            var result = _controlFactory.Create<DialogParentControl>();
-            result.Content = stackPanel;
-            result.DialogControl = _controlFactory.Create<QuestionDialog>(p =>
-                {
-                    p.Content = _controlFactory.Create<NumericKeypad>();
-                });
 
-            button.InputState.MouseClicked += (s, e) =>
+            var result = DialogService.CreateContainer(_controlFactory, stackPanel);
+            result.DialogControl = _controlFactory.Create<NumericKeypadDialog>();
+
+            button.InputState.Clicked += (s, e) =>
             {
-                result.IsDialogVisible = true;                
+                result.IsDialogVisible = true;             
             };
-            
-                     
              
             return result;
         }
