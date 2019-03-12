@@ -27,20 +27,22 @@ namespace Medja.Controls
             _textBox = _controlFactory.Create<TextBox>();
             
             var keyboard = _controlFactory.Create<TablePanel>();
-            keyboard.Rows.Add(new RowDefinition(100));
-            keyboard.Rows.Add(new RowDefinition(100));
-            keyboard.Rows.Add(new RowDefinition(100));
-            keyboard.Rows.Add(new RowDefinition(100));
-            keyboard.Columns.Add(new ColumnDefinition(50));
-            keyboard.Columns.Add(new ColumnDefinition(50));
-            keyboard.Columns.Add(new ColumnDefinition(50));
-            keyboard.Columns.Add(new ColumnDefinition(50));
+            int rowHeight = 90;
+            int rowWidth = 50;
+            keyboard.Rows.Add(new RowDefinition(rowHeight));
+            keyboard.Rows.Add(new RowDefinition(rowHeight));
+            keyboard.Rows.Add(new RowDefinition(rowHeight));
+            keyboard.Rows.Add(new RowDefinition(rowHeight));
+            keyboard.Columns.Add(new ColumnDefinition(rowWidth));
+            keyboard.Columns.Add(new ColumnDefinition(rowWidth));
+            keyboard.Columns.Add(new ColumnDefinition(rowWidth));
+            keyboard.Columns.Add(new ColumnDefinition(rowWidth));
 
             AddNumericButton(keyboard.Children, "7");
             AddNumericButton(keyboard.Children, "8");
             AddNumericButton(keyboard.Children, "9");
 
-            var backspaceButton = CreateButton("<|");
+            var backspaceButton = CreateButton("<x");
             backspaceButton.InputState.MouseClicked += OnBackspaceButtonClicked;
             keyboard.Children.Add(backspaceButton);
             
