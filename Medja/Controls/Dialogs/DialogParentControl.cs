@@ -32,6 +32,8 @@ namespace Medja.Controls
 			
 			PropertyIsDialogVisible = new Property<bool>();
 			PropertyIsDialogVisible.PropertyChanged += OnIsDialogVisibleChanged;
+			PropertyIsDialogVisible.AffectsLayout(this);
+			
 			DialogPadding = new Thickness(100);
 		}
 
