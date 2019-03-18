@@ -22,7 +22,7 @@ namespace MedjaOpenGlTestApp.Tests
             imageButton.MouseDownImage.Path = "Images/button_press.png";
             imageButton.HorizontalAlignment = HorizontalAlignment.None;
             imageButton.VerticalAlignment = VerticalAlignment.None;
-            imageButton.InputState.MouseClicked += (s, e) => Console.WriteLine("Button pressed!"); 
+            imageButton.InputState.Clicked += (s, e) => Console.WriteLine("Button pressed!"); 
 
             var contentControl = _controlFactory.Create<ContentControl>();
             contentControl.AutoSetContentAlignment = false;

@@ -41,8 +41,8 @@ namespace Medja.Controls
             buttons.Buttons = DialogButtons.OkCancel;
             buttons.CreateContent();
             buttons.HorizontalAlignment = HorizontalAlignment.Stretch;
-            buttons.Button1.InputState.MouseClicked += OnConfirmButtonClicked;
-            buttons.Button2.InputState.MouseClicked += OnCancelButtonClicked;
+            buttons.Button1.InputState.Clicked += OnConfirmButtonClicked;
+            buttons.Button2.InputState.Clicked += OnCancelButtonClicked;
 
             var dockPanel = _controlFactory.Create<DockPanel>();
             dockPanel.Add(Dock.Bottom, buttons);

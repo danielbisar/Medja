@@ -1,4 +1,5 @@
 using System;
+using Medja.Primitives;
 
 namespace Medja.Controls
 {
@@ -27,25 +28,33 @@ namespace Medja.Controls
             get { return PropertyValue.Get(); }
             set { PropertyValue.Set(value); }
         }
+        
+        public readonly Property<Color> PropertyForeground;
+        public Color Foreground
+        {
+            get { return PropertyForeground.Get(); }
+            set { PropertyForeground.Set(value); }
+        }
 
         public Slider()
         {
             PropertyMinValue = new Property<float>();
             PropertyMaxValue = new Property<float>();
             PropertyValue = new Property<float>();
+            PropertyForeground = new Property<Color>();
 
-            InputState.MouseClicked += OnMouseClicked;
+            InputState.Clicked += OnClicked;
             InputState.HandlesDrag = true;
             InputState.OwnsMouseEvents = true;
-            InputState.MouseDragged += OnMouseDragged;
+            InputState.Dragged += OnDragged;
         }
 
-        protected virtual void OnMouseDragged(object sender, MouseDraggedEventArgs e)
+        protected virtual void OnDragged(object sender, MouseDraggedEventArgs e)
         {
             ApplyMousePos(e.Target.X);
         }
 
-        protected virtual void OnMouseClicked(object sender, EventArgs e)
+        protected virtual void OnClicked(object sender, EventArgs e)
         {
             ApplyMousePos(InputState.PointerPosition.X);
         }
