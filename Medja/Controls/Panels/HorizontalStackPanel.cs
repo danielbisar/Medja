@@ -27,7 +27,16 @@ namespace Medja.Controls
             PropertyChildrenWidth = new Property<float?>();
             PropertyChildrenWidth.AffectsLayout(this);
         }
-        
+
+        protected override void OnItemAdded(Control child)
+        {
+            base.OnItemAdded(child);
+
+            // take height of the first child, so the user does not need to set
+            if (Children.Count == 1 && Position.Height == 0)
+                Position.Height = Children[0].Position.Height;
+        }
+
         public override void Arrange(Size targetSize)
         {
             var height = targetSize.Height - Padding.TopAndBottom;

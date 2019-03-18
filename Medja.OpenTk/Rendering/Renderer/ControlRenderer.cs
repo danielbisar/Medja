@@ -13,7 +13,5 @@ namespace Medja.OpenTk.Rendering
 		{
 			RenderBackground();
 		}
-
-		
 	}
 }

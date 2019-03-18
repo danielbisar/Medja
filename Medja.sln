@@ -48,6 +48,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Medja.ProtoBuf.Test", "Medj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Medja.OpenTk.Test", "Medja.OpenTk.Test\Medja.OpenTk.Test.csproj", "{041B742F-8287-4427-8C4D-EA5EF2875F4E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Medja.Demo", "Medja.Demo\Medja.Demo.csproj", "{1753B2D4-8377-4339-84AC-FE41539ABB39}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -94,6 +96,10 @@ Global
 		{041B742F-8287-4427-8C4D-EA5EF2875F4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{041B742F-8287-4427-8C4D-EA5EF2875F4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{041B742F-8287-4427-8C4D-EA5EF2875F4E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1753B2D4-8377-4339-84AC-FE41539ABB39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1753B2D4-8377-4339-84AC-FE41539ABB39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1753B2D4-8377-4339-84AC-FE41539ABB39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1753B2D4-8377-4339-84AC-FE41539ABB39}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

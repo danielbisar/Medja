@@ -30,11 +30,11 @@ namespace MedjaOpenGlTestApp.Tests
                 result.AddItem("Item " + i);
 
             var addItemButton = _controlFactory.Create<Button>();
-            addItemButton.InputState.MouseClicked += (s, e) => result.AddItem("New Item " + i++);
+            addItemButton.InputState.Clicked += (s, e) => result.AddItem("New Item " + i++);
             addItemButton.Text = "Add new item";
 
             var clearButton = _controlFactory.Create<Button>();
-            clearButton.InputState.MouseClicked += (s, e) => result.Clear();
+            clearButton.InputState.Clicked += (s, e) => result.Clear();
             clearButton.Text = "Clear";
 
             var stackPanel = _controlFactory.Create<VerticalStackPanel>();

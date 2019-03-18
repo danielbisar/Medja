@@ -100,11 +100,11 @@ namespace Medja.Controls
 
 			_buttonUp.Text = "^";
 			_buttonUp.Position.Height = 50;
-			_buttonUp.InputState.MouseClicked += (s, e) => ScrollUp();
+			_buttonUp.InputState.Clicked += (s, e) => ScrollUp();
 
 			_buttonDown.Text = "ˇ";
 			_buttonDown.Position.Height = 50;
-			_buttonDown.InputState.MouseClicked += (s, e) => ScrollDown();
+			_buttonDown.InputState.Clicked += (s, e) => ScrollDown();
 
 			var scrollButtonDockPanel = _controlFactory.Create<DockPanel>();
 			scrollButtonDockPanel.Add(Dock.Top, _buttonUp);

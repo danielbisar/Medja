@@ -4,7 +4,7 @@ namespace Medja
 {
     /// <summary>
     /// Acts as a wrapper for .NET Properties to support Binding. Does not notify on change of the properties value.
-    /// Use the wrapper to set/get the value if you need change notification.
+    /// Better use the wrapper to set/get the value if you need change notification.
     /// </summary>
     /// <typeparam name="TSourceObject"></typeparam>
     /// <typeparam name="TValue"></typeparam>
