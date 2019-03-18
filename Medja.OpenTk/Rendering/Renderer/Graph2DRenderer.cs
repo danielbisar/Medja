@@ -35,6 +35,14 @@ namespace Medja.OpenTk.Rendering
             // create an array and use DrawPoints reduces the amount of methods called and is faster
             // than calling DrawPoint for each point
             
+            /* without aggregation and xMinDist = 1
+             FPS: 0.9225093
+             Point count: 13173427 */
+            
+            /* with aggregation and xMinDist = 1
+             FPS: 3.69
+             Point count: 799 */
+            
             var pointsToDraw = _control.DataPoints.GetForDrawing(borderRect.Left, borderRect.Right, -10, 10, 1);
             
             Console.WriteLine("Point count: " + pointsToDraw.Count);
