@@ -54,44 +54,47 @@ namespace Medja.Controls
             if (i >= length)
                 return result;
 
-            for (; i < length && _points[i].X <= xMax; i++)
-            {
-                if (_points[i].Y >= yMin && _points[i].Y <= yMax)
-                    result.Add(_points[i]);
-            }
-
-            return result;
-
             // todo how to handle the first point correctly
             var aggregatedPoint = new Point();
             var aggregatedPointsCount = 1;
             var aggregationStartX = _points[i].X;
+            var curX = aggregationStartX;
             
             // maybe we miss one point here...
-            for (;i < length && _points[i].X <= xMax; i++)
+            do
             {
                 if (_points[i].Y >= yMin && _points[i].Y <= yMax)
                 {
-                    if (aggregationStartX + _points[i].X >= xMinDist)
+                    if (curX - aggregationStartX > xMinDist)
                     {
                         aggregatedPoint.X = aggregatedPoint.X / aggregatedPointsCount;
                         aggregatedPoint.Y = aggregatedPoint.Y / aggregatedPointsCount;
-                        
+
                         result.Add(aggregatedPoint);
-                        
-                        aggregatedPoint = new Point(_points[i].X, _points[i].Y);
+
+                        aggregatedPoint = new Point(curX, _points[i].Y);
                         aggregatedPointsCount = 1;
-                        aggregationStartX = _points[i].X;
+                        aggregationStartX = curX;
                     }
                     else
                     {
                         aggregatedPointsCount++;
-                        aggregatedPoint.X += _points[i].X; // todo overflow handling?
+                        aggregatedPoint.X += curX; // todo overflow handling?
                         aggregatedPoint.Y += _points[i].Y;
                     }
                 }
-            }
 
+                i++;
+
+                if (i < length)
+                    curX = _points[i].X;
+                else
+                    break;
+                
+            } while (curX <= xMax);
+
+            // we also might miss some points here
+            
             return result;
         }
     }
