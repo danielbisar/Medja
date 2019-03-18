@@ -34,6 +34,7 @@ namespace MedjaOpenGlTestApp
 			//var test = new Control3DTest(controlFactory);
 			//var test = new DialogTest(controlFactory);
 			//var test = new DockPanelTest(controlFactory);
+			var test = new Graph2DTest(controlFactory);
 			//var test = new ImageButtonTest(controlFactory);
 			//var test = new MultithreadingTest(controlFactory);
 			//var test = new ScrollableContainerTest(controlFactory);
@@ -45,7 +46,7 @@ namespace MedjaOpenGlTestApp
 			//var test = new TextBoxTest(controlFactory);
 			//var test = new TouchButtonListTest(controlFactory);
 			//var test = new VerticalStackPanelTest(controlFactory);
-			var test = new VisibilityTest(controlFactory);
+			//var test = new VisibilityTest(controlFactory);
 			
 			_window = application.CreateWindow();
 			_window.CenterOnScreen(800, 600);

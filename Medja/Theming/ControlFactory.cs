@@ -33,6 +33,7 @@ namespace Medja.Theming
 			_factoryMethods.Add(typeof(DialogButtonsControl), CreateDialogButtonsControl);
 			_factoryMethods.Add(typeof(DialogParentControl), CreateDialogParentControl);
 			_factoryMethods.Add(typeof(DockPanel), CreateDockPanel);
+			_factoryMethods.Add(typeof(Graph2D), CreateGraph2D);
 			_factoryMethods.Add(typeof(HorizontalStackPanel), CreateHorizontalStackPanel);
 			_factoryMethods.Add(typeof(Image), CreateImage);
 			_factoryMethods.Add(typeof(ImageButton), CreateImageButton);
@@ -194,6 +195,11 @@ namespace Medja.Theming
 		protected virtual DockPanel CreateDockPanel()
 		{
 			return new DockPanel();
+		}
+
+		protected virtual Graph2D CreateGraph2D()
+		{
+			return new Graph2D();
 		}
 
 		protected virtual HorizontalStackPanel CreateHorizontalStackPanel()
