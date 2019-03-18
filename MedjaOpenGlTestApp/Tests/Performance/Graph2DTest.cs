@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.Reflection;
+using Medja;
 using Medja.Controls;
 using Medja.Primitives;
 using Medja.Theming;
@@ -40,7 +41,6 @@ namespace MedjaOpenGlTestApp.Tests.Performance
             Console.WriteLine($"Created {itemCount} points. Took {sw.Elapsed}");
             GC.Collect();
             Console.WriteLine("Use about " + ByteSize.GetHumanReadable(GC.GetTotalMemory(true)));
-            
             
             
             return graph;
