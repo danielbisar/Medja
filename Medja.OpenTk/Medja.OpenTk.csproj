@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MedjaOpenTkLibrary.cs" />
+    <Compile Include="Rendering\Renderer\Graph2DRenderer.cs" />
     <Compile Include="Rendering\Renderer\ImageRenderer.cs" />
     <Compile Include="SkiaBitmapFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
