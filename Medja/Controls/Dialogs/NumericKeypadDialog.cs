@@ -7,16 +7,25 @@ namespace Medja.Controls
 {
     public class NumericKeypadDialog : ConfirmableDialog
     {
-        public NumericKeypadDialog(ControlFactory controlFactory) : base(controlFactory)
+        private NumericKeypad _numericKeypad;
+
+        public string Text
         {
-            
+            get { return _numericKeypad.Text; }
+            set { _numericKeypad.Text = value; }
+        }    
+
+        public NumericKeypadDialog(ControlFactory controlFactory) 
+            : base(controlFactory)
+        { 
         }
 
         protected override Control CreateContent()
         {
+            _numericKeypad = _controlFactory.Create<NumericKeypad>();
+
             var result = (DockPanel)base.CreateContent();
-            var numericKeypad = _controlFactory.Create<NumericKeypad>();
-            result.Add(Dock.Fill, numericKeypad);
+            result.Add(Dock.Fill, _numericKeypad);
 
             return result;
         }
