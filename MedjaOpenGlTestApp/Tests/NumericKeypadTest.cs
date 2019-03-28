@@ -28,11 +28,18 @@ namespace MedjaOpenGlTestApp.Tests
             stackPanel.Children.Add(button);
 
             var result = DialogService.CreateContainer(_controlFactory, stackPanel);
-            result.DialogControl = _controlFactory.Create<NumericKeypadDialog>();
-
+           
             button.InputState.Clicked += (s, e) =>
             {
-                result.IsDialogVisible = true;             
+                var dialog = _controlFactory.Create<NumericKeypadDialog>();
+                dialog.Text = textBox.Text;
+                dialog.Closed+= (sender, eventArgs) => 
+                {
+                    if (dialog.IsConfirmed)
+                        textBox.Text = dialog.Text;           
+                };
+
+                DialogService.Show(dialog);
             };
              
             return result;

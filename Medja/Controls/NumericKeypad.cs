@@ -12,11 +12,16 @@ namespace Medja.Controls
     {
         private readonly ControlFactory _controlFactory;
         private TextBox _textBox;
+
+        public string Text
+        {
+            get { return _textBox.Text; }
+            set { _textBox.Text = value; }
+        } 
         
         public NumericKeypad(ControlFactory controlFactory)
         {
             _controlFactory = controlFactory;
-            
             Content = CreateContent();
         }
 
@@ -25,9 +30,14 @@ namespace Medja.Controls
             var placeholder = new Control();
 
             _textBox = _controlFactory.Create<TextBox>();
-            
+
+            var backspaceButton = CreateButton("<x");
+            backspaceButton.InputState.Clicked += OnBackspaceButtonClicked;
+            var clearButton = CreateButton("Clear");
+            clearButton.InputState.Clicked += OnClearButtonClicked;
+
             var keyboard = _controlFactory.Create<TablePanel>();
-            var rowHeight = 90;
+            var rowHeight = 60;
             var rowWidth = 50;
             keyboard.Rows.Add(new RowDefinition(rowHeight));
             keyboard.Rows.Add(new RowDefinition(rowHeight));
@@ -42,16 +52,12 @@ namespace Medja.Controls
             AddNumericButton(keyboard.Children, "8");
             AddNumericButton(keyboard.Children, "9");
 
-            var backspaceButton = CreateButton("<x");
-            backspaceButton.InputState.Clicked += OnBackspaceButtonClicked;
             keyboard.Children.Add(backspaceButton);
             
             AddNumericButton(keyboard.Children, "4");
             AddNumericButton(keyboard.Children, "5");
             AddNumericButton(keyboard.Children, "6");
-
-            var clearButton = CreateButton("Clear");
-            clearButton.InputState.Clicked += OnClearButtonClicked;
+            
             keyboard.Children.Add(clearButton);
 
             AddNumericButton(keyboard.Children, "1");
