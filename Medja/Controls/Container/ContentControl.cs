@@ -24,7 +24,6 @@ namespace Medja.Controls
 		}
 		
 		public readonly Property<bool> PropertyAutoSetContentAlignment;
-
 		/// <summary>
 		/// Gets or sets whether Horizontal- and VerticalAlignment of the Control is set as Content is set to Stretch
 		/// automatically if it was set to None. If false no the alignment will not change.
