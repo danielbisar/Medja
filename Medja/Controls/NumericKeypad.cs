@@ -11,8 +11,8 @@ namespace Medja.Controls
     public class NumericKeypad : ContentControl
     {
         private readonly ControlFactory _controlFactory;
-        private TextBox _textBox;
 
+        private TextBox _textBox;
         public string Text
         {
             get { return _textBox.Text; }
@@ -27,26 +27,53 @@ namespace Medja.Controls
 
         private Control CreateContent()
         {
-            var placeholder = new Control();
-
             _textBox = _controlFactory.Create<TextBox>();
+
+            var keyboard = CreateButtonPanel();  
+
+            var dockPanel = _controlFactory.Create<DockPanel>();
+            dockPanel.Add(Dock.Top, _textBox);
+            dockPanel.Add(Dock.Fill, keyboard);
+            
+            return dockPanel;
+        }
+
+        private TablePanel CreateButtonPanel()
+        {
+            const float rowHeight = 60;
+            const float rowWidth = 50;
+
+            var keyboard = _controlFactory.Create<TablePanel>();
+
+            keyboard.Rows.Add(new RowDefinition(rowHeight));
+            keyboard.Rows.Add(new RowDefinition(rowHeight));
+            keyboard.Rows.Add(new RowDefinition(rowHeight));
+            keyboard.Rows.Add(new RowDefinition(rowHeight));
+            
+            keyboard.Columns.Add(new ColumnDefinition(rowWidth));
+            keyboard.Columns.Add(new ColumnDefinition(rowWidth));
+            keyboard.Columns.Add(new ColumnDefinition(rowWidth));
+            keyboard.Columns.Add(new ColumnDefinition(rowWidth));
+
+            CreateButtons(keyboard);
+
+            return keyboard;
+        }
+
+        // private char[][] KeypadMap = 
+        // {
+        //     {''}
+        // };
+
+        private void CreateButtons(TablePanel keyboard)
+        {
+            var placeholder = new Control();
 
             var backspaceButton = CreateButton("<x");
             backspaceButton.InputState.Clicked += OnBackspaceButtonClicked;
-            var clearButton = CreateButton("Clear");
-            clearButton.InputState.Clicked += OnClearButtonClicked;
 
-            var keyboard = _controlFactory.Create<TablePanel>();
-            var rowHeight = 60;
-            var rowWidth = 50;
-            keyboard.Rows.Add(new RowDefinition(rowHeight));
-            keyboard.Rows.Add(new RowDefinition(rowHeight));
-            keyboard.Rows.Add(new RowDefinition(rowHeight));
-            keyboard.Rows.Add(new RowDefinition(rowHeight));
-            keyboard.Columns.Add(new ColumnDefinition(rowWidth));
-            keyboard.Columns.Add(new ColumnDefinition(rowWidth));
-            keyboard.Columns.Add(new ColumnDefinition(rowWidth));
-            keyboard.Columns.Add(new ColumnDefinition(rowWidth));
+            var clearButton = CreateButton(Globalization.Clear);
+            clearButton.InputState.Clicked += OnClearButtonClicked;
 
             AddNumericButton(keyboard.Children, "7");
             AddNumericButton(keyboard.Children, "8");
@@ -70,12 +97,6 @@ namespace Medja.Controls
             AddNumericButton(keyboard.Children, "0");
 
             keyboard.Children.Add(CreateButton("X"));
-            
-            var dock = _controlFactory.Create<DockPanel>();
-            dock.Add(Dock.Top, _textBox);
-            dock.Add(Dock.Fill, keyboard);
-            
-            return dock;
         }
 
         private void AddNumericButton(ICollection<Control> collection, string text)
@@ -116,7 +137,6 @@ namespace Medja.Controls
                 return;
             
             _textBox.Text = text.Substring(0 , text.Length-1);
-        }
-        
+        }        
     }
 }
