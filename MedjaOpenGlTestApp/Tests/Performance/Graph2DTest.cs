@@ -25,7 +25,7 @@ namespace MedjaOpenGlTestApp.Tests.Performance
             //var itemCount = 17280000.0f;
             var itemCount = 1000000.0f;
             //var itemCount = 21600000.0f; // 10 hours of recorded data (600 fps * 3600 sec * 10)
-            var maxX = 100;
+            var maxX = 1000;
             var step = maxX / itemCount;
 
             var sw = Stopwatch.StartNew();
@@ -34,7 +34,11 @@ namespace MedjaOpenGlTestApp.Tests.Performance
             
             for (float x = 0; x < maxX; x += step)
             {
-                graph.DataPoints.Add(new Point(x*10, (float)Math.Sin(x)*100));
+                //graph.DataPoints.Add(new Point(x*10, (float)Math.Sin(x)*100));
+                var y = 10.0f + Math.Sin(100.0 / ((x / 5) - 9)) * 200.0f * Math.Sin(x);
+                //var y = 10.0f + Math.Sin(x / 100.0) * 200 * Math.Sin(x / 5.0) * Math.Sin(x / 5.0);
+                graph.DataPoints.Add(new Point(x*2, (float)y));
+
             }
             
             sw.Stop();

@@ -17,7 +17,7 @@ namespace Medja.Controls
 
         private bool HasMore
         {
-            get { return _currentPointIndex < _points.Count; }
+            get { return _currentPointIndex + 1 < _points.Count; }
         }
         
         public Graph2DSlopDownsampler(List<Point> points)
@@ -72,28 +72,31 @@ namespace Medja.Controls
                     var m1 = GetSlope(startPoint, currentPoint);
 
                     SkipPointsTooClose(currentPoint, minDistance, xMax);
-                    
-                    if (_currentPointIndex == currentPointI)
-                        _currentPointIndex++;
 
-                    var m2 = GetSlope(startPoint, _points[_currentPointIndex]);                        
-                    
-                    while(HasMore && Math.Abs(m1 - m2) < mThreshold)
+                    if (HasMore)
                     {
-                        currentPoint = _points[_currentPointIndex];
-                        currentPointI = _currentPointIndex;
-                        
-                        SkipPointsTooClose(currentPoint, minDistance, xMax);
+                        if (_currentPointIndex == currentPointI)
+                            _currentPointIndex++;
 
-                        if (HasMore)
+                        var m2 = GetSlope(startPoint, _points[_currentPointIndex]);
+
+                        while (HasMore && Math.Abs(m1 - m2) < mThreshold)
                         {
-                            if (_currentPointIndex == currentPointI)
-                                _currentPointIndex++;
+                            currentPoint = _points[_currentPointIndex];
+                            currentPointI = _currentPointIndex;
 
-                            m2 = GetSlope(startPoint, _points[_currentPointIndex]);
+                            SkipPointsTooClose(currentPoint, minDistance, xMax);
+
+                            if (HasMore)
+                            {
+                                if (_currentPointIndex == currentPointI)
+                                    _currentPointIndex++;
+
+                                m2 = GetSlope(startPoint, _points[_currentPointIndex]);
+                            }
                         }
                     }
-                    
+
                     _result.Add(currentPoint);
                 }
             }

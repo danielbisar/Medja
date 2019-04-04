@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Medja.Controls;
 using Medja.Utils;
 using SkiaSharp;
@@ -30,33 +31,16 @@ namespace Medja.OpenTk.Rendering
         
         private void RenderValues(SKRect borderRect)
         {
-            // todo translate Y coordinate for GetForDrawing
+            //var pointsToDraw = _control.DataPoints.Downsampler.Downsample(borderRect.Left, borderRect.Right, 0.1f, 0.1f);
+            //var pointsToDraw = _control.DataPoints.Downsampler.Downsample(borderRect.Left, borderRect.Right, 0.5f, 1f);
+            //var pointsToDraw = _control.DataPoints.Downsampler.Downsample(borderRect.Left, borderRect.Right, 0.5f, 0.1f);
+            var pointsToDraw = _control.DataPoints.Downsampler.Downsample(borderRect.Left, borderRect.Right, 3.0f, 0.2f);
+            //var pointsToDraw = _control.DataPoints.Downsampler.Downsample(borderRect.Left, borderRect.Right, 0, 0);
             
-            // create an array and use DrawPoints reduces the amount of methods called and is faster
-            // than calling DrawPoint for each point
+            //Console.WriteLine(pointsToDraw.Count);
             
-            /* without aggregation and xMinDist = 1
-             FPS: 0.9225093
-             Point count: 13173427 */
-            
-            /* with aggregation and xMinDist = 1
-             FPS: 3.69
-             Point count: 799 */
-            
-            var pointsToDraw = _control.DataPoints.Downsampler.Downsample(borderRect.Left, borderRect.Right, 0.1f, 0.2f);
-            //var pointsToDraw = _control.DataPoints.GetAll();
-            
-            //Console.WriteLine("Point count:" + pointsToDraw.Count);
-            
-            // _canvas.DrawPoint is faster than creating SKPoints and call _canvas.DrawPoints
-            
-            
-            for(int i = 0; i < pointsToDraw.Count; i++)
-            {
-                var dataPoint = pointsToDraw[i];
-                _canvas.DrawPoint(dataPoint.X, dataPoint.Y + 300, _pointsPaint);
-            }
-            
+            var points = pointsToDraw.Select(p => new SKPoint(p.X, p.Y + 300)).ToArray();
+            _canvas.DrawPoints(SKPointMode.Lines, points, _pointsPaint);
         }
     }
 }
