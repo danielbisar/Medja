@@ -50,7 +50,7 @@ namespace Medja.Test.Controls
             items.Add(new Point(3, 2));
             items.Add(new Point(4, 1.5f));
 
-            var result = items.GetForDrawing(1, 3, 0, 1.5f, 1);
+            var result = items.Downsampler.Downsample(1, 3, 0, 1);
             
             Assert.Equal(result.Count, 2);
             Assert.Equal(1, result[0].X);

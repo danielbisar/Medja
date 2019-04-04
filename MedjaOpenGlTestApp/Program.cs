@@ -16,7 +16,7 @@ using SkiaSharp;
 
 namespace MedjaOpenGlTestApp
 {
-	public class MainClass
+	public static class MainClass
 	{
 		private static MedjaWindow _window;
 
