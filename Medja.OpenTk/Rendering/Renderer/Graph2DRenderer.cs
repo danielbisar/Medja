@@ -9,14 +9,14 @@ namespace Medja.OpenTk.Rendering
     {
         private readonly SKPaint _pointsPaint;
         private readonly FramesPerSecondCounter _counter;
-        
-        public Graph2DRenderer(Graph2D control) 
+
+        public Graph2DRenderer(Graph2D control)
             : base(control)
         {
             _pointsPaint = CreatePaint();
             _pointsPaint.Color = SKColors.Green;
             _pointsPaint.IsAntialias = false;
-            
+
             _counter = new FramesPerSecondCounter();
             _counter.FramesCounted += (s, e) => Console.WriteLine("FPS: " + e.Value);
         }
@@ -43,19 +43,20 @@ namespace Medja.OpenTk.Rendering
              FPS: 3.69
              Point count: 799 */
             
-            var pointsToDraw = _control.DataPoints.GetForDrawing(borderRect.Left, borderRect.Right, -10, 10, 1);
+            var pointsToDraw = _control.DataPoints.Downsampler.Downsample(borderRect.Left, borderRect.Right, 0.1f, 0.2f);
+            //var pointsToDraw = _control.DataPoints.GetAll();
             
-            Console.WriteLine("Point count: " + pointsToDraw.Count);
+            //Console.WriteLine("Point count:" + pointsToDraw.Count);
             
-            var skPoints = new SKPoint[pointsToDraw.Count]; 
+            // _canvas.DrawPoint is faster than creating SKPoints and call _canvas.DrawPoints
+            
             
             for(int i = 0; i < pointsToDraw.Count; i++)
             {
                 var dataPoint = pointsToDraw[i];
-                skPoints[i] = new SKPoint(dataPoint.X + borderRect.Left, borderRect.Bottom - dataPoint.Y);
+                _canvas.DrawPoint(dataPoint.X, dataPoint.Y + 300, _pointsPaint);
             }
             
-            _canvas.DrawPoints(SKPointMode.Points, skPoints, _pointsPaint);
         }
     }
 }

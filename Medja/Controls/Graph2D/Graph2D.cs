@@ -9,7 +9,7 @@ namespace Medja.Controls
         // idea: use a type of list that adds points ordered by x so that max and min methods could operate faster?
         // do not use ObservableCollection for performance reasons
         
-        public DataPoints DataPoints { get; set; }
+        public DataPoints DataPoints { get; }
         
         public Graph2D()
         {
