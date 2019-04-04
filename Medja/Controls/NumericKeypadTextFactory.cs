@@ -58,7 +58,7 @@ namespace Medja.Controls
                         }
                     }
 
-                    if (c == '\n' || c == '\r' && i + 1 < layout.Length)
+                    if ((c == '\n' || c == '\r') && i + 1 < layout.Length)
                     {
                         subList = new List<string>();
                         resultList.Add(subList);

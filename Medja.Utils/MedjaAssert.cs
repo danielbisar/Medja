@@ -64,7 +64,7 @@ namespace Medja.Utils
             {
                 for (int n = 0; n < length1; n++)
                 {
-                    if (EqualityComparer<T>.Default.Equals(actual[i, n], expected[i, n]))
+                    if (!EqualityComparer<T>.Default.Equals(actual[i, n], expected[i, n]))
                         throw new Exception($"Expected value at ({i}, {n}) {expected[i, n]} is != actual value {actual[i, n]}.");
                 }
             }
