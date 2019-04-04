@@ -4,7 +4,7 @@ using Xunit;
 using Medja.Utils;
 using Medja.Controls;
 
-namespace Medja.Controls.Test
+namespace Medja.Test.Controls
 {
     public class NumericKeypadTextFactoryTest
     {
