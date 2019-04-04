@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Medja.Utils.Text;
 
 namespace Medja.Controls
 {
@@ -33,37 +34,32 @@ namespace Medja.Controls
             var subList = new List<string>();
             resultList.Add(subList);
 
-            for (int i = 0; i < layout.Length; i++)
+            var navigator = new TextReaderNavigator(layout);
+
+            while (navigator.HasMore)
             {
-                var c = layout[i];
+                var c = navigator.ReadChar();
                 var translatedC = Translate(c);
 
                 subList.Add(translatedC);
 
-                if (i + 1 < layout.Length)
-                {
-                    i++;
-                    c = layout[i];
+                // if (navigator.HasMore)
+                // {
+                //     if (navigator.IsAtNewLine())
+                //     {
+                //         navigator.SkipLine();
 
-                    if (c != ' ' && c != '\n' && c != '\r')
-                        throw new Exception("Expected space, EOL or new line.");
-
-                    // newline \n, \r, \r\n
-                    if (c == '\r')
-                    {
-                        if (i + 1 < layout.Length)
-                        {
-                            if (layout[i + 1] == '\n')
-                                i++;
-                        }
-                    }
-
-                    if ((c == '\n' || c == '\r') && i + 1 < layout.Length)
-                    {
-                        subList = new List<string>();
-                        resultList.Add(subList);
-                    }
-                }
+                //         if (navigator.HasMore)
+                //         {
+                //             subList = new List<string>();
+                //             resultList.Add(subList);
+                //         }
+                //     }
+                //     else
+                //     {
+                //         navigator.SkipExpected(" ");
+                //     }
+                // }
             }
 
             return resultList;
