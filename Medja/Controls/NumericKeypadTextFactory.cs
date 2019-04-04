@@ -12,12 +12,13 @@ namespace Medja.Controls
             _keys = new Dictionary<char, string>
             {
                 {'c', Globalization.Clear},
-                {'b', Globalization.Back}
+                {'b', Globalization.Back},
+                {'-', ""}
             };
 
             // 48 = ascii digit 0, 49 = 1, ... 
             // unicode has the same values
-            for(int i = 0; i <= 9; i++)
+            for (int i = 0; i <= 9; i++)
                 _keys.Add((char)(i + 48), i.ToString());
         }
 
@@ -26,50 +27,46 @@ namespace Medja.Controls
             return _keys[c];
         }
 
-        public string[,] Translate(string layout)
+        public List<List<string>> Translate(string layout)
         {
             var resultList = new List<List<string>>();
             var subList = new List<string>();
             resultList.Add(subList);
 
-            var maxSubListCount = 0;
-
-            for(int i = 0; i < layout.Length; i++)
+            for (int i = 0; i < layout.Length; i++)
             {
                 var c = layout[i];
                 var translatedC = Translate(c);
 
                 subList.Add(translatedC);
 
-                if(i + 1 < layout.Length)
+                if (i + 1 < layout.Length)
                 {
                     i++;
-                    c = layout[i]; 
-                    
-                    if(c != ' ' && c != '\n' && c != '\r')
+                    c = layout[i];
+
+                    if (c != ' ' && c != '\n' && c != '\r')
                         throw new Exception("Expected space, EOL or new line.");
 
                     // newline \n, \r, \r\n
-                    if(c != '\n')
+                    if (c == '\r')
                     {
-                        if(i + 1 < layout.Length)
+                        if (i + 1 < layout.Length)
                         {
-                            if(layout[i] == '\r')
+                            if (layout[i + 1] == '\n')
                                 i++;
                         }
                     }
 
-                    if(c != '\n' && c != '\r' && i + 1 < layout.Length)
+                    if (c == '\n' || c == '\r' && i + 1 < layout.Length)
                     {
-                        maxSubListCount = Math.Max(subList.Count, maxSubListCount);
-                        
                         subList = new List<string>();
                         resultList.Add(subList);
                     }
                 }
             }
+
+            return resultList;
         }
-
-
     }
 }

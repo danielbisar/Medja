@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Xunit;
 using Medja.Utils;
 using Medja.Controls;
@@ -29,7 +30,7 @@ namespace Medja.Controls.Test
         [Fact]
         public void Translates0to9()
         {
-            for(int i = 0; i <= 9; i++)
+            for (int i = 0; i <= 9; i++)
             {
                 // 48 = ascii digit 0, 49 = 1, ... 
                 var result = Translate((char)(i + 48));
@@ -37,24 +38,24 @@ namespace Medja.Controls.Test
             }
         }
 
+        [Fact]
         public void TranslatesFile()
         {
-            var layout = 
+            var layout =
 @"7 8 9 c
 4 5 6 b
-1 2 3
+1 2 3 -
 - 0 -";
 
             var result = new NumericKeypadTextFactory().Translate(layout);
 
-            MedjaAssert.Equal(result, new [,] 
+            MedjaAssert.Equal(result, new string[][]
             {
-                {"7", "8", "9", Globalization.Cancel},
-                {"4", "5", "6", Globalization.Back},
-                {"1", "2", "3", ""},
-                {"", "0", "", ""},
+                new []{ "7", "8", "9", Globalization.Clear},
+                new []{ "4", "5", "6", Globalization.Back},
+                new []{ "1", "2", "3", ""},
+                new []{ "", "0", ""}
             });
-            
         }
     }
 }
