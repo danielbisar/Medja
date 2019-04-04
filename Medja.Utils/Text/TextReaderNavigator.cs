@@ -38,7 +38,7 @@ namespace Medja.Utils.Text
         public string PeekMax(int length)
         {
             var result = new StringBuilder();
-
+            // IN PROGRESS
 
         }
 
