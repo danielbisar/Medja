@@ -22,8 +22,8 @@ namespace MedjaOpenGlTestApp.Tests.Performance
         public Control Create()
         {
             var graph = _controlFactory.Create<Graph2D>();
-            //var itemCount = 17280000.0f;
-            var itemCount = 1000000.0f;
+            var itemCount = 17280000.0f;
+            //var itemCount = 1000000.0f;
             //var itemCount = 21600000.0f; // 10 hours of recorded data (600 fps * 3600 sec * 10)
             var maxX = 1000;
             var step = maxX / itemCount;
