@@ -12,7 +12,7 @@ namespace Medja.Controls
         
         private float? _startDragPos;
 
-        public ScrollableContainer(ControlFactory controlFactory)
+        public ScrollableContainer(IControlFactory controlFactory)
         {
             _scrollBar = controlFactory.Create<VerticalScrollBar>();
             _scrollBar.PropertyValue.AffectsLayout(this);

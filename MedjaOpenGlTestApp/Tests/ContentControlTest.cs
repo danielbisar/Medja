@@ -6,9 +6,9 @@ namespace MedjaOpenGlTestApp.Tests
 {
     public class ContentControlTest
     {
-        private readonly ControlFactory _controlFactory;
+        private readonly IControlFactory _controlFactory;
 
-        public ContentControlTest(ControlFactory controlFactory)
+        public ContentControlTest(IControlFactory controlFactory)
         {
             _controlFactory = controlFactory;
         }

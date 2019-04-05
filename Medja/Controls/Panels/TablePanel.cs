@@ -3,12 +3,27 @@ using Medja.Primitives;
 
 namespace Medja.Controls
 {
+	/// <summary>
+	/// Creates a table like layout.
+	/// </summary>
+	/// <remarks>
+	/// The children are automatically arranged in the cells resulting of the row and column definitions. 
+	/// Lets say you have a 2 rows and 3 columns. The first 3 children are added to the first row, the next 3 children
+	/// are added to the 2nd row and so forth.
+	/// </remarks>
 	public class TablePanel : Panel
 	{
 		private readonly List<Rect> _positions;
 		private bool _refreshPositions;
 		
+		/// <summary>
+		/// Add or remove rows as required.
+		/// </summary>
 		public List<RowDefinition> Rows { get; }
+		
+		/// <summary>
+		/// Add or remove columns as required.
+		/// </summary>
 		public List<ColumnDefinition> Columns { get; }
 
 		public TablePanel()

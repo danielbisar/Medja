@@ -6,9 +6,9 @@ namespace MedjaOpenGlTestApp.Tests
 {
     public class SliderTest
     {
-        private readonly ControlFactory _controlFactory;
+        private readonly IControlFactory _controlFactory;
 
-        public SliderTest(ControlFactory controlFactory)
+        public SliderTest(IControlFactory controlFactory)
         {
             _controlFactory = controlFactory;
         }

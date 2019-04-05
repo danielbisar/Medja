@@ -4,9 +4,8 @@ using Medja.Controls;
 namespace Medja
 {
     /// <summary>
-    /// Represents an application instance (handling windows and other library stuff)
-    /// 
-    /// currently we just allow one actual window per application.
+    /// Represents an application instance (handling windows and other library stuff) 
+    /// Currently we just allow one actual window per application.
     /// </summary>
     public class MedjaApplication
     {

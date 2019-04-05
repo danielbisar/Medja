@@ -1,5 +1,4 @@
 using Medja.Controls;
-using Medja.Debug;
 using Medja.Primitives;
 using Medja.Theming;
 
@@ -7,9 +6,9 @@ namespace MedjaOpenGlTestApp.Tests
 {
     public class Control3DTest
     {
-        private readonly ControlFactory _controlFactory;
+        private readonly IControlFactory _controlFactory;
 
-        public Control3DTest(ControlFactory controlFactory)
+        public Control3DTest(IControlFactory controlFactory)
         {
             _controlFactory = controlFactory;
         }

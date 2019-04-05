@@ -7,7 +7,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>MedjaOpenGlTestApp</RootNamespace>
     <AssemblyName>MedjaOpenGlTestApp</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -19,6 +19,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ExternalConsole>true</ExternalConsole>
+    <Prefer32bit>false</Prefer32bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <Optimize>true</Optimize>
@@ -26,6 +27,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ExternalConsole>true</ExternalConsole>
+    <Prefer32bit>false</Prefer32bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="OpenTK, Version=3.0.1.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4">
@@ -55,6 +57,7 @@
     <Compile Include="Tests\MultithreadingTest.cs" />
     <Compile Include="Tests\NumericKeypadTest.cs" />
     <Compile Include="Tests\Performance\BytesToInt32PerfTest.cs" />
+    <Compile Include="Tests\Performance\Graph2DTest.cs" />
     <Compile Include="Tests\Performance\SequentialFileNamePerfTest.cs" />
     <Compile Include="Tests\ScrollableContainerTest.cs" />
     <Compile Include="Tests\ScrollingGridTest.cs" />

@@ -12,7 +12,7 @@ namespace Medja.Controls
     {
         private readonly Dictionary<Button, TItem> _buttonToItemMap;
         private readonly Dictionary<TItem, Button> _itemToButtonMap;
-        private readonly ControlFactory _controlFactory;
+        private readonly IControlFactory _controlFactory;
 
         public List<TItem> Items { get; }
 
@@ -46,7 +46,7 @@ namespace Medja.Controls
         public event EventHandler<ItemEventArgs<TItem>> ItemAdded;
         public event EventHandler<ItemEventArgs<TItem>> ItemRemoved;
         
-        public ItemsManager(ControlFactory controlFactory)
+        public ItemsManager(IControlFactory controlFactory)
         {
             PropertyIsSelectable = new Property<bool>();
             PropertySelectedItem = new Property<TItem>();
