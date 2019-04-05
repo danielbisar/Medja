@@ -5,6 +5,6 @@ namespace Medja.Controls
 {
     public interface IGraph2DDownsampler
     {
-        List<Point> Downsample(float xMin, float xMax, float minDistance, float mThreshold);
+        IReadOnlyList<Point> Downsample(float xMin, float xMax, float minDistance, float mThreshold);
     }
 }

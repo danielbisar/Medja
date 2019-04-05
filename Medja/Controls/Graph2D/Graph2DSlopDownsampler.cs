@@ -11,7 +11,7 @@ namespace Medja.Controls
     /// <remarks>Author: Daniel Klafft</remarks> 
     public class Graph2DSlopDownsampler : IGraph2DDownsampler
     {
-        private readonly List<Point> _points;
+        private readonly IReadOnlyList<Point> _points;
         private List<Point> _result;
         private int _currentPointIndex;
 
@@ -20,7 +20,7 @@ namespace Medja.Controls
             get { return _currentPointIndex + 1 < _points.Count; }
         }
         
-        public Graph2DSlopDownsampler(List<Point> points)
+        public Graph2DSlopDownsampler(IReadOnlyList<Point> points)
         {
             _points = points;
         }
@@ -35,7 +35,7 @@ namespace Medja.Controls
         /// <param name="mThreshold">The min/max allowed change of m (see remarks) between points to be recognized.
         /// </param>
         /// <returns>The down sampled list of points.</returns>
-        public List<Point> Downsample(float xMin, float xMax, float minDistance, float mThreshold)
+        public IReadOnlyList<Point> Downsample(float xMin, float xMax, float minDistance, float mThreshold)
         {
             // use Return() to return the list
             _result = new List<Point>();

@@ -34,10 +34,10 @@ namespace MedjaOpenGlTestApp
 			//var test = new Control3DTest(controlFactory);
 			//var test = new DialogTest(controlFactory);
 			//var test = new DockPanelTest(controlFactory);
-			//var test = new Graph2DTest(controlFactory);
+			var test = new Graph2DTest(controlFactory);
 			//var test = new ImageButtonTest(controlFactory);
 			//var test = new MultithreadingTest(controlFactory);
-			var test = new NumericKeypadTest(controlFactory);
+			//var test = new NumericKeypadTest(controlFactory);
 			//var test = new ScrollableContainerTest(controlFactory);
 			//var test = new ScrollingGridTest(controlFactory);
 			//var test = new SideControlsContainerTest(controlFactory);
@@ -53,6 +53,7 @@ namespace MedjaOpenGlTestApp
 			_window.CenterOnScreen(800, 600);
 			_window.Background = Colors.Black;
 			_window.Content = test.Create();
+			_window.Title = "Demo";
 			
 			application.MainWindow = _window;
 			application.Run();

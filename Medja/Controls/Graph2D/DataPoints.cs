@@ -9,10 +9,20 @@ namespace Medja.Controls
 {
     public class DataPoints
     {
-        private readonly List<Point> _points;
         private Point _last;
+
+        private readonly List<Point> _points;
+        public IReadOnlyList<Point> Points
+        {
+            get { return _points;}
+        }
         
-        public IGraph2DDownsampler Downsampler { get; }
+        public IGraph2DDownsampler Downsampler { get; set; }
+
+        public int Count
+        {
+            get { return _points.Count; }
+        }
 
         /// <summary>
         /// 
@@ -31,6 +41,13 @@ namespace Medja.Controls
                 throw new NotSupportedException("Points must be added in correct order (x must <= the previous value)");
 
             _last = p;
+        }
+
+        public void Clear()
+        {
+            _points.Clear();
+            _points.TrimExcess();
+            _last = null;
         }
     }
 }
