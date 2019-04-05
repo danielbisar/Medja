@@ -1,5 +1,4 @@
 using System;
-using Medja.Debug;
 using Medja.Primitives;
 using Medja.Theming;
 
@@ -33,8 +32,6 @@ namespace Medja.Controls
         public override void Arrange(Size availableSize)
         {
             base.Arrange(availableSize);
-            
-            Console.WriteLine(new ControlTreeStringBuilder(this).GetTree());
         }
     }
 }

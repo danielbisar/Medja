@@ -39,7 +39,7 @@ namespace Medja.Utils.Text
         {
             var result = new StringBuilder();
             // IN PROGRESS
-
+            return "";
         }
 
         public char ReadChar()
