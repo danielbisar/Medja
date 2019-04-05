@@ -9,7 +9,6 @@ namespace Medja.OpenTk.Rendering
     public class Graph2DRenderer : SkiaControlRendererBase<Graph2D>
     {
         private readonly SKPaint _pointsPaint;
-        private readonly FramesPerSecondCounter _counter;
 
         public Graph2DRenderer(Graph2D control)
             : base(control)
@@ -17,15 +16,10 @@ namespace Medja.OpenTk.Rendering
             _pointsPaint = CreatePaint();
             _pointsPaint.Color = SKColors.Green;
             _pointsPaint.IsAntialias = false;
-
-            _counter = new FramesPerSecondCounter();
-            _counter.FramesCounted += (s, e) => Console.WriteLine("FPS: " + e.Value);
         }
 
         protected override void InternalRender()
         {
-            _counter.Tick();
-            
             RenderValues(_rect);
         }
         
