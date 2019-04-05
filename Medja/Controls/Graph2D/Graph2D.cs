@@ -10,10 +10,18 @@ namespace Medja.Controls
         // do not use ObservableCollection for performance reasons
         
         public DataPoints DataPoints { get; }
+
+        // todo remove or abstract
+        public int RenderMode {get;set;}
+        public float MinDistance {get;set;}
+        public float SlopThreshold {get;set;}
         
         public Graph2D()
         {
             DataPoints = new DataPoints();
+
+            MinDistance = 3.0f;
+            SlopThreshold = 0.2f;
         }
     }
 }

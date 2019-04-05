@@ -23,10 +23,10 @@ namespace Medja.Utils
         /// </summary>
         public event EventHandler<ValueEventArgs<float>> FramesCounted;
         
-        public FramesPerSecondCounter()
+        public FramesPerSecondCounter(int countSeconds = 1)
         {
             _stopWatch = new Stopwatch();
-            _countTicks = new TimeSpan(0,0,1).Ticks;
+            _countTicks = new TimeSpan(0,0, countSeconds).Ticks;
         }
 
         /// <summary>
