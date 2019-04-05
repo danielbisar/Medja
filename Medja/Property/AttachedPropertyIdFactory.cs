@@ -1,6 +1,6 @@
-﻿using System.Threading;
+using System.Threading;
 
-namespace Medja.Controls
+namespace Medja
 {
 	/// <summary>
 	/// Provides ids for attached properties.

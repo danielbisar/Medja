@@ -6,9 +6,9 @@ namespace MedjaOpenGlTestApp.Tests
 {
     public class VerticalStackPanelTest
     {
-        private readonly ControlFactory _controlFactory;
+        private readonly IControlFactory _controlFactory;
 
-        public VerticalStackPanelTest(ControlFactory controlFactory)
+        public VerticalStackPanelTest(IControlFactory controlFactory)
         {
             _controlFactory = controlFactory;
         }

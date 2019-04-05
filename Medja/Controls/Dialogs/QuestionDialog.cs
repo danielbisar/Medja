@@ -21,7 +21,7 @@ namespace Medja.Controls
 		/// Creates a new instance. Please use <see cref="ControlFactory"/> instead.
 		/// </summary>
 		/// <param name="controlFactory">The <see cref="ControlFactory"/>.</param>
-		public QuestionDialog(ControlFactory controlFactory)
+		public QuestionDialog(IControlFactory controlFactory)
 			: base(controlFactory)
 		{
 			PropertyMessage = new Property<string>();

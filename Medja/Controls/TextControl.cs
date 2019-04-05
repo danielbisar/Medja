@@ -11,7 +11,7 @@ namespace Medja.Controls
 	/// Hint for implementing a renderer for any TextControl: use GetLines to receive the wrapped lines.
 	/// The Font.GetWidth method must be set beforehand.
 	/// </remarks>
-	public class TextControl : Control
+	public abstract class TextControl : Control
 	{
 		private string[] _lines;
 		private bool _linesNeedUpdate;
@@ -49,7 +49,7 @@ namespace Medja.Controls
 		
 		public MRect TextClippingArea { get; }
 
-		public TextControl()
+		protected TextControl()
 		{
 			PropertyText = new Property<string>();
 			PropertyTextAlignment = new Property<TextAlignment>();

@@ -5,12 +5,12 @@
         <LangVersion>latest</LangVersion>
         <Authors>Daniel Klafft</Authors>
         <Company>SprintWORX GmbH</Company>
-        <Copyright>Copyright © 2018</Copyright>
+        <Copyright>Copyright © 2018-2019 SprintWORX GmbH</Copyright>
         <Description>Cross platform .NET utilities library.</Description>
         <Product>Medja</Product>
         <NeutralLanguage>en</NeutralLanguage>
-        <AssemblyVersion>0.2.67.0</AssemblyVersion>
-        <FileVersion>0.2.67.0</FileVersion>
+        <AssemblyVersion>0.2.7.0</AssemblyVersion>
+        <FileVersion>0.2.7.0</FileVersion>
     </PropertyGroup>
 
 </Project>

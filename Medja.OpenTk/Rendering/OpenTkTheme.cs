@@ -56,6 +56,14 @@ namespace Medja.OpenTk.Rendering
 			return result;
 		}
 
+		protected override Graph2D CreateGraph2D()
+		{
+			var result = base.CreateGraph2D();
+			result.Renderer = new Graph2DRenderer(result);
+
+			return result;
+		}
+
 		protected override Image CreateImage()
 		{
 			var result = base.CreateImage();

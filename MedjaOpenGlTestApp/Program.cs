@@ -16,7 +16,7 @@ using SkiaSharp;
 
 namespace MedjaOpenGlTestApp
 {
-	public class MainClass
+	public static class MainClass
 	{
 		private static MedjaWindow _window;
 
@@ -34,6 +34,7 @@ namespace MedjaOpenGlTestApp
 			//var test = new Control3DTest(controlFactory);
 			//var test = new DialogTest(controlFactory);
 			//var test = new DockPanelTest(controlFactory);
+			var test = new Graph2DTest(controlFactory);
 			//var test = new ImageButtonTest(controlFactory);
 			//var test = new MultithreadingTest(controlFactory);
 			var test = new NumericKeypadTest(controlFactory);

@@ -5,9 +5,9 @@ using Medja.Theming;
 
 namespace Medja.Controls
 {
-    public class ComboBoxBase : ContentControl
+    public abstract class ComboBoxBase : ContentControl
     {
-        protected readonly ControlFactory ControlFactory;
+        protected readonly IControlFactory ControlFactory;
 
         protected VerticalStackPanel ItemsPanel;
         protected ScrollableContainer ItemContainer;
@@ -27,7 +27,7 @@ namespace Medja.Controls
             set { PropertyDropDownHeight.Set(value); }
         }
 
-        public ComboBoxBase(ControlFactory controlFactory)
+        protected ComboBoxBase(IControlFactory controlFactory)
         {
             PropertyIsDropDownOpen = new Property<bool>();
             PropertyDropDownHeight = new Property<float>();

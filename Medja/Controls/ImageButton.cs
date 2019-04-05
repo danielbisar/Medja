@@ -50,7 +50,7 @@ namespace Medja.Controls
             set { PropertyIsAutoSizeToBitmap.Set(value); }
         }
         
-        public ImageButton(ControlFactory controlFactory)
+        public ImageButton(IControlFactory controlFactory)
         {
             PropertyImage = new Property<Image>();
             PropertyMouseOverImage = new Property<Image>();

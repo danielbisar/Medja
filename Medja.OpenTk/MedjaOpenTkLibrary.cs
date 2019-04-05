@@ -26,7 +26,7 @@ namespace Medja.OpenTk
 		private OpenTKKeyboardHandler _keyboardHandler;
 		private ControlHierarchy _controlHierarchy;
 
-		public ControlFactory ControlFactory { get; }
+		public IControlFactory ControlFactory { get; }
 		
 		public BitmapFactory BitmapFactory { get; }
 		
@@ -39,7 +39,7 @@ namespace Medja.OpenTk
 		/// <value>The renderer factory.</value>
 		public Func<IRenderer> RendererFactory { get; set; }
 
-		public MedjaOpenTkLibrary(ControlFactory factory = null)
+		public MedjaOpenTkLibrary(IControlFactory factory = null)
 		{
 			ControlFactory = factory ?? new OpenTkTheme();
 			RendererFactory = () => new OpenTkRenderer();

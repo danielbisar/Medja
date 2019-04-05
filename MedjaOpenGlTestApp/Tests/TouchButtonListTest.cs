@@ -7,9 +7,9 @@ namespace MedjaOpenGlTestApp.Tests
 {
     public class TouchButtonListTest
     {
-        private readonly ControlFactory _controlFactory;
+        private readonly IControlFactory _controlFactory;
 
-        public TouchButtonListTest(ControlFactory controlFactory)
+        public TouchButtonListTest(IControlFactory controlFactory)
         {
             _controlFactory = controlFactory;
         }

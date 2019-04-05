@@ -9,7 +9,7 @@ namespace Medja.Controls
     /// </summary>
     public class ConfirmableDialog : Dialog
     {
-        protected readonly ControlFactory _controlFactory;
+        protected readonly IControlFactory _controlFactory;
         
         public readonly Property<bool> PropertyIsConfirmed;
         /// <summary>
@@ -25,7 +25,7 @@ namespace Medja.Controls
         /// Creates a new instance. Use <see cref="ControlFactory"/> to create an instance.
         /// </summary>
         /// <param name="controlFactory"><see cref="ControlFactory"/> for the sub controls.</param>
-        public ConfirmableDialog(ControlFactory controlFactory)
+        public ConfirmableDialog(IControlFactory controlFactory)
         {
             _controlFactory = controlFactory;
             
