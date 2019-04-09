@@ -5,7 +5,7 @@ using Medja.Primitives;
 
 namespace Medja.Demo
 {
-    internal class Program
+    class Program
     {
         public static void Main(string[] args)
         {
