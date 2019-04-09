@@ -5,33 +5,6 @@ VisualStudioVersion = 15.0.27428.2015
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Medja.OpenTk", "Medja.OpenTk\Medja.OpenTk.csproj", "{910BC2C5-8A78-402F-B1E5-56C13B75E60E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5F6B5F4A-F5F1-4844-9FD3-153DA6C2CC96}"
-	ProjectSection(SolutionItems) = preProject
-		CodingGuideline.md = CodingGuideline.md
-		Licenses.md = Licenses.md
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{8D973690-AC8D-4D1E-B219-EC5E7FBC29C9}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "linux", "linux", "{0E153307-835B-4D1B-9D2A-F2C8B76D1148}"
-	ProjectSection(SolutionItems) = preProject
-		build\linux\Readme.md = build\linux\Readme.md
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "windows", "windows", "{A4DE192F-E2F0-423F-9FDF-9F5FAC1BA8F0}"
-	ProjectSection(SolutionItems) = preProject
-		build\windows\Readme.md = build\windows\Readme.md
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libs", "libs", "{11568008-1630-4859-A5F0-3DB571CD8C39}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ZeroMq", "ZeroMq", "{426E7D6E-3730-4554-9855-E0C47334DA91}"
-	ProjectSection(SolutionItems) = preProject
-		libs\ZeroMQ\zeromq.md = libs\ZeroMQ\zeromq.md
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedjaOpenGlTestApp", "MedjaOpenGlTestApp\MedjaOpenGlTestApp.csproj", "{FE458487-F2DF-4C14-890F-73770D04BA83}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Medja.Utils", "Medja.Utils\Medja.Utils.csproj", "{2F8F1833-E550-46D9-93C0-6BD5D1601776}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Medja", "Medja\Medja.csproj", "{75D8712D-EF50-4A44-9B94-11045AA2D7A2}"
@@ -48,8 +21,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Medja.ProtoBuf.Test", "Medj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Medja.OpenTk.Test", "Medja.OpenTk.Test\Medja.OpenTk.Test.csproj", "{041B742F-8287-4427-8C4D-EA5EF2875F4E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Medja.Demo", "Medja.Demo\Medja.Demo.csproj", "{1753B2D4-8377-4339-84AC-FE41539ABB39}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -60,10 +31,6 @@ Global
 		{910BC2C5-8A78-402F-B1E5-56C13B75E60E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{910BC2C5-8A78-402F-B1E5-56C13B75E60E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{910BC2C5-8A78-402F-B1E5-56C13B75E60E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FE458487-F2DF-4C14-890F-73770D04BA83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FE458487-F2DF-4C14-890F-73770D04BA83}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FE458487-F2DF-4C14-890F-73770D04BA83}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FE458487-F2DF-4C14-890F-73770D04BA83}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2F8F1833-E550-46D9-93C0-6BD5D1601776}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2F8F1833-E550-46D9-93C0-6BD5D1601776}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2F8F1833-E550-46D9-93C0-6BD5D1601776}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -96,20 +63,11 @@ Global
 		{041B742F-8287-4427-8C4D-EA5EF2875F4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{041B742F-8287-4427-8C4D-EA5EF2875F4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{041B742F-8287-4427-8C4D-EA5EF2875F4E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1753B2D4-8377-4339-84AC-FE41539ABB39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1753B2D4-8377-4339-84AC-FE41539ABB39}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1753B2D4-8377-4339-84AC-FE41539ABB39}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1753B2D4-8377-4339-84AC-FE41539ABB39}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{8D973690-AC8D-4D1E-B219-EC5E7FBC29C9} = {5F6B5F4A-F5F1-4844-9FD3-153DA6C2CC96}
-		{0E153307-835B-4D1B-9D2A-F2C8B76D1148} = {8D973690-AC8D-4D1E-B219-EC5E7FBC29C9}
-		{A4DE192F-E2F0-423F-9FDF-9F5FAC1BA8F0} = {8D973690-AC8D-4D1E-B219-EC5E7FBC29C9}
-		{11568008-1630-4859-A5F0-3DB571CD8C39} = {5F6B5F4A-F5F1-4844-9FD3-153DA6C2CC96}
-		{426E7D6E-3730-4554-9855-E0C47334DA91} = {11568008-1630-4859-A5F0-3DB571CD8C39}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4D03B243-CA6E-48EC-B91B-5EC47AFF07B0}
