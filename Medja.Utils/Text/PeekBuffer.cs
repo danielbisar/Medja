@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Text;
+using Math = System.Math;
 
 namespace Medja.Utils.Text
 {
@@ -37,8 +38,17 @@ namespace Medja.Utils.Text
 
         public string PeekMax(int length)
         {
-            // IN PROGRESS
-            return "";
+            if(length < 1)
+                throw new ArgumentOutOfRangeException(nameof(length), "Must be >= 1");
+
+            var sb = new StringBuilder(length);
+            var pos = _pos;
+            var end = Math.Min(_pos + length, sb.Length);
+
+            for(;pos < end; pos++)
+                sb.Append(_buffer[pos]);
+
+            return sb.ToString();
         }
     }
 }

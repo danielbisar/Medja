@@ -13,7 +13,11 @@ namespace Medja.Utils.Text
 
         public bool HasMore
         {
-            get { return _textReader.Peek() != -1; }
+            get 
+            {
+                 return _peekBuffer.HasMore
+                     || _textReader.Peek() != -1; 
+            }
         }
 
         public TextReaderNavigator(TextReader reader)
@@ -37,9 +41,22 @@ namespace Medja.Utils.Text
 
         public string PeekMax(int length)
         {
-            var result = new StringBuilder();
-            // IN PROGRESS
-            return "";
+            var sb = new StringBuilder(_peekBuffer.PeekMax(length));
+            var diff = length - sb.Length;
+
+            for(int i = 0; i < diff; i++)
+            {
+                if(_textReader.Peek() != -1)
+                {
+                    var c = (char)_textReader.Read();
+                    sb.Append(c);
+                    _peekBuffer.Add(c);
+                }
+                else
+                    break;
+            }
+
+            return sb.ToString();
         }
 
         public char ReadChar()
