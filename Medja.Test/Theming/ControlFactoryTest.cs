@@ -35,6 +35,10 @@ namespace Medja.Test.Theming
             Assert.True(new ControlFactory().HasControl<Control>());
         }
 
+        /// <summary>
+        /// This test verifies that all controls that are present in Medja are also registered in the
+        /// <see cref="ControlFactory"/> class.
+        /// </summary>
         [Fact]
         public void HasAllControlClassesTest()
         {

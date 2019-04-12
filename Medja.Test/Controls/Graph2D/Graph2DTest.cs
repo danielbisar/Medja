@@ -13,13 +13,6 @@ namespace Medja.Test.Controls
         }
 
         [Fact]
-        public void GeneralTest()
-        {
-            var chart2d = Create2DChart();
-            //chart2d.
-        }
-
-        [Fact]
         public void CanAddDataPoints()
         {
             var chart2d = Create2DChart();
