@@ -50,11 +50,17 @@ namespace Medja.Test.Controls
             items.Add(new Point(3, 2));
             items.Add(new Point(4, 1.5f));
 
-            var result = items.Downsampler.Downsample(1, 3, 0, 1);
+            var settings = new DataPointsRenderingSettings();
+            settings.MinX = 1;
+            settings.MaxX = 3;
+            settings.MinY = 1;
+            settings.MaxY = 2;
             
-            Assert.Equal(result.Count, 2);
+            var result = items.GetForRendering(settings);
+            
+            Assert.Equal(2, result.Count);
             Assert.Equal(1, result[0].X);
-            Assert.Equal(2, result[1].X);
+            Assert.Equal(3, result[1].X);
         }
     }
 }

@@ -23,6 +23,7 @@ namespace Medja.Theming
 			_factoryMethods = new Dictionary<Type, Func<object>>();
 
 			// add in alphabetical order
+			// factory methods should be virtual if implemented in this class
 			_factoryMethods.Add(typeof(Button), CreateButton);
 			_factoryMethods.Add(typeof(Canvas), CreateCanvas);
 			_factoryMethods.Add(typeof(CheckBox), CreateCheckBox);
@@ -34,6 +35,7 @@ namespace Medja.Theming
 			_factoryMethods.Add(typeof(DialogParentControl), CreateDialogParentControl);
 			_factoryMethods.Add(typeof(DockPanel), CreateDockPanel);
 			_factoryMethods.Add(typeof(Graph2D), CreateGraph2D);
+			_factoryMethods.Add(typeof(Graph2DAxis), CreateGraph2DAxis);
 			_factoryMethods.Add(typeof(HorizontalStackPanel), CreateHorizontalStackPanel);
 			_factoryMethods.Add(typeof(Image), CreateImage);
 			_factoryMethods.Add(typeof(ImageButton), CreateImageButton);
@@ -201,7 +203,12 @@ namespace Medja.Theming
 
 		protected virtual Graph2D CreateGraph2D()
 		{
-			return new Graph2D();
+			return new Graph2D(this);
+		}
+
+		protected virtual Graph2DAxis CreateGraph2DAxis()
+		{
+			return new Graph2DAxis();
 		}
 
 		protected virtual HorizontalStackPanel CreateHorizontalStackPanel()
