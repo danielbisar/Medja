@@ -29,6 +29,14 @@ bin/                # csharp projects bin folder
 obj/                # csharp projects obj folder
 out/                # custom build folder (f.e. for cmake)
 
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+bld/
+
 # autosave/backup files
 *.autosave          # autosave files created by some IDEs
 *.bak               # backup files often created by linux tools
@@ -151,13 +159,3 @@ fabric.properties
 
 
 
-
-[Dd]ebug/
-[Dd]ebugPublic/
-[Rr]elease/
-[Rr]eleases/
-x64/
-x86/
-bld/
-[Bb]in/
-[Oo]bj/
