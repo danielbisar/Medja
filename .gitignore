@@ -36,6 +36,8 @@ out/                # custom build folder (f.e. for cmake)
 x64/
 x86/
 bld/
+[Bb]in/
+[Oo]bj/
 
 # autosave/backup files
 *.autosave          # autosave files created by some IDEs
