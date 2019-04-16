@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="RIDER_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$USER_HOME$/.nuget/packages/skiasharp/1.68.0/runtimes/osx/native/libSkiaSharp.dylib" />
+    <content url="file://$USER_HOME$/.nuget/packages/skiasharp/1.68.0/runtimes/win-x64/native/libSkiaSharp.dll" />
+    <content url="file://$USER_HOME$/.nuget/packages/skiasharp/1.68.0/runtimes/win-x86/native/libSkiaSharp.dll" />
+    <content url="file://$MODULE_DIR$/../../../Medja" />
+    <content url="file://$MODULE_DIR$/../../../Medja.OpenTk" />
+    <content url="file://$MODULE_DIR$/../../../Medja.Utils" />
+    <content url="file://$MODULE_DIR$/../.." />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
