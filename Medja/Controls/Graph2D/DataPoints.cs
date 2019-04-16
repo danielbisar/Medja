@@ -67,13 +67,15 @@ namespace Medja.Controls
         /// <returns>The points relevant for rendering.</returns>
         public virtual List<Point> GetForRendering(DataPointsRenderingSettings settings)
         {
+            
+            
             // very naive implementation
             var result = _points.Where(p => p.X >= settings.MinX
                                       && p.X <= settings.MaxX
                                       && p.Y >= settings.MinY
                                       && p.Y <= settings.MaxY).ToList();
             
-            if(result.Distinct(p => p.X).Count() > settings.PixelWidth)
+            if(result.Distinct(p => p.X).Count() > settings.WidthPixels)
                 // reduce 
         }
     }

@@ -27,11 +27,13 @@ namespace Medja.Controls
         /// <summary>
         /// The pixel count available for rendering on the X axis.
         /// </summary>
-        public int PixelWidth { get; set; }
+        public int WidthPixels { get; set; }
         
         /// <summary>
         /// The pixel count available for rendering on the Y axis.
         /// </summary>
-        public int PixelHeight { get; set; }
+        public int HeightPixels { get; set; }
+        
+        
     }
 }
