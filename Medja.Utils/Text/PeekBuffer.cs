@@ -9,8 +9,6 @@ namespace Medja.Utils.Text
         private readonly StringBuilder _buffer;
         private int _pos;
 
-        // todo check with stack performance
-
         public bool HasMore
         {
             get { return _pos < _buffer.Length; }
@@ -52,7 +50,7 @@ namespace Medja.Utils.Text
 
             var sb = new StringBuilder(length);
             var pos = _pos;
-            var end = System.Math.Min(_pos + length, sb.Length);
+            var end = System.Math.Min(_pos + length, _buffer.Length);
 
             for (; pos < end; pos++)
                 sb.Append(_buffer[pos]);
@@ -64,7 +62,7 @@ namespace Medja.Utils.Text
         {
             return
             "\nPeekBuffer: " + _buffer.ToString() + "\n" +
-            "            " + (_pos < 1 ? "" : new string(' ', _pos - 1)) + "^\n" +
+            "            " + (_pos < 1 ? "" : new string(' ', _pos)) + "^\n" +
             "_pos = " + _pos;
         }
     }

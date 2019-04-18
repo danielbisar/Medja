@@ -57,5 +57,18 @@ namespace Medja.Utils.Test.Text
             buffer.ReadChar();
             Assert.False(buffer.HasMore);
         }
+
+        [Fact]
+        public void PeekMaxTest()
+        {
+            var buffer = new PeekBuffer();
+            buffer.Add("abcdef");
+
+            Assert.Equal("ab", buffer.PeekMax(2));
+            Assert.Equal("ab", buffer.PeekMax(2));
+            Assert.Equal('a', buffer.ReadChar());
+            Assert.Equal('b', buffer.ReadChar());
+            Assert.Equal("cdef", buffer.PeekMax(6));
+        }
     }
 }

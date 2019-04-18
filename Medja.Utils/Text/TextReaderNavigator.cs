@@ -73,6 +73,14 @@ namespace Medja.Utils.Text
             return (char)_textReader.Read();
         }
 
+        public void Skip(int count)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                ReadChar();
+            }
+        }
+
         /// <summary>
         /// Skips exactly the given string or throws an exception.
         /// </summary>
@@ -89,6 +97,8 @@ namespace Medja.Utils.Text
                 if (str[i] != peeked[i])
                     return false;
             }
+
+            Skip(str.Length);
 
             return true;
         }
