@@ -1,7 +1,6 @@
 using System;
 using System.IO;
 using System.Text;
-using Math = System.Math;
 
 namespace Medja.Utils.Text
 {
@@ -28,6 +27,11 @@ namespace Medja.Utils.Text
             _buffer.Append(c);
         }
 
+        public void Add(string s)
+        {
+            _buffer.Append(s);
+        }
+
         public char ReadChar()
         {
             if (!HasMore)
@@ -36,19 +40,32 @@ namespace Medja.Utils.Text
             return _buffer[_pos++];
         }
 
+        public char PeekChar()
+        {
+            return _buffer[_pos];
+        }
+
         public string PeekMax(int length)
         {
-            if(length < 1)
+            if (length < 1)
                 throw new ArgumentOutOfRangeException(nameof(length), "Must be >= 1");
 
             var sb = new StringBuilder(length);
             var pos = _pos;
-            var end = Math.Min(_pos + length, sb.Length);
+            var end = System.Math.Min(_pos + length, sb.Length);
 
-            for(;pos < end; pos++)
+            for (; pos < end; pos++)
                 sb.Append(_buffer[pos]);
 
             return sb.ToString();
+        }
+
+        public override string ToString()
+        {
+            return
+            "\nPeekBuffer: " + _buffer.ToString() + "\n" +
+            "            " + (_pos < 1 ? "" : new string(' ', _pos - 1)) + "^\n" +
+            "_pos = " + _pos;
         }
     }
 }
