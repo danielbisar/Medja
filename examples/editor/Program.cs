@@ -1,25 +1,36 @@
 ﻿using System;
+using Medja;
+using Medja.Controls;
+using Medja.OpenTk;
+using Medja.OpenTk.Rendering;
+using Medja.Primitives;
+using Medja.Theming;
 
-namespace editor
+namespace Medja.examples.Editor
 {
     class Program
     {
         static void Main(string[] args)
         {
-            var library = new MedjaOpenTkLibrary(new TestAppTheme());
+            var library = new MedjaOpenTkLibrary(new Medja.OpenTk.Themes.DarkBlue.DarkBlueTheme());
             library.RendererFactory = CreateRenderer;
 
             var controlFactory = library.ControlFactory;
             var application = MedjaApplication.Create(library);
 
-            _window = application.CreateWindow();
-            _window.CenterOnScreen(800, 600);
-            _window.Background = Colors.Black;
-            _window.Content = test.Create();
-            _window.Title = "Editor";
+            var window = application.CreateWindow();
+            window.CenterOnScreen(800, 600);
+            window.Background = Colors.Black;
+            window.Content = CreateWindowContent(controlFactory);
+            window.Title = "Editor";
 
-            application.MainWindow = _window;
+            application.MainWindow = window;
             application.Run();
+        }
+
+        private static Control CreateWindowContent(IControlFactory controlFactory)
+        {
+            return controlFactory.Create<TextBox>();
         }
 
         private static IRenderer CreateRenderer()
