@@ -2,9 +2,9 @@ using Medja.Controls;
 using Medja.Primitives;
 using Medja.Theming;
 
-namespace Medja.Demo
+namespace Medja.OpenTk.Themes.DarkBlue
 {
-    public class DemoTheme : ControlFactory
+    public class DarkBlueTheme : ControlFactory
     {
         protected override Button CreateButton()
         {
