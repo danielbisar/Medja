@@ -5,7 +5,7 @@ using System;
 
 namespace Medja.Utils.Test.Text
 {
-    public class TextReaderNavigatorText
+    public class TextReaderNavigatorTest
     {
         [Fact]
         public void CanReadChar()
@@ -39,20 +39,20 @@ namespace Medja.Utils.Test.Text
 
             Assert.Throws<EndOfStreamException>(() => reader.PeekChar());
         }
-        
+
         // WORK IN PROGRESS
-//        [Fact]
-//        public void CanSkipExpected()
-//        {
-//            var reader = new TextReaderNavigator("a b c");
-//            reader.SkipExpected("a ");
-//            reader.SkipExpected("b");
-//            Assert.Equal(' ', reader.ReadChar());
-//            Assert.False(reader.SkipExpected("d"));
-//            Assert.Equal('c', reader.ReadChar());
-//            Assert.False(reader.HasMore);
-//            Assert.False(reader.SkipExpected("d"));
-//        }
+        //        [Fact]
+        //        public void CanSkipExpected()
+        //        {
+        //            var reader = new TextReaderNavigator("a b c");
+        //            reader.SkipExpected("a ");
+        //            reader.SkipExpected("b");
+        //            Assert.Equal(' ', reader.ReadChar());
+        //            Assert.False(reader.SkipExpected("d"));
+        //            Assert.Equal('c', reader.ReadChar());
+        //            Assert.False(reader.HasMore);
+        //            Assert.False(reader.SkipExpected("d"));
+        //        }
 
         [Fact]
         public void CanSkipLongerExpectedThanString()
@@ -70,17 +70,17 @@ namespace Medja.Utils.Test.Text
             Assert.Equal('b', reader.ReadChar());
         }
 
-//        [Fact]
-//        public void CanPeekMax()
-//        {
-            // WORK IN PROGRESS
-//            var reader = new TextReaderNavigator("abcdefg");
-//
-//            Assert.Equal("abcd", reader.PeekMax(4));
-//            Assert.Equal('a', reader.ReadChar());
-//            Assert.Equal("bcdefg", reader.PeekMax(10));
-//            Assert.Equal('b', reader.ReadChar());
-//            Assert.True(reader.HasMore);
-//        }
+        //        [Fact]
+        //        public void CanPeekMax()
+        //        {
+        // WORK IN PROGRESS
+        //            var reader = new TextReaderNavigator("abcdefg");
+        //
+        //            Assert.Equal("abcd", reader.PeekMax(4));
+        //            Assert.Equal('a', reader.ReadChar());
+        //            Assert.Equal("bcdefg", reader.PeekMax(10));
+        //            Assert.Equal('b', reader.ReadChar());
+        //            Assert.True(reader.HasMore);
+        //        }
     }
 }
