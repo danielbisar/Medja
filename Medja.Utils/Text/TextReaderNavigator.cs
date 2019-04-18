@@ -102,5 +102,33 @@ namespace Medja.Utils.Text
 
             return true;
         }
+
+
+        public bool IsAtNewLine()
+        {
+            if (!HasMore)
+                return false;
+
+            return IsNewLine(PeekChar());
+        }
+
+        public static bool IsNewLine(char c)
+        {
+            return c == '\n' || c == '\r';
+        }
+
+	public void SkipLine()
+	{
+	    while(HasMore && !IsNewLine(PeekChar()))
+	    {
+		ReadChar();
+	    }
+
+	    ReadChar(); // skip the first newline char
+
+            // if \r\n, we skipped \r
+	    if(HasMore && PeekChar() == '\n')
+                ReadChar();
+	}
     }
 }
