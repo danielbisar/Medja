@@ -37,6 +37,7 @@ namespace Medja.Test.Controls
                 Assert.Equal(i.ToString(), result);
             }
         }
+
         [Fact]
         public void TranslatesFile()
         {

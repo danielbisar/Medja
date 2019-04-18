@@ -81,5 +81,31 @@ namespace Medja.Utils.Test.Text
             Assert.Equal('b', reader.ReadChar());
             Assert.True(reader.HasMore);
         }
+
+        [Fact]
+        public void IsAtNewLineTest()
+        {
+            var reader = new TextReaderNavigator("abc\ndef");
+            reader.SkipExpected("abc");
+
+            Assert.True(reader.IsAtNewLine());
+            reader.ReadChar();
+            Assert.False(reader.IsAtNewLine());
+        }
+
+	[Fact]
+	public void SkipLineTest()
+	{
+	    var reader = new TextReaderNavigator("abc\ndef\r\nghi\r");
+
+	    reader.SkipLine();
+	    Assert.Equal('d', reader.PeekChar());
+
+	    reader.SkipLine();
+            Assert.Equal('g', reader.PeekChar());
+
+            reader.SkipLine();
+            Assert.False(reader.HasMore);
+	}
     }
 }
