@@ -18,7 +18,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
             result.Padding.SetLeftAndRight(0);
 
             result.Renderer = new ButtonRenderer(result);
-            
+
             return result;
         }
 
@@ -29,7 +29,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
             result.TextColor = DemoThemeValues.PrimaryTextColor;
             result.Position.Height = 19;
             result.Padding.Left = 27;
-            
+
             result.Renderer = new CheckBoxRenderer(result);
 
             return result;
@@ -43,18 +43,26 @@ namespace Medja.OpenTk.Themes.DarkBlue
             return result;
         }
 
+        protected override MedjaWindow CreateMedjaWindow()
+        {
+            var result = new OpenTkWindow();
+            result.Background = Color.FromHexStr("#FFFFFF");
+
+            return result;
+        }
+
         protected override ProgressBar CreateProgressBar()
         {
             var result = base.CreateProgressBar();
             result.Background = DemoThemeValues.ControlBackground;
             result.Foreground = DemoThemeValues.PrimaryColor;
             result.Position.Height = 25;
-            
+
             result.Renderer = new ProgressBarRenderer(result);
 
             return result;
         }
-        
+
         protected override Slider CreateSlider()
         {
             var result = base.CreateSlider();
@@ -73,7 +81,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
             result.Position.Height = 37;
             result.Padding.Top = 9;
             result.Padding.SetLeftAndRight(10);
-            
+
             result.Renderer = new TextBoxRenderer(result);
 
             return result;
@@ -85,9 +93,9 @@ namespace Medja.OpenTk.Themes.DarkBlue
             result.Background = Colors.White;
             result.TextColor = Colors.Black;
             result.Padding.SetAll(5);
-            
+
             result.Renderer = new TextBlockRenderer(result);
-            
+
             return result;
         }
 
