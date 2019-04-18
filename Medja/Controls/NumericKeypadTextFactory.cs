@@ -36,34 +36,34 @@ namespace Medja.Controls
 
             var navigator = new TextReaderNavigator(layout);
 
-//            while (navigator.HasMore)
-//            {
-//                var c = navigator.ReadChar();
-//                var translatedC = Translate(c);
-//
-//                subList.Add(translatedC);
-//
-//                if (navigator.HasMore)
-//                {
-//                    if (navigator.IsAtNewLine())
-//                    {
-//                        navigator.SkipLine();
-//
-//                        if (navigator.HasMore)
-//                        {
-//                            subList = new List<string>();
-//                            resultList.Add(subList);
-//                        }
-//                    }
-//                    else
-//                    {
-//                        var sc = navigator.ReadChar();
-//                        
-//                        if(sc != ' ')
-//                            throw new Exception("Expected space.");
-//                    }
-//                }
-//            }
+            while (navigator.HasMore)
+            {
+                var c = navigator.ReadChar();
+                var translatedC = Translate(c);
+
+                subList.Add(translatedC);
+
+                if (navigator.HasMore)
+                {
+                    if (navigator.IsAtNewLine())
+                    {
+                        navigator.SkipLine();
+
+                        if (navigator.HasMore)
+                        {
+                            subList = new List<string>();
+                            resultList.Add(subList);
+                        }
+                    }
+                    else
+                    {
+                        var sc = navigator.ReadChar();
+
+                        if (sc != ' ')
+                            throw new Exception("Expected space.");
+                    }
+                }
+            }
 
             return resultList;
         }

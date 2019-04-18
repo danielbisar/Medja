@@ -37,27 +37,25 @@ namespace Medja.Test.Controls
                 Assert.Equal(i.ToString(), result);
             }
         }
+        [Fact]
+        public void TranslatesFile()
+        {
+            var layout =
+@"7 8 9 c
+4 5 6 b
+1 2 3 -
+- 0 -";
 
-        // WORK IN PROGRESS
-//        [Fact]
-//        public void TranslatesFile()
-//        {
-//            var layout =
-//@"7 8 9 c
-//4 5 6 b
-//1 2 3 -
-//- 0 -";
-//
-//            var result = new NumericKeypadTextFactory().Translate(layout);
-//
-//            MedjaAssert.Equal(result, new string[][]
-//            {
-//                new []{ "7", "8", "9", Globalization.Clear},
-//                new []{ "4", "5", "6", Globalization.Back},
-//                new []{ "1", "2", "3", ""},
-//                new []{ "", "0", ""}
-//            });
-//        }
+            var result = new NumericKeypadTextFactory().Translate(layout);
+
+            MedjaAssert.Equal(result, new string[][]
+            {
+                new []{ "7", "8", "9", Globalization.Clear},
+                new []{ "4", "5", "6", Globalization.Back},
+                new []{ "1", "2", "3", ""},
+                new []{ "", "0", ""}
+            });
+        }
     }
 }
 
