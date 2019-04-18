@@ -103,7 +103,6 @@ namespace Medja.Utils.Text
             return true;
         }
 
-
         public bool IsAtNewLine()
         {
             if (!HasMore)
@@ -117,18 +116,18 @@ namespace Medja.Utils.Text
             return c == '\n' || c == '\r';
         }
 
-	public void SkipLine()
-	{
-	    while(HasMore && !IsNewLine(PeekChar()))
-	    {
-		ReadChar();
-	    }
+        public void SkipLine()
+        {
+            while (HasMore && !IsNewLine(PeekChar()))
+            {
+                ReadChar();
+            }
 
-	    ReadChar(); // skip the first newline char
+            ReadChar(); // skip the first newline char
 
             // if \r\n, we skipped \r
-	    if(HasMore && PeekChar() == '\n')
+            if (HasMore && PeekChar() == '\n')
                 ReadChar();
-	}
+        }
     }
 }
