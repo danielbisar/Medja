@@ -1,8 +1,8 @@
-using System;
 using Medja.Controls;
+using Medja.OpenTk.Rendering;
 using SkiaSharp;
 
-namespace Medja.OpenTk.Rendering
+namespace Medja.OpenTk.Themes.BlackRed
 {
     public class SliderRenderer : SkiaControlRendererBase<Slider>
     {

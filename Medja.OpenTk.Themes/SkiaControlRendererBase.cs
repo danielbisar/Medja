@@ -1,9 +1,10 @@
-﻿using Medja.Controls;
+using Medja.Controls;
+using Medja.OpenTk.Rendering;
+using Medja.Primitives;
 using Medja.Theming;
 using SkiaSharp;
-using Medja.Primitives;
 
-namespace Medja.OpenTk.Rendering
+namespace Medja.OpenTk.Themes
 {
 	/// <summary>
 	/// Skia control renderer base.

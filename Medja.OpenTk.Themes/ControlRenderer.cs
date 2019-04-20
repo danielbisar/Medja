@@ -1,6 +1,7 @@
-﻿using Medja.Controls;
+using Medja.Controls;
+using Medja.OpenTk.Themes.BlackRed;
 
-namespace Medja.OpenTk.Rendering
+namespace Medja.OpenTk.Themes
 {
 	public class ControlRenderer : SkiaControlRendererBase<Control>
 	{

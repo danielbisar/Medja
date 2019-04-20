@@ -1,9 +1,10 @@
 ﻿using Medja.Controls;
+using Medja.OpenTk.Themes.BlackRed;
 using Medja.Theming;
 
-namespace Medja.OpenTk.Rendering
+namespace Medja.OpenTk.Themes
 {
-    public class OpenTkTheme : ControlFactory
+    public class BlackRedTheme : ControlFactory
     {
         protected override Button CreateButton()
         {

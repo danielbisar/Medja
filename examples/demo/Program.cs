@@ -2,7 +2,6 @@
 using Medja.OpenTk;
 using Medja.OpenTk.Rendering;
 using Medja.Primitives;
-using Medja.OpenTk.Themes;
 using Medja.OpenTk.Themes.DarkBlue;
 
 namespace Medja.Demo

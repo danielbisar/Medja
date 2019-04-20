@@ -4,7 +4,7 @@ using Medja.Controls;
 using Medja.Utils;
 using SkiaSharp;
 
-namespace Medja.OpenTk.Rendering
+namespace Medja.OpenTk.Themes.BlackRed
 {
     public class Graph2DRenderer : SkiaControlRendererBase<Graph2D>
     {

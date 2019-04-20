@@ -1,8 +1,8 @@
 using Medja.Controls;
 using Medja.Primitives;
 using Medja.Theming;
-using SkiaSharp;
 using OpenTK.Graphics.OpenGL;
+using SkiaSharp;
 
 namespace Medja.OpenTk.Rendering
 {

@@ -93,6 +93,7 @@
         <e p="TextBlock.cs" t="Include" />
         <e p="TextBox.cs" t="Include" />
         <e p="TextControl.cs" t="Include" />
+        <e p="TextEditor.cs" t="Include" />
         <e p="TouchButtonClickedEventArgs.cs" t="Include" />
         <e p="TouchButtonList.cs" t="Include" />
         <e p="VerticalScrollBar.cs" t="Include" />
@@ -180,23 +181,8 @@
         <e p="OpenGLProgram.cs" t="Include" />
         <e p="OpenGLShader.cs" t="Include" />
         <e p="OpenGLState.cs" t="Include" />
+        <e p="OpenTKControlRendererBase.cs" t="Include" />
         <e p="OpenTkRenderer.cs" t="Include" />
-        <e p="OpenTkTheme.cs" t="Include" />
-        <e p="Renderer" t="Include">
-          <e p="ButtonRenderer.cs" t="Include" />
-          <e p="CheckBoxRenderer.cs" t="Include" />
-          <e p="ControlRenderer.cs" t="Include" />
-          <e p="Graph2DRenderer.cs" t="Include" />
-          <e p="ImageRenderer.cs" t="Include" />
-          <e p="OpenTKControlRendererBase.cs" t="Include" />
-          <e p="ProgressBarRenderer.cs" t="Include" />
-          <e p="SkiaControlRendererBase.cs" t="Include" />
-          <e p="SliderRenderer.cs" t="Include" />
-          <e p="TabControlRenderer.cs" t="Include" />
-          <e p="TextBlockRenderer.cs" t="Include" />
-          <e p="TextBoxRenderer.cs" t="Include" />
-          <e p="VerticalScrollBarRenderer.cs" t="Include" />
-        </e>
         <e p="SkiaExtensions.cs" t="Include" />
         <e p="SkiaGLLayer.cs" t="Include" />
         <e p="VertexBufferObject.cs" t="Include" />
@@ -215,6 +201,48 @@
         <e p="Debug" t="Include">
           <e p="net472" t="Include">
             <e p="Medja.OpenTk.AssemblyInfo.cs" t="Include" />
+          </e>
+        </e>
+      </e>
+      <e p="x64" t="Include" />
+      <e p="x86" t="Include" />
+    </e>
+    <e p="$PROJECT_DIR$/../Medja.OpenTk.Themes" t="IncludeRecursive">
+      <e p="BlackRed" t="Include">
+        <e p="BlackRedTheme.cs" t="Include" />
+        <e p="ButtonRenderer.cs" t="Include" />
+        <e p="CheckBoxRenderer.cs" t="Include" />
+        <e p="ColorMap.cs" t="Include" />
+        <e p="Graph2DRenderer.cs" t="Include" />
+        <e p="ImageRenderer.cs" t="Include" />
+        <e p="ProgressBarRenderer.cs" t="Include" />
+        <e p="SliderRenderer.cs" t="Include" />
+        <e p="TabControlRenderer.cs" t="Include" />
+        <e p="TextBlockRenderer.cs" t="Include" />
+        <e p="TextBoxRenderer.cs" t="Include" />
+        <e p="VerticalScrollBarRenderer.cs" t="Include" />
+      </e>
+      <e p="ControlRenderer.cs" t="Include" />
+      <e p="DarkBlue" t="Include">
+        <e p="ButtonRenderer.cs" t="Include" />
+        <e p="CheckBoxRenderer.cs" t="Include" />
+        <e p="ControlRenderer.cs" t="Include" />
+        <e p="DarkBlueTheme.cs" t="Include" />
+        <e p="DemoThemeValues.cs" t="Include" />
+        <e p="ProgressBarRenderer.cs" t="Include" />
+        <e p="SliderRenderer.cs" t="Include" />
+        <e p="TextBlockRenderer.cs" t="Include" />
+        <e p="TextBoxRenderer.cs" t="Include" />
+        <e p="TextControlRendererBase.cs" t="Include" />
+        <e p="TextEditorRenderer.cs" t="Include" />
+      </e>
+      <e p="Medja.OpenTk.Themes.csproj" t="IncludeRecursive" />
+      <e p="SkiaControlRendererBase.cs" t="Include" />
+      <e p="bin" t="ExcludeRecursive" />
+      <e p="obj" t="ExcludeRecursive">
+        <e p="Debug" t="Include">
+          <e p="net472" t="Include">
+            <e p="Medja.OpenTk.Themes.AssemblyInfo.cs" t="Include" />
           </e>
         </e>
       </e>
@@ -297,18 +325,6 @@
     <e p="$PROJECT_DIR$" t="IncludeFlat">
       <e p="demo" t="IncludeRecursive">
         <e p="Program.cs" t="Include" />
-        <e p="Theme" t="Include">
-          <e p="ButtonRenderer.cs" t="Include" />
-          <e p="CheckBoxRenderer.cs" t="Include" />
-          <e p="ControlRenderer.cs" t="Include" />
-          <e p="DemoTheme.cs" t="Include" />
-          <e p="DemoThemeValues.cs" t="Include" />
-          <e p="ProgressBarRenderer.cs" t="Include" />
-          <e p="SliderRenderer.cs" t="Include" />
-          <e p="TextBlockRenderer.cs" t="Include" />
-          <e p="TextBoxRenderer.cs" t="Include" />
-          <e p="TextControlRendererBase.cs" t="Include" />
-        </e>
         <e p="bin" t="ExcludeRecursive" />
         <e p="demo.csproj" t="IncludeRecursive" />
         <e p="obj" t="ExcludeRecursive">
@@ -319,12 +335,69 @@
           </e>
         </e>
       </e>
+      <e p="editor" t="IncludeRecursive">
+        <e p="Program.cs" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="editor.csproj" t="IncludeRecursive" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="net472" t="Include">
+              <e p="editor.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+      </e>
       <e p="examples" t="Include" />
       <e p="examples.sln" t="IncludeFlat" />
       <e p="libs" t="Include" />
       <e p="packages" t="ExcludeRecursive" />
       <e p="ui_tests" t="IncludeRecursive">
+        <e p="Images" t="Include">
+          <e p="button.png" t="Include" />
+          <e p="button_hover.png" t="Include" />
+          <e p="button_press.png" t="Include" />
+        </e>
+        <e p="OpenGlTestControl.cs" t="Include" />
+        <e p="OpenGlTestControlRenderer.cs" t="Include" />
+        <e p="Program.cs" t="Include" />
+        <e p="TestAppTheme.cs" t="Include" />
+        <e p="Tests" t="Include">
+          <e p="ButtonTest.cs" t="Include" />
+          <e p="ComboBoxTest.cs" t="Include" />
+          <e p="ContentControlTest.cs" t="Include" />
+          <e p="Control3DTest.cs" t="Include" />
+          <e p="DialogTest.cs" t="Include" />
+          <e p="DockPanelTest.cs" t="Include" />
+          <e p="ImageButtonTest.cs" t="Include" />
+          <e p="MultithreadingTest.cs" t="Include" />
+          <e p="NumericKeypadTest.cs" t="Include" />
+          <e p="Performance" t="Include">
+            <e p="BytesToInt32PerfTest.cs" t="Include" />
+            <e p="Graph2DTest.cs" t="Include" />
+            <e p="SequentialFileNamePerfTest.cs" t="Include" />
+          </e>
+          <e p="ScrollableContainerTest.cs" t="Include" />
+          <e p="ScrollingGridTest.cs" t="Include" />
+          <e p="SideControlsContainerTest.cs" t="Include" />
+          <e p="SimpleDockPanelTest.cs" t="Include" />
+          <e p="SliderTest.cs" t="Include" />
+          <e p="TabControlTest.cs" t="Include" />
+          <e p="TextBoxTest.cs" t="Include" />
+          <e p="TouchButtonListTest.cs" t="Include" />
+          <e p="VerticalStackPanelTest.cs" t="Include" />
+          <e p="VisibilityTest.cs" t="Include" />
+        </e>
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="net472" t="Include">
+              <e p="ui_tests.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
         <e p="ui_tests.csproj" t="IncludeRecursive" />
+        <e p="x64" t="Include" />
+        <e p="x86" t="Include" />
       </e>
     </e>
   </component>

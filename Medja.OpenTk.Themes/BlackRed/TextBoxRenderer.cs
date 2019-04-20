@@ -1,9 +1,10 @@
-﻿using Medja.Controls;
-using SkiaSharp;
 using System.Diagnostics;
+using Medja.Controls;
+using Medja.OpenTk.Rendering;
 using Medja.Primitives;
+using SkiaSharp;
 
-namespace Medja.OpenTk.Rendering
+namespace Medja.OpenTk.Themes.BlackRed
 {
 	public class TextBoxRenderer : SkiaControlRendererBase<TextBox>
 	{

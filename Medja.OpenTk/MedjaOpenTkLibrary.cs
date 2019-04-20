@@ -39,9 +39,9 @@ namespace Medja.OpenTk
         /// <value>The renderer factory.</value>
         public Func<IRenderer> RendererFactory { get; set; }
 
-        public MedjaOpenTkLibrary(IControlFactory factory = null)
+        public MedjaOpenTkLibrary(IControlFactory factory)
         {
-            ControlFactory = factory ?? new OpenTkTheme();
+            ControlFactory = factory;
             RendererFactory = () => new OpenTkRenderer();
             _focusManager = FocusManager.Default;
             _controls = new List<Control>();

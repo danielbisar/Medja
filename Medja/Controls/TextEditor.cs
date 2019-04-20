@@ -3,6 +3,7 @@ using System.Text;
 
 namespace Medja.Controls
 {
+    // todo refactor theoretical base class: textcontrol
     public class TextEditor : Control
     {
         // maybe we will use another class instead of string later on
@@ -10,11 +11,12 @@ namespace Medja.Controls
         // are read only this copies the whole line and adds the char
         // at the given position...
 
-        public List<string> Lines { get; } 
+        public List<string> Lines { get; }
 
         public TextEditor()
         {
             Lines = new List<string>();
+            Lines.Add("");
         }
 
         ///<summary>Replaces the complete text (content) of the Editor.</summary>
