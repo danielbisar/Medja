@@ -30,7 +30,7 @@ namespace Medja.examples.Editor
 
         private static Control CreateWindowContent(IControlFactory controlFactory)
         {
-            return controlFactory.Create<TextBox>();
+            return controlFactory.Create<TextEditor>();
         }
 
         private static IRenderer CreateRenderer()

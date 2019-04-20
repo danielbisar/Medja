@@ -99,6 +99,18 @@ namespace Medja.OpenTk.Themes.DarkBlue
             return result;
         }
 
+        protected override TextEditor CreateTextEditor()
+        {
+            var result = base.CreateTextEditor();
+            result.Background = DemoThemeValues.ControlBackground;
+            //result.
+            //result.padding
+            
+            result.Renderer = new TextEditorRenderer(result);
+
+            return result;
+        }
+
         protected override VerticalStackPanel CreateVerticalStackPanel()
         {
             var result = base.CreateVerticalStackPanel();

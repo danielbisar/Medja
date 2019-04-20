@@ -1,8 +1,8 @@
-﻿using Medja.OpenTk.Rendering;
+﻿using Medja.OpenTk.Themes;
 
 namespace MedjaOpenGlTestApp
 {
-	public class TestAppTheme : OpenTkTheme
+	public class TestAppTheme : BlackRedTheme
 	{
 		public TestAppTheme()
 		{

@@ -25,6 +25,15 @@ namespace Medja.Test.Controls
             
             editor.SetText("bc");
             MedjaAssert.Equal(editor.Lines, "bc");
-        } 
+        }
+
+        [Fact]
+        public void HasOneLineAfterCreation()
+        {
+            var editor = CreateEditor();
+            
+            // ReSharper disable once xUnit2013
+            Assert.Equal(1, editor.Lines.Count);
+        }
     }
 }
