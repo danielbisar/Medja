@@ -3,7 +3,7 @@ using Medja.Controls;
 using Medja.OpenTk.Rendering;
 using SkiaSharp;
 
-namespace Medja.Demo
+namespace Medja.OpenTk.Themes.DarkBlue
 {
     public abstract class TextControlRendererBase<T> : SkiaControlRendererBase<T> 
         where T : TextControl

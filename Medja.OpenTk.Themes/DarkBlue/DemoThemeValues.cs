@@ -1,7 +1,7 @@
 using Medja.Primitives;
 using SkiaSharp;
 
-namespace Medja.Demo
+namespace Medja.OpenTk.Themes.DarkBlue
 {
     public static class DemoThemeValues
     {

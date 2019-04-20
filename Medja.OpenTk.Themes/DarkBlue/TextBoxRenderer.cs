@@ -4,7 +4,7 @@ using Medja.Controls;
 using Medja.OpenTk.Rendering;
 using SkiaSharp;
 
-namespace Medja.Demo
+namespace Medja.OpenTk.Themes.DarkBlue
 {
     public class TextBoxRenderer : TextControlRendererBase<TextBox>
     {
