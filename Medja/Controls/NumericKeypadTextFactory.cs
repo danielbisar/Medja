@@ -43,23 +43,26 @@ namespace Medja.Controls
 
                 subList.Add(translatedC);
 
-                // if (navigator.HasMore)
-                // {
-                //     if (navigator.IsAtNewLine())
-                //     {
-                //         navigator.SkipLine();
+                if (navigator.HasMore)
+                {
+                    if (navigator.IsAtNewLine())
+                    {
+                        navigator.SkipLine();
 
-                //         if (navigator.HasMore)
-                //         {
-                //             subList = new List<string>();
-                //             resultList.Add(subList);
-                //         }
-                //     }
-                //     else
-                //     {
-                //         navigator.SkipExpected(" ");
-                //     }
-                // }
+                        if (navigator.HasMore)
+                        {
+                            subList = new List<string>();
+                            resultList.Add(subList);
+                        }
+                    }
+                    else
+                    {
+                        var sc = navigator.ReadChar();
+
+                        if (sc != ' ')
+                            throw new Exception("Expected space.");
+                    }
+                }
             }
 
             return resultList;

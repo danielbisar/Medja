@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+      <ProjectReference Include="..\Medja.OpenTk\Medja.OpenTk.csproj" />
+      <!-- <ProjectReference Include="..\Medja.Utils\Medja.Utils.csproj" /> -->
+      <ProjectReference Include="..\Medja\Medja.csproj" />
+    </ItemGroup>
+
+</Project>
