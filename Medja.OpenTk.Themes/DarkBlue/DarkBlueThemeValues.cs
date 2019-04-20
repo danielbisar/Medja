@@ -3,7 +3,7 @@ using SkiaSharp;
 
 namespace Medja.OpenTk.Themes.DarkBlue
 {
-    public static class DemoThemeValues
+    public static class DarkBlueThemeValues
     {
         public static Color Background = Colors.LightGray;
         

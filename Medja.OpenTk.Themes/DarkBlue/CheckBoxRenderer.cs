@@ -17,22 +17,22 @@ namespace Medja.OpenTk.Themes.DarkBlue
         {
             _defaultBackgroundPaint = CreatePaint();
             _defaultBackgroundPaint.Color = control.Background.ToSKColor();
-            _defaultBackgroundPaint.ImageFilter = DemoThemeValues.DropShadow;
+            _defaultBackgroundPaint.ImageFilter = DarkBlueThemeValues.DropShadow;
             
             _disabledUncheckedBackgroundPaint = CreatePaint();
             _disabledUncheckedBackgroundPaint.Color = control.Background.GetDisabled().ToSKColor();
-            _disabledUncheckedBackgroundPaint.ImageFilter = DemoThemeValues.DropShadowDisabled;
+            _disabledUncheckedBackgroundPaint.ImageFilter = DarkBlueThemeValues.DropShadowDisabled;
 
             _checkedBackgroundPaint = CreatePaint();
-            _checkedBackgroundPaint.Color = DemoThemeValues.PrimaryColor.ToSKColor(); // todo control.F.ToSKColor();
-            _checkedBackgroundPaint.ImageFilter = DemoThemeValues.DropShadow;
+            _checkedBackgroundPaint.Color = DarkBlueThemeValues.PrimaryColor.ToSKColor(); // todo control.F.ToSKColor();
+            _checkedBackgroundPaint.ImageFilter = DarkBlueThemeValues.DropShadow;
             
             _disabledCheckedBackgroundPaint = CreatePaint();
-            _disabledCheckedBackgroundPaint.Color = DemoThemeValues.PrimaryColor.ToSKColor(); // todo control.F.ToSKColor();
-            _disabledCheckedBackgroundPaint.ImageFilter = DemoThemeValues.DropShadowDisabled;
+            _disabledCheckedBackgroundPaint.Color = DarkBlueThemeValues.PrimaryColor.ToSKColor(); // todo control.F.ToSKColor();
+            _disabledCheckedBackgroundPaint.ImageFilter = DarkBlueThemeValues.DropShadowDisabled;
 
             _checkMarkPaint = CreatePaint();
-            _checkMarkPaint.Color = DemoThemeValues.PrimaryTextColor.ToSKColor();
+            _checkMarkPaint.Color = DarkBlueThemeValues.PrimaryTextColor.ToSKColor();
             _checkMarkPaint.IsStroke = true;
             _checkMarkPaint.StrokeWidth = 2;
 

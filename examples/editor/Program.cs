@@ -30,7 +30,15 @@ namespace Medja.examples.Editor
 
         private static Control CreateWindowContent(IControlFactory controlFactory)
         {
-            return controlFactory.Create<TextEditor>();
+            // todo menu
+            
+            var editor = controlFactory.Create<TextEditor>();
+            editor.SetText("Bla bla lorem ypsulakjds löasdjfasf\nlkajsdflköasdfn,adsfoiuew\nasdflkjasdfkljaldf\nasdflkjasdöf");
+
+            var dockPanel = controlFactory.Create<DockPanel>();
+            dockPanel.Add(Dock.Fill, editor);
+
+            return dockPanel;
         }
 
         private static IRenderer CreateRenderer()

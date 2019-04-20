@@ -228,7 +228,7 @@
         <e p="CheckBoxRenderer.cs" t="Include" />
         <e p="ControlRenderer.cs" t="Include" />
         <e p="DarkBlueTheme.cs" t="Include" />
-        <e p="DemoThemeValues.cs" t="Include" />
+        <e p="DarkBlueThemeValues.cs" t="Include" />
         <e p="ProgressBarRenderer.cs" t="Include" />
         <e p="SliderRenderer.cs" t="Include" />
         <e p="TextBlockRenderer.cs" t="Include" />

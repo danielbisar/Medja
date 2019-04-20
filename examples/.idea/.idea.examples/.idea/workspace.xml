@@ -2,40 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b387b7f3-51ed-4be5-a0ed-84b7f0233493" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../Medja.OpenTk.Themes/BlackRed/ColorMap.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Medja.OpenTk.Themes/BlackRed/SkiaControlRendererBase.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Medja.OpenTk.Themes/DarkBlue/TextEditorRenderer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Medja.OpenTk.Themes/DarkBlue/ControlRenderer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Medja.OpenTk.Themes/DarkBlue/ControlRenderer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Medja.OpenTk.Themes/DarkBlue/ButtonRenderer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Medja.OpenTk.Themes/DarkBlue/ButtonRenderer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Medja.OpenTk.Themes/DarkBlue/CheckBoxRenderer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Medja.OpenTk.Themes/DarkBlue/CheckBoxRenderer.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Medja.OpenTk.Themes/DarkBlue/DarkBlueTheme.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Medja.OpenTk.Themes/DarkBlue/DarkBlueTheme.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Medja.OpenTk.Themes/DarkBlue/ProgressBarRenderer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Medja.OpenTk.Themes/DarkBlue/ProgressBarRenderer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Medja.OpenTk.Themes/DarkBlue/SliderRenderer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Medja.OpenTk.Themes/DarkBlue/SliderRenderer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Medja.OpenTk.Themes/DarkBlue/TextControlRendererBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Medja.OpenTk.Themes/DarkBlue/TextControlRendererBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Medja.OpenTk.Themes/Medja.OpenTk.Themes.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../Medja.OpenTk.Themes/Medja.OpenTk.Themes.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Medja.OpenTk/MedjaOpenTkLibrary.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Medja.OpenTk/MedjaOpenTkLibrary.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Medja.OpenTk/Rendering/OpenTkTheme.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Medja.OpenTk.Themes/BlackRed/BlackRedTheme.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Medja.OpenTk/Rendering/Renderer/ButtonRenderer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Medja.OpenTk.Themes/BlackRed/ButtonRenderer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Medja.OpenTk/Rendering/Renderer/CheckBoxRenderer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Medja.OpenTk.Themes/BlackRed/CheckBoxRenderer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Medja.OpenTk/Rendering/Renderer/ControlRenderer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Medja.OpenTk.Themes/ControlRenderer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Medja.OpenTk/Rendering/Renderer/Graph2DRenderer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Medja.OpenTk.Themes/BlackRed/Graph2DRenderer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Medja.OpenTk/Rendering/Renderer/ImageRenderer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Medja.OpenTk.Themes/BlackRed/ImageRenderer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Medja.OpenTk/Rendering/Renderer/OpenTKControlRendererBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Medja.OpenTk/Rendering/OpenTKControlRendererBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Medja.OpenTk/Rendering/Renderer/ProgressBarRenderer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Medja.OpenTk.Themes/BlackRed/ProgressBarRenderer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Medja.OpenTk/Rendering/Renderer/SkiaControlRendererBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Medja.OpenTk.Themes/SkiaControlRendererBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Medja.OpenTk/Rendering/Renderer/SliderRenderer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Medja.OpenTk.Themes/BlackRed/SliderRenderer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Medja.OpenTk/Rendering/Renderer/TabControlRenderer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Medja.OpenTk.Themes/BlackRed/TabControlRenderer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Medja.OpenTk/Rendering/Renderer/TextBlockRenderer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Medja.OpenTk.Themes/BlackRed/TextBlockRenderer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Medja.OpenTk/Rendering/Renderer/TextBoxRenderer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Medja.OpenTk.Themes/BlackRed/TextBoxRenderer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Medja.OpenTk/Rendering/Renderer/VerticalScrollBarRenderer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Medja.OpenTk.Themes/BlackRed/VerticalScrollBarRenderer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Medja.Test/Controls/TextEditorTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Medja.Test/Controls/TextEditorTest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Medja.sln" beforeDir="false" afterPath="$PROJECT_DIR$/../Medja.sln" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Medja.OpenTk.Themes/DarkBlue/DemoThemeValues.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Medja.OpenTk.Themes/DarkBlue/DarkBlueThemeValues.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Medja.OpenTk.Themes/DarkBlue/TextBoxRenderer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Medja.OpenTk.Themes/DarkBlue/TextBoxRenderer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Medja.OpenTk.Themes/DarkBlue/TextEditorRenderer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Medja.OpenTk.Themes/DarkBlue/TextEditorRenderer.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Medja/Controls/TextEditor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Medja/Controls/TextEditor.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.examples/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.examples/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.examples/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.examples/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.examples/riderModule.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.examples/riderModule.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/demo/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/demo/Program.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/editor/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/editor/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui_tests/TestAppTheme.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ui_tests/TestAppTheme.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui_tests/ui_tests.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/ui_tests/ui_tests.csproj" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -43,170 +19,217 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/editor/Program.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="10" column="17" lean-forward="true" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
-              <folding>
-                <marker date="1555766560390" expanded="false" signature="6:143" ph="..." />
-                <marker date="1555766560390" expanded="true" signature="176:1192" ph="{...}" />
-                <marker date="1555766560390" expanded="true" signature="196:1190" ph="{...}" />
-                <marker date="1555766560390" expanded="true" signature="242:863" ph="{...}" />
-                <marker date="1555766560390" expanded="true" signature="947:1023" ph="{...}" />
-                <marker date="1555766560390" expanded="true" signature="1074:1184" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../Medja.OpenTk.Themes/DarkBlue/TextControlRendererBase.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="624">
-              <caret line="135" column="1" lean-forward="true" selection-start-line="135" selection-start-column="1" selection-end-line="135" selection-end-column="1" />
-              <folding>
-                <marker date="1555765558732" expanded="false" signature="6:118" ph="..." />
-                <marker date="1555765558732" expanded="true" signature="158:4506" ph="{...}" />
-                <marker date="1555765558732" expanded="true" signature="273:4504" ph="{...}" />
-                <marker date="1555765558732" expanded="true" signature="667:791" ph="{...}" />
-                <marker date="1555765558732" expanded="true" signature="844:1239" ph="{...}" />
-                <marker date="1555765558732" expanded="true" signature="1300:1563" ph="{...}" />
-                <marker date="1555765558732" expanded="true" signature="1613:1942" ph="{...}" />
-                <marker date="1555765558732" expanded="true" signature="2063:3132" ph="{...}" />
-                <marker date="1555765558732" expanded="true" signature="2334:2461" ph="/* add the height also for the first line ... */" />
-                <marker date="1555765558732" expanded="true" signature="2632:2719" ph="{...}" />
-                <marker date="1555765558732" expanded="true" signature="2968:3078" ph="{...}" />
-                <marker date="1555765558732" expanded="true" signature="3193:3945" ph="{...}" />
-                <marker date="1555765558732" expanded="true" signature="3247:3935" ph="{...}" />
-                <marker date="1555765558732" expanded="true" signature="3981:4371" ph="{...}" />
-                <marker date="1555765558732" expanded="true" signature="4088:4318" ph="/* TODO not supported scenarios: ... */" />
-                <marker date="1555765558732" expanded="true" signature="4420:4498" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../Medja/Controls/TextControl.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="316">
-              <caret line="25" column="68" lean-forward="true" selection-start-line="25" selection-start-column="68" selection-end-line="25" selection-end-column="68" />
-              <folding>
-                <marker date="1555764302831" expanded="false" signature="6:56" ph="..." />
-                <marker date="1555764302831" expanded="true" signature="82:3186" ph="{...}" />
-                <marker date="1555764302831" expanded="true" signature="86:359" ph="/// A base class for controls that mainly display text. ... " />
-                <marker date="1555764302831" expanded="true" signature="404:3184" ph="{...}" />
-                <marker date="1555764302831" expanded="true" signature="540:622" ph="{...}" />
-                <marker date="1555764302831" expanded="true" signature="721:819" ph="{...}" />
-                <marker date="1555764302831" expanded="true" signature="898:990" ph="{...}" />
-                <marker date="1555764302831" expanded="true" signature="1093:1192" ph="{...}" />
-                <marker date="1555764302831" expanded="true" signature="1328:1968" ph="{...}" />
-                <marker date="1555764302831" expanded="true" signature="1688:1743" ph="{...}" />
-                <marker date="1555764302831" expanded="true" signature="2002:2038" ph="{...}" />
-                <marker date="1555764302831" expanded="true" signature="2042:2294" ph="/// Gets the text as lines, how they should be rendered. ... " />
-                <marker date="1555764302831" expanded="true" signature="2323:2848" ph="{...}" />
-                <marker date="1555764302831" expanded="true" signature="2462:2825" ph="{...}" />
-                <marker date="1555764302831" expanded="true" signature="2900:3181" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../Medja/Controls/TextEditor.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="16" column="9" lean-forward="true" selection-start-line="16" selection-start-column="9" selection-end-line="16" selection-end-column="9" />
-              <folding>
-                <marker date="1555766758549" expanded="false" signature="6:52" ph="..." />
-                <marker date="1555766758549" expanded="true" signature="78:1595" ph="{...}" />
-                <marker date="1555766758549" expanded="true" signature="175:1593" ph="{...}" />
-                <marker date="1555766758549" expanded="true" signature="190:428" ph="/* maybe we will use another class instead of string later on ... */" />
-                <marker date="1555766758549" expanded="true" signature="501:561" ph="{...}" />
-                <marker date="1555766758549" expanded="true" signature="571:860" ph="///Replaces the complete text (content) of the Editor. ... " />
-                <marker date="1555766758549" expanded="true" signature="901:1587" ph="{...}" />
-                <marker date="1555766758549" expanded="true" signature="1033:1421" ph="{...}" />
-                <marker date="1555766758549" expanded="true" signature="1124:1350" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../Medja.OpenTk.Themes/ControlRenderer.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
-              <folding>
-                <marker date="1555766758536" expanded="false" signature="6:57" ph="..." />
-                <marker date="1555766758536" expanded="true" signature="88:309" ph="{...}" />
-                <marker date="1555766758536" expanded="true" signature="155:307" ph="{...}" />
-                <marker date="1555766758536" expanded="true" signature="219:227" ph="{...}" />
-                <marker date="1555766758536" expanded="true" signature="273:304" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../Medja.OpenTk.Themes/DarkBlue/TextEditorRenderer.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="20" column="9" lean-forward="true" selection-start-line="20" selection-start-column="9" selection-end-line="20" selection-end-column="9" />
-              <folding>
-                <marker date="1555766962369" expanded="true" signature="6:35" ph="..." />
-                <marker date="1555766962369" expanded="true" signature="75:501" ph="{...}" />
-                <marker date="1555766962369" expanded="true" signature="151:499" ph="{...}" />
-                <marker date="1555766962369" expanded="true" signature="239:259" ph="{...}" />
-                <marker date="1555766962369" expanded="true" signature="309:493" ph="{...}" />
-                <marker date="1555766962369" expanded="true" signature="410:483" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/../Medja.OpenTk.Themes/DarkBlue/DarkBlueTheme.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="658">
-              <caret line="110" column="26" selection-start-line="110" selection-start-column="26" selection-end-line="110" selection-end-column="26" />
-              <folding>
-                <marker date="1555767102101" expanded="false" signature="6:66" ph="..." />
-                <marker date="1555767102101" expanded="true" signature="106:3710" ph="{...}" />
-                <marker date="1555767102101" expanded="true" signature="156:3708" ph="{...}" />
-                <marker date="1555767102101" expanded="true" signature="211:715" ph="{...}" />
-                <marker date="1555767102101" expanded="true" signature="769:1137" ph="{...}" />
-                <marker date="1555767102101" expanded="true" signature="1203:1364" ph="{...}" />
-                <marker date="1555767102101" expanded="true" signature="1424:1578" ph="{...}" />
-                <marker date="1555767102101" expanded="true" signature="1638:1971" ph="{...}" />
-                <marker date="1555767102101" expanded="true" signature="2021:2306" ph="{...}" />
-                <marker date="1555767102101" expanded="true" signature="2358:2770" ph="{...}" />
-                <marker date="1555767102101" expanded="true" signature="2826:3114" ph="{...}" />
-                <marker date="1555767102101" expanded="true" signature="3172:3463" ph="{...}" />
-                <marker date="1555767102101" expanded="true" signature="3312:3350" ph="/* result. ... */" />
-                <marker date="1555767102101" expanded="true" signature="3537:3702" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <splitter split-orientation="horizontal" split-proportion="0.5447958">
+      <split-first>
+        <leaf>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/../Medja.OpenTk.Themes/BlackRed/TextBlockRenderer.cs">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="390">
+                  <caret line="33" selection-start-line="33" selection-end-line="33" />
+                  <folding>
+                    <marker date="1555765565908" expanded="false" signature="6:68" ph="..." />
+                    <marker date="1555765565908" expanded="true" signature="108:2112" ph="{...}" />
+                    <marker date="1555765565908" expanded="true" signature="179:2110" ph="{...}" />
+                    <marker date="1555765565908" expanded="true" signature="376:534" ph="{...}" />
+                    <marker date="1555765565908" expanded="true" signature="580:1298" ph="{...}" />
+                    <marker date="1555765565908" expanded="true" signature="1014:1123" ph="/* add the height also for the first line ... */" />
+                    <marker date="1555765565908" expanded="true" signature="1215:1294" ph="{...}" />
+                    <marker date="1555765565908" expanded="true" signature="1328:2014" ph="{...}" />
+                    <marker date="1555765565908" expanded="true" signature="1773:1976" ph="/* TODO not supported scenarios: ... */" />
+                    <marker date="1555765565908" expanded="true" signature="2057:2107" ph="{...}" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/../Medja.OpenTk.Themes/DarkBlue/TextEditorRenderer.cs">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="493">
+                  <caret line="29" column="58" selection-start-line="29" selection-start-column="58" selection-end-line="29" selection-end-column="58" />
+                  <folding>
+                    <marker date="1555768735996" expanded="true" signature="6:82" ph="..." />
+                    <marker date="1555768735996" expanded="true" signature="122:1143" ph="{...}" />
+                    <marker date="1555768735996" expanded="true" signature="198:1141" ph="{...}" />
+                    <marker date="1555768735996" expanded="true" signature="375:635" ph="{...}" />
+                    <marker date="1555768735996" expanded="true" signature="685:1135" ph="{...}" />
+                    <marker date="1555768735996" expanded="true" signature="949:1125" ph="{...}" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/../Medja.OpenTk.Themes/DarkBlue/DarkBlueTheme.cs">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="186">
+                  <caret line="78" column="47" lean-forward="true" selection-start-line="78" selection-start-column="47" selection-end-line="78" selection-end-column="47" />
+                  <folding>
+                    <marker date="1555768151665" expanded="false" signature="6:66" ph="..." />
+                    <marker date="1555768151665" expanded="true" signature="106:3703" ph="{...}" />
+                    <marker date="1555768151665" expanded="true" signature="156:3701" ph="{...}" />
+                    <marker date="1555768151665" expanded="true" signature="211:723" ph="{...}" />
+                    <marker date="1555768151665" expanded="true" signature="777:1153" ph="{...}" />
+                    <marker date="1555768151665" expanded="true" signature="1219:1380" ph="{...}" />
+                    <marker date="1555768151665" expanded="true" signature="1440:1594" ph="{...}" />
+                    <marker date="1555768151665" expanded="true" signature="1654:1995" ph="{...}" />
+                    <marker date="1555768151665" expanded="true" signature="2045:2338" ph="{...}" />
+                    <marker date="1555768151665" expanded="true" signature="2390:2810" ph="{...}" />
+                    <marker date="1555768151665" expanded="true" signature="2866:3154" ph="{...}" />
+                    <marker date="1555768151665" expanded="true" signature="3212:3456" ph="{...}" />
+                    <marker date="1555768151665" expanded="true" signature="3530:3695" ph="{...}" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/editor/Program.cs">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="442">
+                  <caret line="35" column="124" selection-start-line="35" selection-start-column="124" selection-end-line="35" selection-end-column="124" />
+                  <folding>
+                    <marker date="1555768684808" expanded="false" signature="6:143" ph="..." />
+                    <marker date="1555768684808" expanded="true" signature="176:1506" ph="{...}" />
+                    <marker date="1555768684808" expanded="true" signature="196:1504" ph="{...}" />
+                    <marker date="1555768684808" expanded="true" signature="242:863" ph="{...}" />
+                    <marker date="1555768684808" expanded="true" signature="947:1337" ph="{...}" />
+                    <marker date="1555768684808" expanded="true" signature="1388:1498" ph="{...}" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <leaf>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/../Medja.OpenTk.Themes/BlackRed/TextBoxRenderer.cs">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="34">
+                  <caret line="8" column="17" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
+                  <folding>
+                    <marker date="1555765558700" expanded="false" signature="6:118" ph="..." />
+                    <marker date="1555765558700" expanded="true" signature="158:1677" ph="{...}" />
+                    <marker date="1555765558700" expanded="true" signature="225:1675" ph="{...}" />
+                    <marker date="1555765558700" expanded="true" signature="335:386" ph="{...}" />
+                    <marker date="1555765558700" expanded="true" signature="430:1278" ph="{...}" />
+                    <marker date="1555765558700" expanded="true" signature="962:1274" ph="{...}" />
+                    <marker date="1555765558700" expanded="true" signature="1313:1672" ph="{...}" />
+                    <marker date="1555765558700" expanded="true" signature="1407:1585" ph="{...}" />
+                    <marker date="1555765558700" expanded="true" signature="1440:1504" ph="{...}" />
+                    <marker date="1555765558700" expanded="true" signature="1513:1580" ph="{...}" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/../Medja.OpenTk.Themes/BlackRed/TextBlockRenderer.cs">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="75">
+                  <caret line="33" selection-start-line="33" selection-end-line="33" />
+                  <folding>
+                    <marker date="1555765565908" expanded="false" signature="6:68" ph="..." />
+                    <marker date="1555765565908" expanded="true" signature="108:2112" ph="{...}" />
+                    <marker date="1555765565908" expanded="true" signature="179:2110" ph="{...}" />
+                    <marker date="1555765565908" expanded="true" signature="376:534" ph="{...}" />
+                    <marker date="1555765565908" expanded="true" signature="580:1298" ph="{...}" />
+                    <marker date="1555765565908" expanded="true" signature="1014:1123" ph="/* add the height also for the first line ... */" />
+                    <marker date="1555765565908" expanded="true" signature="1215:1294" ph="{...}" />
+                    <marker date="1555765565908" expanded="true" signature="1328:2014" ph="{...}" />
+                    <marker date="1555765565908" expanded="true" signature="1773:1976" ph="/* TODO not supported scenarios: ... */" />
+                    <marker date="1555765565908" expanded="true" signature="2057:2107" ph="{...}" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/../Medja.OpenTk.Themes/DarkBlue/TextControlRendererBase.cs">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="716">
+                  <caret line="101" column="17" lean-forward="true" selection-start-line="101" selection-start-column="17" selection-end-line="101" selection-end-column="17" />
+                  <folding>
+                    <marker date="1555765558732" expanded="false" signature="6:118" ph="..." />
+                    <marker date="1555765558732" expanded="true" signature="158:4506" ph="{...}" />
+                    <marker date="1555765558732" expanded="true" signature="273:4504" ph="{...}" />
+                    <marker date="1555765558732" expanded="true" signature="667:791" ph="{...}" />
+                    <marker date="1555765558732" expanded="true" signature="844:1239" ph="{...}" />
+                    <marker date="1555765558732" expanded="true" signature="1300:1563" ph="{...}" />
+                    <marker date="1555765558732" expanded="true" signature="1613:1942" ph="{...}" />
+                    <marker date="1555765558732" expanded="true" signature="2063:3132" ph="{...}" />
+                    <marker date="1555765558732" expanded="true" signature="2334:2461" ph="/* add the height also for the first line ... */" />
+                    <marker date="1555765558732" expanded="true" signature="2632:2719" ph="{...}" />
+                    <marker date="1555765558732" expanded="true" signature="2968:3078" ph="{...}" />
+                    <marker date="1555765558732" expanded="true" signature="3193:3945" ph="{...}" />
+                    <marker date="1555765558732" expanded="true" signature="3247:3935" ph="{...}" />
+                    <marker date="1555765558732" expanded="true" signature="3981:4371" ph="{...}" />
+                    <marker date="1555765558732" expanded="true" signature="4088:4318" ph="/* TODO not supported scenarios: ... */" />
+                    <marker date="1555765558732" expanded="true" signature="4420:4498" ph="{...}" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/../Medja.OpenTk.Themes/DarkBlue/TextBoxRenderer.cs">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="151">
+                  <caret line="35" column="31" lean-forward="true" selection-start-line="35" selection-start-column="31" selection-end-line="35" selection-end-column="31" />
+                  <folding>
+                    <marker date="1555768151688" expanded="false" signature="6:108" ph="..." />
+                    <marker date="1555768151688" expanded="true" signature="148:2170" ph="{...}" />
+                    <marker date="1555768151688" expanded="true" signature="218:2168" ph="{...}" />
+                    <marker date="1555768151688" expanded="true" signature="461:893" ph="{...}" />
+                    <marker date="1555768151688" expanded="true" signature="954:1042" ph="{...}" />
+                    <marker date="1555768151688" expanded="true" signature="1086:2162" ph="{...}" />
+                    <marker date="1555768151688" expanded="true" signature="1480:1592" ph="{...}" />
+                    <marker date="1555768151688" expanded="true" signature="1783:2152" ph="{...}" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-second>
+    </splitter>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/../Medja.OpenTk.Themes/BlackRed/ButtonRenderer.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../Medja.OpenTk.Themes/ControlRenderer.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/demo/Program.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../Medja/Controls/TextEditor.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../Medja.OpenTk.Themes/DarkBlue/DarkBlueTheme.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../Medja.OpenTk.Themes/DarkBlue/TextBoxRenderer.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../Medja.OpenTk.Themes/BlackRed/TextBoxRenderer.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../Medja.OpenTk.Themes/BlackRed/TextBlockRenderer.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../Medja.OpenTk.Themes/DarkBlue/TextControlRendererBase.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../Medja.OpenTk.Themes/BlackRed/BlackRedTheme.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/editor/Program.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../Medja/Controls/TextBox.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../Medja.OpenTk.Themes/DarkBlue/TextEditorRenderer.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ui_tests/TestAppTheme.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../Medja.OpenTk.Themes/DarkBlue/TextControlRendererBase.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../Medja/Controls/TextControl.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ui_tests/Program.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -216,11 +239,11 @@
         <option value="$PROJECT_DIR$/ui_tests/Program.cs" />
         <option value="$PROJECT_DIR$/ui_tests/TestAppTheme.cs" />
         <option value="$PROJECT_DIR$/demo/Program.cs" />
-        <option value="$PROJECT_DIR$/editor/Program.cs" />
-        <option value="$PROJECT_DIR$/../Medja/Controls/TextEditor.cs" />
         <option value="$PROJECT_DIR$/../Medja.OpenTk.Themes/ControlRenderer.cs" />
-        <option value="$PROJECT_DIR$/../Medja.OpenTk.Themes/DarkBlue/TextEditorRenderer.cs" />
+        <option value="$PROJECT_DIR$/../Medja/Controls/TextEditor.cs" />
         <option value="$PROJECT_DIR$/../Medja.OpenTk.Themes/DarkBlue/DarkBlueTheme.cs" />
+        <option value="$PROJECT_DIR$/editor/Program.cs" />
+        <option value="$PROJECT_DIR$/../Medja.OpenTk.Themes/DarkBlue/TextEditorRenderer.cs" />
       </list>
     </option>
   </component>
@@ -252,6 +275,12 @@
             <path>
               <item name="" type="784c90a0:SolutionExplorerRootNode" />
               <item name="examples" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="examples" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="editor" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="examples" type="24d0babc:SolutionExplorerModelNode" />
               <item name="libs" type="24d0babc:SolutionExplorerModelNode" />
             </path>
             <path>
@@ -259,19 +288,19 @@
               <item name="examples" type="24d0babc:SolutionExplorerModelNode" />
               <item name="libs" type="24d0babc:SolutionExplorerModelNode" />
               <item name="Medja" type="24d0babc:SolutionExplorerModelNode" />
-            </path>
-            <path>
-              <item name="" type="784c90a0:SolutionExplorerRootNode" />
-              <item name="examples" type="24d0babc:SolutionExplorerModelNode" />
-              <item name="libs" type="24d0babc:SolutionExplorerModelNode" />
-              <item name="Medja" type="24d0babc:SolutionExplorerModelNode" />
-              <item name="Controls" type="24d0babc:SolutionExplorerModelNode" />
             </path>
             <path>
               <item name="" type="784c90a0:SolutionExplorerRootNode" />
               <item name="examples" type="24d0babc:SolutionExplorerModelNode" />
               <item name="libs" type="24d0babc:SolutionExplorerModelNode" />
               <item name="Medja.OpenTk.Themes" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="examples" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="libs" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Medja.OpenTk.Themes" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="BlackRed" type="24d0babc:SolutionExplorerModelNode" />
             </path>
             <path>
               <item name="" type="784c90a0:SolutionExplorerRootNode" />
@@ -363,12 +392,12 @@
       <updated>1554815546349</updated>
       <workItem from="1554815550068" duration="604000" />
       <workItem from="1554975478836" duration="1863000" />
-      <workItem from="1555766373115" duration="729000" />
+      <workItem from="1555766373115" duration="2365000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3196000" />
+    <option name="totallyTimeSpent" value="4832000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -383,12 +412,12 @@
     <frame x="0" y="27" width="1920" height="1053" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.226254" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18996799" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49939686" weight="0.3286026" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49939686" visible="true" weight="0.1779476" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -406,9 +435,9 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Tutorials" order="3" />
-      <window_info anchor="right" id="Errors In Solution" order="4" />
-      <window_info anchor="right" id="Database" order="5" />
-      <window_info anchor="right" id="Unit Tests Coverage" order="6" />
+      <window_info anchor="right" id="Errors In Solution" order="4" weight="0.32977587" />
+      <window_info anchor="right" id="Database" order="5" show_stripe_button="false" />
+      <window_info anchor="right" id="Unit Tests Coverage" order="6" show_stripe_button="false" weight="0.32977587" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -462,22 +491,62 @@
         <state relative-caret-position="505">
           <caret line="128" column="5" lean-forward="true" selection-start-line="128" selection-start-column="5" selection-end-line="128" selection-end-column="5" />
           <folding>
-            <marker date="1555766517723" expanded="true" signature="6:131" ph="..." />
-            <marker date="1555766517723" expanded="true" signature="153:4841" ph="{...}" />
-            <marker date="1555766517723" expanded="true" signature="173:4839" ph="{...}" />
-            <marker date="1555766517723" expanded="true" signature="226:279" ph="{...}" />
-            <marker date="1555766517723" expanded="true" signature="362:588" ph="{...}" />
-            <marker date="1555766517723" expanded="true" signature="615:699" ph="{...}" />
-            <marker date="1555766517723" expanded="true" signature="740:1014" ph="{...}" />
-            <marker date="1555766517723" expanded="true" signature="1055:4833" ph="{...}" />
+            <marker date="1555768151334" expanded="true" signature="6:131" ph="..." />
+            <marker date="1555768151334" expanded="true" signature="153:4845" ph="{...}" />
+            <marker date="1555768151334" expanded="true" signature="173:4843" ph="{...}" />
+            <marker date="1555768151334" expanded="true" signature="226:279" ph="{...}" />
+            <marker date="1555768151334" expanded="true" signature="362:588" ph="{...}" />
+            <marker date="1555768151334" expanded="true" signature="615:699" ph="{...}" />
+            <marker date="1555768151334" expanded="true" signature="740:1014" ph="{...}" />
+            <marker date="1555768151334" expanded="true" signature="1055:4837" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../Medja/Controls/TextBox.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
+          <folding>
+            <marker date="1555764302831" expanded="true" signature="49:1514" ph="{...}" />
+            <marker date="1555764302831" expanded="true" signature="87:1512" ph="{...}" />
+            <marker date="1555764302831" expanded="true" signature="198:288" ph="{...}" />
+            <marker date="1555764302831" expanded="true" signature="310:598" ph="{...}" />
+            <marker date="1555764302831" expanded="true" signature="679:755" ph="{...}" />
+            <marker date="1555764302831" expanded="true" signature="820:1509" ph="{...}" />
+            <marker date="1555764302831" expanded="true" signature="875:1011" ph="{...}" />
+            <marker date="1555764302831" expanded="true" signature="905:1006" ph="{...}" />
+            <marker date="1555764302831" expanded="true" signature="1052:1178" ph="{...}" />
+            <marker date="1555764302831" expanded="true" signature="1089:1173" ph="{...}" />
+            <marker date="1555764302831" expanded="true" signature="1216:1264" ph="{...}" />
+            <marker date="1555764302831" expanded="true" signature="1304:1363" ph="{...}" />
+            <marker date="1555764302831" expanded="true" signature="1371:1472" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../Medja.OpenTk.Themes/BlackRed/ButtonRenderer.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="6" column="17" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
+          <folding>
+            <marker date="1555765558647" expanded="false" signature="6:68" ph="..." />
+            <marker date="1555765558647" expanded="true" signature="108:1652" ph="{...}" />
+            <marker date="1555765558647" expanded="true" signature="173:1650" ph="{...}" />
+            <marker date="1555765558647" expanded="true" signature="409:993" ph="{...}" />
+            <marker date="1555765558647" expanded="true" signature="1039:1647" ph="{...}" />
+            <marker date="1555765558647" expanded="true" signature="1070:1480" ph="{...}" />
+            <marker date="1555765558647" expanded="true" signature="1120:1179" ph="{...}" />
+            <marker date="1555765558647" expanded="true" signature="1225:1284" ph="{...}" />
+            <marker date="1555765558647" expanded="true" signature="1293:1396" ph="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../Medja/Controls/TextControl.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="316">
-          <caret line="25" column="68" lean-forward="true" selection-start-line="25" selection-start-column="68" selection-end-line="25" selection-end-column="68" />
+        <state relative-caret-position="349">
+          <caret line="47" selection-start-line="47" selection-end-line="48" />
           <folding>
             <marker date="1555764302831" expanded="false" signature="6:56" ph="..." />
             <marker date="1555764302831" expanded="true" signature="82:3186" ph="{...}" />
@@ -498,57 +567,83 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/editor/Program.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="10" column="17" lean-forward="true" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
-          <folding>
-            <marker date="1555766560390" expanded="false" signature="6:143" ph="..." />
-            <marker date="1555766560390" expanded="true" signature="176:1192" ph="{...}" />
-            <marker date="1555766560390" expanded="true" signature="196:1190" ph="{...}" />
-            <marker date="1555766560390" expanded="true" signature="242:863" ph="{...}" />
-            <marker date="1555766560390" expanded="true" signature="947:1023" ph="{...}" />
-            <marker date="1555766560390" expanded="true" signature="1074:1184" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../Medja/Controls/TextEditor.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="16" column="9" lean-forward="true" selection-start-line="16" selection-start-column="9" selection-end-line="16" selection-end-column="9" />
+        <state relative-caret-position="187">
+          <caret line="14" column="42" selection-start-line="14" selection-start-column="42" selection-end-line="14" selection-end-column="42" />
           <folding>
-            <marker date="1555766758549" expanded="false" signature="6:52" ph="..." />
-            <marker date="1555766758549" expanded="true" signature="78:1595" ph="{...}" />
-            <marker date="1555766758549" expanded="true" signature="175:1593" ph="{...}" />
-            <marker date="1555766758549" expanded="true" signature="190:428" ph="/* maybe we will use another class instead of string later on ... */" />
-            <marker date="1555766758549" expanded="true" signature="501:561" ph="{...}" />
-            <marker date="1555766758549" expanded="true" signature="571:860" ph="///Replaces the complete text (content) of the Editor. ... " />
-            <marker date="1555766758549" expanded="true" signature="901:1587" ph="{...}" />
-            <marker date="1555766758549" expanded="true" signature="1033:1421" ph="{...}" />
-            <marker date="1555766758549" expanded="true" signature="1124:1350" ph="{...}" />
+            <marker date="1555767833386" expanded="false" signature="6:76" ph="..." />
+            <marker date="1555767833386" expanded="true" signature="102:1646" ph="{...}" />
+            <marker date="1555767833386" expanded="true" signature="199:1644" ph="{...}" />
+            <marker date="1555767833386" expanded="true" signature="214:452" ph="/* maybe we will use another class instead of string later on ... */" />
+            <marker date="1555767833386" expanded="true" signature="525:612" ph="{...}" />
+            <marker date="1555767833386" expanded="true" signature="622:911" ph="///Replaces the complete text (content) of the Editor. ... " />
+            <marker date="1555767833386" expanded="true" signature="952:1638" ph="{...}" />
+            <marker date="1555767833386" expanded="true" signature="1084:1472" ph="{...}" />
+            <marker date="1555767833386" expanded="true" signature="1175:1401" ph="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../Medja.OpenTk.Themes/ControlRenderer.cs">
+    <entry file="file://$PROJECT_DIR$/../Medja.OpenTk.Themes/BlackRed/BlackRedTheme.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
+        <state relative-caret-position="51">
+          <caret line="6" column="17" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
           <folding>
-            <marker date="1555766758536" expanded="false" signature="6:57" ph="..." />
-            <marker date="1555766758536" expanded="true" signature="88:309" ph="{...}" />
-            <marker date="1555766758536" expanded="true" signature="155:307" ph="{...}" />
-            <marker date="1555766758536" expanded="true" signature="219:227" ph="{...}" />
-            <marker date="1555766758536" expanded="true" signature="273:304" ph="{...}" />
+            <marker date="1555765680116" expanded="false" signature="6:78" ph="..." />
+            <marker date="1555765680116" expanded="true" signature="109:6190" ph="{...}" />
+            <marker date="1555765680116" expanded="true" signature="159:6188" ph="{...}" />
+            <marker date="1555765680116" expanded="true" signature="214:451" ph="{...}" />
+            <marker date="1555765680116" expanded="true" signature="505:702" ph="{...}" />
+            <marker date="1555765680116" expanded="true" signature="754:908" ph="{...}" />
+            <marker date="1555765680116" expanded="true" signature="974:1135" ph="{...}" />
+            <marker date="1555765680116" expanded="true" signature="1185:1338" ph="{...}" />
+            <marker date="1555765680116" expanded="true" signature="1416:1562" ph="{...}" />
+            <marker date="1555765680116" expanded="true" signature="1614:1768" ph="{...}" />
+            <marker date="1555765680116" expanded="true" signature="1816:1966" ph="{...}" />
+            <marker date="1555765680116" expanded="true" signature="2032:2243" ph="{...}" />
+            <marker date="1555765680116" expanded="true" signature="2303:2548" ph="{...}" />
+            <marker date="1555765680116" expanded="true" signature="2326:2466" ph="/* do not use base.CreateMedjaWindow because ... */" />
+            <marker date="1555765680116" expanded="true" signature="2612:2822" ph="{...}" />
+            <marker date="1555765680116" expanded="true" signature="2898:3114" ph="{...}" />
+            <marker date="1555765680116" expanded="true" signature="3178:3338" ph="{...}" />
+            <marker date="1555765680116" expanded="true" signature="3414:3630" ph="{...}" />
+            <marker date="1555765680116" expanded="true" signature="3680:3873" ph="{...}" />
+            <marker date="1555765680116" expanded="true" signature="3931:4091" ph="{...}" />
+            <marker date="1555765680116" expanded="true" signature="4143:4485" ph="{...}" />
+            <marker date="1555765680116" expanded="true" signature="4541:4837" ph="{...}" />
+            <marker date="1555765680116" expanded="true" signature="4897:5059" ph="{...}" />
+            <marker date="1555765680116" expanded="true" signature="5125:5336" ph="{...}" />
+            <marker date="1555765680116" expanded="true" signature="5396:5604" ph="{...}" />
+            <marker date="1555765680116" expanded="true" signature="5676:5940" ph="{...}" />
+            <marker date="1555765680116" expanded="true" signature="6016:6182" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../Medja.OpenTk.Themes/BlackRed/TextBoxRenderer.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="8" column="17" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
+          <folding>
+            <marker date="1555765558700" expanded="false" signature="6:118" ph="..." />
+            <marker date="1555765558700" expanded="true" signature="158:1677" ph="{...}" />
+            <marker date="1555765558700" expanded="true" signature="225:1675" ph="{...}" />
+            <marker date="1555765558700" expanded="true" signature="335:386" ph="{...}" />
+            <marker date="1555765558700" expanded="true" signature="430:1278" ph="{...}" />
+            <marker date="1555765558700" expanded="true" signature="962:1274" ph="{...}" />
+            <marker date="1555765558700" expanded="true" signature="1313:1672" ph="{...}" />
+            <marker date="1555765558700" expanded="true" signature="1407:1585" ph="{...}" />
+            <marker date="1555765558700" expanded="true" signature="1440:1504" ph="{...}" />
+            <marker date="1555765558700" expanded="true" signature="1513:1580" ph="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../Medja.OpenTk.Themes/DarkBlue/TextControlRendererBase.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="624">
-          <caret line="135" column="1" lean-forward="true" selection-start-line="135" selection-start-column="1" selection-end-line="135" selection-end-column="1" />
+        <state relative-caret-position="716">
+          <caret line="101" column="17" lean-forward="true" selection-start-line="101" selection-start-column="17" selection-end-line="101" selection-end-column="17" />
           <folding>
             <marker date="1555765558732" expanded="false" signature="6:118" ph="..." />
             <marker date="1555765558732" expanded="true" signature="158:4506" ph="{...}" />
@@ -570,40 +665,104 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../Medja.OpenTk.Themes/DarkBlue/TextEditorRenderer.cs">
+    <entry file="file://$PROJECT_DIR$/../Medja.OpenTk.Themes/ControlRenderer.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="20" column="9" lean-forward="true" selection-start-line="20" selection-start-column="9" selection-end-line="20" selection-end-column="9" />
+        <state relative-caret-position="68">
+          <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
           <folding>
-            <marker date="1555766962369" expanded="true" signature="6:35" ph="..." />
-            <marker date="1555766962369" expanded="true" signature="75:501" ph="{...}" />
-            <marker date="1555766962369" expanded="true" signature="151:499" ph="{...}" />
-            <marker date="1555766962369" expanded="true" signature="239:259" ph="{...}" />
-            <marker date="1555766962369" expanded="true" signature="309:493" ph="{...}" />
-            <marker date="1555766962369" expanded="true" signature="410:483" ph="{...}" />
+            <marker date="1555766758536" expanded="false" signature="6:57" ph="..." />
+            <marker date="1555766758536" expanded="true" signature="88:309" ph="{...}" />
+            <marker date="1555766758536" expanded="true" signature="155:307" ph="{...}" />
+            <marker date="1555766758536" expanded="true" signature="219:227" ph="{...}" />
+            <marker date="1555766758536" expanded="true" signature="273:304" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../Medja.OpenTk.Themes/DarkBlue/TextBoxRenderer.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="151">
+          <caret line="35" column="31" lean-forward="true" selection-start-line="35" selection-start-column="31" selection-end-line="35" selection-end-column="31" />
+          <folding>
+            <marker date="1555768151688" expanded="false" signature="6:108" ph="..." />
+            <marker date="1555768151688" expanded="true" signature="148:2170" ph="{...}" />
+            <marker date="1555768151688" expanded="true" signature="218:2168" ph="{...}" />
+            <marker date="1555768151688" expanded="true" signature="461:893" ph="{...}" />
+            <marker date="1555768151688" expanded="true" signature="954:1042" ph="{...}" />
+            <marker date="1555768151688" expanded="true" signature="1086:2162" ph="{...}" />
+            <marker date="1555768151688" expanded="true" signature="1480:1592" ph="{...}" />
+            <marker date="1555768151688" expanded="true" signature="1783:2152" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../Medja.OpenTk.Themes/BlackRed/TextBlockRenderer.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="33" selection-start-line="33" selection-end-line="33" />
+          <folding>
+            <marker date="1555765565908" expanded="false" signature="6:68" ph="..." />
+            <marker date="1555765565908" expanded="true" signature="108:2112" ph="{...}" />
+            <marker date="1555765565908" expanded="true" signature="179:2110" ph="{...}" />
+            <marker date="1555765565908" expanded="true" signature="376:534" ph="{...}" />
+            <marker date="1555765565908" expanded="true" signature="580:1298" ph="{...}" />
+            <marker date="1555765565908" expanded="true" signature="1014:1123" ph="/* add the height also for the first line ... */" />
+            <marker date="1555765565908" expanded="true" signature="1215:1294" ph="{...}" />
+            <marker date="1555765565908" expanded="true" signature="1328:2014" ph="{...}" />
+            <marker date="1555765565908" expanded="true" signature="1773:1976" ph="/* TODO not supported scenarios: ... */" />
+            <marker date="1555765565908" expanded="true" signature="2057:2107" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/editor/Program.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="35" column="124" selection-start-line="35" selection-start-column="124" selection-end-line="35" selection-end-column="124" />
+          <folding>
+            <marker date="1555768684808" expanded="false" signature="6:143" ph="..." />
+            <marker date="1555768684808" expanded="true" signature="176:1506" ph="{...}" />
+            <marker date="1555768684808" expanded="true" signature="196:1504" ph="{...}" />
+            <marker date="1555768684808" expanded="true" signature="242:863" ph="{...}" />
+            <marker date="1555768684808" expanded="true" signature="947:1337" ph="{...}" />
+            <marker date="1555768684808" expanded="true" signature="1388:1498" ph="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../Medja.OpenTk.Themes/DarkBlue/DarkBlueTheme.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="658">
-          <caret line="110" column="26" selection-start-line="110" selection-start-column="26" selection-end-line="110" selection-end-column="26" />
+        <state relative-caret-position="186">
+          <caret line="78" column="47" lean-forward="true" selection-start-line="78" selection-start-column="47" selection-end-line="78" selection-end-column="47" />
           <folding>
-            <marker date="1555767102101" expanded="false" signature="6:66" ph="..." />
-            <marker date="1555767102101" expanded="true" signature="106:3710" ph="{...}" />
-            <marker date="1555767102101" expanded="true" signature="156:3708" ph="{...}" />
-            <marker date="1555767102101" expanded="true" signature="211:715" ph="{...}" />
-            <marker date="1555767102101" expanded="true" signature="769:1137" ph="{...}" />
-            <marker date="1555767102101" expanded="true" signature="1203:1364" ph="{...}" />
-            <marker date="1555767102101" expanded="true" signature="1424:1578" ph="{...}" />
-            <marker date="1555767102101" expanded="true" signature="1638:1971" ph="{...}" />
-            <marker date="1555767102101" expanded="true" signature="2021:2306" ph="{...}" />
-            <marker date="1555767102101" expanded="true" signature="2358:2770" ph="{...}" />
-            <marker date="1555767102101" expanded="true" signature="2826:3114" ph="{...}" />
-            <marker date="1555767102101" expanded="true" signature="3172:3463" ph="{...}" />
-            <marker date="1555767102101" expanded="true" signature="3312:3350" ph="/* result. ... */" />
-            <marker date="1555767102101" expanded="true" signature="3537:3702" ph="{...}" />
+            <marker date="1555768151665" expanded="false" signature="6:66" ph="..." />
+            <marker date="1555768151665" expanded="true" signature="106:3703" ph="{...}" />
+            <marker date="1555768151665" expanded="true" signature="156:3701" ph="{...}" />
+            <marker date="1555768151665" expanded="true" signature="211:723" ph="{...}" />
+            <marker date="1555768151665" expanded="true" signature="777:1153" ph="{...}" />
+            <marker date="1555768151665" expanded="true" signature="1219:1380" ph="{...}" />
+            <marker date="1555768151665" expanded="true" signature="1440:1594" ph="{...}" />
+            <marker date="1555768151665" expanded="true" signature="1654:1995" ph="{...}" />
+            <marker date="1555768151665" expanded="true" signature="2045:2338" ph="{...}" />
+            <marker date="1555768151665" expanded="true" signature="2390:2810" ph="{...}" />
+            <marker date="1555768151665" expanded="true" signature="2866:3154" ph="{...}" />
+            <marker date="1555768151665" expanded="true" signature="3212:3456" ph="{...}" />
+            <marker date="1555768151665" expanded="true" signature="3530:3695" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../Medja.OpenTk.Themes/DarkBlue/TextEditorRenderer.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="493">
+          <caret line="29" column="58" selection-start-line="29" selection-start-column="58" selection-end-line="29" selection-end-column="58" />
+          <folding>
+            <marker date="1555768735996" expanded="true" signature="6:82" ph="..." />
+            <marker date="1555768735996" expanded="true" signature="122:1143" ph="{...}" />
+            <marker date="1555768735996" expanded="true" signature="198:1141" ph="{...}" />
+            <marker date="1555768735996" expanded="true" signature="375:635" ph="{...}" />
+            <marker date="1555768735996" expanded="true" signature="685:1135" ph="{...}" />
+            <marker date="1555768735996" expanded="true" signature="949:1125" ph="{...}" />
           </folding>
         </state>
       </provider>

@@ -16,11 +16,11 @@ namespace Medja.OpenTk.Themes.DarkBlue
             : base(control)
         {
             _textBoxBackground = CreatePaint();
-            _textBoxBackground.Color = DemoThemeValues.ControlBorder.ToSKColor();
+            _textBoxBackground.Color = DarkBlueThemeValues.ControlBorder.ToSKColor();
             _textBoxBackground.IsStroke = true;
 
             _caretPaint = CreatePaint();
-            _caretPaint.Color = DemoThemeValues.PrimaryTextColor.ToSKColor();
+            _caretPaint.Color = DarkBlueThemeValues.PrimaryTextColor.ToSKColor();
             _caretPaint.IsStroke = true;
             
             _caretStopWatch = Stopwatch.StartNew();
