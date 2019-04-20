@@ -113,7 +113,7 @@ namespace Medja.Demo
 
             var result = controlFactory.Create<VerticalStackPanel>();
             result.Padding.SetAll(20);
-            result.Background = DemoThemeValues.Background;
+            result.Background = DarkBlueThemeValues.Background;
             result.SpaceBetweenChildren = 25;
             result.Children.Add(buttonStackPanel);
             result.Children.Add(checkBoxStackPanel);

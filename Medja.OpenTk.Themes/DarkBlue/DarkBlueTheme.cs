@@ -9,8 +9,8 @@ namespace Medja.OpenTk.Themes.DarkBlue
         protected override Button CreateButton()
         {
             var result = base.CreateButton();
-            result.Background = DemoThemeValues.PrimaryColor;
-            result.TextColor = DemoThemeValues.PrimaryTextColor;
+            result.Background = DarkBlueThemeValues.PrimaryColor;
+            result.TextColor = DarkBlueThemeValues.PrimaryTextColor;
             result.Position.Height = 40;
             //result.Position.Width = 100;
             result.TextAlignment = TextAlignment.Center;
@@ -25,8 +25,8 @@ namespace Medja.OpenTk.Themes.DarkBlue
         protected override CheckBox CreateCheckBox()
         {
             var result = base.CreateCheckBox();
-            result.Background = DemoThemeValues.ControlBackground;
-            result.TextColor = DemoThemeValues.PrimaryTextColor;
+            result.Background = DarkBlueThemeValues.ControlBackground;
+            result.TextColor = DarkBlueThemeValues.PrimaryTextColor;
             result.Position.Height = 19;
             result.Padding.Left = 27;
 
@@ -54,8 +54,8 @@ namespace Medja.OpenTk.Themes.DarkBlue
         protected override ProgressBar CreateProgressBar()
         {
             var result = base.CreateProgressBar();
-            result.Background = DemoThemeValues.ControlBackground;
-            result.Foreground = DemoThemeValues.PrimaryColor;
+            result.Background = DarkBlueThemeValues.ControlBackground;
+            result.Foreground = DarkBlueThemeValues.PrimaryColor;
             result.Position.Height = 25;
 
             result.Renderer = new ProgressBarRenderer(result);
@@ -66,8 +66,8 @@ namespace Medja.OpenTk.Themes.DarkBlue
         protected override Slider CreateSlider()
         {
             var result = base.CreateSlider();
-            result.Background = DemoThemeValues.ControlBackground;
-            result.Foreground = DemoThemeValues.PrimaryTextColor;
+            result.Background = DarkBlueThemeValues.ControlBackground;
+            result.Foreground = DarkBlueThemeValues.PrimaryTextColor;
             result.Renderer = new SliderRenderer(result);
 
             return result;
@@ -76,8 +76,8 @@ namespace Medja.OpenTk.Themes.DarkBlue
         protected override TextBox CreateTextBox()
         {
             var result = base.CreateTextBox();
-            result.Background = DemoThemeValues.ControlBackground;
-            result.TextColor = DemoThemeValues.PrimaryTextColor;
+            result.Background = DarkBlueThemeValues.ControlBackground;
+            result.TextColor = DarkBlueThemeValues.PrimaryTextColor;
             result.Position.Height = 37;
             result.Padding.Top = 9;
             result.Padding.SetLeftAndRight(10);
@@ -102,9 +102,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
         protected override TextEditor CreateTextEditor()
         {
             var result = base.CreateTextEditor();
-            result.Background = DemoThemeValues.ControlBackground;
-            //result.
-            //result.padding
+            result.Background = DarkBlueThemeValues.ControlBackground;
             
             result.Renderer = new TextEditorRenderer(result);
 

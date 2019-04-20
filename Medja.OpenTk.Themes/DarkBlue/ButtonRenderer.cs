@@ -19,11 +19,11 @@ namespace Medja.OpenTk.Themes.DarkBlue
 
             _disabledBackgroundPaint = CreatePaint();
             _disabledBackgroundPaint.Color = control.Background.GetDisabled().ToSKColor();
-            _disabledBackgroundPaint.ImageFilter = DemoThemeValues.DropShadowDisabled;
+            _disabledBackgroundPaint.ImageFilter = DarkBlueThemeValues.DropShadowDisabled;
             
             _clickBackgroundPaint = CreatePaint();
             _clickBackgroundPaint.Color = control.Background.ToSKColor();
-            _clickBackgroundPaint.ImageFilter = DemoThemeValues.DropShadowElevated;
+            _clickBackgroundPaint.ImageFilter = DarkBlueThemeValues.DropShadowElevated;
             ;
             // todo update colors on change - required for all renders; find a good clean solution
         }
