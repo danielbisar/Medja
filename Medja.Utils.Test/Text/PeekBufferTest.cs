@@ -41,5 +41,34 @@ namespace Medja.Utils.Test.Text
 
             Assert.Throws<EndOfStreamException>(() => buffer.ReadChar());
         }
+
+        [Fact]
+        public void CanPeekChar()
+        {
+            var buffer = new PeekBuffer();
+            buffer.Add("abc");
+
+            Assert.Equal('a', buffer.PeekChar());
+            Assert.Equal('a', buffer.PeekChar());
+            buffer.ReadChar();
+            Assert.Equal('b', buffer.PeekChar());
+            buffer.ReadChar();
+            Assert.Equal('c', buffer.PeekChar());
+            buffer.ReadChar();
+            Assert.False(buffer.HasMore);
+        }
+
+        [Fact]
+        public void PeekMaxTest()
+        {
+            var buffer = new PeekBuffer();
+            buffer.Add("abcdef");
+
+            Assert.Equal("ab", buffer.PeekMax(2));
+            Assert.Equal("ab", buffer.PeekMax(2));
+            Assert.Equal('a', buffer.ReadChar());
+            Assert.Equal('b', buffer.ReadChar());
+            Assert.Equal("cdef", buffer.PeekMax(6));
+        }
     }
 }
