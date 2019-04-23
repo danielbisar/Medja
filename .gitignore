@@ -161,3 +161,8 @@ fabric.properties
 
 
 
+packages/*
+examples/.idea/*
+.idea/*
+.vs/*
+.vscode/*
