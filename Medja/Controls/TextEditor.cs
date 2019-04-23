@@ -19,7 +19,7 @@ namespace Medja.Controls
             get { return PropertyCaretX.Get(); }
             private set { PropertyCaretX.Set(value); }
         }
-        
+
         public readonly Property<int> PropertyCaretY;
         public int CaretY
         {
@@ -31,10 +31,10 @@ namespace Medja.Controls
         {
             Lines = new List<string>();
             Lines.Add("");
-            
+
             PropertyCaretX = new Property<int>();
             PropertyCaretY = new Property<int>();
-            
+
             InputState.KeyPressed += OnKeyPressed;
             InputState.OwnsMouseEvents = true;
         }
@@ -42,7 +42,7 @@ namespace Medja.Controls
         private void OnKeyPressed(object sender, KeyboardEventArgs e)
         {
             var line = Lines[CaretY];
-            
+
             // todo check modifier keys
             switch (e.Key)
             {
@@ -62,7 +62,7 @@ namespace Medja.Controls
                     }
                     break;
                 case (char)Keys.Down:
-                    if (CaretY < Lines.Count)
+                    if (CaretY < Lines.Count - 1)
                     {
                         CaretY++;
                         UpdateCaretXAfterCaretYChange();
@@ -105,7 +105,7 @@ namespace Medja.Controls
         {
             if (Lines[CaretY].Length <= CaretX)
                 CaretX = Lines[CaretY].Length;
-            
+
             // todo remember MaxCaretY and if possible use that value
         }
 
@@ -118,27 +118,27 @@ namespace Medja.Controls
 
             var line = new StringBuilder();
 
-            for(int i = 0; i < text.Length; i++)
+            for (int i = 0; i < text.Length; i++)
             {
                 var c = text[i];
 
-                if(c == '\n' || c == '\r')
+                if (c == '\n' || c == '\r')
                 {
                     Lines.Add(line.ToString());
                     line.Clear();
 
-                    if(c == '\r' && i + 1 < text.Length && text[i+1] == '\n')
+                    if (c == '\r' && i + 1 < text.Length && text[i + 1] == '\n')
                         i++;
                 }
                 else
                     line.Append(c);
             }
-            
+
             Lines.Add(line.ToString());
 
             // todo reduce capacity of lines if they used a large amount before and now just a few...
         }
-        
-        
+
+
     }
 }
