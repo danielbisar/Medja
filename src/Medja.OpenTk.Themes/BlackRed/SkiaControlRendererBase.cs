@@ -4,7 +4,7 @@ using Medja.Primitives;
 using Medja.Theming;
 using SkiaSharp;
 
-namespace Medja.OpenTk.Themes
+namespace Medja.OpenTk.Themes.BlackRed
 {
 	/// <summary>
 	/// Skia control renderer base.

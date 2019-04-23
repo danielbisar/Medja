@@ -1,8 +1,9 @@
 using Medja.Controls;
 using Medja.OpenTk.Rendering;
+using Medja.OpenTk.Themes.BlackRed;
 using SkiaSharp;
 
-namespace Medja.OpenTk.Themes.BlackRed
+namespace Medja.OpenTk.Themes.DarkBlue
 {
     public class SliderRenderer : SkiaControlRendererBase<Slider>
     {
@@ -10,19 +11,16 @@ namespace Medja.OpenTk.Themes.BlackRed
         private readonly SKPaint _positionPaint;
         
         public SliderRenderer(Slider control) 
-                : base(control)
+            : base(control)
         {
-            _barPaint = new SKPaint();
-            _barPaint.Color = ColorMap.Primary.ToSKColor();
+            _barPaint = CreatePaint();
+            _barPaint.Color = _control.Background.ToSKColor();
             _barPaint.StrokeCap = SKStrokeCap.Round;
             _barPaint.Style = SKPaintStyle.Stroke;
             _barPaint.StrokeWidth = 4;
-			
-            _positionPaint = new SKPaint();
-            _positionPaint.Color = ColorMap.PrimaryText.ToSKColor();
-            _positionPaint.IsAntialias = true;
 
-            _paint.Color = ColorMap.PrimaryText.ToSKColor();
+            _positionPaint = CreatePaint();
+            _positionPaint.Color = _control.Foreground.ToSKColor();
         }
 
         protected override void InternalRender()
