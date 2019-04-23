@@ -1,7 +1,7 @@
 using Medja.Controls;
 using SkiaSharp;
 
-namespace Medja.OpenTk.Rendering
+namespace Medja.OpenTk.Themes.BlackRed
 {
     public class ImageRenderer : SkiaControlRendererBase<Image>
     {

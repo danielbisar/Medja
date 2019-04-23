@@ -50,6 +50,7 @@ namespace Medja.Theming
 			_factoryMethods.Add(typeof(TabItem), CreateTabItem);
 			_factoryMethods.Add(typeof(TextBox), CreateTextBox);
 			_factoryMethods.Add(typeof(TextBlock), CreateTextBlock);
+			_factoryMethods.Add(typeof(TextEditor), CreateTextEditor);
 			_factoryMethods.Add(typeof(ProgressBar), CreateProgressBar);
 			_factoryMethods.Add(typeof(QuestionDialog), CreateQuestionDialog);
 			_factoryMethods.Add(typeof(TablePanel), CreateTablePanel);
@@ -282,6 +283,11 @@ namespace Medja.Theming
 		protected virtual TextBlock CreateTextBlock()
 		{
 			return new TextBlock();
+		}
+		
+		protected virtual TextEditor CreateTextEditor()
+		{
+			return new TextEditor();
 		}
 
 		protected virtual ProgressBar CreateProgressBar()

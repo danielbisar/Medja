@@ -1,8 +1,9 @@
-﻿using Medja.Controls;
+using Medja.Controls;
+using Medja.OpenTk.Rendering;
 using Medja.Primitives;
 using SkiaSharp;
 
-namespace Medja.OpenTk.Rendering
+namespace Medja.OpenTk.Themes.BlackRed
 {
 	public class TabControlRenderer : SkiaControlRendererBase<TabControl>
 	{
