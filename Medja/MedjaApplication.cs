@@ -15,7 +15,7 @@ namespace Medja
         {
             get { return _application; }
         }
-        
+
         /// <summary>
         /// Initializes the MedjaApplication, not thread-safe.
         /// </summary>
@@ -23,7 +23,7 @@ namespace Medja
         /// <returns>The application instance.</returns>
         public static MedjaApplication Create(IMedjaLibrary library)
         {
-            if(_application != null)
+            if (_application != null)
                 throw new InvalidOperationException("Just one instance can be create of " + nameof(MedjaApplication));
 
             return _application = new MedjaApplication(library);
@@ -47,12 +47,12 @@ namespace Medja
             }
         }
 
-		public event EventHandler<ShutdownEventArgs> ShutdownEvent;
-        
+        public event EventHandler<ShutdownEventArgs> ShutdownEvent;
+
         private MedjaApplication(IMedjaLibrary library)
         {
             _library = library;
-        }        
+        }
 
         private void UnregisterMainWindow()
         {
@@ -64,7 +64,7 @@ namespace Medja
 
         private void RegisterMainWindow()
         {
-            if(_mainWindow == null)
+            if (_mainWindow == null)
                 throw new InvalidOperationException(nameof(MainWindow) + " cannot be null!");
 
             _mainWindow.Closed += OnMainWindowClosed;
@@ -81,14 +81,14 @@ namespace Medja
         /// </summary>
         public void Shutdown()
         {
-			var hasMainWindow = _mainWindow != null && !_mainWindow.IsClosed;
+            var hasMainWindow = _mainWindow != null && !_mainWindow.IsClosed;
 
-			if (hasMainWindow)
-			{
-				var cancelShutdown = NotifyShutdown();
+            if (hasMainWindow)
+            {
+                var cancelShutdown = NotifyShutdown();
 
-				if (cancelShutdown)
-					return;
+                if (cancelShutdown)
+                    return;
 
                 _mainWindow.Close();
                 return; // function will be called by _mainWindow.Closed again
@@ -97,27 +97,27 @@ namespace Medja
             //_isRunning = false;
         }
 
-		private bool NotifyShutdown()
-		{
-			var result = false;
-
-			if(ShutdownEvent != null)
-			{
-				var eventArgs = new ShutdownEventArgs();
-				ShutdownEvent(this, eventArgs);
-				result = eventArgs.Cancel;
-			}
-
-			return result;
-		}
-
-		/// <summary>
-		/// Creates a new window. This method exists so you don't need to worry about the acutal used library instance.
-		/// </summary>
-		/// <returns>The new window instance provided by the library.</returns>
-		public MedjaWindow CreateWindow()
+        private bool NotifyShutdown()
         {
-            return _library.CreateWindow();
+            var result = false;
+
+            if (ShutdownEvent != null)
+            {
+                var eventArgs = new ShutdownEventArgs();
+                ShutdownEvent(this, eventArgs);
+                result = eventArgs.Cancel;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Creates a new window. This method exists so you don't need to worry about the acutal used library instance.
+        /// </summary>
+        /// <returns>The new window instance provided by the library.</returns>
+        public MedjaWindow CreateWindow()
+        {
+            return _library.ControlFactory.Create<MedjaWindow>();
         }
 
         /// <summary>

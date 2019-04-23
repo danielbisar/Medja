@@ -14,23 +14,17 @@ namespace Medja
         /// Gets the current <see cref="ControlFactory"/>. This allows theming of the UI.
         /// </summary>
         IControlFactory ControlFactory { get; }
-        
+
         /// <summary>
         /// Gets the current <see cref="BitmapFactory"/>.
         /// </summary>
         BitmapFactory BitmapFactory { get; }
-        
+
         /// <summary>
         /// Gets the task queue - you can use this the same way you would use a Dispatcher. If you want to execute a
         /// task/method on the UI thread.
         /// </summary>
         TaskQueue<object> TaskQueue { get; }
-
-        /// <summary>
-        /// Creates a new window; currently we support basically just one.
-        /// </summary>
-        /// <returns>The new <see cref="MedjaWindow"/> instance.</returns>
-        MedjaWindow CreateWindow();
 
         /// <summary>
         /// Enters the Main-Loop of the program. Do not call this method directly but call <see cref="MedjaApplication.Run"/> instead.

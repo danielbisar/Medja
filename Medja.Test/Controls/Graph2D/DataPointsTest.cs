@@ -52,7 +52,7 @@ namespace Medja.Test.Controls
 
             var result = items.Downsampler.Downsample(1, 3, 0, 1);
             
-            Assert.Equal(result.Count, 2);
+            Assert.Equal(2, result.Count);
             Assert.Equal(1, result[0].X);
             Assert.Equal(2, result[1].X);
         }
