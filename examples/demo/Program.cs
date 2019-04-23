@@ -2,6 +2,7 @@
 using Medja.OpenTk;
 using Medja.OpenTk.Rendering;
 using Medja.Primitives;
+using Medja.OpenTk.Themes.DarkBlue;
 
 namespace Medja.Demo
 {
@@ -11,12 +12,12 @@ namespace Medja.Demo
         {
             new Program().Run();
         }
-        
+
         private readonly MedjaApplication _application;
 
         public Program()
         {
-            var library = new MedjaOpenTkLibrary(new DemoTheme());
+            var library = new MedjaOpenTkLibrary(new DarkBlueTheme());
             library.RendererFactory = () => new OpenTkRenderer("Roboto");
             _application = MedjaApplication.Create(library);
         }
@@ -40,7 +41,7 @@ namespace Medja.Demo
         private Control CreateContent()
         {
             var controlFactory = _application.Library.ControlFactory;
-            
+
             var button = controlFactory.Create<Button>();
             button.Text = "Normal";
 
@@ -61,7 +62,7 @@ namespace Medja.Demo
 
             var checkBox = controlFactory.Create<CheckBox>();
             checkBox.Text = "CheckBox";
-            
+
             var checkedCheckBox = controlFactory.Create<CheckBox>();
             checkedCheckBox.IsChecked = true;
             checkedCheckBox.Text = "checked";
@@ -69,7 +70,7 @@ namespace Medja.Demo
             var checkBoxDisabled = controlFactory.Create<CheckBox>();
             checkBoxDisabled.IsEnabled = false;
             checkBoxDisabled.Text = "disabled";
-            
+
             var progressBar = controlFactory.Create<ProgressBar>();
             progressBar.MaxValue = 100;
             progressBar.Value = 75;
@@ -95,7 +96,7 @@ namespace Medja.Demo
             textBoxStackPanel.Children.Add(textBox);
             textBoxStackPanel.Children.Add(textBoxDisabled);
             textBoxStackPanel.Children.Add(textBoxFocused);
-            
+
             var textBlock = controlFactory.Create<TextBlock>();
             textBlock.TextWrapping = TextWrapping.Auto;
             textBlock.Text = "Modern UI Design without Android or iOS. A Linux device that is supported by the mono runtime " +
@@ -109,10 +110,10 @@ namespace Medja.Demo
             checkBoxStackPanel.Children.Add(checkBox);
             checkBoxStackPanel.Children.Add(checkedCheckBox);
             checkBoxStackPanel.Children.Add(checkBoxDisabled);
-            
+
             var result = controlFactory.Create<VerticalStackPanel>();
             result.Padding.SetAll(20);
-            result.Background = DemoThemeValues.Background;
+            result.Background = DarkBlueThemeValues.Background;
             result.SpaceBetweenChildren = 25;
             result.Children.Add(buttonStackPanel);
             result.Children.Add(checkBoxStackPanel);
@@ -120,9 +121,9 @@ namespace Medja.Demo
             result.Children.Add(slider);
             result.Children.Add(textBoxStackPanel);
             result.Children.Add(textBlock);
-            
+
             // todo combobox
-            
+
             return result;
         }
     }

@@ -31,6 +31,10 @@ namespace Medja.OpenTk.Input
 				NotifyKeyPressed((char)Keys.Left);
 			else if(e.Key == Key.Right)
 				NotifyKeyPressed((char)Keys.Right);
+			else if(e.Key == Key.Up)
+				NotifyKeyPressed((char)Keys.Up);
+			else if(e.Key == Key.Down)
+				NotifyKeyPressed((char)Keys.Down);
 		}
 
 		private void OnKeyPressed(object sender, KeyPressEventArgs e)
