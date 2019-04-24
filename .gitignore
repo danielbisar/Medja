@@ -30,3 +30,5 @@ packages/
 .vs/
 .idea/
 .vscode/
+build/test_runs/
+*.sln.DotSettings

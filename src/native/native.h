@@ -5,12 +5,12 @@ typedef struct
 {
     float x_scale;
     float y_scale;
-} medja_monitor;
+} medja_screen;
 
 typedef struct
 {
     int screen_count;
-    medja_monitor* screens;  
+    medja_screen* screens;  
 } medja_system_info;
 
 
