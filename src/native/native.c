@@ -28,7 +28,7 @@ int medja_get_system_info(medja_system_info *system_info) {
     GLFWmonitor** monitors = glfwGetMonitors(&count);
 
     system_info->screen_count = count;
-    system_info->screens = (medja_monitor*)malloc(sizeof(medja_monitor) * count);
+    system_info->screens = (medja_screen*)malloc(sizeof(medja_screen) * count);
 
     for(int i = 0; i < count; i++)
     {
