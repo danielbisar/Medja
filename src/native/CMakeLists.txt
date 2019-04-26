@@ -1,14 +1,25 @@
 cmake_minimum_required(VERSION 3.12.4)
 
+set(default_build_type "Release")
+
+if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+  message(STATUS "Set CMAKE_BUILD_TYPE = '${default_build_type}'")
+  set(CMAKE_BUILD_TYPE "${default_build_type}" CACHE
+      STRING "Choose the type of build." FORCE)
+
+  # Set the possible values of build type for cmake-gui
+  set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS
+    "Debug" "Release")
+endif()
+
 project(medja 
 	VERSION 0.1.0.0 
 	DESCRIPTION "medja native api"
 )
 
-#set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
-#set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
-#set_target_properties(medja PROPERTIES VERSION ${PROJECT_VERSION}) # medja.so.1.0.0 or alike
-#set_target_properties(medja PROPERTIES SOVERSION 1)		   # create symlink medja.so.1
+add_library(medja SHARED 
+	native.c
+)
 
 # glfw
 include(ExternalProject)
@@ -20,8 +31,8 @@ externalproject_add(
 	GIT_TAG 3.3-stable
 	GIT_PROGRESS true
 	CMAKE_ARGS "-DBUILD_SHARED_LIBS=ON"
-		   "-DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/libs"
-		   "-DCMAKE_BUILD_TYPE=Release"
+		   "-DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}"
+		   "-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}"
 		   "-DGLFW_BUILD_EXAMPLES=OFF"
 		   "-DGLFW_BUILD_TESTS=OFF"
 		   "-DGLFW_BUILD_DOCS=OFF"
@@ -31,21 +42,11 @@ externalproject_add(
 		"-DCMAKE_CXX_COMPILER:FILEPATH=${CMAKE_CXX_COMPILER}"
 )
 
-set(GLFW_INCLUDE_DIR "${CMAKE_BINARY_DIR}/libs")
-set(GLFW_LIB_DIR "${CMAKE_BINARY_DIR}/libs/libs64")
-
-add_library(glfw SHARED IMPORTED)
-set_target_properties(glfw
-	PROPERTIES IMPORTED_LOCATION ${GLFW_LIB_DIR}/libglfw.so
-)
-
-
-
-include_directories(${GLFW_INCLUDE_DIR})
-add_library(medja SHARED 
-	native.c
-)
-target_link_libraries(glfw)
 add_dependencies(medja glfw_download)
 
+set(GLFW_INCLUDE_DIR "${CMAKE_BINARY_DIR}/include")
+set(GLFW_LIBRARY_DIR "${CMAKE_BINARY_DIR}/lib64")
+include_directories(${GLFW_INCLUDE_DIR})
+
+target_link_libraries(medja "${GLFW_LIBRARY_DIR}/libglfw.so.3.3")
 

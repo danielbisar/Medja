@@ -2,9 +2,9 @@
 // this library provides access to some system functions that were not available via other
 // .net projects
 
-#include <GLFW/glfw3.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <GLFW/glfw3.h>
 #include "native.h"
 
 void __attribute__ ((constructor)) init_medja() {

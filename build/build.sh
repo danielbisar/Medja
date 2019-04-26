@@ -10,13 +10,10 @@ mkdir -p "$BUILD_TARGET_DIR"
 pushd ../src || exit -1
 pushd native || exit -1
 
-mkdir -p out
-cd out       || exit -1
-cmake ..     || exit -1
-make         || exit -1
+./build.sh || exit -1
 
-cp libmedja.so "$BUILD_TARGET_DIR"  || exit -1
-cp -P libs/lib64/libglfw* "$BUILD_TARGET_DIR"  || exit -1
+cp out/libmedja.so "$BUILD_TARGET_DIR"  || exit -1
+cp out/libglfw.so.3.3 "$BUILD_TARGET_DIR"  || exit -1
 
 popd    # back to src
 
