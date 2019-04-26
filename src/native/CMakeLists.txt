@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 3.12.4)
 
+include(ExternalProject)
+include(GNUInstallDirs)
+
 set(default_build_type "Release")
 
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
@@ -22,8 +25,6 @@ add_library(medja SHARED
 )
 
 # glfw
-include(ExternalProject)
-
 externalproject_add(
 	glfw_download 
 	PREFIX glfw
@@ -32,6 +33,7 @@ externalproject_add(
 	GIT_PROGRESS true
 	CMAKE_ARGS "-DBUILD_SHARED_LIBS=ON"
 		   "-DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}"
+			 "-DCMAKE_INSTALL_LIBDIR=${CMAKE_INSTALL_LIBDIR}"
 		   "-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}"
 		   "-DGLFW_BUILD_EXAMPLES=OFF"
 		   "-DGLFW_BUILD_TESTS=OFF"
@@ -45,8 +47,8 @@ externalproject_add(
 add_dependencies(medja glfw_download)
 
 set(GLFW_INCLUDE_DIR "${CMAKE_BINARY_DIR}/include")
-set(GLFW_LIBRARY_DIR "${CMAKE_BINARY_DIR}/lib64")
+message(STATUS "FICKEN: ${CMAKE_INSTALL_LIBDIR}")
+set(GLFW_LIBRARY_DIR "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR}")
 include_directories(${GLFW_INCLUDE_DIR})
 
 target_link_libraries(medja "${GLFW_LIBRARY_DIR}/libglfw.so.3.3")
-
