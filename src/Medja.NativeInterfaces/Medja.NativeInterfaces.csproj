@@ -4,4 +4,10 @@
         <TargetFramework>net472</TargetFramework>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Folder Include="Linux" />
+      <Folder Include="OSX" />
+      <Folder Include="Windows" />
+    </ItemGroup>
+
 </Project>

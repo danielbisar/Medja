@@ -15,6 +15,10 @@ void __attribute__ ((destructor)) free_medja() {
 	printf("Medja.native: Exit library\n");
 }
 
+void medja_native_check() {
+    return;
+}
+
 int medja_get_system_info(medja_system_info *system_info) {
 	
     if(!system_info)

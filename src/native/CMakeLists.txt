@@ -47,7 +47,6 @@ externalproject_add(
 add_dependencies(medja glfw_download)
 
 set(GLFW_INCLUDE_DIR "${CMAKE_BINARY_DIR}/include")
-message(STATUS "FICKEN: ${CMAKE_INSTALL_LIBDIR}")
 set(GLFW_LIBRARY_DIR "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR}")
 include_directories(${GLFW_INCLUDE_DIR})
 

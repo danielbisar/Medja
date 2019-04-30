@@ -32,3 +32,4 @@ packages/
 .vscode/
 build/test_runs/
 *.sln.DotSettings
+*.DotSettings.user
