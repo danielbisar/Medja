@@ -1,29 +1,33 @@
-using System.Runtime.InteropServices;
+using System;
 
 // ReSharper disable InconsistentNaming
 // ReSharper disable FieldCanBeMadeReadOnly.Local
 
 namespace Medja.NativeInterfaces
 {
-    internal class MedjaNative
+    internal class MedjaNative : IMedjaNative
     {
-        [StructLayout(LayoutKind.Sequential)]
-        internal struct medja_screen
+        public void CheckIfLibIsAvailable()
         {
-            public float x_scale;
-            public float y_scale;
+            // main purpose: make the runtime try to load the native lib
+            CommonExternFunctions.medja_native_check();
         }
 
-        [StructLayout(LayoutKind.Sequential)]
-        internal struct medja_system_info
+        public MedjaSystemInfo GetSystemInfo()
         {
-            public int screen_count;
+            var info = new medja_system_info();
+
+            if(CommonExternFunctions.medja_get_system_info(ref info) == 0)
+            {
+                var screens = new MedjaScreen[info.screen_count];
+                
+                for(int i = 0; i < info.screen_count; i++)
+                    screens[i] = new MedjaScreen(info.screens[i].x_scale, info.screens[i].y_scale);
+
+                return new MedjaSystemInfo(screens);
+            }
             
-            [MarshalAs(UnmanagedType.ByValArray)]
-            public medja_screen[] screens;
+            throw new Exception($"Error calling {nameof(CommonExternFunctions.medja_get_system_info)}.");
         }
-
-        [DllImport("medja.so")]
-        internal static extern int medja_get_system_info(ref medja_system_info system_info);
     }
 }
