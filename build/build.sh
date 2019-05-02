@@ -33,8 +33,14 @@ pushd native || exit -1
 
 ./build.sh || exit -1
 
-cp out/libmedja.so "$BUILD_TARGET_DIR"  || exit -1
-cp out/libglfw.so.3.3 "$BUILD_TARGET_DIR"  || exit -1
+if [[ "$OSTYPE" == darwin* ]]; then
+	echo "Copy libs for mac"
+	cp out/libglfw.3.3.dylib "$BUILD_TARGET_DIR"  || exit -1
+	cp out/libmedja.dylib "$BUILD_TARGET_DIR"  || exit -1
+else # unix and currently all others
+	cp -u out/libmedja.so "$BUILD_TARGET_DIR"  || exit -1
+	cp -u out/libglfw.so.3.3 "$BUILD_TARGET_DIR"  || exit -1
+fi
 
 popd    # back to src
 

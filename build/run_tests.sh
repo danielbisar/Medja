@@ -7,6 +7,6 @@ mkdir -p $TEST_DIR
 cp -r "$COMMON_SCRIPT_DIR/out/." "$TEST_DIR"
 pushd $TEST_DIR
 
-LD_LIBRARY_PATH=. xunit *.Test.dll -diagnostics
+DYLD_LIBRARY_PATH=. LD_LIBRARY_PATH=. xunit *.Test.dll -diagnostics
 
 popd
