@@ -13,5 +13,9 @@ namespace Medja.NativeInterfaces
         
         [DllImport("medja")]
         internal static extern int medja_get_system_info(ref medja_system_info system_info);
+        
+        [DllImport("medja", CallingConvention = CallingConvention.Cdecl)]
+        [return:MarshalAs(UnmanagedType.SafeArray, SafeArraySubType = )]
+        internal static extern medja_screen[] medja_float();
     }
 }

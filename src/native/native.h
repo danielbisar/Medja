@@ -21,4 +21,6 @@ void medja_native_check();
 
 int medja_get_system_info(medja_system_info *system_info);
 
+medja_screen* medja_float();
+
 #endif
