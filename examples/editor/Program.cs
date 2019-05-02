@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Medja;
 using Medja.Controls;
 using Medja.OpenTk;
@@ -31,12 +32,28 @@ namespace Medja.examples.Editor
         private static Control CreateWindowContent(IControlFactory controlFactory)
         {
             // todo menu
-            
+
             var editor = controlFactory.Create<TextEditor>();
-            editor.SetText("Bla bla lorem ypsulakjds löasdjfasf\nlkajsdflköasdfn,adsfoiuew\nasdflkjasdfkljaldf\nasdflkjasdöf");
+            // editor.SetText("Bla bla lorem ypsulakjds löasdjfasf\nlkajsdflköasdfn,adsfoiuew\nasdflkjasdfkljaldf\nasdflkjasdöf");
+
+            editor.SetText(File.ReadAllText("dummy.txt"));
+
+            var btn = controlFactory.Create<Button>();
+            btn.Text = "Du";
+
+            var buttonStackPanel = controlFactory.Create<HorizontalStackPanel>();
+            buttonStackPanel.ChildrenWidth = 60;
+            buttonStackPanel.Position.Height = btn.Position.Height;
+            buttonStackPanel.Background = editor.Background;
+            Console.WriteLine("editor backgroud: " + editor.Background);
+
+            //buttonStackPanel.SpaceBetweenChildren = 50;
+            buttonStackPanel.Children.Add(btn);
 
             var dockPanel = controlFactory.Create<DockPanel>();
+            dockPanel.Add(Dock.Bottom, buttonStackPanel);
             dockPanel.Add(Dock.Fill, editor);
+            FocusManager.Default.SetFocus(editor);
 
             return dockPanel;
         }

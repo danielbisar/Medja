@@ -103,7 +103,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
         {
             var result = base.CreateTextEditor();
             result.Background = DarkBlueThemeValues.ControlBackground;
-            
+
             result.Renderer = new TextEditorRenderer(result);
 
             return result;
