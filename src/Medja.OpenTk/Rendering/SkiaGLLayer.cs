@@ -42,6 +42,7 @@ namespace Medja.OpenTk.Rendering
 			{
 				_surface = SKSurface.Create(_grContext, _renderTarget, GRSurfaceOrigin.BottomLeft, GetColorType());
                 Canvas = _surface.Canvas;
+                Canvas.Scale(0.5f);
                 ResetContext();
             });
 		}
