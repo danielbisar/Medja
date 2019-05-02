@@ -1,9 +1,12 @@
-using System;
 using Xunit;
 using Xunit.Abstractions;
 
 namespace Medja.NativeInterfaces.Test
 {
+    /// <summary>
+    /// To execute them on console after build with the correct lib:
+    /// LD_LIBRARY_PATH=. mono --debug ../../bin/xunit.runner.console.2.4.1/tools/net472/xunit.console.exe *.Test.dll -diagnostics
+    /// </summary>
     public class MedjaNativeTest
     {
         private readonly ITestOutputHelper _output;

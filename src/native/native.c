@@ -52,3 +52,12 @@ int medja_get_system_info(medja_system_info *system_info) {
 
     return 0;
 }
+
+medja_screen* medja_float()
+{
+    medja_screen* x = (medja_screen*)malloc(sizeof(medja_screen));
+    x[0].x_scale = 3.141f;
+    x[0].y_scale = 2.345f;
+
+    return x;
+}
