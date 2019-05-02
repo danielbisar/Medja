@@ -2,6 +2,8 @@
 
 Currently this project is under no license.
 Copyright (c) 2017 by Daniel Klafft
+Copyright (c) 2018-2019 SprintWORX GmbH
+
 
 # Used licenses
 

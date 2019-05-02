@@ -63,7 +63,7 @@ namespace Medja.Utils.Test.Threading.Tasks
 
                 var thread = new Thread(ExecuteTasks);
                 thread.Start(taskQueue);
-                thread.Join(TimeSpan.FromMilliseconds(200));
+                thread.Join();
 
                 Assert.Equal(tasksThreadId, thread.ManagedThreadId);
             }
@@ -72,9 +72,7 @@ namespace Medja.Utils.Test.Threading.Tasks
         private void ExecuteTasks(object state)
         {
             var queue = (TaskQueue<bool>) state;
-            
-            while (!queue.IsDisposed)
-                queue.WaitAndExecuteAll();
+            queue.WaitAndExecuteAll();
         }
 
         [Fact]
@@ -104,7 +102,13 @@ namespace Medja.Utils.Test.Threading.Tasks
                     enqueueThreads.Add(thread);
                 }
 
-                var executionThread = new Thread(ExecuteTasks);
+                var executionThread = new Thread(p =>
+                {
+                    var queue = (TaskQueue<bool>) p;
+                    
+                    while(!queue.IsDisposed)
+                        queue.WaitAndExecuteAll();
+                });
                 executionThread.Start(taskQueue);
 
                 foreach (var enqueueThread in enqueueThreads)
@@ -159,7 +163,7 @@ namespace Medja.Utils.Test.Threading.Tasks
                 var executionThread = new Thread(ExecuteTasks);
                 executionThread.Start(taskQueue);
 
-                Assert.True(task.Wait(100));
+                Assert.True(task.Wait(1000));
             }
         }
 
