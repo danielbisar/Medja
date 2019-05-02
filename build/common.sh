@@ -40,4 +40,11 @@ function xunit()
     mono_cmd "$XUNIT_RUNNER_DIR/tools/$NET_TARGET/xunit.console.exe" "$@"
 }
 
+if [[ "$OSTYPE" == darwin* ]]; then
+    function realpath()
+    {
+	[[ $1 = /* ]] && echo "$1" || echo "$PWD/${1#./}"
+    }
+fi
+
 popd
