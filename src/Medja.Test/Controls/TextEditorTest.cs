@@ -92,5 +92,16 @@ namespace Medja.Test.Controls
             Assert.Throws<ArgumentOutOfRangeException>(() => editor.SetCaretPosition(-1, 3));
             Assert.Throws<ArgumentOutOfRangeException>(() => editor.SetCaretPosition(99, -1));
         }
+
+        [Fact]
+        public void CanInsertTab()
+        {
+            var editor = CreateEditor();
+            editor.SetText("abcdef");
+            editor.SetCaretPosition(3, 0);
+            editor.InputState.NotifyKeyPressed(new KeyboardEventArgs(Keys.Tab, ModifierKeys.None));
+
+            MedjaAssert.Equal(editor.Lines, "abc    def");
+        }
     }
 }
