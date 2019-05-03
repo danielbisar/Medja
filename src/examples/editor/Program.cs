@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Reflection;
 using Medja;
 using Medja.Controls;
 using Medja.OpenTk;
@@ -11,6 +12,17 @@ namespace Medja.examples.Editor
 {
     class Program
     {
+        public static string AssemblyDirectory
+        {
+            get
+            {
+                string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+                UriBuilder uri = new UriBuilder(codeBase);
+                string path = Uri.UnescapeDataString(uri.Path);
+                return Path.GetDirectoryName(path);
+            }
+        }
+
         static void Main(string[] args)
         {
             var library = new MedjaOpenTkLibrary(new Medja.OpenTk.Themes.DarkBlue.DarkBlueTheme());
@@ -31,12 +43,11 @@ namespace Medja.examples.Editor
 
         private static Control CreateWindowContent(IControlFactory controlFactory)
         {
-            // todo menu
+            //TODO menu
 
             var editor = controlFactory.Create<TextEditor>();
-            // editor.SetText("Bla bla lorem ypsulakjds löasdjfasf\nlkajsdflköasdfn,adsfoiuew\nasdflkjasdfkljaldf\nasdflkjasdöf");
 
-            editor.SetText(File.ReadAllText("dummy.txt"));
+            editor.SetText(File.ReadAllText(Path.Combine(AssemblyDirectory, "dummy.txt")));
 
             var btn = controlFactory.Create<Button>();
             btn.Text = "Du";
@@ -47,7 +58,6 @@ namespace Medja.examples.Editor
             buttonStackPanel.Background = editor.Background;
             Console.WriteLine("editor backgroud: " + editor.Background);
 
-            //buttonStackPanel.SpaceBetweenChildren = 50;
             buttonStackPanel.Children.Add(btn);
 
             var dockPanel = controlFactory.Create<DockPanel>();

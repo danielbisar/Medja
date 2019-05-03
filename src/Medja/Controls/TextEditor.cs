@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Medja.Primitives;
@@ -137,6 +138,16 @@ namespace Medja.Controls
             Lines.Add(line.ToString());
 
             // todo reduce capacity of lines if they used a large amount before and now just a few...
+        }
+
+        public void SetCaretPosition(int posY, int posX)
+        {
+            if (posY < 0 || posY > Lines.Count)
+                throw new System.ArgumentOutOfRangeException("argument for Y-Position out of range");
+            CaretY = posY;
+            if (posX < 0 || posX > Lines[posY].Length)
+                throw new System.ArgumentOutOfRangeException("argument for X-Position out of range");
+            CaretX = posX;
         }
 
 
