@@ -66,7 +66,7 @@ namespace Medja.OpenTk
                 _mouseHandler = new OpenTkMouseHandler(_medjaWindow, _gameWindow, _focusManager);
                 _mouseHandler.Controls = _controls;
 
-                _keyboardHandler = new OpenTKKeyboardHandler(_medjaWindow, _gameWindow, _focusManager);
+                _keyboardHandler = new OpenTKKeyboardHandler(_gameWindow, _focusManager);
 
                 _gameWindow.Run(1 / 30.0);
             }

@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Text;
+using Medja.Input;
 using Medja.Primitives;
 
 namespace Medja.Controls
@@ -41,34 +43,37 @@ namespace Medja.Controls
 
         private void OnKeyPressed(object sender, KeyboardEventArgs e)
         {
+            if (e.KeyChar == 0)
+                return;
+            
             var line = Lines[CaretY];
 
             // todo check modifier keys
             switch (e.Key)
             {
-                case (char)Keys.Left:
+                case Keys.Left:
                     if (CaretX > 0)
                         CaretX--;
                     break;
-                case (char)Keys.Right:
+                case Keys.Right:
                     if (CaretX < Lines[CaretY].Length)
                         CaretX++;
                     break;
-                case (char)Keys.Up:
+                case Keys.Up:
                     if (CaretY > 0)
                     {
                         CaretY--;
                         UpdateCaretXAfterCaretYChange();
                     }
                     break;
-                case (char)Keys.Down:
+                case Keys.Down:
                     if (CaretY < Lines.Count - 1)
                     {
                         CaretY++;
                         UpdateCaretXAfterCaretYChange();
                     }
                     break;
-                case '\b':
+                case Keys.Backspace:
                     if (CaretX > 0)
                     {
                         Lines[CaretY] = line.Substring(0, CaretX - 1) + line.Substring(CaretX);
@@ -79,7 +84,7 @@ namespace Medja.Controls
                         // todo: move part of line up handling if line.Length > 0, else just remove line
                     }
                     break;
-                case (char)Keys.Delete:
+                case Keys.Delete:
                     if (CaretX < line.Length)
                     {
                         Lines[CaretY] = line.Substring(0, CaretX) + line.Substring(CaretX + 1);
@@ -95,10 +100,12 @@ namespace Medja.Controls
                 // todo shift + right
                 // todo ctrl+c, ctrl+x
                 default:
-                    Lines[CaretY] = line.Substring(0, CaretX) + e.Key + line.Substring(CaretX);
+                    Lines[CaretY] = line.Substring(0, CaretX) + e.KeyChar + line.Substring(CaretX);
                     CaretX++;
                     break;
             }
+            
+            Console.WriteLine(e);
         }
 
         private void UpdateCaretXAfterCaretYChange()
