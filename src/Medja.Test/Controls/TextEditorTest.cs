@@ -103,5 +103,54 @@ namespace Medja.Test.Controls
 
             MedjaAssert.Equal(editor.Lines, "abc    def");
         }
+
+        [Fact]
+        public void CanMoveCaretForward()
+        {
+            var editor = CreateEditor();
+            editor.SetText("abc\ndef");
+            editor.MoveCaretForward(false);
+            editor.MoveCaretForward(false);
+            editor.MoveCaretForward(false);
+            editor.MoveCaretForward(false);
+            
+            Assert.Equal(0, editor.CaretX);
+            Assert.Equal(1, editor.CaretY);
+            
+            editor.MoveCaretForward(false);
+            editor.MoveCaretForward(false);
+            editor.MoveCaretForward(false);
+            editor.MoveCaretForward(false); // should not throw an exception but keep the cursor at the end of the text
+            
+            Assert.Equal(3, editor.CaretX);
+            Assert.Equal(1, editor.CaretY);
+        }
+        
+        [Fact]
+        public void CanMoveCaretBackward()
+        {
+            var editor = CreateEditor();
+            editor.SetText("abc\ndef");
+            editor.SetCaretPosition(3, 1);
+            editor.MoveCaretBackward(false);
+            editor.MoveCaretBackward(false);
+            editor.MoveCaretBackward(false);
+            
+            Assert.Equal(0, editor.CaretX);
+            Assert.Equal(1, editor.CaretY);
+            
+            editor.MoveCaretBackward(false);
+
+            Assert.Equal(3, editor.CaretX);
+            Assert.Equal(0, editor.CaretY);
+            
+            editor.MoveCaretBackward(false);
+            editor.MoveCaretBackward(false);
+            editor.MoveCaretBackward(false);
+            editor.MoveCaretBackward(false);
+            
+            Assert.Equal(0, editor.CaretX);
+            Assert.Equal(0, editor.CaretY);
+        }
     }
 }
