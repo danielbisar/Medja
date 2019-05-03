@@ -16,20 +16,13 @@ namespace Medja.OpenTk.Test.Input
         {
             var map = new KeyMap();
             
-            Assert.Equal((char)Keys.Backspace, map.GetKeyChar(Key.BackSpace));
-            Assert.Equal((char)Keys.Delete, map.GetKeyChar(Key.Delete));
-            Assert.Equal((char)Keys.Left, map.GetKeyChar(Key.Left));
-            Assert.Equal((char)Keys.Right, map.GetKeyChar(Key.Right));
-            Assert.Equal((char)Keys.Up, map.GetKeyChar(Key.Up));
-            Assert.Equal((char)Keys.Down, map.GetKeyChar(Key.Down));
+            Assert.Equal(Keys.Backspace, map.GetKey(Key.BackSpace));
+            Assert.Equal(Keys.Delete, map.GetKey(Key.Delete));
+            Assert.Equal(Keys.Left, map.GetKey(Key.Left));
+            Assert.Equal(Keys.Right, map.GetKey(Key.Right));
+            Assert.Equal(Keys.Up, map.GetKey(Key.Up));
+            Assert.Equal(Keys.Down, map.GetKey(Key.Down));
         }
-        
-        [Fact]
-        public void GetKeyCharReturnsNullForStandardKey()
-        {
-            var map = new KeyMap();
-            
-            Assert.Null(map.GetKeyChar(Key.A));
-        }
+
     }
 }
