@@ -3,7 +3,7 @@ using Medja.Controls;
 using Medja.Primitives;
 using Medja.Utils;
 
-namespace Medja
+namespace Medja.Input
 {
 	public class InputState
 	{
@@ -109,9 +109,9 @@ namespace Medja
 			_dragThreshold = 5;
 		}
 
-		public void NotifyKeyPressed(char key)
+		public void NotifyKeyPressed(KeyboardEventArgs keyboardEventArgs)
 		{
-			KeyPressed?.Invoke(this, new KeyboardEventArgs(key));
+			KeyPressed?.Invoke(this, keyboardEventArgs);
 		}
 
 		private void OnPointerPositionChanged(object sender, PropertyChangedEventArgs eventArgs)
