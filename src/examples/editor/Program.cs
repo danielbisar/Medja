@@ -56,7 +56,7 @@ namespace Medja.examples.Editor
             buttonStackPanel.ChildrenWidth = 60;
             buttonStackPanel.Position.Height = btn.Position.Height;
             buttonStackPanel.Background = editor.Background;
-            Console.WriteLine("editor backgroud: " + editor.Background);
+            Console.WriteLine("editor background: " + editor.Background);
 
             buttonStackPanel.Children.Add(btn);
 
