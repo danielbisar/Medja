@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Medja.Input;
 using Medja.Primitives;
@@ -29,6 +30,20 @@ namespace Medja.Controls
             private set { PropertyCaretY.Set(value); }
         }
 
+        public readonly Property<Caret> PropertySelectionStart;
+        public Caret SelectionStart
+        {
+            get { return PropertySelectionStart.Get(); }
+            private set { PropertySelectionStart.Set(value); }
+        }
+
+        public readonly Property<Caret> PropertySelectionEnd;
+        public Caret SelectionEnd
+        {
+            get { return PropertySelectionEnd.Get(); }
+            private set { PropertySelectionEnd.Set(value); }
+        }
+        
         public TextEditor()
         {
             Lines = new List<string>();
@@ -36,7 +51,9 @@ namespace Medja.Controls
 
             PropertyCaretX = new Property<int>();
             PropertyCaretY = new Property<int>();
-
+            PropertySelectionStart = new Property<Caret>();
+            PropertySelectionEnd = new Property<Caret>();
+            
             InputState.KeyPressed += OnKeyPressed;
             InputState.OwnsMouseEvents = true;
         }
@@ -52,12 +69,10 @@ namespace Medja.Controls
             switch (e.Key)
             {
                 case Keys.Left:
-                    if (CaretX > 0)
-                        CaretX--;
+                    MoveCaretBackward(e.ModifierKeys.HasShift());
                     break;
                 case Keys.Right:
-                    if (CaretX < Lines[CaretY].Length)
-                        CaretX++;
+                    MoveCaretForward(e.ModifierKeys.HasShift());
                     break;
                 case Keys.Up:
                     if (CaretY > 0)
@@ -100,10 +115,7 @@ namespace Medja.Controls
                     SetCaretPosition(0, CaretY + 1);
                     break;
                 case Keys.Tab:
-                    InsertChar(' ');
-                    InsertChar(' ');
-                    InsertChar(' ');
-                    InsertChar(' ');
+                    InsertText("    ");
                     break;
                 // todo ctrl+v
                 // todo shift + left
@@ -117,11 +129,21 @@ namespace Medja.Controls
 
         private void InsertChar(char c)
         {
-            var line = Lines[CaretY];
-            Lines[CaretY] = line.Substring(0, CaretX) + c + line.Substring(CaretX);
-            CaretX++;
+            InsertText(new string(c, 1));
         }
 
+
+        /// <summary>
+        /// Inserts text at the current caret position.
+        /// </summary>
+        /// <param name="text">The text to insert.</param>
+        public void InsertText(string text)
+        {
+            var line = Lines[CaretY];
+            Lines[CaretY] = line.Substring(0, CaretX) + text + line.Substring(CaretX);
+            CaretX++;
+        }
+        
         private void UpdateCaretXAfterCaretYChange()
         {
             if (Lines[CaretY].Length <= CaretX)
@@ -170,6 +192,77 @@ namespace Medja.Controls
 
             CaretX = posX;
             CaretY = posY;
+        }
+
+        public void MoveCaretBackward(bool select)
+        {
+            if (select && SelectionStart == null)
+                MarkSelectionStart();
+            
+            if (CaretX > 0)
+                CaretX--;
+            else if(CaretY > 0)
+            {
+                CaretY--;
+                CaretX = Lines[CaretY].Length;
+            }
+            
+            if(select)
+                MarkSelectionEnd();
+            else
+                ClearSelection();
+        }
+
+        public void MoveCaretForward(bool select)
+        {
+            if (select && SelectionStart == null)
+                MarkSelectionStart();
+            
+            if (CaretX < Lines[CaretY].Length)
+                CaretX++;
+            else if (CaretY < Lines.Count - 1)
+            {
+                CaretY++;
+                CaretX = 0;
+            }
+
+            if(select)
+                MarkSelectionEnd();
+            else
+                ClearSelection();
+        }
+
+        private void MarkSelectionStart()
+        {
+            SelectionStart = new Caret(CaretX, CaretY);
+            SelectionEnd = SelectionStart;
+        }
+        
+        private void MarkSelectionEnd()
+        {
+            SelectionEnd = new Caret(CaretX, CaretY);
+        }
+
+        private void ClearSelection()
+        {
+            SelectionStart = null;
+            SelectionEnd = null;
+        }
+
+        public Caret GetLogicalSelectionStart()
+        {
+            if (SelectionStart == null)
+                return null;
+            
+            return SelectionStart < SelectionEnd ? SelectionStart : SelectionEnd;
+        }
+
+        public Caret GetLogicalSelectionEnd()
+        {
+            if (SelectionEnd == null)
+                return null;
+            
+            return SelectionStart < SelectionEnd ? SelectionEnd : SelectionStart;
         }
     }
 }
