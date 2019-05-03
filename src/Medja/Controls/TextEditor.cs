@@ -99,15 +99,27 @@ namespace Medja.Controls
                     Lines.Insert(CaretY + 1, line.Substring(CaretX, line.Length - CaretX));
                     SetCaretPosition(0, CaretY + 1);
                     break;
+                case Keys.Tab:
+                    InsertChar(' ');
+                    InsertChar(' ');
+                    InsertChar(' ');
+                    InsertChar(' ');
+                    break;
                 // todo ctrl+v
                 // todo shift + left
                 // todo shift + right
                 // todo ctrl+c, ctrl+x
                 default:
-                    Lines[CaretY] = line.Substring(0, CaretX) + e.KeyChar + line.Substring(CaretX);
-                    CaretX++;
+                    InsertChar(e.KeyChar);
                     break;
             }
+        }
+
+        private void InsertChar(char c)
+        {
+            var line = Lines[CaretY];
+            Lines[CaretY] = line.Substring(0, CaretX) + c + line.Substring(CaretX);
+            CaretX++;
         }
 
         private void UpdateCaretXAfterCaretYChange()
