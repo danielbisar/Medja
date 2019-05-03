@@ -1,4 +1,5 @@
-﻿using Medja.Primitives;
+﻿using Medja.Input;
+using Medja.Primitives;
 
 namespace Medja.Controls
 {
@@ -36,7 +37,7 @@ namespace Medja.Controls
 		{
 			_selfChangedText = true;
 
-			if (e.Key == '\b')
+			if (e.KeyChar == '\b')
 			{
 				if (Text.Length > 0)
 				{
@@ -44,26 +45,26 @@ namespace Medja.Controls
 					CaretPos--;
 				}
 			}
-			else if (e.Key == (char) Keys.Delete)
+			else if (e.KeyChar == (char) Keys.Delete)
 			{
 				if (CaretPos < Text.Length)
 				{
 					Text = Text.Substring(0, CaretPos) + Text.Substring(CaretPos + 1);
 				}
 			}
-			else if (e.Key == (char)Keys.Left)
+			else if (e.KeyChar == (char)Keys.Left)
 			{
 				if(CaretPos > 0)
 					CaretPos--;
 			}
-			else if (e.Key == (char) Keys.Right)
+			else if (e.KeyChar == (char) Keys.Right)
 			{
 				if(CaretPos < Text.Length)
 					CaretPos++;	
 			}
 			else
 			{
-				Text = Text.Substring(0, CaretPos) + e.Key + Text.Substring(CaretPos);
+				Text = Text.Substring(0, CaretPos) + e.KeyChar + Text.Substring(CaretPos);
 				CaretPos++;
 			}
 			
