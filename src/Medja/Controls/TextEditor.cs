@@ -45,7 +45,7 @@ namespace Medja.Controls
         {
             if (e.KeyChar == 0)
                 return;
-            
+
             var line = Lines[CaretY];
 
             // todo check modifier keys
@@ -94,11 +94,10 @@ namespace Medja.Controls
                         // todo: move part of line up handling if line.Length > 0, else just remove line
                     }
                     break;
-                case '\n':
-                    // todo return/enter key handling case (char)
+                case Keys.Return:
                     Lines[CaretY] = line.Substring(0, CaretX);
                     Lines.Insert(CaretY + 1, line.Substring(CaretX, line.Length - CaretX));
-                    SetCaretPosition(CaretY + 1, 0);
+                    SetCaretPosition(0, CaretY + 1);
                     break;
                 // todo ctrl+v
                 // todo shift + left
@@ -109,8 +108,6 @@ namespace Medja.Controls
                     CaretX++;
                     break;
             }
-            
-            Console.WriteLine(e);
         }
 
         private void UpdateCaretXAfterCaretYChange()
@@ -151,16 +148,16 @@ namespace Medja.Controls
             // todo reduce capacity of lines if they used a large amount before and now just a few...
         }
 
-        public void SetCaretPosition(int posY, int posX)
+        public void SetCaretPosition(int posX, int posY)
         {
             if (posY < 0 || posY > Lines.Count)
-                throw new System.ArgumentOutOfRangeException("argument for Y-Position out of range");
-            CaretY = posY;
+                throw new System.ArgumentOutOfRangeException(nameof(posY));
+
             if (posX < 0 || posX > Lines[posY].Length)
-                throw new System.ArgumentOutOfRangeException("argument for X-Position out of range");
+                throw new System.ArgumentOutOfRangeException(nameof(posX));
+
             CaretX = posX;
+            CaretY = posY;
         }
-
-
     }
 }
