@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Reflection;
 using Medja;
@@ -47,7 +47,10 @@ namespace Medja.examples.Editor
 
             var editor = controlFactory.Create<TextEditor>();
 
-            editor.SetText(File.ReadAllText(Path.Combine(AssemblyDirectory, "dummy.txt")));
+            var path = Path.Combine(AssemblyDirectory, "dummy.txt");
+
+            if (File.Exists(path))
+                editor.SetText(File.ReadAllText(path));
 
             var btn = controlFactory.Create<Button>();
             btn.Text = "Du";
@@ -56,13 +59,12 @@ namespace Medja.examples.Editor
             buttonStackPanel.ChildrenWidth = 60;
             buttonStackPanel.Position.Height = btn.Position.Height;
             buttonStackPanel.Background = editor.Background;
-            Console.WriteLine("editor background: " + editor.Background);
-
             buttonStackPanel.Children.Add(btn);
 
             var dockPanel = controlFactory.Create<DockPanel>();
             dockPanel.Add(Dock.Bottom, buttonStackPanel);
             dockPanel.Add(Dock.Fill, editor);
+
             FocusManager.Default.SetFocus(editor);
 
             return dockPanel;
