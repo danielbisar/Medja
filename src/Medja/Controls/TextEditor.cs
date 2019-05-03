@@ -90,7 +90,12 @@ namespace Medja.Controls
                         // todo: move part of line up handling if line.Length > 0, else just remove line
                     }
                     break;
-                // todo return/enter key handling case (char)
+                case '\n':
+                    // todo return/enter key handling case (char)
+                    Lines[CaretY] = line.Substring(0, CaretX);
+                    Lines.Insert(CaretY + 1, line.Substring(CaretX, line.Length - CaretX));
+                    SetCaretPosition(CaretY + 1, 0);
+                    break;
                 // todo ctrl+v
                 // todo shift + left
                 // todo shift + right

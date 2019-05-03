@@ -45,11 +45,13 @@ namespace Medja.Test.Controls
             editor.SetText("abcdefghijklm");
             Assert.Equal(1, (int)editor.Lines.Count);
 
-            editor.GetType().GetProperty("CaretX").SetValue(editor, 7, null);
-            // editor.InputState.NotifyKeyPressed();
-
-            editor.SetText("abcdefg\nhijklm");
+            editor.SetCaretPosition(0, 3);
+            editor.InputState.NotifyKeyPressed('\n');
             Assert.Equal(2, (int)editor.Lines.Count);
+
+            Assert.Equal("defghijklm".Length, (int)editor.Lines[1].Length);
+            Assert.Equal(1, editor.CaretY);
+            Assert.Equal(0, editor.CaretX);
         }
 
         [Fact]
