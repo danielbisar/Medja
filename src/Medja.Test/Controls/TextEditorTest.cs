@@ -168,6 +168,22 @@ namespace Medja.Test.Controls
         }
 
         [Fact]
+        public void DeleteCanHandleSequencesOverLinebreaks()
+        {
+            var editor = CreateEditor();
+            editor.SetText("abcde\nfghij");
+            editor.SetCaretPosition(3,0);
+            editor.InputState.NotifyKeyPressed(new KeyboardEventArgs(Keys.Delete, ModifierKeys.None));
+            editor.InputState.NotifyKeyPressed(new KeyboardEventArgs(Keys.Delete, ModifierKeys.None));
+            editor.InputState.NotifyKeyPressed(new KeyboardEventArgs(Keys.Delete, ModifierKeys.None));
+
+            Assert.Equal(3, editor.CaretX);
+            Assert.Equal(0, editor.CaretY);
+            Assert.Equal(1, (int)editor.Lines.Count);
+            MedjaAssert.Equal(editor.Lines, "abcfghij");
+        }
+        
+        [Fact]
         public void DeleteCanHandleLimits()
         {
             var editor = CreateEditor();
