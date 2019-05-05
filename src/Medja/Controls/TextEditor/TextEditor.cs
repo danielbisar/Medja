@@ -96,7 +96,6 @@ namespace Medja.Controls
                     }
                     else
                     {
-                        // todo: move part of line up handling if line.Length > 0, else just remove line
                         if (CaretY != 0)
                         {
                             Lines[CaretY - 1] = Lines[CaretY - 1] + Lines[CaretY].Substring(0, line.Length);
@@ -114,7 +113,7 @@ namespace Medja.Controls
                     }
                     else
                     {
-                        // todo: move part of line up handling if line.Length > 0, else just remove line
+                        // TODO: handle delete for macOS
                         if(CaretY+1 != Lines.Count)
                         {
                             Lines[CaretY] = line + Lines[CaretY + 1].Substring(0, line.Length);
