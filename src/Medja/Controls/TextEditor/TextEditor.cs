@@ -97,10 +97,14 @@ namespace Medja.Controls
                     else
                     {
                         // todo: move part of line up handling if line.Length > 0, else just remove line
-                        Lines[CaretY - 1] = Lines[CaretY - 1] + Lines[CaretY].Substring(0, line.Length);
-                        CaretX = Lines[CaretY - 1].Length - Lines[CaretY].Length;
-                        CaretY--;
-                        Lines.RemoveAt(CaretY + 1); 
+                        if (CaretY != 0)
+                        {
+                            Lines[CaretY - 1] = Lines[CaretY - 1] + Lines[CaretY].Substring(0, line.Length);
+                            CaretX = Lines[CaretY - 1].Length - Lines[CaretY].Length;
+                            CaretY--;
+                            Lines.RemoveAt(CaretY + 1);                            
+                        }
+ 
                     }
                     break;
                 case Keys.Delete:
@@ -111,7 +115,7 @@ namespace Medja.Controls
                     else
                     {
                         // todo: move part of line up handling if line.Length > 0, else just remove line
-                        if (Lines.Count > CaretY)
+                        if(CaretY+1 != Lines.Count)
                         {
                             Lines[CaretY] = line + Lines[CaretY + 1].Substring(0, line.Length);
                             Lines.RemoveAt(CaretY + 1); 

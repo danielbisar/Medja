@@ -168,6 +168,20 @@ namespace Medja.Test.Controls
         }
 
         [Fact]
+        public void DeleteCanHandleLimits()
+        {
+            var editor = CreateEditor();
+            editor.SetText("abcde");
+            editor.SetCaretPosition(5,0);
+            editor.InputState.NotifyKeyPressed(new KeyboardEventArgs(Keys.Delete, ModifierKeys.None));
+            
+            Assert.Equal(5, editor.CaretX);
+            Assert.Equal(0, editor.CaretY);
+            Assert.Equal(1, (int)editor.Lines.Count);
+            MedjaAssert.Equal(editor.Lines, "abcde");
+        }
+
+        [Fact]
         public void BackspaceCanCombineTwoLines()
         {
             var editor = CreateEditor();
@@ -190,6 +204,20 @@ namespace Medja.Test.Controls
             Assert.Equal(1, editor.CaretY);
             Assert.Equal(2, (int)editor.Lines.Count);
             MedjaAssert.Equal(editor.Lines, "abcde", "fghijlmno");
+        }
+        
+        [Fact]
+        public void BackspaceCanHandleLimits()
+        {
+            var editor = CreateEditor();
+            editor.SetText("abcde\nfghij");
+            editor.SetCaretPosition(0,0);
+            editor.InputState.NotifyKeyPressed(new KeyboardEventArgs(Keys.Backspace, ModifierKeys.None));
+            
+            Assert.Equal(0, editor.CaretX);
+            Assert.Equal(0, editor.CaretY);
+            Assert.Equal(2, (int)editor.Lines.Count);
+            MedjaAssert.Equal(editor.Lines, "abcde", "fghij");
         }
     }
 }
