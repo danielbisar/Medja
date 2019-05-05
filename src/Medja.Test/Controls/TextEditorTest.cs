@@ -152,5 +152,44 @@ namespace Medja.Test.Controls
             Assert.Equal(0, editor.CaretX);
             Assert.Equal(0, editor.CaretY);
         }
+
+        [Fact]
+        public void DeleteCanCombineTwoLines()
+        {
+            var editor = CreateEditor();
+            editor.SetText("abcde\nfghij");
+            editor.SetCaretPosition(5,0);
+            editor.InputState.NotifyKeyPressed(new KeyboardEventArgs(Keys.Delete, ModifierKeys.None));
+
+            Assert.Equal(5, editor.CaretX);
+            Assert.Equal(0, editor.CaretY);
+            Assert.Equal(1, (int)editor.Lines.Count);
+            MedjaAssert.Equal(editor.Lines, "abcdefghij");
+        }
+
+        [Fact]
+        public void BackspaceCanCombineTwoLines()
+        {
+            var editor = CreateEditor();
+            editor.SetText("abcde\nfghij");
+            editor.SetCaretPosition(0,1);
+            editor.InputState.NotifyKeyPressed(new KeyboardEventArgs(Keys.Backspace, ModifierKeys.None));
+            
+            Assert.Equal(5, editor.CaretX);
+            Assert.Equal(0, editor.CaretY);
+            Assert.Equal(1, (int)editor.Lines.Count);
+            MedjaAssert.Equal(editor.Lines, "abcdefghij");
+            
+            
+            editor.SetText("abcde\nfghij\nklmno");
+            editor.SetCaretPosition(1,2);
+            editor.InputState.NotifyKeyPressed(new KeyboardEventArgs(Keys.Backspace, ModifierKeys.None));
+            editor.InputState.NotifyKeyPressed(new KeyboardEventArgs(Keys.Backspace, ModifierKeys.None));
+            
+            Assert.Equal(5, editor.CaretX);
+            Assert.Equal(1, editor.CaretY);
+            Assert.Equal(2, (int)editor.Lines.Count);
+            MedjaAssert.Equal(editor.Lines, "abcde", "fghijlmno");
+        }
     }
 }
