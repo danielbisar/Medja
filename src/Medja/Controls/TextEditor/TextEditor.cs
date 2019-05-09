@@ -82,12 +82,7 @@ namespace Medja.Controls
                     MoveCaretUp(e.ModifierKeys.HasShift());
                     break;
                 case Keys.Down:
-                    if (CaretY < Lines.Count - 1)
-                    {
-                        CaretY++;
-                        UpdateCaretXAfterCaretYChange();
-                    }
-
+                    MoveCaretDown(e.ModifierKeys.HasShift());
                     break;
                 case Keys.Backspace:
                     if (CaretX > 0)
@@ -121,6 +116,7 @@ namespace Medja.Controls
                             Lines.RemoveAt(CaretY + 1);
                         }
                     }
+
                     break;
                 case Keys.Return:
                     Lines[CaretY] = line.Substring(0, CaretX);
@@ -254,6 +250,19 @@ namespace Medja.Controls
                 UpdateCaretXAfterCaretYChange();
             }
 
+            MarkSelectionEndOrClear(select);
+        }
+        
+        public void MoveCaretDown(bool select)
+        {
+            AssureSelectionStart(select);
+
+            if (CaretY < Lines.Count - 1)
+            {
+                CaretY++;
+                UpdateCaretXAfterCaretYChange();
+            }
+            
             MarkSelectionEndOrClear(select);
         }
 

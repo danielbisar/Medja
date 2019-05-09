@@ -265,6 +265,7 @@ namespace Medja.Test.Controls
             Assert.Equal(new Caret(2, 0), editor.SelectionEnd);
         }
 
+        [Fact]
         public void MoveCaretUpClearsSelection()
         {
             var editor = CreateEditor();
@@ -276,6 +277,52 @@ namespace Medja.Test.Controls
             Assert.Equal(new Caret(2, 1), editor.SelectionEnd);
             
             editor.MoveCaretUp(false);
+            
+            Assert.Null(editor.SelectionStart);
+            Assert.Null(editor.SelectionEnd);
+        }
+        
+        [Fact]
+        public void CanMoveCaretDown()
+        {
+            var editor = CreateEditor();
+            editor.SetText("abc\ndef\nghi");
+            editor.SetCaretPosition(2, 1);
+            editor.MoveCaretDown(false);
+            
+            Assert.Equal(2, editor.CaretX);
+            Assert.Equal(2, editor.CaretY);
+            Assert.Null(editor.SelectionStart);
+            Assert.Null(editor.SelectionEnd);
+            
+            editor.MoveCaretDown(false);
+
+            Assert.Equal(2, editor.CaretX);
+            Assert.Equal(2, editor.CaretY);
+            Assert.Null(editor.SelectionStart);
+            Assert.Null(editor.SelectionEnd);
+
+            editor.SetCaretPosition(2, 1);
+            editor.MoveCaretDown(true);
+
+            Assert.Equal(2, editor.CaretX);
+            Assert.Equal(2, editor.CaretY);
+            Assert.Equal(new Caret(2, 1), editor.SelectionStart);
+            Assert.Equal(new Caret(2, 2), editor.SelectionEnd);
+        }
+
+        [Fact]
+        public void MoveCaretDownClearsSelection()
+        {
+            var editor = CreateEditor();
+            editor.SetText("abc\ndef\nghi");
+            editor.SetCaretPosition(2, 2);
+            editor.MoveCaretUp(true);
+            
+            Assert.Equal(new Caret(2, 2), editor.SelectionStart);
+            Assert.Equal(new Caret(2, 1), editor.SelectionEnd);
+            
+            editor.MoveCaretDown(false);
             
             Assert.Null(editor.SelectionStart);
             Assert.Null(editor.SelectionEnd);
