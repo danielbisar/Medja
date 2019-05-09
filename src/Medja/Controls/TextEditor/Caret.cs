@@ -1,6 +1,8 @@
+using System;
+
 namespace Medja.Controls
 {
-    public class Caret
+    public class Caret : IEquatable<Caret>
     {
         public static bool operator >(Caret a, Caret b)
         {
@@ -30,6 +32,24 @@ namespace Medja.Controls
             return a.Y < b.Y;
         }
 
+        public static bool operator ==(Caret a, Caret b)
+        {
+            if (object.ReferenceEquals(a, null))
+            {
+                if (object.ReferenceEquals(b, null))
+                    return true;
+
+                return false;
+            }
+
+            return a.Equals(b);
+        }
+
+        public static bool operator !=(Caret a, Caret b)
+        {
+            return !(a == b);
+        }
+
         public int X { get; set; }
         public int Y { get; set; }
 
@@ -42,6 +62,37 @@ namespace Medja.Controls
         {
             X = x;
             Y = y;
+        }
+
+        public bool Equals(Caret other)
+        {
+            if (ReferenceEquals(null, other)) 
+                return false;
+            if (ReferenceEquals(this, other)) 
+                return true;
+            
+            return X == other.X && Y == other.Y;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) 
+                return false;
+            if (ReferenceEquals(this, obj)) 
+                return true;
+            
+            if (obj.GetType() != this.GetType()) 
+                return false;
+            
+            return Equals((Caret) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return (X * 397) ^ Y;
+            }
         }
     }
 }

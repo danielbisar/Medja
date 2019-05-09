@@ -17,6 +17,7 @@ namespace Medja.Controls
         public List<string> Lines { get; }
 
         public readonly Property<int> PropertyCaretX;
+
         public int CaretX
         {
             get { return PropertyCaretX.Get(); }
@@ -24,6 +25,7 @@ namespace Medja.Controls
         }
 
         public readonly Property<int> PropertyCaretY;
+
         public int CaretY
         {
             get { return PropertyCaretY.Get(); }
@@ -31,6 +33,7 @@ namespace Medja.Controls
         }
 
         public readonly Property<Caret> PropertySelectionStart;
+
         public Caret SelectionStart
         {
             get { return PropertySelectionStart.Get(); }
@@ -38,12 +41,13 @@ namespace Medja.Controls
         }
 
         public readonly Property<Caret> PropertySelectionEnd;
+
         public Caret SelectionEnd
         {
             get { return PropertySelectionEnd.Get(); }
             private set { PropertySelectionEnd.Set(value); }
         }
-        
+
         public TextEditor()
         {
             Lines = new List<string>();
@@ -53,7 +57,7 @@ namespace Medja.Controls
             PropertyCaretY = new Property<int>();
             PropertySelectionStart = new Property<Caret>();
             PropertySelectionEnd = new Property<Caret>();
-            
+
             InputState.KeyPressed += OnKeyPressed;
             InputState.OwnsMouseEvents = true;
         }
@@ -75,11 +79,7 @@ namespace Medja.Controls
                     MoveCaretForward(e.ModifierKeys.HasShift());
                     break;
                 case Keys.Up:
-                    if (CaretY > 0)
-                    {
-                        CaretY--;
-                        UpdateCaretXAfterCaretYChange();
-                    }
+                    MoveCaretUp(e.ModifierKeys.HasShift());
                     break;
                 case Keys.Down:
                     if (CaretY < Lines.Count - 1)
@@ -87,6 +87,7 @@ namespace Medja.Controls
                         CaretY++;
                         UpdateCaretXAfterCaretYChange();
                     }
+
                     break;
                 case Keys.Backspace:
                     if (CaretX > 0)
@@ -98,13 +99,13 @@ namespace Medja.Controls
                     {
                         if (CaretY != 0)
                         {
-                            Lines[CaretY - 1] = Lines[CaretY - 1] + Lines[CaretY].Substring(0, line.Length);
+                            Lines[CaretY - 1] = Lines[CaretY - 1] + Lines[CaretY];
                             CaretX = Lines[CaretY - 1].Length - Lines[CaretY].Length;
                             CaretY--;
-                            Lines.RemoveAt(CaretY + 1);                            
+                            Lines.RemoveAt(CaretY + 1);
                         }
- 
                     }
+
                     break;
                 case Keys.Delete:
                     if (CaretX < line.Length)
@@ -114,11 +115,11 @@ namespace Medja.Controls
                     else
                     {
                         // TODO: handle delete for macOS
-                        if(CaretY+1 != Lines.Count)
+                        if (CaretY + 1 < Lines.Count)
                         {
-                            Lines[CaretY] = line + Lines[CaretY + 1].Substring(0, line.Length);
-                            Lines.RemoveAt(CaretY + 1); 
-                        }  
+                            Lines[CaretY] = line + Lines[CaretY + 1];
+                            Lines.RemoveAt(CaretY + 1);
+                        }
                     }
                     break;
                 case Keys.Return:
@@ -155,7 +156,7 @@ namespace Medja.Controls
             Lines[CaretY] = line.Substring(0, CaretX) + text + line.Substring(CaretX);
             CaretX++;
         }
-        
+
         private void UpdateCaretXAfterCaretYChange()
         {
             if (Lines[CaretY].Length <= CaretX)
@@ -204,22 +205,22 @@ namespace Medja.Controls
 
             CaretX = posX;
             CaretY = posY;
+            ClearSelection();
         }
 
         public void MoveCaretBackward(bool select)
         {
-            if (select && SelectionStart == null)
-                MarkSelectionStart();
-            
+            AssureSelectionStart(select);
+
             if (CaretX > 0)
                 CaretX--;
-            else if(CaretY > 0)
+            else if (CaretY > 0)
             {
                 CaretY--;
                 CaretX = Lines[CaretY].Length;
             }
-            
-            if(select)
+
+            if (select)
                 MarkSelectionEnd();
             else
                 ClearSelection();
@@ -227,9 +228,8 @@ namespace Medja.Controls
 
         public void MoveCaretForward(bool select)
         {
-            if (select && SelectionStart == null)
-                MarkSelectionStart();
-            
+            AssureSelectionStart(select);
+
             if (CaretX < Lines[CaretY].Length)
                 CaretX++;
             else if (CaretY < Lines.Count - 1)
@@ -238,10 +238,37 @@ namespace Medja.Controls
                 CaretX = 0;
             }
 
-            if(select)
+            if (select)
                 MarkSelectionEnd();
             else
                 ClearSelection();
+        }
+
+        public void MoveCaretUp(bool select)
+        {
+            AssureSelectionStart(select);
+
+            if (CaretY > 0)
+            {
+                CaretY--;
+                UpdateCaretXAfterCaretYChange();
+            }
+
+            MarkSelectionEndOrClear(select);
+        }
+
+        private void MarkSelectionEndOrClear(bool select)
+        {
+            if (select)
+                MarkSelectionEnd();
+            else
+                ClearSelection();
+        }
+
+        private void AssureSelectionStart(bool select)
+        {
+            if (select && SelectionStart == null)
+                MarkSelectionStart();
         }
 
         private void MarkSelectionStart()
@@ -249,7 +276,7 @@ namespace Medja.Controls
             SelectionStart = new Caret(CaretX, CaretY);
             SelectionEnd = SelectionStart;
         }
-        
+
         private void MarkSelectionEnd()
         {
             SelectionEnd = new Caret(CaretX, CaretY);
@@ -265,7 +292,7 @@ namespace Medja.Controls
         {
             if (SelectionStart == null)
                 return null;
-            
+
             return SelectionStart < SelectionEnd ? SelectionStart : SelectionEnd;
         }
 
@@ -273,7 +300,7 @@ namespace Medja.Controls
         {
             if (SelectionEnd == null)
                 return null;
-            
+
             return SelectionStart < SelectionEnd ? SelectionEnd : SelectionStart;
         }
     }
