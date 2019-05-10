@@ -94,5 +94,10 @@ namespace Medja.Controls
                 return (X * 397) ^ Y;
             }
         }
+
+        public override string ToString()
+        {
+            return nameof(Caret) + ": { "+nameof(X)+" = " + X + ", " + nameof(Y) + " = " + Y + "}";
+        }
     }
 }
