@@ -563,5 +563,28 @@ namespace Medja.Test.Controls
             Assert.Null(editor.SelectionStart);
             Assert.Null(editor.SelectionEnd);
         }
+
+        [Fact]
+        public void InsertTextClearsSelection()
+        {
+            Assert.False(true);
+        }
+
+        [Fact]
+        public void JoinLineAndNext()
+        {
+            var editor = CreateEditor();
+            editor.SetText("0123\n4567\n8901");
+            
+            editor.JoinLineAndNext(1);
+            
+            Assert.Equal("0123\n45678901", editor.GetText());
+
+            Assert.Throws<ArgumentOutOfRangeException>(() => editor.JoinLineAndNext(1));
+            
+            editor.JoinLineAndNext(0);
+            
+            Assert.Equal("012345678901", editor.GetText());
+        }
     }
 }

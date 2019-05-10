@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Text;
 using Medja.Input;
-using Medja.Primitives;
 
 namespace Medja.Controls
 {
@@ -111,14 +109,154 @@ namespace Medja.Controls
                     break;
             }
         }
+        
+        /// <summary>
+        /// Sets the position of the caret.
+        /// </summary>
+        /// <param name="posX">The column in the given line.</param>
+        /// <param name="posY">The row/line index.</param>
+        /// <remarks>Clears the current selection.</remarks>
+        /// <exception cref="ArgumentOutOfRangeException">If the given <see cref="posX"/> or <see cref="posY"/> is
+        /// invalid.</exception>
+        public void SetCaretPosition(int posX, int posY)
+        {
+            if (posY < 0 || posY > Lines.Count)
+                throw new ArgumentOutOfRangeException(nameof(posY));
+
+            if (posX < 0 || posX > Lines[posY].Length)
+                throw new ArgumentOutOfRangeException(nameof(posX));
+
+            CaretX = posX;
+            CaretY = posY;
+            ClearSelection();
+        }
+
+        /// <summary>
+        /// Moves the caret backward one position. Goes to previous line if the caret was at the beginning of a line.
+        /// </summary>
+        /// <remarks>Clears previous selection if select is false.</remarks>
+        /// <param name="select">If true selects the text the caret moved over.</param>
+        public void MoveCaretBackward(bool select)
+        {
+            AssureSelectionStart(select);
+
+            if (CaretX > 0)
+                CaretX--;
+            else if (CaretY > 0)
+            {
+                CaretY--;
+                CaretX = Lines[CaretY].Length;
+            }
+
+            if (select)
+                MarkSelectionEnd();
+            else
+                ClearSelection();
+        }
+
+        /// <summary>
+        /// Moves the caret forward one position. Goes to the next line if the caret was at the end of a line.
+        /// </summary>
+        /// <remarks>Clears previous selection if select is false.</remarks>
+        /// <param name="select">If true selects the text the caret moved over.</param>
+        public void MoveCaretForward(bool select)
+        {
+            AssureSelectionStart(select);
+
+            if (CaretX < Lines[CaretY].Length)
+                CaretX++;
+            else if (CaretY < Lines.Count - 1)
+            {
+                CaretY++;
+                CaretX = 0;
+            }
+
+            if (select)
+                MarkSelectionEnd();
+            else
+                ClearSelection();
+        }
+        
+        /// <summary>
+        /// Moves the caret up one line.
+        /// </summary>
+        /// <remarks>Clears previous selection if select is false.</remarks>
+        /// <param name="select">If true selects the text the caret moved over (usual editor selection behavior).</param>
+        public void MoveCaretUp(bool select)
+        {
+            AssureSelectionStart(select);
+
+            if (CaretY > 0)
+            {
+                CaretY--;
+                UpdateCaretXAfterCaretYChange();
+            }
+
+            MarkSelectionEndOrClear(select);
+        }
+
+        /// <summary>
+        /// Moves the caret down one line.
+        /// </summary>
+        /// <remarks>Clears previous selection if select is false.</remarks>
+        /// <param name="select">If true selects the text the caret moved over (usual editor selection behavior).</param>
+        public void MoveCaretDown(bool select)
+        {
+            AssureSelectionStart(select);
+
+            if (CaretY < Lines.Count - 1)
+            {
+                CaretY++;
+                UpdateCaretXAfterCaretYChange();
+            }
+
+            MarkSelectionEndOrClear(select);
+        }
+
+        /// <summary>
+        /// Clears the current selection.
+        /// </summary>
+        private void ClearSelection()
+        {
+            SelectionStart = null;
+            SelectionEnd = null;
+        }
+
+        /// <summary>
+        /// Gets the logical selection start. This is the lower position interpreted as selection start and the higher
+        /// as selection end.
+        /// </summary>
+        /// <returns>The logical selection start.</returns>
+        public Caret GetLogicalSelectionStart()
+        {
+            if (SelectionStart == null)
+                return null;
+
+            return SelectionStart < SelectionEnd ? SelectionStart : SelectionEnd;
+        }
+
+        /// <summary>
+        /// Gets the logical selection end. This is the lower position interpreted as selection start and the higher
+        /// as selection end.
+        /// </summary>
+        /// <returns>The logical selection end.</returns>
+        public Caret GetLogicalSelectionEnd()
+        {
+            if (SelectionEnd == null)
+                return null;
+
+            return SelectionStart < SelectionEnd ? SelectionEnd : SelectionStart;
+        }
 
         private void HandleReturn()
         {
             var line = Lines[CaretY];
 
             Lines[CaretY] = line.Substring(0, CaretX);
-            Lines.Insert(CaretY + 1, line.Substring(CaretX, line.Length - CaretX));
-            SetCaretPosition(0, CaretY + 1);
+
+            CaretY++;
+            Lines.Insert(CaretY, line.Substring(CaretX, line.Length - CaretX));
+            CaretX = 0;
         }
 
         private void HandleDelete()
@@ -130,14 +268,17 @@ namespace Medja.Controls
                 Lines[CaretY] = line.Substring(0, CaretX) + line.Substring(CaretX + 1);
             }
             else
-            {
-                // TODO: handle delete for macOS
-                if (CaretY + 1 < Lines.Count)
-                {
-                    Lines[CaretY] = line + Lines[CaretY + 1];
-                    Lines.RemoveAt(CaretY + 1);
-                }
-            }
+                JoinLineAndNext(CaretY);
+        }
+
+        public void JoinLineAndNext(int index)
+        {
+            // we need one extra line
+            if(index + 1 >= Lines.Count)
+                throw new ArgumentOutOfRangeException(nameof(index));
+
+            Lines[index] += Lines[index + 1];
+            Lines.RemoveAt(index + 1);
         }
 
         private void HandleBackspace()
@@ -190,8 +331,7 @@ namespace Medja.Controls
                         }
                         else
                         {
-                            Lines[lineIndex] += Lines[lineIndex + 1];
-                            Lines.RemoveAt(lineIndex);
+                            JoinLineAndNext(lineIndex);
                             lineIndex--;
                         }
                     }
@@ -207,10 +347,8 @@ namespace Medja.Controls
                     }
                     else
                     {
-                        // join this line with the previous one
-                        Lines[lineIndex - 1] += Lines[lineIndex];
-                        Lines.RemoveAt(lineIndex);
                         lineIndex--;
+                        JoinLineAndNext(lineIndex);
                     }
                 }
                 else
@@ -258,14 +396,17 @@ namespace Medja.Controls
 
 
         /// <summary>
-        /// Inserts text at the current caret position.
+        /// Inserts text at the current caret position. If some text is selected, this text will be replaced.
         /// </summary>
+        /// <remarks>Clears selection.</remarks>
         /// <param name="text">The text to insert.</param>
         public void InsertText(string text)
         {
+            // todo replace selected text
             var line = Lines[CaretY];
             Lines[CaretY] = line.Substring(0, CaretX) + text + line.Substring(CaretX);
             CaretX++;
+            ClearSelection();
         }
 
         private void UpdateCaretXAfterCaretYChange()
@@ -332,81 +473,6 @@ namespace Medja.Controls
             return result + Lines.Count * Environment.NewLine.Length;
         }
 
-        public void SetCaretPosition(int posX, int posY)
-        {
-            if (posY < 0 || posY > Lines.Count)
-                throw new System.ArgumentOutOfRangeException(nameof(posY));
-
-            if (posX < 0 || posX > Lines[posY].Length)
-                throw new System.ArgumentOutOfRangeException(nameof(posX));
-
-            CaretX = posX;
-            CaretY = posY;
-            ClearSelection();
-        }
-
-        public void MoveCaretBackward(bool select)
-        {
-            AssureSelectionStart(select);
-
-            if (CaretX > 0)
-                CaretX--;
-            else if (CaretY > 0)
-            {
-                CaretY--;
-                CaretX = Lines[CaretY].Length;
-            }
-
-            if (select)
-                MarkSelectionEnd();
-            else
-                ClearSelection();
-        }
-
-        public void MoveCaretForward(bool select)
-        {
-            AssureSelectionStart(select);
-
-            if (CaretX < Lines[CaretY].Length)
-                CaretX++;
-            else if (CaretY < Lines.Count - 1)
-            {
-                CaretY++;
-                CaretX = 0;
-            }
-
-            if (select)
-                MarkSelectionEnd();
-            else
-                ClearSelection();
-        }
-
-        public void MoveCaretUp(bool select)
-        {
-            AssureSelectionStart(select);
-
-            if (CaretY > 0)
-            {
-                CaretY--;
-                UpdateCaretXAfterCaretYChange();
-            }
-
-            MarkSelectionEndOrClear(select);
-        }
-
-        public void MoveCaretDown(bool select)
-        {
-            AssureSelectionStart(select);
-
-            if (CaretY < Lines.Count - 1)
-            {
-                CaretY++;
-                UpdateCaretXAfterCaretYChange();
-            }
-
-            MarkSelectionEndOrClear(select);
-        }
-
         private void MarkSelectionEndOrClear(bool select)
         {
             if (select)
@@ -430,28 +496,6 @@ namespace Medja.Controls
         private void MarkSelectionEnd()
         {
             SelectionEnd = new Caret(CaretX, CaretY);
-        }
-
-        private void ClearSelection()
-        {
-            SelectionStart = null;
-            SelectionEnd = null;
-        }
-
-        public Caret GetLogicalSelectionStart()
-        {
-            if (SelectionStart == null)
-                return null;
-
-            return SelectionStart < SelectionEnd ? SelectionStart : SelectionEnd;
-        }
-
-        public Caret GetLogicalSelectionEnd()
-        {
-            if (SelectionEnd == null)
-                return null;
-
-            return SelectionStart < SelectionEnd ? SelectionEnd : SelectionStart;
         }
     }
 }
