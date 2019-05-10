@@ -324,15 +324,21 @@ namespace Medja.Controls
                         Lines[lineIndex] = line.Substring(0, SelectionStart.X) + line.Substring(SelectionEnd.X);
                     else if (SelectionStart.X == line.Length) // selection started at the end of the line
                     {
+                        // selection ends somewhere in the next line
                         if (SelectionEnd.Y == i + 1)
                         {
-                            Lines[lineIndex] += Lines[lineIndex + 1].Substring(SelectionEnd.Y);
-                            // todo fix
+                            if(SelectionEnd.X > 0)
+                                Lines[lineIndex + 1] = Lines[lineIndex + 1].Substring(SelectionEnd.X);
+                            
+                            JoinLineAndNext(lineIndex);
+                            lineIndex--;
+                            SelectionEnd.Y--;
                         }
                         else
                         {
-                            JoinLineAndNext(lineIndex);
+                            Lines.RemoveAt(lineIndex + 1);
                             lineIndex--;
+                            SelectionEnd.Y--;
                         }
                     }
                     else
@@ -343,20 +349,24 @@ namespace Medja.Controls
                     if (SelectionEnd.X > 0)
                     {
                         var line = Lines[lineIndex];
-                        Lines[lineIndex] = line.Substring(SelectionEnd.X);
+                        Lines[lineIndex] = line.Substring(0, SelectionEnd.X);
                     }
                     else
                     {
-                        lineIndex--;
                         JoinLineAndNext(lineIndex);
+                        lineIndex--;
+                        SelectionEnd.Y--;
                     }
                 }
                 else
                 {
                     Lines.RemoveAt(lineIndex);
                     lineIndex--;
+                    SelectionEnd.Y--;
                 }
             }
+            
+            ClearSelection();
         }
 
         public string GetSelectedText()
@@ -402,11 +412,34 @@ namespace Medja.Controls
         /// <param name="text">The text to insert.</param>
         public void InsertText(string text)
         {
-            // todo replace selected text
-            var line = Lines[CaretY];
-            Lines[CaretY] = line.Substring(0, CaretX) + text + line.Substring(CaretX);
-            CaretX++;
-            ClearSelection();
+            if(HasSelection)
+                RemoveSelectedText();
+
+            var insertLines = text.Split(new string[] {"\n", "\r\n", "\r"}, StringSplitOptions.None);
+            var linePart1 = Lines[CaretY].Substring(0, CaretX);
+            var linePart2 = Lines[CaretY].Substring(CaretX);
+
+            if (insertLines.Length == 1)
+            {
+                Lines[CaretY] = linePart1 + insertLines[0] + linePart2;
+                CaretX += insertLines[0].Length;
+            }
+            else if (insertLines.Length > 1)
+            {
+                Lines[CaretY] = linePart1 + insertLines[0];
+                
+                for(int i = 1; i + 1 < insertLines.Length; i++, CaretY++)
+                    Lines.Insert(CaretY, insertLines[i]);
+
+                CaretY++;
+                var lastInsertLine = insertLines[insertLines.Length - 1];
+                
+                Lines.Insert(CaretY, lastInsertLine + linePart2);
+                
+                CaretX = lastInsertLine.Length;
+            }
+            else
+                throw new InvalidOperationException();
         }
 
         private void UpdateCaretXAfterCaretYChange()
