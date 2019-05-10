@@ -71,9 +71,6 @@ namespace Medja.Controls
             if (e.KeyChar == 0)
                 return;
 
-            if (HasSelection && e.Key == null || KeyInsertsValue(e.Key))
-                RemoveSelectedText();
-
             switch (e.Key)
             {
                 case Keys.Left:
@@ -261,13 +258,19 @@ namespace Medja.Controls
 
         private void HandleDelete()
         {
+            if (HasSelection)
+            {
+                RemoveSelectedText();
+                return;
+            }
+            
             var line = Lines[CaretY];
 
             if (CaretX < line.Length)
             {
                 Lines[CaretY] = line.Substring(0, CaretX) + line.Substring(CaretX + 1);
             }
-            else
+            else if(CaretY + 1 < Lines.Count)
                 JoinLineAndNext(CaretY);
         }
 
@@ -283,6 +286,12 @@ namespace Medja.Controls
 
         private void HandleBackspace()
         {
+            if (HasSelection)
+            {
+                RemoveSelectedText();
+                return;
+            }
+            
             var line = Lines[CaretY];
 
             if (CaretX > 0)
@@ -302,11 +311,6 @@ namespace Medja.Controls
             }
         }
 
-        private bool KeyInsertsValue(Keys? key)
-        {
-            return key == Keys.Backspace || key == Keys.Delete || key == Keys.Return || key == Keys.Tab;
-        }
-
         public void RemoveSelectedText()
         {
             if (!HasSelection)
@@ -320,23 +324,29 @@ namespace Medja.Controls
             
             // just part of one line selected
             if (logicalSelectionStart.Y == logicalSelectionEnd.Y) 
-            {
                 Lines[logicalSelectionStart.Y] = line.Substring(0, logicalSelectionStart.X) + line.Substring(logicalSelectionEnd.X);
-                return;
+            else
+            {
+                Lines[logicalSelectionStart.Y] = line.Substring(0, logicalSelectionStart.X);
+
+                // join the ending line with the starting one
+                Lines[logicalSelectionStart.Y] += Lines[logicalSelectionEnd.Y].Substring(logicalSelectionEnd.X);
+
+                // lines in after first and before last line
+                for (int i = logicalSelectionStart.Y + 1; i <= logicalSelectionEnd.Y; i++)
+                    Lines.RemoveAt(logicalSelectionStart.Y + 1);
             }
 
-            Lines[logicalSelectionStart.Y] = line.Substring(0, logicalSelectionStart.X);
-            
-            // join the ending line with the starting one
-            Lines[logicalSelectionStart.Y] += Lines[logicalSelectionEnd.Y].Substring(logicalSelectionEnd.X);
-            
-            // lines in after first and before last line
-            for(int i = logicalSelectionStart.Y + 1; i <= logicalSelectionEnd.Y; i++)
-                Lines.RemoveAt(logicalSelectionStart.Y + 1);
+            CaretX = logicalSelectionStart.X;
+            CaretY = logicalSelectionStart.Y;
             
             ClearSelection();
         }
 
+        /// <summary>
+        /// Gets the selected text as string.
+        /// </summary>
+        /// <returns>The selected text or string.Empty.</returns>
         public string GetSelectedText()
         {
             if (!HasSelection)
