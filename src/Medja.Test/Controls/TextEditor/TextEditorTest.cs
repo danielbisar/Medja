@@ -35,7 +35,7 @@ namespace Medja.Test.Controls
             var editor = CreateEditor();
 
             // ReSharper disable once xUnit2013
-            Assert.Equal(1, (int)editor.Lines.Count);
+            Assert.Equal(1, (int) editor.Lines.Count);
         }
 
         [Fact]
@@ -44,7 +44,7 @@ namespace Medja.Test.Controls
             var editor = CreateEditor();
 
             editor.SetText("abcdefghijklm");
-            Assert.Equal(1, (int)editor.Lines.Count);
+            Assert.Equal(1, (int) editor.Lines.Count);
 
             editor.SetCaretPosition(3, 0);
             editor.InputState.NotifyKeyPressed(new KeyboardEventArgs(Keys.Return, ModifierKeys.None));
@@ -113,19 +113,19 @@ namespace Medja.Test.Controls
             editor.MoveCaretForward(false);
             editor.MoveCaretForward(false);
             editor.MoveCaretForward(false);
-            
+
             Assert.Equal(0, editor.CaretX);
             Assert.Equal(1, editor.CaretY);
-            
+
             editor.MoveCaretForward(false);
             editor.MoveCaretForward(false);
             editor.MoveCaretForward(false);
             editor.MoveCaretForward(false); // should not throw an exception but keep the cursor at the end of the text
-            
+
             Assert.Equal(3, editor.CaretX);
             Assert.Equal(1, editor.CaretY);
         }
-        
+
         [Fact]
         public void CanMoveCaretBackward()
         {
@@ -135,20 +135,20 @@ namespace Medja.Test.Controls
             editor.MoveCaretBackward(false);
             editor.MoveCaretBackward(false);
             editor.MoveCaretBackward(false);
-            
+
             Assert.Equal(0, editor.CaretX);
             Assert.Equal(1, editor.CaretY);
-            
+
             editor.MoveCaretBackward(false);
 
             Assert.Equal(3, editor.CaretX);
             Assert.Equal(0, editor.CaretY);
-            
+
             editor.MoveCaretBackward(false);
             editor.MoveCaretBackward(false);
             editor.MoveCaretBackward(false);
             editor.MoveCaretBackward(false);
-            
+
             Assert.Equal(0, editor.CaretX);
             Assert.Equal(0, editor.CaretY);
         }
@@ -158,12 +158,12 @@ namespace Medja.Test.Controls
         {
             var editor = CreateEditor();
             editor.SetText("abcde\nfghij");
-            editor.SetCaretPosition(5,0);
+            editor.SetCaretPosition(5, 0);
             editor.InputState.NotifyKeyPressed(new KeyboardEventArgs(Keys.Delete, ModifierKeys.None));
 
             Assert.Equal(5, editor.CaretX);
             Assert.Equal(0, editor.CaretY);
-            Assert.Equal(1, (int)editor.Lines.Count);
+            Assert.Equal(1, (int) editor.Lines.Count);
             MedjaAssert.Equal(editor.Lines, "abcdefghij");
         }
 
@@ -172,25 +172,25 @@ namespace Medja.Test.Controls
         {
             var editor = CreateEditor();
             editor.SetText("abcde\nfghij");
-            editor.SetCaretPosition(3,0);
+            editor.SetCaretPosition(3, 0);
             editor.InputState.NotifyKeyPressed(new KeyboardEventArgs(Keys.Delete, ModifierKeys.None));
             editor.InputState.NotifyKeyPressed(new KeyboardEventArgs(Keys.Delete, ModifierKeys.None));
             editor.InputState.NotifyKeyPressed(new KeyboardEventArgs(Keys.Delete, ModifierKeys.None));
 
             Assert.Equal(3, editor.CaretX);
             Assert.Equal(0, editor.CaretY);
-            Assert.Equal(1, (int)editor.Lines.Count);
+            Assert.Equal(1, (int) editor.Lines.Count);
             MedjaAssert.Equal(editor.Lines, "abcfghij");
         }
-        
+
         [Fact]
         public void DeleteKeyDoesntFailOnEndOfLastLine()
         {
             var editor = CreateEditor();
             editor.SetText("abcde");
-            editor.SetCaretPosition(5,0);
+            editor.SetCaretPosition(5, 0);
             editor.InputState.NotifyKeyPressed(new KeyboardEventArgs(Keys.Delete, ModifierKeys.None));
-            
+
             Assert.Equal(5, editor.CaretX);
             Assert.Equal(0, editor.CaretY);
             MedjaAssert.Equal(editor.Lines, "abcde");
@@ -201,37 +201,37 @@ namespace Medja.Test.Controls
         {
             var editor = CreateEditor();
             editor.SetText("abcde\nfghij");
-            editor.SetCaretPosition(0,1);
+            editor.SetCaretPosition(0, 1);
             editor.InputState.NotifyKeyPressed(new KeyboardEventArgs(Keys.Backspace, ModifierKeys.None));
-            
+
             Assert.Equal(5, editor.CaretX);
             Assert.Equal(0, editor.CaretY);
-            Assert.Equal(1, (int)editor.Lines.Count);
+            Assert.Equal(1, (int) editor.Lines.Count);
             MedjaAssert.Equal(editor.Lines, "abcdefghij");
-            
-            
+
+
             editor.SetText("abcde\nfghij\nklmno");
-            editor.SetCaretPosition(1,2);
+            editor.SetCaretPosition(1, 2);
             editor.InputState.NotifyKeyPressed(new KeyboardEventArgs(Keys.Backspace, ModifierKeys.None));
             editor.InputState.NotifyKeyPressed(new KeyboardEventArgs(Keys.Backspace, ModifierKeys.None));
-            
+
             Assert.Equal(5, editor.CaretX);
             Assert.Equal(1, editor.CaretY);
-            Assert.Equal(2, (int)editor.Lines.Count);
+            Assert.Equal(2, (int) editor.Lines.Count);
             MedjaAssert.Equal(editor.Lines, "abcde", "fghijlmno");
         }
-        
+
         [Fact]
         public void BackspaceCanHandleLimits()
         {
             var editor = CreateEditor();
             editor.SetText("abcde\nfghij");
-            editor.SetCaretPosition(0,0);
+            editor.SetCaretPosition(0, 0);
             editor.InputState.NotifyKeyPressed(new KeyboardEventArgs(Keys.Backspace, ModifierKeys.None));
-            
+
             Assert.Equal(0, editor.CaretX);
             Assert.Equal(0, editor.CaretY);
-            Assert.Equal(2, (int)editor.Lines.Count);
+            Assert.Equal(2, (int) editor.Lines.Count);
             MedjaAssert.Equal(editor.Lines, "abcde", "fghij");
         }
 
@@ -242,12 +242,12 @@ namespace Medja.Test.Controls
             editor.SetText("abc\ndef\nghi");
             editor.SetCaretPosition(2, 1);
             editor.MoveCaretUp(false);
-            
+
             Assert.Equal(2, editor.CaretX);
             Assert.Equal(0, editor.CaretY);
             Assert.Null(editor.SelectionStart);
             Assert.Null(editor.SelectionEnd);
-            
+
             editor.MoveCaretUp(false);
 
             Assert.Equal(2, editor.CaretX);
@@ -271,16 +271,16 @@ namespace Medja.Test.Controls
             editor.SetText("abc\ndef\nghi");
             editor.SetCaretPosition(2, 2);
             editor.MoveCaretUp(true);
-            
+
             Assert.Equal(new Caret(2, 2), editor.SelectionStart);
             Assert.Equal(new Caret(2, 1), editor.SelectionEnd);
-            
+
             editor.MoveCaretUp(false);
-            
+
             Assert.Null(editor.SelectionStart);
             Assert.Null(editor.SelectionEnd);
         }
-        
+
         [Fact]
         public void CanMoveCaretDown()
         {
@@ -288,12 +288,12 @@ namespace Medja.Test.Controls
             editor.SetText("abc\ndef\nghi");
             editor.SetCaretPosition(2, 1);
             editor.MoveCaretDown(false);
-            
+
             Assert.Equal(2, editor.CaretX);
             Assert.Equal(2, editor.CaretY);
             Assert.Null(editor.SelectionStart);
             Assert.Null(editor.SelectionEnd);
-            
+
             editor.MoveCaretDown(false);
 
             Assert.Equal(2, editor.CaretX);
@@ -317,12 +317,12 @@ namespace Medja.Test.Controls
             editor.SetText("abc\ndef\nghi");
             editor.SetCaretPosition(2, 2);
             editor.MoveCaretUp(true);
-            
+
             Assert.Equal(new Caret(2, 2), editor.SelectionStart);
             Assert.Equal(new Caret(2, 1), editor.SelectionEnd);
-            
+
             editor.MoveCaretDown(false);
-            
+
             Assert.Null(editor.SelectionStart);
             Assert.Null(editor.SelectionEnd);
         }
@@ -334,12 +334,12 @@ namespace Medja.Test.Controls
             editor.SetText("abc\ndef\nghi");
             editor.SetCaretPosition(2, 1);
             editor.MoveCaretUp(true);
-            
+
             Assert.Equal(new Caret(2, 1), editor.SelectionStart);
             Assert.Equal(new Caret(2, 0), editor.SelectionEnd);
-            
+
             editor.SetCaretPosition(2, 1);
-            
+
             Assert.Null(editor.SelectionStart);
             Assert.Null(editor.SelectionEnd);
         }
@@ -357,7 +357,7 @@ namespace Medja.Test.Controls
             editor.MoveCaretForward(true); // e
             editor.MoveCaretForward(true); // c
             editor.MoveCaretForward(true); // t
-            
+
             editor.InputState.NotifyKeyPressed(new KeyboardEventArgs('c', ModifierKeys.None));
 
             Assert.Equal("012 c 456", editor.GetText());
@@ -369,7 +369,7 @@ namespace Medja.Test.Controls
             var text = "012" + Environment.NewLine + "345" + Environment.NewLine + "678";
             var editor = CreateEditor();
             editor.SetText(text);
-            
+
             Assert.Equal(text, editor.GetText());
         }
 
@@ -386,15 +386,12 @@ namespace Medja.Test.Controls
             editor.MoveCaretForward(true); // e
             editor.MoveCaretForward(true); // c
             editor.MoveCaretForward(true); // t
-            
+
             editor.RemoveSelectedText();
-            
+
             Assert.Equal("012  456", editor.GetText());
         }
-        
-        
-        // TODO RemoveSelectedText with backwards selected text
-        
+
         [Fact]
         public void RemoveSelectedText()
         {
@@ -402,17 +399,17 @@ namespace Medja.Test.Controls
 
             var expected = new[]
             {
-                "012select\n456\n789",
-                "012elect\n456\n789",
-                "012lect\n456\n789",
-                "012ect\n456\n789",
-                "012ct\n456\n789",
-                "012t\n456\n789",
-                "012\n456\n789",
-                "012456\n789",
-                "01256\n789",
-                "0126\n789",
-                "012\n789",
+                "012select" + Environment.NewLine + "456" + Environment.NewLine + "789",
+                "012elect" + Environment.NewLine + "456" + Environment.NewLine + "789",
+                "012lect" + Environment.NewLine + "456" + Environment.NewLine + "789",
+                "012ect" + Environment.NewLine + "456" + Environment.NewLine + "789",
+                "012ct" + Environment.NewLine + "456" + Environment.NewLine + "789",
+                "012t" + Environment.NewLine + "456" + Environment.NewLine + "789",
+                "012" + Environment.NewLine + "456" + Environment.NewLine + "789",
+                "012456" + Environment.NewLine + "789",
+                "01256" + Environment.NewLine + "789",
+                "0126" + Environment.NewLine + "789",
+                "012" + Environment.NewLine + "789",
                 "012789",
                 "01289",
                 "0129",
@@ -421,17 +418,18 @@ namespace Medja.Test.Controls
 
             for (int i = 0; i < expected.Length; i++)
             {
-                editor.SetText("012\nselect\n456\n789_" + i);
+                editor.SetText("012" + Environment.NewLine + "select" + Environment.NewLine + "456" +
+                               Environment.NewLine + "789_" + i);
                 editor.SetCaretPosition(3, 0);
 
-                for(int n = 0; n <= i; n++)
+                for (int n = 0; n <= i; n++)
                     editor.MoveCaretForward(true);
-                
+
                 editor.RemoveSelectedText();
                 Assert.Equal(expected[i] + "_" + i, editor.GetText());
             }
         }
-        
+
         [Fact]
         public void RemoveSelectedTextTwoLines()
         {
@@ -446,17 +444,17 @@ namespace Medja.Test.Controls
             editor.MoveCaretForward(true); // e
             editor.MoveCaretForward(true); // c
             editor.MoveCaretForward(true); // t
-            
+
             editor.RemoveSelectedText();
-            
-            Assert.Equal("012\n456", editor.GetText());
+
+            Assert.Equal("012" + Environment.NewLine + "456", editor.GetText());
         }
-        
+
         [Fact]
         public void RemoveSelectedTextMultipleLines()
         {
             var editor = CreateEditor();
-            editor.SetText("012\nselect\n456\n789");
+            editor.SetText("012" + Environment.NewLine + "select" + Environment.NewLine + "456" + Environment.NewLine + "789");
             editor.SetCaretPosition(3, 0);
 
             editor.MoveCaretForward(true); // \n
@@ -471,27 +469,26 @@ namespace Medja.Test.Controls
             editor.MoveCaretForward(true); // 5
             editor.MoveCaretForward(true); // 6
             editor.MoveCaretForward(true); // \n
-            
+
             editor.RemoveSelectedText();
-            
+
             Assert.Equal("012789", editor.GetText());
         }
 
         [Fact]
         public void RemoveSelectedSetsCaretPos()
         {
-            
         }
 
         [Fact]
         public void GetSelectedTextNoSelection()
         {
             var editor = CreateEditor();
-            editor.SetText("012\nselect\n456\n789");
-            
+            editor.SetText("012\nsele" + Environment.NewLine + "9");
+
             Assert.Equal("", editor.GetSelectedText());
         }
-        
+
         [Fact]
         public void GetSelectedText()
         {
@@ -500,74 +497,74 @@ namespace Medja.Test.Controls
             editor.SetCaretPosition(3, 0);
 
             editor.MoveCaretForward(true); // \n
-            Assert.Equal("\n", editor.GetSelectedText());
-            
+            Assert.Equal(Environment.NewLine, editor.GetSelectedText());
+
             editor.MoveCaretForward(true); // s
-            Assert.Equal("\ns", editor.GetSelectedText());
-            
+            Assert.Equal(Environment.NewLine + "s", editor.GetSelectedText());
+
             editor.MoveCaretForward(true); // e
-            Assert.Equal("\nse", editor.GetSelectedText());
+            Assert.Equal(Environment.NewLine + "se", editor.GetSelectedText());
 
             editor.MoveCaretForward(true); // l
-            Assert.Equal("\nsel", editor.GetSelectedText());
-            
+            Assert.Equal(Environment.NewLine + "sel", editor.GetSelectedText());
+
             editor.MoveCaretForward(true); // e
-            Assert.Equal("\nsele", editor.GetSelectedText());
-            
+            Assert.Equal(Environment.NewLine + "sele", editor.GetSelectedText());
+
             editor.MoveCaretForward(true); // c
-            Assert.Equal("\nselec", editor.GetSelectedText());
-            
+            Assert.Equal(Environment.NewLine + "selec", editor.GetSelectedText());
+
             editor.MoveCaretForward(true); // t
-            Assert.Equal("\nselect", editor.GetSelectedText());
-            
+            Assert.Equal(Environment.NewLine + "select", editor.GetSelectedText());
+
             editor.MoveCaretForward(true); // \n
-            Assert.Equal("\nselect\n", editor.GetSelectedText());
-            
+            Assert.Equal(Environment.NewLine + "select" + Environment.NewLine, editor.GetSelectedText());
+
             editor.MoveCaretForward(true); // 4
-            Assert.Equal("\nselect\n4", editor.GetSelectedText());
-            
+            Assert.Equal(Environment.NewLine + "select" + Environment.NewLine + "4", editor.GetSelectedText());
+
             editor.MoveCaretForward(true); // 5
-            Assert.Equal("\nselect\n45", editor.GetSelectedText());
-            
+            Assert.Equal(Environment.NewLine + "select" + Environment.NewLine + "45", editor.GetSelectedText());
+
             editor.MoveCaretForward(true); // 6
-            Assert.Equal("\nselect\n456", editor.GetSelectedText());
-            
+            Assert.Equal(Environment.NewLine + "select" + Environment.NewLine + "456", editor.GetSelectedText());
+
             editor.MoveCaretForward(true); // \n
-            Assert.Equal("\nselect\n456\n", editor.GetSelectedText());
+            Assert.Equal(Environment.NewLine + "select" + Environment.NewLine + "456" + Environment.NewLine,
+                editor.GetSelectedText());
         }
 
         [Fact]
         public void MoveCaretForward()
         {
             var editor = CreateEditor();
-            editor.SetText("012\nselect\n456\n789");
+            editor.SetText("012\nsele" + Environment.NewLine + "9");
             editor.SetCaretPosition(3, 0);
-            
+
             editor.MoveCaretForward(true);
             Assert.Equal(new Caret(3, 0), editor.SelectionStart);
             Assert.Equal(new Caret(0, 1), editor.SelectionEnd);
-            
+
             editor.MoveCaretForward(true);
             Assert.Equal(new Caret(3, 0), editor.SelectionStart);
             Assert.Equal(new Caret(1, 1), editor.SelectionEnd);
-
         }
 
         [Fact]
         public void SetTextClearsSelection()
         {
             var editor = CreateEditor();
-            editor.SetText("012\nselect\n456\n789");
+            editor.SetText("012\nsele" + Environment.NewLine + "9");
             editor.SetCaretPosition(3, 0);
-            
+
             editor.MoveCaretForward(true);
             editor.MoveCaretForward(true);
-            
+
             Assert.Equal(new Caret(3, 0), editor.SelectionStart);
             Assert.Equal(new Caret(1, 1), editor.SelectionEnd);
-            
-            editor.SetText("012\nselect\n456\n78");
-            
+
+            editor.SetText("012\nsele" + Environment.NewLine + "");
+
             Assert.Null(editor.SelectionStart);
             Assert.Null(editor.SelectionEnd);
         }
@@ -576,37 +573,37 @@ namespace Medja.Test.Controls
         public void InsertTextClearsSelection()
         {
             var editor = CreateEditor();
-            editor.SetText("012\nselect\n456\n789");
+            editor.SetText("012\nsele" + Environment.NewLine + "9");
             editor.SetCaretPosition(3, 0);
-            
+
             editor.MoveCaretForward(true);
             editor.MoveCaretForward(true);
-            
+
             Assert.Equal(new Caret(3, 0), editor.SelectionStart);
             Assert.Equal(new Caret(1, 1), editor.SelectionEnd);
-            
+
             editor.InsertText("123");
-            
+
             Assert.Null(editor.SelectionStart);
             Assert.Null(editor.SelectionEnd);
         }
-        
+
         [Fact]
         public void InsertTextReplacesSelectedText()
         {
             var editor = CreateEditor();
-            editor.SetText("012\nselect\n456\n789");
+            editor.SetText("012\nsele" + Environment.NewLine + "9");
             editor.SetCaretPosition(3, 0);
-            
+
             editor.MoveCaretForward(true);
             editor.MoveCaretForward(true);
-            
+
             Assert.Equal(new Caret(3, 0), editor.SelectionStart);
             Assert.Equal(new Caret(1, 1), editor.SelectionEnd);
-            
+
             editor.InsertText("123");
-            
-            Assert.Equal("012123elect\n456\n789", editor.GetText());
+
+            Assert.Equal("012123ele" + Environment.NewLine + "9", editor.GetText());
         }
 
         [Fact]
@@ -614,15 +611,15 @@ namespace Medja.Test.Controls
         {
             var editor = CreateEditor();
             editor.SetText("0123\n4567\n8901");
-            
+
             editor.JoinLineAndNext(1);
-            
+
             Assert.Equal("0123\n45678901", editor.GetText());
 
             Assert.Throws<ArgumentOutOfRangeException>(() => editor.JoinLineAndNext(1));
-            
+
             editor.JoinLineAndNext(0);
-            
+
             Assert.Equal("012345678901", editor.GetText());
         }
 
@@ -630,17 +627,17 @@ namespace Medja.Test.Controls
         public void RemoveSelectedTextClearsSelection()
         {
             var editor = CreateEditor();
-            editor.SetText("012\nselect\n456\n789");
+            editor.SetText("012\nsele" + Environment.NewLine + "9");
             editor.SetCaretPosition(3, 0);
-            
+
             editor.MoveCaretForward(true);
             editor.MoveCaretForward(true);
-            
+
             Assert.Equal(new Caret(3, 0), editor.SelectionStart);
             Assert.Equal(new Caret(1, 1), editor.SelectionEnd);
-            
+
             editor.RemoveSelectedText();
-            
+
             Assert.False(editor.HasSelection);
             Assert.Null(editor.SelectionStart);
             Assert.Null(editor.SelectionEnd);
@@ -652,7 +649,7 @@ namespace Medja.Test.Controls
             var editor = CreateEditor();
             editor.SetText("012345");
             editor.SetCaretPosition(3, 0);
-            
+
             editor.InsertText("\n");
             editor.InsertText("\r");
             editor.InsertText("\r\n");
@@ -670,9 +667,9 @@ namespace Medja.Test.Controls
             editor.MoveCaretForward(true); // 3
             editor.MoveCaretForward(true); // 4
             editor.MoveCaretForward(true); // 5
-            
+
             editor.InputState.NotifyKeyPressed(new KeyboardEventArgs(Keys.Backspace, ModifierKeys.None));
-            
+
             Assert.Equal("0126789", editor.GetText());
             Assert.Equal(3, editor.CaretX);
             Assert.Equal(0, editor.CaretY);
@@ -688,12 +685,28 @@ namespace Medja.Test.Controls
             editor.MoveCaretForward(true); // 3
             editor.MoveCaretForward(true); // 4
             editor.MoveCaretForward(true); // 5
-            
+
             editor.InputState.NotifyKeyPressed(new KeyboardEventArgs(Keys.Delete, ModifierKeys.None));
-            
+
             Assert.Equal("0126789", editor.GetText());
             Assert.Equal(3, editor.CaretX);
             Assert.Equal(0, editor.CaretY);
+        }
+
+        [Fact]
+        public void RemoveSelectedTextWithBackwardSelectedText()
+        {
+            var editor = CreateEditor();
+            editor.SetText("0123456789");
+            editor.SetCaretPosition(6, 0);
+
+            editor.MoveCaretBackward(true); // 5
+            editor.MoveCaretBackward(true); // 4
+            editor.MoveCaretBackward(true); // 3
+
+            editor.RemoveSelectedText();
+
+            Assert.Equal("0126789", editor.GetText());
         }
     }
 }
