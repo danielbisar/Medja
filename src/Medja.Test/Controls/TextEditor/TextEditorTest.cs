@@ -614,7 +614,7 @@ namespace Medja.Test.Controls
 
             editor.JoinLineAndNext(1);
 
-            Assert.Equal("0123\n45678901", editor.GetText());
+            Assert.Equal("0123" + Environment.NewLine + "45678901", editor.GetText());
 
             Assert.Throws<ArgumentOutOfRangeException>(() => editor.JoinLineAndNext(1));
 
@@ -654,7 +654,8 @@ namespace Medja.Test.Controls
             editor.InsertText("\r");
             editor.InsertText("\r\n");
 
-            Assert.Equal("012\n\n\n345", editor.GetText());
+            var nl = Environment.NewLine;
+            Assert.Equal("012" + nl+nl+nl + "345", editor.GetText());
         }
 
         [Fact]
