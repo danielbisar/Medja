@@ -312,59 +312,27 @@ namespace Medja.Controls
             if (!HasSelection)
                 return;
 
-            int lineIndex;
-
-            for (int i = lineIndex = SelectionStart.Y; i <= SelectionEnd.Y; i++, lineIndex++)
+            var logicalSelectionStart = GetLogicalSelectionStart();
+            var logicalSelectionEnd = GetLogicalSelectionEnd();
+            
+            // handle first line
+            var line = Lines[logicalSelectionStart.Y];
+            
+            // just part of one line selected
+            if (logicalSelectionStart.Y == logicalSelectionEnd.Y) 
             {
-                if (i == SelectionStart.Y)
-                {
-                    var line = Lines[lineIndex];
-
-                    if (i == SelectionEnd.Y)
-                        Lines[lineIndex] = line.Substring(0, SelectionStart.X) + line.Substring(SelectionEnd.X);
-                    else if (SelectionStart.X == line.Length) // selection started at the end of the line
-                    {
-                        // selection ends somewhere in the next line
-                        if (SelectionEnd.Y == i + 1)
-                        {
-                            if(SelectionEnd.X > 0)
-                                Lines[lineIndex + 1] = Lines[lineIndex + 1].Substring(SelectionEnd.X);
-                            
-                            JoinLineAndNext(lineIndex);
-                            lineIndex--;
-                            SelectionEnd.Y--;
-                        }
-                        else
-                        {
-                            Lines.RemoveAt(lineIndex + 1);
-                            lineIndex--;
-                            SelectionEnd.Y--;
-                        }
-                    }
-                    else
-                        Lines[lineIndex] = line.Substring(0, SelectionStart.X);
-                }
-                else if (i == SelectionEnd.Y)
-                {
-                    if (SelectionEnd.X > 0)
-                    {
-                        var line = Lines[lineIndex];
-                        Lines[lineIndex] = line.Substring(0, SelectionEnd.X);
-                    }
-                    else
-                    {
-                        JoinLineAndNext(lineIndex);
-                        lineIndex--;
-                        SelectionEnd.Y--;
-                    }
-                }
-                else
-                {
-                    Lines.RemoveAt(lineIndex);
-                    lineIndex--;
-                    SelectionEnd.Y--;
-                }
+                Lines[logicalSelectionStart.Y] = line.Substring(0, logicalSelectionStart.X) + line.Substring(logicalSelectionEnd.X);
+                return;
             }
+
+            Lines[logicalSelectionStart.Y] = line.Substring(0, logicalSelectionStart.X);
+            
+            // join the ending line with the starting one
+            Lines[logicalSelectionStart.Y] += Lines[logicalSelectionEnd.Y].Substring(logicalSelectionEnd.X);
+            
+            // lines in after first and before last line
+            for(int i = logicalSelectionStart.Y + 1; i <= logicalSelectionEnd.Y; i++)
+                Lines.RemoveAt(logicalSelectionStart.Y + 1);
             
             ClearSelection();
         }
