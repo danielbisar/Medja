@@ -344,5 +344,224 @@ namespace Medja.Test.Controls
             Assert.Null(editor.SelectionStart);
             Assert.Null(editor.SelectionEnd);
         }
+
+        [Fact]
+        public void CharReplacesSelection()
+        {
+            var editor = CreateEditor();
+            editor.SetText("012 select 456");
+            editor.SetCaretPosition(4, 0);
+
+            editor.MoveCaretForward(true); // s
+            editor.MoveCaretForward(true); // e
+            editor.MoveCaretForward(true); // l
+            editor.MoveCaretForward(true); // e
+            editor.MoveCaretForward(true); // c
+            editor.MoveCaretForward(true); // t
+            
+            editor.InputState.NotifyKeyPressed(new KeyboardEventArgs('c', ModifierKeys.None));
+
+            Assert.Equal("012 c 456", editor.GetText());
+        }
+
+        [Fact]
+        public void CanGetMultilineText()
+        {
+            var text = "012\n345\n678";
+            var editor = CreateEditor();
+            editor.SetText(text);
+            
+            Assert.Equal(text, editor.GetText());
+        }
+
+        [Fact]
+        public void RemoveSelectedTextOneLine()
+        {
+            var editor = CreateEditor();
+            editor.SetText("012 select 456");
+            editor.SetCaretPosition(4, 0);
+
+            editor.MoveCaretForward(true); // s
+            editor.MoveCaretForward(true); // e
+            editor.MoveCaretForward(true); // l
+            editor.MoveCaretForward(true); // e
+            editor.MoveCaretForward(true); // c
+            editor.MoveCaretForward(true); // t
+            
+            editor.RemoveSelectedText();
+            
+            Assert.Equal("012  456", editor.GetText());
+        }
+        
+        [Fact]
+        public void RemoveSelectedText()
+        {
+            var editor = CreateEditor();
+
+            var expected = new[]
+            {
+                "012select\n456\n789",
+                "012elect\n456\n789",
+                "012lect\n456\n789",
+                "012ect\n456\n789",
+                "012ct\n456\n789",
+                "012t\n456\n789",
+                "012\n456\n789",
+                "012456\n789",
+                "01256\n789",
+                "0126\n789",
+                "012\n789",
+                "012789",
+                "01289",
+                "0129",
+                "012",
+            };
+
+            for (int i = 0; i < expected.Length; i++)
+            {
+                editor.SetText("012\nselect\n456\n789");
+                editor.SetCaretPosition(3, 0);
+
+                for(int n = 0; n <= i; n++)
+                    editor.MoveCaretForward(true);
+                
+                editor.RemoveSelectedText();
+                Assert.Equal(expected[i], editor.GetText());
+            }
+        }
+        
+        [Fact]
+        public void RemoveSelectedTextTwoLines()
+        {
+            var editor = CreateEditor();
+            editor.SetText("012\nselect\n456");
+            editor.SetCaretPosition(3, 0);
+
+            editor.MoveCaretForward(true); // \n
+            editor.MoveCaretForward(true); // s
+            editor.MoveCaretForward(true); // e
+            editor.MoveCaretForward(true); // l
+            editor.MoveCaretForward(true); // e
+            editor.MoveCaretForward(true); // c
+            editor.MoveCaretForward(true); // t
+            
+            editor.RemoveSelectedText();
+            
+            Assert.Equal("012\n456", editor.GetText());
+        }
+        
+        [Fact]
+        public void RemoveSelectedTextMultipleLines()
+        {
+            var editor = CreateEditor();
+            editor.SetText("012\nselect\n456\n789");
+            editor.SetCaretPosition(3, 0);
+
+            editor.MoveCaretForward(true); // \n
+            editor.MoveCaretForward(true); // s
+            editor.MoveCaretForward(true); // e
+            editor.MoveCaretForward(true); // l
+            editor.MoveCaretForward(true); // e
+            editor.MoveCaretForward(true); // c
+            editor.MoveCaretForward(true); // t
+            editor.MoveCaretForward(true); // \n
+            editor.MoveCaretForward(true); // 4
+            editor.MoveCaretForward(true); // 5
+            editor.MoveCaretForward(true); // 6
+            editor.MoveCaretForward(true); // \n
+            
+            editor.RemoveSelectedText();
+            
+            Assert.Equal("012789", editor.GetText());
+        }
+
+        [Fact]
+        public void GetSelectedTextNoSelection()
+        {
+            var editor = CreateEditor();
+            editor.SetText("012\nselect\n456\n789");
+            
+            Assert.Equal("", editor.GetSelectedText());
+        }
+        
+        [Fact]
+        public void GetSelectedText()
+        {
+            var editor = CreateEditor();
+            editor.SetText("012\nselect\n456\n789");
+            editor.SetCaretPosition(3, 0);
+
+            editor.MoveCaretForward(true); // \n
+            Assert.Equal("\n", editor.GetSelectedText());
+            
+            editor.MoveCaretForward(true); // s
+            Assert.Equal("\ns", editor.GetSelectedText());
+            
+            editor.MoveCaretForward(true); // e
+            Assert.Equal("\nse", editor.GetSelectedText());
+
+            editor.MoveCaretForward(true); // l
+            Assert.Equal("\nsel", editor.GetSelectedText());
+            
+            editor.MoveCaretForward(true); // e
+            Assert.Equal("\nsele", editor.GetSelectedText());
+            
+            editor.MoveCaretForward(true); // c
+            Assert.Equal("\nselec", editor.GetSelectedText());
+            
+            editor.MoveCaretForward(true); // t
+            Assert.Equal("\nselect", editor.GetSelectedText());
+            
+            editor.MoveCaretForward(true); // \n
+            Assert.Equal("\nselect\n", editor.GetSelectedText());
+            
+            editor.MoveCaretForward(true); // 4
+            Assert.Equal("\nselect\n4", editor.GetSelectedText());
+            
+            editor.MoveCaretForward(true); // 5
+            Assert.Equal("\nselect\n45", editor.GetSelectedText());
+            
+            editor.MoveCaretForward(true); // 6
+            Assert.Equal("\nselect\n456", editor.GetSelectedText());
+            
+            editor.MoveCaretForward(true); // \n
+            Assert.Equal("\nselect\n456\n", editor.GetSelectedText());
+        }
+
+        [Fact]
+        public void MoveCaretForward()
+        {
+            var editor = CreateEditor();
+            editor.SetText("012\nselect\n456\n789");
+            editor.SetCaretPosition(3, 0);
+            
+            editor.MoveCaretForward(true);
+            Assert.Equal(new Caret(3, 0), editor.SelectionStart);
+            Assert.Equal(new Caret(0, 1), editor.SelectionEnd);
+            
+            editor.MoveCaretForward(true);
+            Assert.Equal(new Caret(3, 0), editor.SelectionStart);
+            Assert.Equal(new Caret(1, 1), editor.SelectionEnd);
+
+        }
+
+        [Fact]
+        public void SetTextClearsSelection()
+        {
+            var editor = CreateEditor();
+            editor.SetText("012\nselect\n456\n789");
+            editor.SetCaretPosition(3, 0);
+            
+            editor.MoveCaretForward(true);
+            editor.MoveCaretForward(true);
+            
+            Assert.Equal(new Caret(3, 0), editor.SelectionStart);
+            Assert.Equal(new Caret(1, 1), editor.SelectionEnd);
+            
+            editor.SetText("012\nselect\n456\n78");
+            
+            Assert.Null(editor.SelectionStart);
+            Assert.Null(editor.SelectionEnd);
+        }
     }
 }
