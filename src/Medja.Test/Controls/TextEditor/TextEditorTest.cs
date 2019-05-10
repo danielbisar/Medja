@@ -393,6 +393,9 @@ namespace Medja.Test.Controls
             Assert.Equal("012  456", editor.GetText());
         }
         
+        
+        // TODO RemoveSelectedText with backwards selected text
+        
         [Fact]
         public void RemoveSelectedText()
         {
