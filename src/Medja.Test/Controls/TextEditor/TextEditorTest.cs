@@ -184,7 +184,7 @@ namespace Medja.Test.Controls
         }
         
         [Fact]
-        public void DeleteCanHandleLimits()
+        public void DeleteKeyDoesntFailOnEndOfLastLine()
         {
             var editor = CreateEditor();
             editor.SetText("abcde");
@@ -193,7 +193,6 @@ namespace Medja.Test.Controls
             
             Assert.Equal(5, editor.CaretX);
             Assert.Equal(0, editor.CaretY);
-            Assert.Equal(1, (int)editor.Lines.Count);
             MedjaAssert.Equal(editor.Lines, "abcde");
         }
 
@@ -479,6 +478,12 @@ namespace Medja.Test.Controls
         }
 
         [Fact]
+        public void RemoveSelectedSetsCaretPos()
+        {
+            
+        }
+
+        [Fact]
         public void GetSelectedTextNoSelection()
         {
             var editor = CreateEditor();
@@ -653,6 +658,42 @@ namespace Medja.Test.Controls
             editor.InsertText("\r\n");
 
             Assert.Equal("012\n\n\n345", editor.GetText());
+        }
+
+        [Fact]
+        public void BackspaceRemovesSelectedText()
+        {
+            var editor = CreateEditor();
+            editor.SetText("0123456789");
+            editor.SetCaretPosition(3, 0);
+
+            editor.MoveCaretForward(true); // 3
+            editor.MoveCaretForward(true); // 4
+            editor.MoveCaretForward(true); // 5
+            
+            editor.InputState.NotifyKeyPressed(new KeyboardEventArgs(Keys.Backspace, ModifierKeys.None));
+            
+            Assert.Equal("0126789", editor.GetText());
+            Assert.Equal(3, editor.CaretX);
+            Assert.Equal(0, editor.CaretY);
+        }
+
+        [Fact]
+        public void DeleteRemovesSelectedText()
+        {
+            var editor = CreateEditor();
+            editor.SetText("0123456789");
+            editor.SetCaretPosition(3, 0);
+
+            editor.MoveCaretForward(true); // 3
+            editor.MoveCaretForward(true); // 4
+            editor.MoveCaretForward(true); // 5
+            
+            editor.InputState.NotifyKeyPressed(new KeyboardEventArgs(Keys.Delete, ModifierKeys.None));
+            
+            Assert.Equal("0126789", editor.GetText());
+            Assert.Equal(3, editor.CaretX);
+            Assert.Equal(0, editor.CaretY);
         }
     }
 }
