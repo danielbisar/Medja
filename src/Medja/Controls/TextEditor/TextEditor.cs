@@ -274,6 +274,11 @@ namespace Medja.Controls
                 JoinLineAndNext(CaretY);
         }
 
+        /// <summary>
+        /// Joins the line at <see cref="index"/> and the following one.
+        /// </summary>
+        /// <param name="index">The index of the line you want to join with the following line.</param>
+        /// <exception cref="ArgumentOutOfRangeException">If <see cref="index"/> is >= the last lines index.</exception>
         public void JoinLineAndNext(int index)
         {
             // we need one extra line
@@ -311,6 +316,9 @@ namespace Medja.Controls
             }
         }
 
+        /// <summary>
+        /// Removes the selected text.
+        /// </summary>
         public void RemoveSelectedText()
         {
             if (!HasSelection)
@@ -381,7 +389,6 @@ namespace Medja.Controls
         {
             InsertText(new string(c, 1));
         }
-
 
         /// <summary>
         /// Inserts text at the current caret position. If some text is selected, this text will be replaced.
@@ -459,6 +466,10 @@ namespace Medja.Controls
             // todo reduce capacity of lines if they used a large amount before and now just a few...
         }
 
+        /// <summary>
+        /// Gets the content of the editor as string.
+        /// </summary>
+        /// <returns>The editors text.</returns>
         public string GetText()
         {
             var charCount = GetCharCount();
@@ -469,7 +480,7 @@ namespace Medja.Controls
 
             Debug.Assert(result.Capacity == charCount);
 
-            return Lines.Count > 0 ? result.ToString(0, result.Length - 1) : string.Empty;
+            return Lines.Count > 0 ? result.ToString(0, result.Length - Environment.NewLine.Length) : string.Empty;
         }
 
         private int GetCharCount()

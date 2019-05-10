@@ -366,7 +366,7 @@ namespace Medja.Test.Controls
         [Fact]
         public void CanGetMultilineText()
         {
-            var text = "012\n345\n678";
+            var text = "012" + Environment.NewLine + "345" + Environment.NewLine + "678";
             var editor = CreateEditor();
             editor.SetText(text);
             
