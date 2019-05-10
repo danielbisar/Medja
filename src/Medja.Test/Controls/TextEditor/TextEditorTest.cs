@@ -419,14 +419,14 @@ namespace Medja.Test.Controls
 
             for (int i = 0; i < expected.Length; i++)
             {
-                editor.SetText("012\nselect\n456\n789");
+                editor.SetText("012\nselect\n456\n789_" + i);
                 editor.SetCaretPosition(3, 0);
 
                 for(int n = 0; n <= i; n++)
                     editor.MoveCaretForward(true);
                 
                 editor.RemoveSelectedText();
-                Assert.Equal(expected[i], editor.GetText());
+                Assert.Equal(expected[i] + "_" + i, editor.GetText());
             }
         }
         
@@ -567,7 +567,38 @@ namespace Medja.Test.Controls
         [Fact]
         public void InsertTextClearsSelection()
         {
-            Assert.False(true);
+            var editor = CreateEditor();
+            editor.SetText("012\nselect\n456\n789");
+            editor.SetCaretPosition(3, 0);
+            
+            editor.MoveCaretForward(true);
+            editor.MoveCaretForward(true);
+            
+            Assert.Equal(new Caret(3, 0), editor.SelectionStart);
+            Assert.Equal(new Caret(1, 1), editor.SelectionEnd);
+            
+            editor.InsertText("123");
+            
+            Assert.Null(editor.SelectionStart);
+            Assert.Null(editor.SelectionEnd);
+        }
+        
+        [Fact]
+        public void InsertTextReplacesSelectedText()
+        {
+            var editor = CreateEditor();
+            editor.SetText("012\nselect\n456\n789");
+            editor.SetCaretPosition(3, 0);
+            
+            editor.MoveCaretForward(true);
+            editor.MoveCaretForward(true);
+            
+            Assert.Equal(new Caret(3, 0), editor.SelectionStart);
+            Assert.Equal(new Caret(1, 1), editor.SelectionEnd);
+            
+            editor.InsertText("123");
+            
+            Assert.Equal("012123elect\n456\n789", editor.GetText());
         }
 
         [Fact]
@@ -585,6 +616,40 @@ namespace Medja.Test.Controls
             editor.JoinLineAndNext(0);
             
             Assert.Equal("012345678901", editor.GetText());
+        }
+
+        [Fact]
+        public void RemoveSelectedTextClearsSelection()
+        {
+            var editor = CreateEditor();
+            editor.SetText("012\nselect\n456\n789");
+            editor.SetCaretPosition(3, 0);
+            
+            editor.MoveCaretForward(true);
+            editor.MoveCaretForward(true);
+            
+            Assert.Equal(new Caret(3, 0), editor.SelectionStart);
+            Assert.Equal(new Caret(1, 1), editor.SelectionEnd);
+            
+            editor.RemoveSelectedText();
+            
+            Assert.False(editor.HasSelection);
+            Assert.Null(editor.SelectionStart);
+            Assert.Null(editor.SelectionEnd);
+        }
+
+        [Fact]
+        public void InsertTextHandlesNewLine()
+        {
+            var editor = CreateEditor();
+            editor.SetText("012345");
+            editor.SetCaretPosition(3, 0);
+            
+            editor.InsertText("\n");
+            editor.InsertText("\r");
+            editor.InsertText("\r\n");
+
+            Assert.Equal("012\n\n\n345", editor.GetText());
         }
     }
 }
