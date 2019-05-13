@@ -42,6 +42,14 @@ namespace Medja.OpenTk.Themes.DarkBlue
 
             return result;
         }
+        
+        protected override HorizontalStackPanel CreateHorizontalStackPanel()
+        {
+            var result = base.CreateHorizontalStackPanel();
+            result.Renderer = new ControlRenderer(result);
+
+            return result;
+        }
 
         protected override MedjaWindow CreateMedjaWindow()
         {
@@ -116,5 +124,6 @@ namespace Medja.OpenTk.Themes.DarkBlue
 
             return result;
         }
+        
     }
 }
