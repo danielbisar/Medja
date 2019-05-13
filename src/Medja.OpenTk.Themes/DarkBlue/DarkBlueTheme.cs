@@ -22,6 +22,14 @@ namespace Medja.OpenTk.Themes.DarkBlue
             return result;
         }
 
+        protected override Canvas CreateCanvas()
+        {
+            var result = base.CreateCanvas();
+            
+            result.Renderer = new ControlRenderer(result);
+            return result;
+        }
+
         protected override CheckBox CreateCheckBox()
         {
             var result = base.CreateCheckBox();
@@ -40,6 +48,14 @@ namespace Medja.OpenTk.Themes.DarkBlue
             var result = base.CreateContentControl();
             result.Renderer = new ControlRenderer(result);
 
+            return result;
+        }
+
+        protected override DockPanel CreateDockPanel()
+        {
+            var result = base.CreateDockPanel();
+
+            result.Renderer = new ControlRenderer(result);
             return result;
         }
         
@@ -71,6 +87,14 @@ namespace Medja.OpenTk.Themes.DarkBlue
             return result;
         }
 
+        protected override ScrollingGrid CreateScrollingGrid()
+        {
+            var result = base.CreateScrollingGrid();
+
+            result.Renderer = new ControlRenderer(result);
+            return result;
+        }
+        
         protected override Slider CreateSlider()
         {
             var result = base.CreateSlider();
@@ -78,6 +102,14 @@ namespace Medja.OpenTk.Themes.DarkBlue
             result.Foreground = DarkBlueThemeValues.PrimaryTextColor;
             result.Renderer = new SliderRenderer(result);
 
+            return result;
+        }
+
+        protected override TablePanel CreateTablePanel()
+        {
+            var result = base.CreateTablePanel();
+            
+            result.Renderer = new ControlRenderer(result);
             return result;
         }
 
