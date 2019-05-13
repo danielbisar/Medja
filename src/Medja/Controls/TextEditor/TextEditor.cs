@@ -71,9 +71,6 @@ namespace Medja.Controls
             if (e.KeyChar == 0)
                 return;
 
-            if (HasSelection && e.Key == null || KeyInsertsValue(e.Key))
-                RemoveSelectedText();
-
             switch (e.Key)
             {
                 case Keys.Left:
@@ -261,16 +258,27 @@ namespace Medja.Controls
 
         private void HandleDelete()
         {
+            if (HasSelection)
+            {
+                RemoveSelectedText();
+                return;
+            }
+            
             var line = Lines[CaretY];
 
             if (CaretX < line.Length)
             {
                 Lines[CaretY] = line.Substring(0, CaretX) + line.Substring(CaretX + 1);
             }
-            else
+            else if(CaretY + 1 < Lines.Count)
                 JoinLineAndNext(CaretY);
         }
 
+        /// <summary>
+        /// Joins the line at <see cref="index"/> and the following one.
+        /// </summary>
+        /// <param name="index">The index of the line you want to join with the following line.</param>
+        /// <exception cref="ArgumentOutOfRangeException">If <see cref="index"/> is >= the last lines index.</exception>
         public void JoinLineAndNext(int index)
         {
             // we need one extra line
@@ -283,6 +291,12 @@ namespace Medja.Controls
 
         private void HandleBackspace()
         {
+            if (HasSelection)
+            {
+                RemoveSelectedText();
+                return;
+            }
+            
             var line = Lines[CaretY];
 
             if (CaretX > 0)
@@ -302,63 +316,45 @@ namespace Medja.Controls
             }
         }
 
-        private bool KeyInsertsValue(Keys? key)
-        {
-            return key == Keys.Backspace || key == Keys.Delete || key == Keys.Return || key == Keys.Tab;
-        }
-
+        /// <summary>
+        /// Removes the selected text.
+        /// </summary>
         public void RemoveSelectedText()
         {
             if (!HasSelection)
                 return;
 
-            int lineIndex;
-
-            for (int i = lineIndex = SelectionStart.Y; i <= SelectionEnd.Y; i++, lineIndex++)
+            var logicalSelectionStart = GetLogicalSelectionStart();
+            var logicalSelectionEnd = GetLogicalSelectionEnd();
+            
+            // handle first line
+            var line = Lines[logicalSelectionStart.Y];
+            
+            // just part of one line selected
+            if (logicalSelectionStart.Y == logicalSelectionEnd.Y) 
+                Lines[logicalSelectionStart.Y] = line.Substring(0, logicalSelectionStart.X) + line.Substring(logicalSelectionEnd.X);
+            else
             {
-                if (i == SelectionStart.Y)
-                {
-                    var line = Lines[lineIndex];
+                Lines[logicalSelectionStart.Y] = line.Substring(0, logicalSelectionStart.X);
 
-                    if (i == SelectionEnd.Y)
-                        Lines[lineIndex] = line.Substring(0, SelectionStart.X) + line.Substring(SelectionEnd.X);
-                    else if (SelectionStart.X == line.Length) // selection started at the end of the line
-                    {
-                        if (SelectionEnd.Y == i + 1)
-                        {
-                            Lines[lineIndex] += Lines[lineIndex + 1].Substring(SelectionEnd.Y);
-                            // todo fix
-                        }
-                        else
-                        {
-                            JoinLineAndNext(lineIndex);
-                            lineIndex--;
-                        }
-                    }
-                    else
-                        Lines[lineIndex] = line.Substring(0, SelectionStart.X);
-                }
-                else if (i == SelectionEnd.Y)
-                {
-                    if (SelectionEnd.X > 0)
-                    {
-                        var line = Lines[lineIndex];
-                        Lines[lineIndex] = line.Substring(SelectionEnd.X);
-                    }
-                    else
-                    {
-                        lineIndex--;
-                        JoinLineAndNext(lineIndex);
-                    }
-                }
-                else
-                {
-                    Lines.RemoveAt(lineIndex);
-                    lineIndex--;
-                }
+                // join the ending line with the starting one
+                Lines[logicalSelectionStart.Y] += Lines[logicalSelectionEnd.Y].Substring(logicalSelectionEnd.X);
+
+                // lines in after first and before last line
+                for (int i = logicalSelectionStart.Y + 1; i <= logicalSelectionEnd.Y; i++)
+                    Lines.RemoveAt(logicalSelectionStart.Y + 1);
             }
+
+            CaretX = logicalSelectionStart.X;
+            CaretY = logicalSelectionStart.Y;
+            
+            ClearSelection();
         }
 
+        /// <summary>
+        /// Gets the selected text as string.
+        /// </summary>
+        /// <returns>The selected text or string.Empty.</returns>
         public string GetSelectedText()
         {
             if (!HasSelection)
@@ -394,7 +390,6 @@ namespace Medja.Controls
             InsertText(new string(c, 1));
         }
 
-
         /// <summary>
         /// Inserts text at the current caret position. If some text is selected, this text will be replaced.
         /// </summary>
@@ -402,11 +397,34 @@ namespace Medja.Controls
         /// <param name="text">The text to insert.</param>
         public void InsertText(string text)
         {
-            // todo replace selected text
-            var line = Lines[CaretY];
-            Lines[CaretY] = line.Substring(0, CaretX) + text + line.Substring(CaretX);
-            CaretX++;
-            ClearSelection();
+            if(HasSelection)
+                RemoveSelectedText();
+
+            var insertLines = text.Split(new string[] {"\n", "\r\n", "\r"}, StringSplitOptions.None);
+            var linePart1 = Lines[CaretY].Substring(0, CaretX);
+            var linePart2 = Lines[CaretY].Substring(CaretX);
+
+            if (insertLines.Length == 1)
+            {
+                Lines[CaretY] = linePart1 + insertLines[0] + linePart2;
+                CaretX += insertLines[0].Length;
+            }
+            else if (insertLines.Length > 1)
+            {
+                Lines[CaretY] = linePart1 + insertLines[0];
+                
+                for(int i = 1; i + 1 < insertLines.Length; i++, CaretY++)
+                    Lines.Insert(CaretY, insertLines[i]);
+
+                CaretY++;
+                var lastInsertLine = insertLines[insertLines.Length - 1];
+                
+                Lines.Insert(CaretY, lastInsertLine + linePart2);
+                
+                CaretX = lastInsertLine.Length;
+            }
+            else
+                throw new InvalidOperationException();
         }
 
         private void UpdateCaretXAfterCaretYChange()
@@ -448,6 +466,10 @@ namespace Medja.Controls
             // todo reduce capacity of lines if they used a large amount before and now just a few...
         }
 
+        /// <summary>
+        /// Gets the content of the editor as string.
+        /// </summary>
+        /// <returns>The editors text.</returns>
         public string GetText()
         {
             var charCount = GetCharCount();
@@ -458,7 +480,7 @@ namespace Medja.Controls
 
             Debug.Assert(result.Capacity == charCount);
 
-            return Lines.Count > 0 ? result.ToString(0, result.Length - 1) : string.Empty;
+            return Lines.Count > 0 ? result.ToString(0, result.Length - Environment.NewLine.Length) : string.Empty;
         }
 
         private int GetCharCount()
