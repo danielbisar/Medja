@@ -45,7 +45,7 @@
             Left = Right = value;
         }
 
-        public void SetTopAndBotton(float value)
+        public void SetTopAndBottom(float value)
         {
             Top = Bottom = value;
         }
