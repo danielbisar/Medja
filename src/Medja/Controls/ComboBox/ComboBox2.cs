@@ -63,8 +63,16 @@ namespace Medja.Controls
             MaxDropDownHeight = 200;
             
             InputState.Clicked += OnClicked;
+            InputState.OwnsMouseEvents = true;
+            PropertyIsFocused.PropertyChanged += OnIsFocusedChanged;
 
             _popup.PropertyBackground.BindTo(PropertyBackground);
+        }
+
+        protected virtual void OnIsFocusedChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (IsFocused == false && !_popup.IsFocused) // lost focus
+                IsDropDownOpen = false;
         }
 
         protected virtual void OnClicked(object sender, EventArgs e)
