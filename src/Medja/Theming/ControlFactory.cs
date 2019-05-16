@@ -42,6 +42,7 @@ namespace Medja.Theming
 			_factoryMethods.Add(typeof(NumericKeypad), CreateNumericKeypad);
 			_factoryMethods.Add(typeof(NumericKeypadDialog), CreateNumericKeypadDialog);
 			_factoryMethods.Add(typeof(MedjaWindow), CreateMedjaWindow);
+			_factoryMethods.Add(typeof(Popup), CreatePopup);
 			_factoryMethods.Add(typeof(ScrollableContainer), CreateScrollableContainer);
 			_factoryMethods.Add(typeof(ScrollingGrid), CreateScrollingGrid);
 			_factoryMethods.Add(typeof(SideControlsContainer), CreateSideControlContainer);
@@ -168,7 +169,7 @@ namespace Medja.Theming
 
 		protected virtual ComboBox2 CreateComboBox2()
 		{
-			return new ComboBox2();
+			return new ComboBox2(this);
 		}
 
 		protected virtual ConfirmableDialog CreateConfirmableDialog()
@@ -244,6 +245,11 @@ namespace Medja.Theming
 		protected virtual MedjaWindow CreateMedjaWindow()
 		{
 			return new MedjaWindow();
+		}
+
+		protected virtual Popup CreatePopup()
+		{
+			return new Popup();
 		}
 
 		protected virtual ScrollableContainer CreateScrollableContainer()
