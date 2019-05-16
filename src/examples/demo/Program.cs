@@ -3,6 +3,7 @@ using Medja.OpenTk;
 using Medja.OpenTk.Rendering;
 using Medja.Primitives;
 using Medja.OpenTk.Themes.DarkBlue;
+using Medja.Theming;
 
 namespace Medja.Demo
 {
@@ -118,6 +119,9 @@ namespace Medja.Demo
 
             var comboBox2 = controlFactory.Create<ComboBox2>();
             comboBox2.Title = "Select an item";
+            comboBox2.ItemsPanel.Children.Add(controlFactory.CreateTextBlock("ABC"));
+            comboBox2.ItemsPanel.Children.Add(controlFactory.CreateTextBlock("DEF"));
+            comboBox2.ItemsPanel.Children.Add(controlFactory.CreateTextBlock("GHI"));
 
             var comboBoxStackPanel = controlFactory.Create<HorizontalStackPanel>();
             comboBoxStackPanel.ChildrenWidth = 200;
