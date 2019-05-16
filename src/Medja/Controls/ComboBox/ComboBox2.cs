@@ -11,6 +11,12 @@ namespace Medja.Controls
     public class ComboBox2 : Control
     {
         private readonly Popup _popup;
+        private readonly VerticalStackPanel _itemsPanel;
+
+        public VerticalStackPanel ItemsPanel
+        {
+            get { return _itemsPanel; }
+        }
 
         public Property<string> PropertyTitle;
         /// <summary>
@@ -23,7 +29,9 @@ namespace Medja.Controls
         }
         
         public Property<bool> PropertyIsDropDownOpen;
-
+        /// <summary>
+        /// Gets or sets whether the drop down are is open (visible) or not.
+        /// </summary>
         public bool IsDropDownOpen
         {
             get { return PropertyIsDropDownOpen.Get(); }
@@ -49,9 +57,6 @@ namespace Medja.Controls
         
         public ComboBox2(IControlFactory controlFactory)
         {
-            _popup = controlFactory.Create<Popup>();
-            _popup.Parent = this;
-            
             PropertyTitle = new Property<string>();
             PropertyIsDropDownOpen = new Property<bool>();
             PropertyDropDownWidth = new Property<float?>();
@@ -60,13 +65,28 @@ namespace Medja.Controls
             PropertyDropDownWidth.AffectsLayout(this);
             PropertyMaxDropDownHeight.AffectsLayout(this);
 
-            MaxDropDownHeight = 200;
+            MaxDropDownHeight = 400;
             
             InputState.Clicked += OnClicked;
             InputState.OwnsMouseEvents = true;
             PropertyIsFocused.PropertyChanged += OnIsFocusedChanged;
-
+            
+            _itemsPanel = controlFactory.Create<VerticalStackPanel>();
+            
+            _popup = CreatePopup(controlFactory);
             _popup.PropertyBackground.BindTo(PropertyBackground);
+        }
+
+        private Popup CreatePopup(IControlFactory controlFactory)
+        {
+            var content = controlFactory.Create<ScrollableContainer>();
+            content.Content = _itemsPanel;
+
+            var result = controlFactory.Create<Popup>();
+            result.Parent = this;
+            result.Content = content;
+
+            return result;
         }
 
         protected virtual void OnIsFocusedChanged(object sender, PropertyChangedEventArgs e)
@@ -87,20 +107,33 @@ namespace Medja.Controls
         {
             base.Arrange(availableSize);
 
-            var root = GetRootControl();
             var isDropDownAboveControl = false;
-
-            if (root is MedjaWindow)
-                isDropDownAboveControl = Position.Y + Position.Height + MaxDropDownHeight > root.Position.Height;
 
             _popup.Position.X = Position.X;
             _popup.Position.Width = DropDownWidth ?? Position.Width;
-            _popup.Position.Height = MaxDropDownHeight;
+            _popup.Position.Height = GetDropDownHeight();
 
+            var root = GetRootControl();
+            
+            if (root is MedjaWindow)
+                isDropDownAboveControl = Position.Y + Position.Height + _popup.Position.Height > root.Position.Height;
+            
             if (!isDropDownAboveControl)
                 _popup.Position.Y = Position.Y + Position.Height;
             else
                 _popup.Position.Y = Position.Y - _popup.Position.Height;
+        }
+
+        private float GetDropDownHeight()
+        {
+            return Math.Min(MaxDropDownHeight, GetItemsPanelHeight());
+        }
+
+        private float GetItemsPanelHeight()
+        {
+            return (ItemsPanel.SpaceBetweenChildren + ItemsPanel.ChildrenHeight ?? 0) *
+                   ItemsPanel.Children.Count + ItemsPanel.Margin.TopAndBottom +
+                   ItemsPanel.Padding.TopAndBottom;
         }
 
         public override IEnumerable<Control> GetChildren()

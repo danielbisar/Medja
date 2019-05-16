@@ -49,6 +49,8 @@ namespace Medja.OpenTk.Themes.DarkBlue
             result.Background = Colors.White;
             //result.
             result.Position.Height = 30;
+            result.ItemsPanel.ChildrenHeight = 30;
+            result.ItemsPanel.SpaceBetweenChildren = 2;
 
             result.Renderer = new ComboBoxRenderer(result);
             
