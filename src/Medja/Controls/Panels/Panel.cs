@@ -28,19 +28,26 @@ namespace Medja.Controls
 
 		protected virtual void OnChildrenCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
 		{
-			if (e.NewItems != null)
-			{
-				foreach (var item in e.NewItems.Cast<Control>())
-				{
-					OnItemAdded(item);
-				}
-			}
-			else if (e.Action == NotifyCollectionChangedAction.Reset)
+			if (e.Action == NotifyCollectionChangedAction.Reset)
 			{
 				foreach(var item in Children)
 					OnItemAdded(item);
 			}
+			else
+			{
+				if (e.NewItems != null)
+				{
+					foreach (var item in e.NewItems.Cast<Control>())
+						OnItemAdded(item);
+				}
 
+				if (e.OldItems != null)
+				{
+					foreach (var item in e.OldItems.Cast<Control>())
+						OnItemRemoved(item);
+				}
+			}
+			
 			IsLayoutUpdated = false;
 		}
 
@@ -50,6 +57,12 @@ namespace Medja.Controls
 				ForwardClippingArea(child);
 
 			ForwardIsEnabled(child);
+			child.Parent = this;
+		}
+
+		protected virtual void OnItemRemoved(Control child)
+		{
+			child.Parent = null;
 		}
 
 		private void ForwardClippingArea(Control child)

@@ -90,8 +90,18 @@ namespace Medja.OpenTk.Themes.DarkBlue
         protected override MedjaWindow CreateMedjaWindow()
         {
             var result = new OpenTkWindow();
-            result.Background = Color.FromHexStr("#FFFFFF");
+            result.Background = Colors.Black;
 
+            return result;
+        }
+
+        protected override Popup CreatePopup()
+        {
+            var result = base.CreatePopup();
+            result.Background = DarkBlueThemeValues.ControlBackground;
+
+            result.Renderer = new PopupRenderer(result);
+            
             return result;
         }
 

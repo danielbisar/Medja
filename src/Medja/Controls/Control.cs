@@ -193,5 +193,19 @@ namespace Medja.Controls
 		{
 			AnimationManager.ApplyAnimations();
 		}
+
+		/// <summary>
+		/// Gets the highest control in the hierarchy.
+		/// </summary>
+		/// <returns>The highest parent control, or self.</returns>
+		public Control GetRootControl()
+		{
+			var root = this;
+
+			while (root.Parent != null)
+				root = root.Parent;
+
+			return root;
+		}
 	}
 }
