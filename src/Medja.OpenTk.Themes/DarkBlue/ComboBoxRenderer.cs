@@ -29,7 +29,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
             _dropDownArrowPaint.StrokeWidth = 1.5f;
             
             _titlePaint = CreatePaint();
-            _titlePaint.Color = DarkBlueThemeValues.PrimaryTextColor.ToSKColor();
+            _titlePaint.Color = DarkBlueThemeValues.ControlBackground.ToSKColor();
             _titlePaint.Typeface = SKTypeface.FromFamilyName("Roboto", SKFontStyleWeight.Normal, SKFontStyleWidth.Normal, SKFontStyleSlant.Italic);
             _titlePaint.TextSize = 16;
             _lineHeight = _titlePaint.TextSize * 1.3f;

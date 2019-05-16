@@ -63,6 +63,8 @@ namespace Medja.Controls
             MaxDropDownHeight = 200;
             
             InputState.Clicked += OnClicked;
+
+            _popup.PropertyBackground.BindTo(PropertyBackground);
         }
 
         protected virtual void OnClicked(object sender, EventArgs e)
