@@ -115,7 +115,6 @@ namespace Medja.Demo
             comboBox.AddItem("123");
             comboBox.AddItem("456");
             comboBox.AddItem("789");
-            comboBox.Position.Height = 30;
 
             var comboBoxStackPanel = controlFactory.Create<HorizontalStackPanel>();
             comboBoxStackPanel.ChildrenWidth = 150;
