@@ -116,10 +116,14 @@ namespace Medja.Demo
             comboBox.AddItem("456");
             comboBox.AddItem("789");
 
+            var comboBox2 = controlFactory.Create<ComboBox2>();
+            comboBox2.Title = "Select an item";
+
             var comboBoxStackPanel = controlFactory.Create<HorizontalStackPanel>();
-            comboBoxStackPanel.ChildrenWidth = 150;
+            comboBoxStackPanel.ChildrenWidth = 200;
             comboBoxStackPanel.SpaceBetweenChildren = 50;
             comboBoxStackPanel.Children.Add(comboBox);
+            comboBoxStackPanel.Children.Add(comboBox2);
 
             var result = controlFactory.Create<VerticalStackPanel>();
             result.Padding.SetAll(20);

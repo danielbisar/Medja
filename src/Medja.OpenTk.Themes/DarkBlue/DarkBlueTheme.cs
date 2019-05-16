@@ -43,6 +43,18 @@ namespace Medja.OpenTk.Themes.DarkBlue
             return result;
         }
 
+        protected override ComboBox2 CreateComboBox2()
+        {
+            var result = base.CreateComboBox2();
+            result.Background = Colors.White;
+            //result.
+            result.Position.Height = 30;
+
+            result.Renderer = new ComboBoxRenderer(result);
+            
+            return result;
+        }
+
         protected override ComboBox<T> CreateComboBox<T>()
         {
             var result = base.CreateComboBox<T>();
