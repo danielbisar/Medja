@@ -111,6 +111,17 @@ namespace Medja.Demo
             checkBoxStackPanel.Children.Add(checkedCheckBox);
             checkBoxStackPanel.Children.Add(checkBoxDisabled);
 
+            var comboBox = controlFactory.Create<ComboBox<string>>();
+            comboBox.AddItem("123");
+            comboBox.AddItem("456");
+            comboBox.AddItem("789");
+            comboBox.Position.Height = 30;
+
+            var comboBoxStackPanel = controlFactory.Create<HorizontalStackPanel>();
+            comboBoxStackPanel.ChildrenWidth = 150;
+            comboBoxStackPanel.SpaceBetweenChildren = 50;
+            comboBoxStackPanel.Children.Add(comboBox);
+
             var result = controlFactory.Create<VerticalStackPanel>();
             result.Padding.SetAll(20);
             result.Background = DarkBlueThemeValues.Background;
@@ -121,8 +132,7 @@ namespace Medja.Demo
             result.Children.Add(slider);
             result.Children.Add(textBoxStackPanel);
             result.Children.Add(textBlock);
-
-            // todo combobox
+            result.Children.Add(comboBoxStackPanel);
 
             return result;
         }
