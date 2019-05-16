@@ -1,7 +1,5 @@
-using System;
 using Medja.Controls;
 using Medja.OpenTk.Rendering;
-using Medja.Primitives;
 using SkiaSharp;
 
 namespace Medja.OpenTk.Themes.DarkBlue
@@ -16,6 +14,14 @@ namespace Medja.OpenTk.Themes.DarkBlue
             _defaultBackgroundPaint = CreatePaint();
             _defaultBackgroundPaint.Color = control.Background.ToSKColor();
             _defaultBackgroundPaint.ImageFilter = DarkBlueThemeValues.DropShadow;
+
+            control.PropertyBackground.PropertyChanged += OnBackgroundChanged;
+        }
+
+        // this should be the default behavior for all renderers, they should update the background if it changes
+        private void OnBackgroundChanged(object sender, PropertyChangedEventArgs e)
+        {
+            _defaultBackgroundPaint.Color = _control.Background.ToSKColor();
         }
 
         protected override void InternalRender()
