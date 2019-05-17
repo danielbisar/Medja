@@ -83,6 +83,15 @@ namespace Medja.OpenTk.Themes.DarkBlue
             return result;
         }
 
+        protected override MenuItem CreateMenuItem()
+        {
+            var result = base.CreateMenuItem();
+            result.Position.Height = 25;
+            result.Renderer = new MenuItemRenderer(result);
+
+            return result;
+        }
+
         protected override ProgressBar CreateProgressBar()
         {
             var result = base.CreateProgressBar();

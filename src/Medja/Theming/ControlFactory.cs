@@ -38,6 +38,7 @@ namespace Medja.Theming
 			_factoryMethods.Add(typeof(Image), CreateImage);
 			_factoryMethods.Add(typeof(ImageButton), CreateImageButton);
 			_factoryMethods.Add(typeof(InputBoxDialog), CreateInputBoxDialog);
+			_factoryMethods.Add(typeof(MenuItem), CreateMenuItem);
 			_factoryMethods.Add(typeof(NumericKeypad), CreateNumericKeypad);
 			_factoryMethods.Add(typeof(NumericKeypadDialog), CreateNumericKeypadDialog);
 			_factoryMethods.Add(typeof(MedjaWindow), CreateMedjaWindow);
@@ -223,6 +224,11 @@ namespace Medja.Theming
 		protected virtual InputBoxDialog CreateInputBoxDialog()
 		{
 			return new InputBoxDialog(this);
+		}
+
+		protected virtual MenuItem CreateMenuItem()
+		{
+			return new MenuItem();
 		}
 		
 		protected virtual NumericKeypad CreateNumericKeypad()

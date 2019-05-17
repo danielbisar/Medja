@@ -95,16 +95,18 @@ namespace Medja.Input
 		public InputState(Control control)
 		{
 			Control = control;
+
+			PropertyHandlesDrag = new Property<bool>();
+			PropertyIsDrag = new Property<bool>();
+
 			PropertyIsLeftMouseDown = new Property<bool>();
 			PropertyIsLeftMouseDown.PropertyChanged += OnIsLeftMouseDownChanged;
 
 			PropertyIsMouseOver = new Property<bool>();
-			PropertyIsDrag = new Property<bool>();
-			PropertyPointerPosition = new Property<Point>();
-			PropertyPointerPosition.PropertyChanged += OnPointerPositionChanged;
 			PropertyMouseWheelDelta = new Property<float>();
 			PropertyOwnsMouseEvents = new Property<bool>();
-			PropertyHandlesDrag = new Property<bool>();
+			PropertyPointerPosition = new Property<Point>();
+			PropertyPointerPosition.PropertyChanged += OnPointerPositionChanged;
 
 			_dragThreshold = 5;
 		}
@@ -157,6 +159,19 @@ namespace Medja.Input
 			MouseWheelDelta = 0;
 
 			_isClearing = false;
+		}
+
+		public override string ToString()
+		{
+			return "InputState: { " 
+			       + nameof(HandlesDrag) + ": " + HandlesDrag + ", "
+			       + nameof(IsDrag) + ": " + IsDrag + ", "
+			       + nameof(IsLeftMouseDown) + ": " + IsLeftMouseDown + ", "
+			       + nameof(IsMouseOver) + ": " + IsMouseOver + ", "
+			       + nameof(MouseWheelDelta) + ": " + MouseWheelDelta + ", "
+			       + nameof(OwnsMouseEvents) + ": " + OwnsMouseEvents + ", "
+			       + nameof(PointerPosition) + ": " + PointerPosition + ", "
+			       + " }";
 		}
 	}
 }
