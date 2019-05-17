@@ -103,7 +103,15 @@ namespace Medja.OpenTk.Themes.DarkBlue
             result.Background = DarkBlueThemeValues.ControlBackground;
 
             result.Renderer = new PopupRenderer(result);
-            
+			return result;
+		}            
+
+        protected override MenuItem CreateMenuItem()
+        {
+            var result = base.CreateMenuItem();
+            result.Position.Height = 25;
+            result.Renderer = new MenuItemRenderer(result);
+
             return result;
         }
 

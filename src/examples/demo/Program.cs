@@ -129,6 +129,14 @@ namespace Medja.Demo
             comboBoxStackPanel.Children.Add(comboBox);
             comboBoxStackPanel.Children.Add(comboBox2);
 
+            var menuItem = controlFactory.Create<MenuItem>();
+            menuItem.Title = "MenuItem";
+            
+            var menuItemPanel = controlFactory.Create<HorizontalStackPanel>();
+            menuItemPanel.ChildrenWidth = 150;
+            menuItemPanel.SpaceBetweenChildren = 10;
+            menuItemPanel.Add(menuItem);
+            
             var result = controlFactory.Create<VerticalStackPanel>();
             result.Padding.SetAll(20);
             result.Background = DarkBlueThemeValues.Background;
@@ -140,6 +148,7 @@ namespace Medja.Demo
             result.Children.Add(textBoxStackPanel);
             result.Children.Add(textBlock);
             result.Children.Add(comboBoxStackPanel);
+            result.Children.Add(menuItemPanel);
 
             return result;
         }
