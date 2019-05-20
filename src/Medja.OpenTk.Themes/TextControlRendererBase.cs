@@ -1,10 +1,9 @@
 using System;
 using Medja.Controls;
 using Medja.OpenTk.Rendering;
-using Medja.OpenTk.Themes.BlackRed;
 using SkiaSharp;
 
-namespace Medja.OpenTk.Themes.DarkBlue
+namespace Medja.OpenTk.Themes
 {
     public abstract class TextControlRendererBase<T> : SkiaControlRendererBase<T> 
         where T : TextControl
@@ -31,7 +30,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
             
             var result = CreatePaint();
             result.Color = _control.TextColor.ToSKColor();
-            result.Typeface = font.Name == null ? DefaultTypeFace : SKTypeface.FromFamilyName(font.Name);
+            result.Typeface = font.Name == null ? null : SKTypeface.FromFamilyName(font.Name);
             result.TextSize = font.Size;
 
             return result;

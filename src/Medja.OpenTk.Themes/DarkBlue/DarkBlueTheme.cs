@@ -6,6 +6,12 @@ namespace Medja.OpenTk.Themes.DarkBlue
 {
     public class DarkBlueTheme : ControlFactory
     {
+        public DarkBlueTheme()
+        {
+            DefaultFont = new Font();
+            DefaultFont.Name = "Roboto";
+        }
+        
         protected override Button CreateButton()
         {
             var result = base.CreateButton();
@@ -43,9 +49,9 @@ namespace Medja.OpenTk.Themes.DarkBlue
             return result;
         }
 
-        protected override ComboBox CreateComboBox2()
+        protected override ComboBox CreateComboBox()
         {
-            var result = base.CreateComboBox2();
+            var result = base.CreateComboBox();
             result.Background = Colors.White;
             result.Position.Height = 30;
             

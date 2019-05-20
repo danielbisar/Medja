@@ -17,14 +17,10 @@ namespace Medja.OpenTk.Rendering
 	{
 		private readonly SkiaGlLayer _skia;
 		private SKCanvas _canvas;
-		private readonly SKTypeface _defaultTypeface;
 
-		public OpenTkRenderer(string fontFamilyName = null)
+		public OpenTkRenderer()
 		{
 			_skia = new SkiaGlLayer();
-
-			// todo clean font usage implementation for all controls
-			_defaultTypeface = SKTypeface.FromFamilyName(fontFamilyName ?? "Monospace");
 		}
 
 		public void SetSize(Rectangle rectangle)
@@ -84,20 +80,11 @@ namespace Medja.OpenTk.Rendering
 			if (renderer == null)
 				return;
 
-			if (renderer is ISkiaRenderer skiaRenderer)
-			{
-				skiaRenderer.DefaultTypeFace = _defaultTypeface;
-				skiaRenderer.Render(_canvas);
-			}
-			else if (renderer is IControlRenderer controlRenderer)
-			{
-				controlRenderer.Render(_canvas);
-			}
+			renderer.Render(_canvas);
 		}
 
 		public void Dispose()
 		{
-			_defaultTypeface.Dispose();
 			_skia.Dispose();
 		}
 	}

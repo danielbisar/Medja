@@ -28,10 +28,10 @@ namespace Medja.OpenTk.Themes.BlackRed
 
 			foreach (var tab in tabs)
 			{
-				_paint.Color = tab.IsSelected ? ColorMap.PrimaryLight.ToSKColor() : ColorMap.Primary.ToSKColor();
+				_paint.Color = tab.IsSelected ? BlackRedThemeValues.PrimaryLightColor.ToSKColor() : BlackRedThemeValues.PrimaryColor.ToSKColor();
 				_canvas.DrawRect(headerRect, _paint);
 
-				_paint.Color = ColorMap.PrimaryText.ToSKColor();
+				_paint.Color = BlackRedThemeValues.PrimaryTextColor.ToSKColor();
 				RenderText(tab.Header, _font, new SKPoint(headerRect.Left + 5, headerRect.Top + _paint.FontSpacing));
 
 				headerRect.Left += tabHeaderWidth;

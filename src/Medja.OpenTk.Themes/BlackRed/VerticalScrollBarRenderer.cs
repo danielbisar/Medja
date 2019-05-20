@@ -13,7 +13,7 @@ namespace Medja.OpenTk.Themes.BlackRed
         {
             _fillPaint = new SKPaint();
             _fillPaint.IsAntialias = true;
-            _fillPaint.Color = ColorMap.PrimaryLight.ToSKColor();
+            _fillPaint.Color = BlackRedThemeValues.PrimaryLightColor.ToSKColor();
         }
         
         protected override void InternalRender()
