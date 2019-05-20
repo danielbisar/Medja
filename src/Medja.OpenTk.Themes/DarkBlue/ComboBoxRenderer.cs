@@ -1,20 +1,20 @@
 using Medja.Controls;
 using Medja.OpenTk.Rendering;
-using Medja.Primitives;
 using SkiaSharp;
 
 namespace Medja.OpenTk.Themes.DarkBlue
 {
-    public class ComboBoxRenderer : SkiaControlRendererBase<ComboBox2>
+    public class ComboBoxRenderer : SkiaControlRendererBase<ComboBox>
     {
         private readonly SKPaint _backgroundPaint;
         private readonly SKPaint _titlePaint;
         private readonly SKPaint _buttonPaint;
         private readonly SKPaint _dropDownArrowPaint;
+        private readonly SKPaint _displayTextPaint;
         
         private readonly float _lineHeight;
         
-        public ComboBoxRenderer(ComboBox2 control) : base(control)
+        public ComboBoxRenderer(ComboBox control) : base(control)
         {
             _backgroundPaint = CreatePaint();
             _backgroundPaint.Color = control.Background.ToSKColor();
@@ -33,6 +33,11 @@ namespace Medja.OpenTk.Themes.DarkBlue
             _titlePaint.Typeface = SKTypeface.FromFamilyName("Roboto", SKFontStyleWeight.Normal, SKFontStyleWidth.Normal, SKFontStyleSlant.Italic);
             _titlePaint.TextSize = 16;
             _lineHeight = _titlePaint.TextSize * 1.3f;
+            
+            _displayTextPaint = CreatePaint();
+            _displayTextPaint.Color = DarkBlueThemeValues.ControlBackground.ToSKColor();
+            _displayTextPaint.Typeface = SKTypeface.FromFamilyName("Roboto");
+            _displayTextPaint.TextSize = _titlePaint.TextSize;
         }
 
         protected override void InternalRender()
@@ -40,7 +45,12 @@ namespace Medja.OpenTk.Themes.DarkBlue
             var buttonRect = new SKRect(_rect.Right - 35, _rect.Top, _rect.Right, _rect.Bottom);
             
             _canvas.DrawRoundRect(_rect, 3, 3, _backgroundPaint);
-            _canvas.DrawText(_control.Title, _rect.Left + 10, _rect.Top + _lineHeight, _titlePaint);
+
+            if(_control.SelectedItem == null)
+                _canvas.DrawText(_control.Title, _rect.Left + 10, _rect.Top + _lineHeight, _titlePaint);
+            else
+                _canvas.DrawText(_control.DisplayText, _rect.Left + 10, _rect.Top + _lineHeight, _displayTextPaint);
+            
             _canvas.DrawRoundRect(buttonRect, 3, 3, _buttonPaint);
             
             // draw the v for drop down

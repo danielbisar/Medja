@@ -15,5 +15,15 @@ namespace Medja.Primitives
         {
             return new Point(rect.X, rect.Y);
         }
+
+        /// <summary>
+        /// Creates a size object based on the width and height of the rects width and height.
+        /// </summary>
+        /// <param name="rect">The <see cref="Rect"/>.</param>
+        /// <returns>The <see cref="Size"/>.</returns>
+        public static Size ToSize(this Rect rect)
+        {
+            return new Size(rect.Width, rect.Height);
+        }
     }
 }
