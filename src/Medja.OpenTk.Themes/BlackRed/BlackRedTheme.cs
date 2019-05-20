@@ -16,11 +16,14 @@ namespace Medja.OpenTk.Themes
         protected override Button CreateButton()
         {
             var result = base.CreateButton();
-            result.Renderer = new ButtonRenderer(result);
             result.Font.Name = DefaultFont.Name;
             result.Position.Height = 50;
+            result.Padding.Top = 14;
             result.TextColor = BlackRedThemeValues.PrimaryTextColor;
+            result.TextAlignment = TextAlignment.Center;
 
+            result.Renderer = new ButtonRenderer(result);
+            
             return result;
         }
 
