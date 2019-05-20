@@ -1,5 +1,4 @@
-﻿using System;
-using Medja.Controls;
+﻿using Medja.Controls;
 using Medja.Input;
 using OpenTK;
 using OpenTK.Input;

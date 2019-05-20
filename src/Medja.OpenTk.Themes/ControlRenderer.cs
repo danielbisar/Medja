@@ -1,5 +1,4 @@
 using Medja.Controls;
-using Medja.OpenTk.Themes.BlackRed;
 
 namespace Medja.OpenTk.Themes
 {

@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace Medja.NativeInterfaces
 {
     public class MedjaSystemInfo

@@ -1,9 +1,6 @@
 using System;
-using System.Text;
 using System.Collections.Generic;
-using Medja.Controls;
 using Medja.Input;
-using Medja.Primitives;
 using Medja.Theming;
 
 namespace Medja.Controls

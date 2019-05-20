@@ -18,7 +18,7 @@ namespace Medja.OpenTk.Themes.BlackRed
             TextPaint.IsAntialias = true;
             
             SelectedBackgroundPaint = new SKPaint();
-            SelectedBackgroundPaint.Color = BlackRedThemeValues.PrimaryColor.ToSKColor();
+            SelectedBackgroundPaint.Color = BlackRedThemeValues.SecondaryColor.ToSKColor();
             SelectedBackgroundPaint.IsAntialias = true;
         }
 
@@ -30,6 +30,7 @@ namespace Medja.OpenTk.Themes.BlackRed
             _backgroundPaint = new SKPaint();
             _backgroundPaint.IsAntialias = true;
             _backgroundPaint.Color = control.Background.ToSKColor();
+            
             control.PropertyBackground.PropertyChanged += OnControlBackgroundChanged;
         }
 

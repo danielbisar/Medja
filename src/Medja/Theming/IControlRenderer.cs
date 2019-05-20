@@ -1,6 +1,4 @@
-﻿using Medja.Controls;
-
-namespace Medja.Theming
+﻿namespace Medja.Theming
 {
 	public interface IControlRenderer
     {

@@ -1,7 +1,4 @@
-﻿using SkiaSharp;
-using Xunit;
-
-namespace Medja.OpenTk.Test
+﻿namespace Medja.OpenTk.Test
 {
     public class SkiaBitmapFactoryTest
     {
