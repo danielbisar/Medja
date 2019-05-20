@@ -5,23 +5,23 @@ using Medja.Utils;
 
 namespace MedjaOpenGlTestApp.Tests
 {
-    public class TouchButtonListTest
+    public class TouchItemListTest
     {
         private readonly IControlFactory _controlFactory;
 
-        public TouchButtonListTest(IControlFactory controlFactory)
+        public TouchItemListTest(IControlFactory controlFactory)
         {
             _controlFactory = controlFactory;
         }
 
         public Control Create()
         {
-            var touchButtonList1 = _controlFactory.Create<TouchButtonList<MyItemType>>(p =>
+            var touchButtonList1 = _controlFactory.Create<TouchItemList<MyItemType>>(p =>
             {
                 //p.InitButtonFromItem = (item, button) => button.Text = item.Name;
                 p.IsSelectable = true;
                 p.PageSize = 5;
-                p.ButtonClicked += (s, e) =>
+                p.ItemClicked += (s, e) =>
                 {
                     if((e.Item as MyItemType)?.Name == "Remove some item")
                         p.RemoveItem(p.SelectedItem);
@@ -56,7 +56,7 @@ namespace MedjaOpenGlTestApp.Tests
             
             return tablePanel;
             
-            /*_digitalInputs = _controlFactory.Create<TouchButtonList<MsgDigitalInput>>();
+            /*_digitalInputs = _controlFactory.Create<TouchItemList<MsgDigitalInput>>();
             _digitalInputs.InitializeButtonFromItem = (item, button) => { button.Text = "Eingang " + item.Id; };
             _digitalInputs.Position.Width = 200;
             _digitalInputs.PropertySelectedItem.PropertyChanged += OnSelectedDigitalInputChanged;

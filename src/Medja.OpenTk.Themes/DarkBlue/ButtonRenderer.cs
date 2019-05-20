@@ -24,8 +24,6 @@ namespace Medja.OpenTk.Themes.DarkBlue
             _clickBackgroundPaint = CreatePaint();
             _clickBackgroundPaint.Color = control.Background.ToSKColor();
             _clickBackgroundPaint.ImageFilter = DarkBlueThemeValues.DropShadowElevated;
-            
-            // todo update colors on change - required for all renders; find a good clean solution
         }
 
         protected override void DrawTextControlBackground()

@@ -8,7 +8,6 @@ namespace Medja.OpenTk.Themes.BlackRed
 	{
 		private readonly SKPaint _mouseDownPaint;
 		private readonly SKPaint _mouseOverPaint;
-		private readonly SKPaint _selectedPaint;
 		private readonly SKPaint _defaultPaint;
 		
 		public ButtonRenderer(Button button)
@@ -25,10 +24,6 @@ namespace Medja.OpenTk.Themes.BlackRed
 			_mouseOverPaint = new SKPaint();
 			_mouseOverPaint.IsAntialias = true;
 			_mouseOverPaint.Color = BlackRedThemeValues.SecondaryColor.ToSKColor();
-			
-			_selectedPaint = new SKPaint();
-			_selectedPaint.IsAntialias = true;
-			_selectedPaint.Color = BlackRedThemeValues.PrimaryLightColor.ToSKColor().WithAlpha(byte.MaxValue / 2);
 		}
 		
 		protected override void DrawTextControlBackground()
@@ -42,9 +37,6 @@ namespace Medja.OpenTk.Themes.BlackRed
 				_canvas.DrawRect(_rect, _mouseOverPaint);
 			else
 				_canvas.DrawLine(_rect.Left, _rect.Bottom, _rect.Right, _rect.Bottom, _defaultPaint);
-				
-			if(_control.IsSelected)
-				_canvas.DrawRect(_rect, _selectedPaint);
 		}
 	}
 }

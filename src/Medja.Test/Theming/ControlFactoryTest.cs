@@ -25,7 +25,7 @@ namespace Medja.Test.Theming
         [Fact]
         public void CreateGenericControlTest()
         {
-            var control = new ControlFactory().Create<TouchButtonList<string>>();
+            var control = new ControlFactory().Create<TouchItemList<string>>();
             Assert.NotNull(control);
         }
 

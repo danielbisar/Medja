@@ -1,17 +1,9 @@
 ﻿namespace Medja.Controls
 {
-	public class Button : TextControl, IButton
+	public class Button : TextControl
 	{
-		public readonly Property<bool> PropertyIsSelected;
-		public bool IsSelected
-		{
-			get { return PropertyIsSelected.Get(); }
-			set { PropertyIsSelected.Set(value); }
-		}
-
 		public Button()
 		{
-			PropertyIsSelected = new Property<bool>();
 			InputState.OwnsMouseEvents = true;
 		}
 		

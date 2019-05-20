@@ -4,7 +4,7 @@ using Medja.Theming;
 
 namespace Medja.Controls
 {
-	public class TouchButtonList<TItem> : ContentControl 
+	public class TouchItemList<TItem> : ContentControl 
 			where TItem : class
 	{
 		private readonly PagedListView<TItem> _visibleItems;
@@ -29,10 +29,10 @@ namespace Medja.Controls
 		/// instance. By default this just sets button.Text = item.ToString();
 		/// </summary>
 		/// <value>The initialize button from item.</value>
-		public Action<TItem, Button> InitButtonFromItem
+		public Action<TItem, MenuItem> InitMenuItemFromItem
 		{
-			get { return _itemsManager.InitButtonFromItem; }
-			set { _itemsManager.InitButtonFromItem = value; }
+			get { return _itemsManager.InitMenuItemFromItem; }
+			set { _itemsManager.InitMenuItemFromItem = value; }
 		}
 
 		/// <summary>
@@ -49,10 +49,10 @@ namespace Medja.Controls
 		/// <summary>
 		/// An event that is fired whenever any of the item buttons is clicked.
 		/// </summary>
-		public event EventHandler<TouchButtonClickedEventArgs> ButtonClicked
+		public event EventHandler<ItemEventArgs<TItem>> ItemClicked
 		{
-			add { _itemsManager.ButtonClicked += value; }
-			remove { _itemsManager.ButtonClicked -= value; }
+			add { _itemsManager.ItemClicked += value; }
+			remove { _itemsManager.ItemClicked -= value; }
 		}
 		
 		public readonly Property<bool> PropertyIsSelectable;
@@ -75,7 +75,7 @@ namespace Medja.Controls
 			set { PropertySelectedItem.Set(value); }
 		}
 
-		public TouchButtonList(IControlFactory controlFactory)
+		public TouchItemList(IControlFactory controlFactory)
 		{
 			PropertyIsSelectable = new Property<bool>();
 			PropertySelectedItem = new Property<TItem>();
