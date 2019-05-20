@@ -16,7 +16,7 @@ namespace MedjaOpenGlTestApp.Tests
         public ContentControl Create()
         {
             var result = _controlFactory.Create<SideControlsContainer>();
-            result.Content = _controlFactory.Create<TouchButtonList<string>>(p =>
+            result.Content = _controlFactory.Create<TouchItemList<string>>(p =>
             {
                 p.Background = Colors.Blue;
                 

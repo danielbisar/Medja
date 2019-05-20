@@ -5,15 +5,8 @@ namespace Medja.Controls
     /// <summary>
     /// A button containing an image.
     /// </summary>
-    public class ImageButton : ContentControl, IButton
+    public class ImageButton : ContentControl
     {
-        public readonly Property<bool> PropertyIsSelected;
-        public bool IsSelected
-        {
-            get { return PropertyIsSelected.Get(); }
-            set { PropertyIsSelected.Set(value); }
-        }
-        
         public readonly Property<Image> PropertyImage;
         public Image Image
         {
@@ -35,14 +28,6 @@ namespace Medja.Controls
             private set { PropertyMouseDownImage.Set(value); }
         }
 
-        public readonly Property<Image> PropertySelectedImage;
-        public Image SelectedImage
-        {
-            get { return PropertySelectedImage.Get(); }
-            private set { PropertySelectedImage.Set(value); }
-        }
-
-        
         public readonly Property<bool> PropertyIsAutoSizeToBitmap;
         public bool IsAutoSizeToBitmap
         {
@@ -55,16 +40,12 @@ namespace Medja.Controls
             PropertyImage = new Property<Image>();
             PropertyMouseOverImage = new Property<Image>();
             PropertyMouseDownImage = new Property<Image>();
-            PropertySelectedImage = new Property<Image>();
-            PropertyIsSelected = new Property<bool>();
             PropertyIsAutoSizeToBitmap = new Property<bool>();
             
             InputState.OwnsMouseEvents = true;
             InputState.PropertyIsMouseOver.PropertyChanged += OnMouseOverChanged;
             InputState.PropertyIsLeftMouseDown.PropertyChanged += OnLeftMouseDownChanged;
 
-            PropertyIsSelected.PropertyChanged += OnSelectedChanged;
-            
             // TODO how to behave for resizes of this control, instead of resizing to bitmap?
             IsAutoSizeToBitmap = true;
             
@@ -73,14 +54,8 @@ namespace Medja.Controls
 
             MouseDownImage = controlFactory.Create<Image>();
             MouseOverImage = controlFactory.Create<Image>();
-            SelectedImage = controlFactory.Create<Image>();
             
             Content = Image;
-        }
-
-        private void OnSelectedChanged(object sender, PropertyChangedEventArgs eventargs)
-        {
-            UpdateContent();
         }
 
         private void UpdateContent()
@@ -92,8 +67,6 @@ namespace Medja.Controls
                 else
                     Content = MouseOverImage;
             }
-            else if (IsSelected)
-                Content = SelectedImage;
             else
                 Content = Image;
         }

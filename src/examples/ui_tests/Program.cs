@@ -44,8 +44,8 @@ namespace MedjaOpenGlTestApp
             //var test = new SimpleDockPanelTest(controlFactory);
             //var test = new SliderTest(controlFactory);
             //var test = new TabControlTest(controlFactory);
-            var test = new TextBoxTest(controlFactory);
-            //var test = new TouchButtonListTest(controlFactory);
+            //var test = new TextBoxTest(controlFactory);
+            var test = new TouchItemListTest(controlFactory);
             //var test = new VerticalStackPanelTest(controlFactory);
             //var test = new VisibilityTest(controlFactory);
 

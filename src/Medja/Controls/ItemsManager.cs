@@ -11,13 +11,13 @@ namespace Medja.Controls
     public class ItemsManager<TItem>
      where TItem: class
     {
-        private readonly Dictionary<Button, TItem> _buttonToItemMap;
-        private readonly Dictionary<TItem, Button> _itemToButtonMap;
+        private readonly Dictionary<MenuItem, TItem> _menuToItemMap;
+        private readonly Dictionary<TItem, MenuItem> _itemToMenuMap;
         private readonly IControlFactory _controlFactory;
 
         public List<TItem> Items { get; }
 
-        public Action<TItem, Button> InitButtonFromItem { get; set; }
+        public Action<TItem, MenuItem> InitMenuItemFromItem { get; set; }
         
         public readonly Property<bool> PropertyIsSelectable;
         /// <summary>
@@ -42,7 +42,7 @@ namespace Medja.Controls
         /// <summary>
         /// An event that is fired whenever any of the item buttons is clicked.
         /// </summary>
-        public event EventHandler<TouchButtonClickedEventArgs> ButtonClicked;
+        public event EventHandler<ItemEventArgs<TItem>> ItemClicked;
 
         public event EventHandler<ItemEventArgs<TItem>> ItemAdded;
         public event EventHandler<ItemEventArgs<TItem>> ItemRemoved;
@@ -54,14 +54,14 @@ namespace Medja.Controls
             PropertySelectedItem.PropertyChanged += OnSelectedItemChanged;
             
             _controlFactory = controlFactory ?? throw new ArgumentNullException(nameof(controlFactory));;
-            _buttonToItemMap = new Dictionary<Button, TItem>(new ReferenceEqualityComparer<Button>());
-            _itemToButtonMap = new Dictionary<TItem, Button>(EqualityUtils.GetItemEqualityComparer<TItem>());
+            _menuToItemMap = new Dictionary<MenuItem, TItem>(new ReferenceEqualityComparer<MenuItem>());
+            _itemToMenuMap = new Dictionary<TItem, MenuItem>(EqualityUtils.GetItemEqualityComparer<TItem>());
             
             Items = new List<TItem>();
             
-            InitButtonFromItem = (item, button) =>
+            InitMenuItemFromItem = (item, button) =>
             {
-                button.Text = item.ToString();
+                button.Title = item.ToString();
             };
 
             ItemAdded += (s, e) => { };
@@ -76,7 +76,7 @@ namespace Medja.Controls
             if (oldSelectedItem != null)
             {
                 // we need to use try, because the button might not be visible
-                if(_itemToButtonMap.TryGetValue(oldSelectedItem, out var button))
+                if(_itemToMenuMap.TryGetValue(oldSelectedItem, out var button))
                     button.IsSelected = false;
             }
 
@@ -84,7 +84,7 @@ namespace Medja.Controls
             {
                 // we need to use try, because the button might not be visible
                 // if user sets it manually
-                if(_itemToButtonMap.TryGetValue(newSelectedItem, out var button))
+                if(_itemToMenuMap.TryGetValue(newSelectedItem, out var button))
                     button.IsSelected = true;
             }
         }
@@ -93,11 +93,11 @@ namespace Medja.Controls
         {
             Items.Add(item);
 
-            var button = CreateButtonForItem(item);
-            _buttonToItemMap.Add(button, item);
-            _itemToButtonMap.Add(item, button);
+            var menuItem = CreateMenuItemForItem(item);
+            _menuToItemMap.Add(menuItem, item);
+            _itemToMenuMap.Add(item, menuItem);
             
-            ItemAdded?.Invoke(this, new ItemEventArgs<TItem>(item, button));
+            ItemAdded?.Invoke(this, new ItemEventArgs<TItem>(item, menuItem));
         }
         
         public void AddRange(IEnumerable<TItem> items)
@@ -106,11 +106,11 @@ namespace Medja.Controls
                 AddItem(item);
         }
         
-        private Button CreateButtonForItem(TItem item)
+        private MenuItem CreateMenuItemForItem(TItem item)
         {
-            var result = _controlFactory.Create<Button>();
-            InitButtonFromItem(item, result);
-            result.InputState.Clicked += OnButtonClicked;
+            var result = _controlFactory.Create<MenuItem>();
+            InitMenuItemFromItem(item, result);
+            result.InputState.Clicked += OnMenuItemClicked;
 
             if (IsSelectable && ReferenceEquals(item, SelectedItem))
                 result.IsSelected = true;
@@ -118,29 +118,29 @@ namespace Medja.Controls
             return result;
         }
         
-        private void OnButtonClicked(object sender, EventArgs e)
+        private void OnMenuItemClicked(object sender, EventArgs e)
         {
             var inputState = sender as InputState;
-            var button = (Button) inputState.Control;
+            var menuItem = (MenuItem) inputState.Control;
 			
-            NotifyButtonClicked(button);
+            NotifyMenuItemClicked(menuItem);
 
             if (IsSelectable)
-                SelectedItem = _buttonToItemMap[button];
+                SelectedItem = _menuToItemMap[menuItem];
         }
 
         public bool RemoveItem(TItem item)
         {
             if (Items.Remove(item))
             {
-                var button = _itemToButtonMap[item];
+                var menuItem = _itemToMenuMap[item];
 
-                button.InputState.Clicked -= OnButtonClicked;
+                menuItem.InputState.Clicked -= OnMenuItemClicked;
                 
-                _itemToButtonMap.Remove(item);
-                _buttonToItemMap.Remove(button);
+                _itemToMenuMap.Remove(item);
+                _menuToItemMap.Remove(menuItem);
                 
-                ItemRemoved(this, new ItemEventArgs<TItem>(item, button));
+                ItemRemoved(this, new ItemEventArgs<TItem>(item, menuItem));
 
                 return true;
             }
@@ -154,28 +154,28 @@ namespace Medja.Controls
                 RemoveItem(item);
         }
         
-        private void NotifyButtonClicked(Button button)
+        private void NotifyMenuItemClicked(MenuItem menuItem)
         {
-            var item = GetItemFromButton(button);
-            ButtonClicked?.Invoke(this, new TouchButtonClickedEventArgs(button, item));
+            var item = GetItemFromMenuItem(menuItem);
+            ItemClicked?.Invoke(this, new ItemEventArgs<TItem>(item, menuItem));
         }
 
-        private TItem GetItemFromButton(Button button)
+        private TItem GetItemFromMenuItem(MenuItem menuItem)
         {
-            return _buttonToItemMap.GetOrDefault(button);
+            return _menuToItemMap.GetOrDefault(menuItem);
         }
 
-        public TItem GetItemFromControl(Button control)
+        public TItem GetItemFromControl(MenuItem control)
         {
-            if (_buttonToItemMap.TryGetValue(control, out var item))
+            if (_menuToItemMap.TryGetValue(control, out var item))
                 return item;
 
             return null;
         }
 
-        public Button GetControlFromItem(TItem item)
+        public MenuItem GetControlFromItem(TItem item)
         {
-            if (_itemToButtonMap.TryGetValue(item, out var control))
+            if (_itemToMenuMap.TryGetValue(item, out var control))
                 return control;
 
             return null;
@@ -189,7 +189,7 @@ namespace Medja.Controls
 
         public void UpdateItem(TItem item)
         {
-            InitButtonFromItem(item, _itemToButtonMap[item]);
+            InitMenuItemFromItem(item, _itemToMenuMap[item]);
         }
     }
 }

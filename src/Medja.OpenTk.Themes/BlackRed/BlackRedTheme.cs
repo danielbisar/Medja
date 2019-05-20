@@ -125,6 +125,7 @@ namespace Medja.OpenTk.Themes
         protected override MenuItem CreateMenuItem()
         {
             var result = base.CreateMenuItem();
+            result.Position.Height = 40;
             result.Renderer = new MenuItemRenderer(result);
 
             return result;

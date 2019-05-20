@@ -40,7 +40,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
 
         protected override void InternalRender()
         {
-            if (_control.InputState.IsMouseOver)
+            if (_control.IsSelected)
                 _canvas.DrawRect(_rect, SelectedBackgroundPaint);
             else if(_control.Background != null)
                 _canvas.DrawRect(_rect, _backgroundPaint);

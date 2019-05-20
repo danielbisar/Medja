@@ -315,9 +315,9 @@ namespace Medja.Theming
 			return new ProgressBar();
 		}
 
-		protected virtual TouchButtonList<T> CreateTouchButtonList<T>() where T : class
+		protected virtual TouchItemList<T> CreateTouchItemList<T>() where T : class
 		{
-			return new TouchButtonList<T>(this);
+			return new TouchItemList<T>(this);
 		}
 
 		protected virtual QuestionDialog CreateQuestionDialog()
