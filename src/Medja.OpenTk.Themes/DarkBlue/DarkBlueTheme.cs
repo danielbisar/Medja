@@ -43,12 +43,12 @@ namespace Medja.OpenTk.Themes.DarkBlue
             return result;
         }
 
-        protected override ComboBox2 CreateComboBox2()
+        protected override ComboBox CreateComboBox2()
         {
             var result = base.CreateComboBox2();
             result.Background = Colors.White;
-            //result.
             result.Position.Height = 30;
+            
             result.ItemsPanel.ChildrenHeight = 30;
             result.ItemsPanel.SpaceBetweenChildren = 2;
 
@@ -57,12 +57,10 @@ namespace Medja.OpenTk.Themes.DarkBlue
             return result;
         }
 
-        protected override ComboBox<T> CreateComboBox<T>()
+        public override void ComboBoxMenuItemStyle(MenuItem menuItem)
         {
-            var result = base.CreateComboBox<T>();
-            result.Position.Height = 30;
-            
-            return result;
+            base.ComboBoxMenuItemStyle(menuItem);
+            menuItem.Background = DarkBlueThemeValues.ControlBackground;
         }
 
         protected override ContentControl CreateContentControl()

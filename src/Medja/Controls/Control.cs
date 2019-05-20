@@ -85,6 +85,9 @@ namespace Medja.Controls
 		}
 		
 		public readonly Property<bool> PropertyIsLayoutUpdated;
+		/// <summary>
+		/// Gets or sets if this control needs to be updated on the next layout run.
+		/// </summary>
 		public bool IsLayoutUpdated
 		{
 			get { return PropertyIsLayoutUpdated.Get(); }

@@ -117,16 +117,11 @@ namespace Medja.Demo
             checkBoxStackPanel.Add(checkedCheckBox);
             checkBoxStackPanel.Add(checkBoxDisabled);
 
-//            var comboBox = controlFactory.Create<ComboBox<string>>();
-//            comboBox.AddItem("123");
-//            comboBox.AddItem("456");
-//            comboBox.AddItem("789");
-
-            var comboBox2 = controlFactory.Create<ComboBox2>();
+            var comboBox2 = controlFactory.Create<ComboBox>();
             comboBox2.Title = "Select an item";
-            comboBox2.ItemsPanel.Add(controlFactory.CreateTextBlock("ABC"));
-            comboBox2.ItemsPanel.Add(controlFactory.CreateTextBlock("DEF"));
-            comboBox2.ItemsPanel.Add(controlFactory.CreateTextBlock("GHI"));
+            comboBox2.Add("123");
+            comboBox2.Add("456");
+            comboBox2.Add("789");
 
             var comboBoxStackPanel = controlFactory.Create<HorizontalStackPanel>();
             comboBoxStackPanel.ChildrenWidth = 200;

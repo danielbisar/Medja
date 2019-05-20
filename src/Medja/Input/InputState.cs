@@ -173,5 +173,11 @@ namespace Medja.Input
 			       + nameof(PointerPosition) + ": " + PointerPosition + ", "
 			       + " }";
 		}
+
+		public void SendClick(Point point = null)
+		{
+			PointerPosition = point ?? new Point(0, 0);
+			NotifyClicked();
+		}
 	}
 }
