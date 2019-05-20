@@ -1,4 +1,3 @@
-using System;
 using Medja.Primitives;
 using Medja.Theming;
 

@@ -1,6 +1,6 @@
 using Medja.Controls;
 
-namespace Medja.OpenTk.Themes.DarkBlue
+namespace Medja.OpenTk.Themes.BlackRed
 {
     public class PopupRenderer : PopupRendererBase
     {
@@ -11,7 +11,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
         
         protected override void InternalRender()
         {
-            _canvas.DrawRoundRect(_rect, 3, 3, DefaultBackgroundPaint);
+            _canvas.DrawRect(_rect, DefaultBackgroundPaint);
         }
     }
 }

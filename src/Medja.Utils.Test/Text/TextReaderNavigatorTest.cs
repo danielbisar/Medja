@@ -1,7 +1,6 @@
 using Medja.Utils.Text;
 using Xunit;
 using System.IO;
-using System;
 
 namespace Medja.Utils.Test.Text
 {

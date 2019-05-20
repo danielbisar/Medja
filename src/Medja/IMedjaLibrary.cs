@@ -1,5 +1,4 @@
-﻿using Medja.Controls;
-using Medja.Controls.Images;
+﻿using Medja.Controls.Images;
 using Medja.Theming;
 using Medja.Utils.Threading.Tasks;
 

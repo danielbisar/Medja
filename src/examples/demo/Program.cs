@@ -19,8 +19,8 @@ namespace Medja.Demo
 
         public Program()
         {
-            //var library = new MedjaOpenTkLibrary(new DarkBlueTheme());
-            var library = new MedjaOpenTkLibrary(new BlackRedTheme());
+            var library = new MedjaOpenTkLibrary(new DarkBlueTheme());
+            //var library = new MedjaOpenTkLibrary(new BlackRedTheme());
             
             library.RendererFactory = () => new OpenTkRenderer();
             _application = MedjaApplication.Create(library);

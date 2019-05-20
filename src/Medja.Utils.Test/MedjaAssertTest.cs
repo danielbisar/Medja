@@ -1,6 +1,5 @@
 using System;
 using Xunit;
-using Medja.Utils;
 
 namespace Medja.Utils.Test
 {

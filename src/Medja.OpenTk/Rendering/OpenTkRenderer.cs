@@ -2,11 +2,6 @@
 using System.Drawing;
 using Medja.Controls;
 using SkiaSharp;
-using OpenTK.Graphics.OpenGL;
-using System;
-using System.Linq;
-using System.Text;
-using Medja.Theming;
 
 namespace Medja.OpenTk.Rendering
 {

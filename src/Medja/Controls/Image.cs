@@ -1,5 +1,4 @@
 using Medja.Controls.Images;
-using Medja.Utils.Threading.Tasks;
 
 namespace Medja.Controls
 {

@@ -53,7 +53,7 @@ namespace Medja.OpenTk.Themes
         public override void ComboBoxMenuItemStyle(MenuItem menuItem)
         {
             base.ComboBoxMenuItemStyle(menuItem);
-            menuItem.Background = BlackRedThemeValues.SecondaryLightColor;
+            menuItem.Background = BlackRedThemeValues.PrimaryColor;
         }
 
         protected override Control CreateControl()
@@ -143,8 +143,16 @@ namespace Medja.OpenTk.Themes
         protected override NumericKeypadDialog CreateNumericKeypadDialog()
         {
             var result = base.CreateNumericKeypadDialog();
-            result.Renderer = new ControlRenderer(result);
             result.Background = BlackRedThemeValues.PrimaryColor;
+            result.Renderer = new ControlRenderer(result);
+
+            return result;
+        }
+
+        protected override Popup CreatePopup()
+        {
+            var result = base.CreatePopup();
+            result.Renderer = new PopupRenderer(result);
 
             return result;
         }

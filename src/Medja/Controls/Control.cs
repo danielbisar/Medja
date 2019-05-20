@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Medja.Controls.Animation;
 using Medja.Input;
 using Medja.Primitives;
