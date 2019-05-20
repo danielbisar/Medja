@@ -1,5 +1,6 @@
 using System;
 using Medja.Controls;
+using Medja.Primitives;
 
 namespace Medja.Theming
 {
@@ -8,6 +9,8 @@ namespace Medja.Theming
     /// </summary>
     public interface IControlFactory
     {
+        Font DefaultFont { get; }
+        
         TControl Create<TControl>() where TControl : Control;
         TControl Create<TControl>(Action<TControl> applyCustomStyle) where TControl : Control;
         

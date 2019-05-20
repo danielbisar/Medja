@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using Medja.Controls;
+using Medja.Primitives;
 using Medja.Utils.Reflection;
 
 namespace Medja.Theming
@@ -17,6 +18,8 @@ namespace Medja.Theming
 	public class ControlFactory : IControlFactory
 	{
 		private readonly Dictionary<Type, Func<object>> _factoryMethods;
+		
+		public Font DefaultFont { get; protected set; }
 
 		public ControlFactory()
 		{
@@ -26,7 +29,7 @@ namespace Medja.Theming
 			_factoryMethods.Add(typeof(Button), CreateButton);
 			_factoryMethods.Add(typeof(Canvas), CreateCanvas);
 			_factoryMethods.Add(typeof(CheckBox), CreateCheckBox);
-			_factoryMethods.Add(typeof(ComboBox), CreateComboBox2);
+			_factoryMethods.Add(typeof(ComboBox), CreateComboBox);
 			_factoryMethods.Add(typeof(ConfirmableDialog), CreateConfirmableDialog);
 			_factoryMethods.Add(typeof(Control), CreateControl);
 			_factoryMethods.Add(typeof(ContentControl), CreateContentControl);
@@ -74,7 +77,7 @@ namespace Medja.Theming
 		{
 			_factoryMethods.Add(typeof(TControl), factory);
 		}
-		
+
 		/// <summary>
 		/// Creates a new instance of the given type.
 		/// </summary>
@@ -167,7 +170,7 @@ namespace Medja.Theming
 			return new CheckBox();
 		}
 
-		protected virtual ComboBox CreateComboBox2()
+		protected virtual ComboBox CreateComboBox()
 		{
 			return new ComboBox(this);
 		}

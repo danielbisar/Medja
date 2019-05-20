@@ -1,17 +1,25 @@
 ﻿using Medja.Controls;
 using Medja.OpenTk.Themes.BlackRed;
+using Medja.Primitives;
 using Medja.Theming;
 
 namespace Medja.OpenTk.Themes
 {
     public class BlackRedTheme : ControlFactory
     {
+        public BlackRedTheme()
+        {
+            DefaultFont = new Font();
+            DefaultFont.Name = "Monospace";
+        }
+        
         protected override Button CreateButton()
         {
             var result = base.CreateButton();
             result.Renderer = new ButtonRenderer(result);
-            result.Font.Name = "Monospace";
+            result.Font.Name = DefaultFont.Name;
             result.Position.Height = 50;
+            result.TextColor = BlackRedThemeValues.PrimaryTextColor;
 
             return result;
         }
@@ -23,6 +31,26 @@ namespace Medja.OpenTk.Themes
             result.Position.Height = 26;
 
             return result;
+        }
+
+        protected override ComboBox CreateComboBox()
+        {
+            var result = base.CreateComboBox();
+            result.Background = BlackRedThemeValues.PrimaryColor;
+            result.Position.Height = 30;
+            
+            result.ItemsPanel.ChildrenHeight = 30;
+            result.ItemsPanel.SpaceBetweenChildren = 2;
+
+            result.Renderer = new ComboBoxRenderer(result);
+            
+            return result;
+        }
+
+        public override void ComboBoxMenuItemStyle(MenuItem menuItem)
+        {
+            base.ComboBoxMenuItemStyle(menuItem);
+            menuItem.Background = BlackRedThemeValues.SecondaryLightColor;
         }
 
         protected override Control CreateControl()
@@ -77,7 +105,7 @@ namespace Medja.OpenTk.Themes
         {
             var result = base.CreateInputBoxDialog();
             result.Renderer = new ControlRenderer(result);
-            result.Background = ColorMap.Primary;
+            result.Background = BlackRedThemeValues.PrimaryColor;
 
             return result;
         }
@@ -91,11 +119,19 @@ namespace Medja.OpenTk.Themes
             return result;
         }
 
+        protected override MenuItem CreateMenuItem()
+        {
+            var result = base.CreateMenuItem();
+            result.Renderer = new MenuItemRenderer(result);
+
+            return result;
+        }
+
         protected override NumericKeypad CreateNumericKeypad()
         {
             var result = base.CreateNumericKeypad();
             result.Renderer = new ControlRenderer(result);
-            result.Background = ColorMap.Primary;
+            result.Background = BlackRedThemeValues.PrimaryColor;
 
             return result;
         }
@@ -104,7 +140,7 @@ namespace Medja.OpenTk.Themes
         {
             var result = base.CreateNumericKeypadDialog();
             result.Renderer = new ControlRenderer(result);
-            result.Background = ColorMap.Primary;
+            result.Background = BlackRedThemeValues.PrimaryColor;
 
             return result;
         }
@@ -121,7 +157,7 @@ namespace Medja.OpenTk.Themes
         {
             var result = base.CreateSimpleMessageDialog();
             result.Renderer = new ControlRenderer(result);
-            result.Background = ColorMap.Primary;
+            result.Background = BlackRedThemeValues.PrimaryColor;
 
             return result;
         }
@@ -147,9 +183,9 @@ namespace Medja.OpenTk.Themes
         {
             var result = base.CreateTextBox();
             result.Renderer = new TextBoxRenderer(result);
-            result.TextColor = ColorMap.PrimaryText;
-            result.Background = ColorMap.Primary;
-            result.Font.Name = "Monospace";
+            result.TextColor = BlackRedThemeValues.PrimaryTextColor;
+            result.Background = BlackRedThemeValues.PrimaryColor;
+            result.Font.Name = DefaultFont.Name;
             result.Position.Height = 26;
 
             return result;
@@ -159,8 +195,8 @@ namespace Medja.OpenTk.Themes
         {
             var result = base.CreateTextBlock();
             result.Renderer = new TextBlockRenderer(result);
-            result.TextColor = ColorMap.PrimaryText;
-            result.Font.Name = "Monospace";
+            result.TextColor = BlackRedThemeValues.PrimaryTextColor;
+            result.Font.Name = DefaultFont.Name;
             result.Position.Height = 23;
 
             return result;
@@ -178,7 +214,7 @@ namespace Medja.OpenTk.Themes
         {
             var result = base.CreateQuestionDialog();
             result.Renderer = new ControlRenderer(result);
-            result.Background = ColorMap.Primary;
+            result.Background = BlackRedThemeValues.PrimaryColor;
 
             return result;
         }
@@ -188,7 +224,7 @@ namespace Medja.OpenTk.Themes
             var result = base.CreateVerticalScrollBar();
             result.Renderer = new VerticalScrollBarRenderer(result);
             result.Position.Width = 20;
-            result.Background = ColorMap.Primary;
+            result.Background = BlackRedThemeValues.PrimaryColor;
 
             return result;
         }

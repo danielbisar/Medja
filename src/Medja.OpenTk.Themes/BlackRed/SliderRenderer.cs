@@ -13,16 +13,16 @@ namespace Medja.OpenTk.Themes.BlackRed
                 : base(control)
         {
             _barPaint = new SKPaint();
-            _barPaint.Color = ColorMap.Primary.ToSKColor();
+            _barPaint.Color = BlackRedThemeValues.PrimaryColor.ToSKColor();
             _barPaint.StrokeCap = SKStrokeCap.Round;
             _barPaint.Style = SKPaintStyle.Stroke;
             _barPaint.StrokeWidth = 4;
 			
             _positionPaint = new SKPaint();
-            _positionPaint.Color = ColorMap.PrimaryText.ToSKColor();
+            _positionPaint.Color = BlackRedThemeValues.PrimaryTextColor.ToSKColor();
             _positionPaint.IsAntialias = true;
 
-            _paint.Color = ColorMap.PrimaryText.ToSKColor();
+            _paint.Color = BlackRedThemeValues.PrimaryTextColor.ToSKColor();
         }
 
         protected override void InternalRender()

@@ -4,21 +4,18 @@ using SkiaSharp;
 
 namespace Medja.OpenTk.Themes.BlackRed
 {
-    public class CheckBoxRenderer : SkiaControlRendererBase<CheckBox>
+    public class CheckBoxRenderer : TextControlRendererBase<CheckBox>
     {
         public CheckBoxRenderer(CheckBox checkBox)
             : base(checkBox)
         {
-            
         }
-        
-        protected override void InternalRender()
-        {
-            RenderBackground();
 
+        protected override void DrawTextControlBackground()
+        {
             _paint.Color = _control.IsEnabled 
-                    ? ColorMap.PrimaryLight.ToSKColor() 
-                    : ColorMap.Primary.ToSKColor();
+                ? BlackRedThemeValues.PrimaryLightColor.ToSKColor() 
+                : BlackRedThemeValues.PrimaryColor.ToSKColor();
 
             var checkMarkBorder = new SKRect(_rect.Left, _rect.Top, _rect.Left + _rect.Height, _rect.Bottom);
             _paint.IsStroke = true; 
@@ -28,13 +25,10 @@ namespace Medja.OpenTk.Themes.BlackRed
             if (_control.IsChecked)
             {
                 _paint.Color = _control.IsEnabled 
-                        ? ColorMap.Secondary.ToSKColor()
-                        : ColorMap.SecondaryLight.ToSKColor();
+                    ? BlackRedThemeValues.SecondaryColor.ToSKColor()
+                    : BlackRedThemeValues.SecondaryLightColor.ToSKColor();
                 _canvas.DrawRect(checkMarkBorder, _paint);
             }
-
-            _paint.Color = _control.IsEnabled ? ColorMap.PrimaryText.ToSKColor() : ColorMap.PrimaryLight.ToSKColor();
-            RenderText(_control.Text, _control.Font, new SKPoint(checkMarkBorder.Right+5, checkMarkBorder.Top + _paint.FontSpacing));
         }
     }
 }

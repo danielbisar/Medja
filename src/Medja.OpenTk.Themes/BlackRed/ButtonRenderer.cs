@@ -4,7 +4,7 @@ using SkiaSharp;
 
 namespace Medja.OpenTk.Themes.BlackRed
 {
-	public class ButtonRenderer : SkiaControlRendererBase<Button>
+	public class ButtonRenderer : TextControlRendererBase<Button>
 	{
 		private readonly SKPaint _mouseDownPaint;
 		private readonly SKPaint _mouseOverPaint;
@@ -16,44 +16,35 @@ namespace Medja.OpenTk.Themes.BlackRed
 		{
 			_defaultPaint = new SKPaint();
 			_defaultPaint.IsAntialias = true;
-			_defaultPaint.Color = ColorMap.Secondary.ToSKColor();
+			_defaultPaint.Color = BlackRedThemeValues.SecondaryColor.ToSKColor();
 			
 			_mouseDownPaint = new SKPaint();
 			_mouseDownPaint.IsAntialias = true;
-			_mouseDownPaint.Color = ColorMap.SecondaryLight.ToSKColor();
+			_mouseDownPaint.Color = BlackRedThemeValues.SecondaryLightColor.ToSKColor();
 			
 			_mouseOverPaint = new SKPaint();
 			_mouseOverPaint.IsAntialias = true;
-			_mouseOverPaint.Color = ColorMap.Secondary.ToSKColor();
+			_mouseOverPaint.Color = BlackRedThemeValues.SecondaryColor.ToSKColor();
 			
 			_selectedPaint = new SKPaint();
 			_selectedPaint.IsAntialias = true;
-			_selectedPaint.Color = ColorMap.PrimaryLight.ToSKColor().WithAlpha(byte.MaxValue / 2);
+			_selectedPaint.Color = BlackRedThemeValues.PrimaryLightColor.ToSKColor().WithAlpha(byte.MaxValue / 2);
 		}
 		
-		protected override void InternalRender()
+		protected override void DrawTextControlBackground()
 		{
-			if (_control.IsEnabled)
-			{
-				if (_control.InputState.IsLeftMouseDown)
-				{
-					_canvas.DrawRect(_rect, _mouseDownPaint);
-				}
-				else if (_control.InputState.IsMouseOver)
-				{
-					_canvas.DrawRect(_rect, _mouseOverPaint);
-				}
-				else
-				{
-					_canvas.DrawLine(_rect.Left, _rect.Bottom, _rect.Right, _rect.Bottom, _defaultPaint);
-				}
+			if (!_control.IsEnabled) 
+				return;
+			
+			if (_control.InputState.IsLeftMouseDown)
+				_canvas.DrawRect(_rect, _mouseDownPaint);
+			else if (_control.InputState.IsMouseOver)
+				_canvas.DrawRect(_rect, _mouseOverPaint);
+			else
+				_canvas.DrawLine(_rect.Left, _rect.Bottom, _rect.Right, _rect.Bottom, _defaultPaint);
 				
-				if(_control.IsSelected)
-					_canvas.DrawRect(_rect, _selectedPaint);
-			}
-
-			_paint.Color = _control.IsEnabled ? ColorMap.PrimaryText.ToSKColor() : ColorMap.PrimaryLight.ToSKColor();
-			RenderTextCentered(_control.Text, _control.Font);
+			if(_control.IsSelected)
+				_canvas.DrawRect(_rect, _selectedPaint);
 		}
 	}
 }
