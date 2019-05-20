@@ -43,6 +43,11 @@ namespace Medja.Demo
         {
             var controlFactory = _application.Library.ControlFactory;
 
+            //var simpleFactory = new SimpleFactory();
+            //simpleFactory.AddAlias("Button", () => controlFactory.Create<Button>());
+            
+            //var button = simpleFactory.CreateFromFile<Button>("button.s");
+
             var button = controlFactory.Create<Button>();
             button.Text = "Normal";
 
@@ -57,9 +62,9 @@ namespace Medja.Demo
             var buttonStackPanel = controlFactory.Create<HorizontalStackPanel>();
             buttonStackPanel.ChildrenWidth = 150;
             buttonStackPanel.SpaceBetweenChildren = 50;
-            buttonStackPanel.Children.Add(button);
-            buttonStackPanel.Children.Add(touchedButton);
-            buttonStackPanel.Children.Add(disabledButton);
+            buttonStackPanel.Add(button);
+            buttonStackPanel.Add(touchedButton);
+            buttonStackPanel.Add(disabledButton);
 
             var checkBox = controlFactory.Create<CheckBox>();
             checkBox.Text = "CheckBox";
@@ -94,9 +99,9 @@ namespace Medja.Demo
             var textBoxStackPanel = controlFactory.Create<HorizontalStackPanel>();
             textBoxStackPanel.ChildrenWidth = 150;
             textBoxStackPanel.SpaceBetweenChildren = 50;
-            textBoxStackPanel.Children.Add(textBox);
-            textBoxStackPanel.Children.Add(textBoxDisabled);
-            textBoxStackPanel.Children.Add(textBoxFocused);
+            textBoxStackPanel.Add(textBox);
+            textBoxStackPanel.Add(textBoxDisabled);
+            textBoxStackPanel.Add(textBoxFocused);
 
             var textBlock = controlFactory.Create<TextBlock>();
             textBlock.TextWrapping = TextWrapping.Auto;
@@ -108,26 +113,26 @@ namespace Medja.Demo
             var checkBoxStackPanel = controlFactory.Create<HorizontalStackPanel>();
             checkBoxStackPanel.ChildrenWidth = 150;
             checkBoxStackPanel.SpaceBetweenChildren = 50;
-            checkBoxStackPanel.Children.Add(checkBox);
-            checkBoxStackPanel.Children.Add(checkedCheckBox);
-            checkBoxStackPanel.Children.Add(checkBoxDisabled);
+            checkBoxStackPanel.Add(checkBox);
+            checkBoxStackPanel.Add(checkedCheckBox);
+            checkBoxStackPanel.Add(checkBoxDisabled);
 
-            var comboBox = controlFactory.Create<ComboBox<string>>();
-            comboBox.AddItem("123");
-            comboBox.AddItem("456");
-            comboBox.AddItem("789");
+//            var comboBox = controlFactory.Create<ComboBox<string>>();
+//            comboBox.AddItem("123");
+//            comboBox.AddItem("456");
+//            comboBox.AddItem("789");
 
             var comboBox2 = controlFactory.Create<ComboBox2>();
             comboBox2.Title = "Select an item";
-            comboBox2.ItemsPanel.Children.Add(controlFactory.CreateTextBlock("ABC"));
-            comboBox2.ItemsPanel.Children.Add(controlFactory.CreateTextBlock("DEF"));
-            comboBox2.ItemsPanel.Children.Add(controlFactory.CreateTextBlock("GHI"));
+            comboBox2.ItemsPanel.Add(controlFactory.CreateTextBlock("ABC"));
+            comboBox2.ItemsPanel.Add(controlFactory.CreateTextBlock("DEF"));
+            comboBox2.ItemsPanel.Add(controlFactory.CreateTextBlock("GHI"));
 
             var comboBoxStackPanel = controlFactory.Create<HorizontalStackPanel>();
             comboBoxStackPanel.ChildrenWidth = 200;
             comboBoxStackPanel.SpaceBetweenChildren = 50;
-            comboBoxStackPanel.Children.Add(comboBox);
-            comboBoxStackPanel.Children.Add(comboBox2);
+            //comboBoxStackPanel.Children.Add(comboBox);
+            comboBoxStackPanel.Add(comboBox2);
 
             var menuItem = controlFactory.Create<MenuItem>();
             menuItem.Title = "MenuItem";
@@ -141,14 +146,14 @@ namespace Medja.Demo
             result.Padding.SetAll(20);
             result.Background = DarkBlueThemeValues.Background;
             result.SpaceBetweenChildren = 25;
-            result.Children.Add(buttonStackPanel);
-            result.Children.Add(checkBoxStackPanel);
-            result.Children.Add(progressBar);
-            result.Children.Add(slider);
-            result.Children.Add(textBoxStackPanel);
-            result.Children.Add(textBlock);
-            result.Children.Add(comboBoxStackPanel);
-            result.Children.Add(menuItemPanel);
+            result.Add(buttonStackPanel);
+            result.Add(checkBoxStackPanel);
+            result.Add(progressBar);
+            result.Add(slider);
+            result.Add(textBoxStackPanel);
+            result.Add(textBlock);
+            result.Add(comboBoxStackPanel);
+            result.Add(menuItemPanel);
 
             return result;
         }

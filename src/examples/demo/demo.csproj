@@ -13,4 +13,10 @@
       <ProjectReference Include="..\..\Medja\Medja.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="button.s">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>

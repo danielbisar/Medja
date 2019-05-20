@@ -8,26 +8,28 @@ namespace Medja.OpenTk.Themes.DarkBlue
 {
     public class TextEditorRenderer : SkiaControlRendererBase<TextEditor>
     {
-        private SKPaint _textPaint;
-        private SKPaint _selectionPaint;
+        private static readonly SKPaint TextPaint;
+        private static readonly SKPaint SelectionPaint;
+
+        static TextEditorRenderer()
+        {
+            TextPaint = new SKPaint();
+            TextPaint.IsAntialias = true;
+            TextPaint.Color = DarkBlueThemeValues.PrimaryTextColor.ToSKColor();
+            TextPaint.TextSize = 16;
+
+            SelectionPaint = new SKPaint();
+            SelectionPaint.IsAntialias = true;
+            SelectionPaint.Color = DarkBlueThemeValues.Background.ToSKColor().WithAlpha(178);
+        }
 
         private readonly float _lineHeight;
-
-        private SKPoint _selectionStart;
-        private SKPoint _selectionEnd;
         private bool _isInSelection;
 
         public TextEditorRenderer(TextEditor control)
             : base(control)
         {
-            _textPaint = CreatePaint();
-            _textPaint.Color = DarkBlueThemeValues.PrimaryTextColor.ToSKColor();
-            _textPaint.TextSize = 16;
-
-            _selectionPaint = CreatePaint();
-            _selectionPaint.Color = DarkBlueThemeValues.Background.ToSKColor().WithAlpha(178);
-
-            _lineHeight = _textPaint.TextSize * 1.3f;
+            _lineHeight = TextPaint.TextSize * 1.3f;
         }
 
         protected override void InternalRender()
@@ -43,7 +45,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
                 var line = lines[i];
 
                 // todo string marshalling is slow?
-                _canvas.DrawText(line, x, y, _textPaint);
+                _canvas.DrawText(line, x, y, TextPaint);
 
                 if (i == _control.CaretY)
                     DrawCaret(x, y);
@@ -71,8 +73,8 @@ namespace Medja.OpenTk.Themes.DarkBlue
                 if (!thisLineStartsSelection && !thisLineEndsSelection)
                 {
                     // select whole line
-                    _canvas.DrawRect(x, y - _textPaint.TextSize, GetTextWidth(line), _lineHeight,
-                        _selectionPaint);
+                    _canvas.DrawRect(x, y - TextPaint.TextSize, GetTextWidth(line), _lineHeight,
+                        SelectionPaint);
                 }
                 else
                 {
@@ -99,8 +101,8 @@ namespace Medja.OpenTk.Themes.DarkBlue
 
                     var selectionWidth = GetTextWidth(thisLinesSelectedText);
 
-                    _canvas.DrawRect(selectionX, y - _textPaint.TextSize, selectionWidth, _textPaint.FontSpacing,
-                        _selectionPaint);
+                    _canvas.DrawRect(selectionX, y - TextPaint.TextSize, selectionWidth, TextPaint.FontSpacing,
+                        SelectionPaint);
                 }
             }
 
@@ -114,7 +116,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
             if (string.IsNullOrEmpty(text))
                 return 0;
 
-            return _textPaint.MeasureText(text);
+            return TextPaint.MeasureText(text);
         }
 
         private void DrawCaret(float startX, float y)
@@ -131,11 +133,11 @@ namespace Medja.OpenTk.Themes.DarkBlue
             if (string.IsNullOrEmpty(textBeforeCaret))
                 x = startX;
             else
-                x = startX + _textPaint.MeasureText(textBeforeCaret);
+                x = startX + TextPaint.MeasureText(textBeforeCaret);
 
-            y -= _textPaint.TextSize;
+            y -= TextPaint.TextSize;
 
-            _canvas.DrawLine(x, y, x, y + _textPaint.FontSpacing, _textPaint);
+            _canvas.DrawLine(x, y, x, y + TextPaint.FontSpacing, TextPaint);
         }
     }
 }
