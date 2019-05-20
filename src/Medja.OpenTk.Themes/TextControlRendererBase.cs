@@ -8,35 +8,41 @@ namespace Medja.OpenTk.Themes
     public abstract class TextControlRendererBase<T> : SkiaControlRendererBase<T> 
         where T : TextControl
     {
+        // TODO not supported scenarios:
+        // - changing of any value in font of the control
+        
         protected readonly SKPaint _textPaint;
         protected readonly SKPaint _textDisabledPaint;
+        
         private SKPaint _currentTextPaint;
         
         private bool _isControlInitialized;
         protected float StartingY { get; private set; }
         protected float XOffset { get; set; }
-        
-        public TextControlRendererBase(T control) 
+
+        protected TextControlRendererBase(T control) 
             : base(control)
         {
             _textPaint = CreateTextPaint();
             _textDisabledPaint = CreateTextDisabledPaint();
+            
+            _control.PropertyTextColor.PropertyChanged += OnTextColorChanged;
         }
 
-        protected virtual SKPaint CreateTextPaint()
+        private SKPaint CreateTextPaint()
         {
             // todo update on control.Font change
             var font = _control.Font;
             
             var result = CreatePaint();
-            result.Color = _control.TextColor.ToSKColor();
             result.Typeface = font.Name == null ? null : SKTypeface.FromFamilyName(font.Name);
             result.TextSize = font.Size;
+            result.Color = _control.TextColor.ToSKColor();
 
             return result;
         }
-
-        protected virtual SKPaint CreateTextDisabledPaint()
+        
+        private SKPaint CreateTextDisabledPaint()
         {
             var result = CreatePaint();
             result.Typeface = _textPaint.Typeface;
@@ -44,6 +50,12 @@ namespace Medja.OpenTk.Themes
             result.Color = _control.TextColor.GetDisabled().ToSKColor();
 
             return result;
+        }
+
+        private void OnTextColorChanged(object sender, PropertyChangedEventArgs e)
+        {
+            _textPaint.Color = _control.TextColor.ToSKColor();
+            _textDisabledPaint.Color = _control.TextColor.GetDisabled().ToSKColor();
         }
 
         protected override void InternalRender()
@@ -118,11 +130,6 @@ namespace Medja.OpenTk.Themes
         {
             var font = _control.Font;
             font.GetWidth = GetTextWidth;
-			
-            // TODO not supported scenarios:
-            // - changing of foreground color of the control
-            // - changing of any value in font of the control
-            // - using the actual font and size defined in the font object
 
             _isControlInitialized = true;
         }
