@@ -1,5 +1,6 @@
 using Medja.Controls;
 using Medja.OpenTk.Rendering;
+using Medja.OpenTk.Utils;
 using SkiaSharp;
 
 namespace Medja.OpenTk.Themes.BlackRed
@@ -46,9 +47,9 @@ namespace Medja.OpenTk.Themes.BlackRed
             _canvas.DrawRect(_rect, _backgroundPaint);
 
             if(_control.SelectedItem == null)
-                _canvas.DrawText(_control.Title, _rect.Left + 10, _rect.Top + _lineHeight, _titlePaint);
+                _canvas.DrawTextSafe(_control.Title, _rect.Left + 10, _rect.Top + _lineHeight, _titlePaint);
             else
-                _canvas.DrawText(_control.DisplayText, _rect.Left + 10, _rect.Top + _lineHeight, _displayTextPaint);
+                _canvas.DrawTextSafe(_control.DisplayText, _rect.Left + 10, _rect.Top + _lineHeight, _displayTextPaint);
             
             _canvas.DrawRect(buttonRect, _buttonPaint);
             
