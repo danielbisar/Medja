@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using Medja.Controls;
 using Medja.OpenTk.Rendering;
+using Medja.OpenTk.Utils;
 using SkiaSharp;
 
 namespace Medja.OpenTk.Themes.DarkBlue
@@ -45,7 +46,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
                 var line = lines[i];
 
                 // todo string marshalling is slow?
-                _canvas.DrawText(line, x, y, TextPaint);
+                _canvas.DrawTextSafe(line, x, y, TextPaint);
 
                 if (i == _control.CaretY)
                     DrawCaret(x, y);

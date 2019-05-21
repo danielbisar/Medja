@@ -1,5 +1,6 @@
 using Medja.Controls;
 using Medja.OpenTk.Rendering;
+using Medja.OpenTk.Utils;
 using SkiaSharp;
 
 namespace Medja.OpenTk.Themes.DarkBlue
@@ -45,7 +46,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
             else if(_control.Background != null)
                 _canvas.DrawRect(_rect, _backgroundPaint);
             
-            _canvas.DrawText(_control.Title, _rect.Left + 10, _rect.Top + TextPaint.TextSize + 2, TextPaint);
+            _canvas.DrawTextSafe(_control.Title, _rect.Left + 10, _rect.Top + TextPaint.TextSize + 2, TextPaint);
         }
     }
 }
