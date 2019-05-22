@@ -37,8 +37,7 @@ namespace Medja.Controls
 
         public void UpdateLayout()
         {
-            if(TopMostControlNeedingLayoutPass != null)
-                TopMostControlNeedingLayoutPass.UpdateLayout();
+            TopMostControlNeedingLayoutPass?.UpdateLayout();
         }
 
         /// <summary>

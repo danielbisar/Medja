@@ -6,64 +6,45 @@ namespace Medja.OpenTk.Themes.DarkBlue
 {
     public class CheckBoxRenderer : TextControlRendererBase<CheckBox>
     {
-        private readonly SKPaint _defaultBackgroundPaint;
-        private readonly SKPaint _disabledUncheckedBackgroundPaint;
-        private readonly SKPaint _checkedBackgroundPaint;
-        private readonly SKPaint _disabledCheckedBackgroundPaint;
+        private readonly SKPaint _backgroundPaint;
         private readonly SKPaint _checkMarkPaint;
         
         public CheckBoxRenderer(CheckBox control) 
             : base(control)
         {
-            _defaultBackgroundPaint = new SKPaint();
-            _defaultBackgroundPaint.Color = control.Background.ToSKColor();
-            _defaultBackgroundPaint.ImageFilter = DarkBlueThemeValues.DropShadow;
-            _defaultBackgroundPaint.IsAntialias = true;
-            
-            _disabledUncheckedBackgroundPaint = new SKPaint();
-            _disabledUncheckedBackgroundPaint.IsAntialias = true;
-            _disabledUncheckedBackgroundPaint.Color = control.Background.GetDisabled().ToSKColor();
-            _disabledUncheckedBackgroundPaint.ImageFilter = DarkBlueThemeValues.DropShadowDisabled;
-
-            _checkedBackgroundPaint = new SKPaint();
-            _checkedBackgroundPaint.IsAntialias = true;
-            _checkedBackgroundPaint.Color = DarkBlueThemeValues.PrimaryColor.ToSKColor(); // todo control.F.ToSKColor();
-            _checkedBackgroundPaint.ImageFilter = DarkBlueThemeValues.DropShadow;
-            
-            _disabledCheckedBackgroundPaint = new SKPaint();
-            _disabledCheckedBackgroundPaint.IsAntialias = true;
-            _disabledCheckedBackgroundPaint.Color = DarkBlueThemeValues.PrimaryColor.ToSKColor(); // todo control.F.ToSKColor();
-            _disabledCheckedBackgroundPaint.ImageFilter = DarkBlueThemeValues.DropShadowDisabled;
+            _backgroundPaint = new SKPaint();
+            _backgroundPaint.IsAntialias = true;
 
             _checkMarkPaint = new SKPaint();
             _checkMarkPaint.IsAntialias = true;
             _checkMarkPaint.Color = DarkBlueThemeValues.PrimaryTextColor.ToSKColor();
             _checkMarkPaint.IsStroke = true;
             _checkMarkPaint.StrokeWidth = 2;
-
-            // todo update colors on change - required for all renders; find a good clean solution
+            
+            control.AffectRendering(control.PropertyIsChecked, 
+                control.PropertyBackground, 
+                control.PropertyIsEnabled);
         }
 
         protected override void DrawTextControlBackground()
         {
-            SKPaint backgroundPaint = null;
+            var backgroundColor = _control.IsChecked 
+                ? DarkBlueThemeValues.PrimaryColor 
+                : _control.Background;
             
-            // todo do not get the actual state on rendering but in ctor and watch for changes of control
-            // we might need to implement dispose...
-
             if (_control.IsEnabled)
             {
-                backgroundPaint = _control.IsChecked ? _checkedBackgroundPaint : _defaultBackgroundPaint;
+                _backgroundPaint.Color = backgroundColor.ToSKColor();
+                _backgroundPaint.ImageFilter = DarkBlueThemeValues.DropShadow;
             }
             else
             {
-                backgroundPaint = _control.IsChecked
-                    ? _disabledCheckedBackgroundPaint
-                    : _disabledUncheckedBackgroundPaint;
+                _backgroundPaint.Color = backgroundColor.GetDisabled().ToSKColor();
+                _backgroundPaint.ImageFilter = DarkBlueThemeValues.DropShadowDisabled;
             }
             
             var checkMarkBorder = new SKRect(_rect.Left, _rect.Top, _rect.Left + _rect.Height, _rect.Bottom);
-            _canvas.DrawRoundRect(checkMarkBorder, 2, 2, backgroundPaint);
+            _canvas.DrawRoundRect(checkMarkBorder, 2, 2, _backgroundPaint);
 
             if (_control.IsChecked)
             {
@@ -76,6 +57,14 @@ namespace Medja.OpenTk.Themes.DarkBlue
                     _canvas.DrawPath(checkMarkPath, _checkMarkPaint);
                 }
             }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _checkMarkPaint.Dispose();
+            _backgroundPaint.Dispose();
+            
+            base.Dispose(disposing);
         }
     }
 }

@@ -27,6 +27,8 @@ namespace Medja.OpenTk.Themes
             _textDisabledPaint = CreateTextDisabledPaint();
             
             _control.Font.PropertyColor.PropertyChanged += OnTextColorChanged;
+            
+            _control.AffectRendering(_control.PropertyText);
         }
 
         private SKPaint CreateTextPaint()

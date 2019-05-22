@@ -12,6 +12,8 @@ namespace Medja.Controls
 	/// </summary>
 	public class Control : IDisposable
 	{
+		private readonly HashSet<IProperty> _propertiesAffectingRendering;
+		
 		public AnimationManager AnimationManager { get; }
 		public Dictionary<int, object> AttachedProperties { get; }
 		public InputState InputState { get; }
@@ -94,6 +96,17 @@ namespace Medja.Controls
 			set { PropertyIsLayoutUpdated.Set(value); }
 		}
 
+		public readonly Property<bool> PropertyNeedsRendering;
+
+		/// <summary>
+		/// Gets or sets if this control should be rendered again.
+		/// </summary>
+		public bool NeedsRendering
+		{
+			get { return PropertyNeedsRendering.Get(); }
+			set { PropertyNeedsRendering.Set(value); }
+		}
+
 		public readonly Property<bool> PropertyIsTopMost;
 		/// <summary>
 		/// If set to true this control will be rendered above others (later).
@@ -108,6 +121,8 @@ namespace Medja.Controls
 
 		public Control()
 		{
+			_propertiesAffectingRendering = new HashSet<IProperty>();
+			
 			AnimationManager = new AnimationManager();
 			AttachedProperties = new Dictionary<int, object>();
 			InputState = new InputState(this);
@@ -132,15 +147,26 @@ namespace Medja.Controls
 			PropertyVerticalAlignment = new Property<VerticalAlignment>();
 			PropertyHorizontalAlignment = new Property<HorizontalAlignment>();
 			PropertyIsLayoutUpdated = new Property<bool>();
+			PropertyNeedsRendering = new Property<bool>();
+			PropertyNeedsRendering.PropertyChanged += OnNeedsRenderingChanged;
 			
 			PropertyIsTopMost = new Property<bool>();
 			
 			ClippingArea = new MRect();
 		}
 
+		private void OnNeedsRenderingChanged(object sender, PropertyChangedEventArgs e)
+		{
+			if (Renderer == null)
+				NeedsRendering = false;
+		}
+
 		protected virtual void OnPositionChanged(object sender, PropertyChangedEventArgs e)
 		{
 			IsLayoutUpdated = false;
+			
+			if(Renderer != null)
+				NeedsRendering = true;
 		}
 
 		private void OnVisibilityChanged(object sender, PropertyChangedEventArgs eventArgs)
@@ -154,6 +180,7 @@ namespace Medja.Controls
 			Arrange(new Size(Position.Width, Position.Height));
 			
 			IsLayoutUpdated = true;
+			NeedsRendering = true; // todo not the best place to set this
 		}
 
 		/// <summary>
@@ -215,14 +242,47 @@ namespace Medja.Controls
 		{
 			if (disposing)
 			{
+				// managed objects go here
+				
 				Renderer?.Dispose();
+
+				foreach (var property in _propertiesAffectingRendering)
+					property.PropertyChanged -= OnRenderingRelevantPropertyChanged;
 			}
+			
+			// unmanaged objects go here
 		}
 
 		public void Dispose()
 		{
 			Dispose(true);
 			GC.SuppressFinalize(this);
+		}
+
+		/// <summary>
+		/// Adds a property to the listener that affects the rendering.
+		/// </summary>
+		/// <remarks>This method should be used by themes to define when a control needs to be rerendered.</remarks>
+		/// <param name="property">The property that affects rendering.</param>
+		public void AffectsRendering(IProperty property)
+		{
+			if(_propertiesAffectingRendering.Add(property))
+				property.PropertyChanged += OnRenderingRelevantPropertyChanged;
+		}
+
+		/// <summary>
+		/// <see cref="AffectsRendering"/>.
+		/// </summary>
+		/// <param name="properties">The properties that affect rendering.</param>
+		public void AffectRendering(params IProperty[] properties)
+		{
+			foreach(var property in properties)
+				AffectsRendering(property);
+		}
+
+		private void OnRenderingRelevantPropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			NeedsRendering = true;
 		}
 	}
 }

@@ -26,7 +26,6 @@ namespace Medja.examples.Editor
         static void Main(string[] args)
         {
             var library = new MedjaOpenTkLibrary(new Medja.OpenTk.Themes.DarkBlue.DarkBlueTheme());
-            library.RendererFactory = CreateRenderer;
 
             var controlFactory = library.ControlFactory;
             var application = MedjaApplication.Create(library);
@@ -68,12 +67,6 @@ namespace Medja.examples.Editor
             FocusManager.Default.SetFocus(editor);
 
             return dockPanel;
-        }
-
-        private static IRenderer CreateRenderer()
-        {
-            var openTkRenderer = new OpenTkRenderer();
-            return openTkRenderer;
         }
     }
 }

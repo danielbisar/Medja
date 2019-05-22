@@ -11,7 +11,8 @@ namespace Medja.OpenTk.Themes.DarkBlue
         
         protected override void InternalRender()
         {
-            _canvas.DrawRoundRect(_rect, 3, 3, DefaultBackgroundPaint);
+            base.InternalRender();
+            _canvas.DrawRoundRect(_rect, 3, 3, _backgroundPaint);
         }
     }
 }

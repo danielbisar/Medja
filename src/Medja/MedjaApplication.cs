@@ -123,9 +123,9 @@ namespace Medja
         /// <summary>
         /// Starts the application (shows the main window, starts message queue, ...)
         /// </summary>
-        public void Run()
+        public void Run(int maxFps = 60)
         {
-            _library.Run(this);
+            _library.Run(this, maxFps);
         }
     }
 }

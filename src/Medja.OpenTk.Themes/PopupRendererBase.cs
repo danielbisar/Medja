@@ -7,21 +7,29 @@ namespace Medja.OpenTk.Themes
 {
     public abstract class PopupRendererBase : SkiaControlRendererBase<Popup>
     {
-        protected readonly SKPaint DefaultBackgroundPaint;
+        protected readonly SKPaint _backgroundPaint;
         
         protected PopupRendererBase(Popup control) 
             : base(control)
         {
-            DefaultBackgroundPaint = new SKPaint();
-            DefaultBackgroundPaint.Color = control.Background.ToSKColor();
-            DefaultBackgroundPaint.ImageFilter = DarkBlueThemeValues.DropShadow;
-
-            control.PropertyBackground.PropertyChanged += OnBackgroundChanged;
+            _backgroundPaint = new SKPaint();
+            _backgroundPaint.Color = control.Background.ToSKColor();
+            _backgroundPaint.ImageFilter = DarkBlueThemeValues.DropShadow;
+            
+            control.AffectRendering(control.PropertyBackground, control.PropertyIsEnabled);
+        }
+        
+        protected override void InternalRender()
+        {
+            var color = _control.IsEnabled ? _control.Background : _control.Background.GetDisabled();
+            _backgroundPaint.Color = color.ToSKColor();
         }
 
-        private void OnBackgroundChanged(object sender, PropertyChangedEventArgs e)
+        protected override void Dispose(bool disposing)
         {
-            DefaultBackgroundPaint.Color = _control.Background.ToSKColor();
+            _backgroundPaint.Dispose();
+            
+            base.Dispose(disposing);
         }
     }
 }
