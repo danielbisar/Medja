@@ -12,7 +12,7 @@ namespace Medja.OpenTk.Themes
         protected PopupRendererBase(Popup control) 
             : base(control)
         {
-            DefaultBackgroundPaint = CreatePaint();
+            DefaultBackgroundPaint = new SKPaint();
             DefaultBackgroundPaint.Color = control.Background.ToSKColor();
             DefaultBackgroundPaint.ImageFilter = DarkBlueThemeValues.DropShadow;
 

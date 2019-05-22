@@ -16,7 +16,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
         
         public static SKImageFilter DropShadow = SKImageFilter.CreateDropShadow(2,2,4,4, new SKColor(0,0,0,70), SKDropShadowImageFilterShadowMode.DrawShadowAndForeground);
         public static SKImageFilter DropShadowDisabled = SKImageFilter.CreateDropShadow(1,1,4,4, new SKColor(0,0,0,50), SKDropShadowImageFilterShadowMode.DrawShadowAndForeground);
-        public static SKImageFilter DropShadowElevated = SKImageFilter.CreateDropShadow(0,10,4,4, new SKColor(0,0,0,70), SKDropShadowImageFilterShadowMode.DrawShadowAndForeground);
+        public static SKImageFilter DropShadowElevated = SKImageFilter.CreateDropShadow(1,10,4,4, new SKColor(0,0,0,70), SKDropShadowImageFilterShadowMode.DrawShadowAndForeground);
 
     }
 }

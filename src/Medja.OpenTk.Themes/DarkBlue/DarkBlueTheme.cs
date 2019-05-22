@@ -16,7 +16,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
         {
             var result = base.CreateButton();
             result.Background = DarkBlueThemeValues.PrimaryColor;
-            result.TextColor = DarkBlueThemeValues.PrimaryTextColor;
+            result.Font.Color = DarkBlueThemeValues.PrimaryTextColor;
             result.Position.Height = 40;
             //result.Position.Width = 100;
             result.TextAlignment = TextAlignment.Center;
@@ -40,7 +40,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
         {
             var result = base.CreateCheckBox();
             result.Background = DarkBlueThemeValues.ControlBackground;
-            result.TextColor = DarkBlueThemeValues.PrimaryTextColor;
+            result.Font.Color = DarkBlueThemeValues.PrimaryTextColor;
             result.Position.Height = 19;
             result.Padding.Left = 27;
 
@@ -161,7 +161,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
         {
             var result = base.CreateTextBox();
             result.Background = DarkBlueThemeValues.ControlBackground;
-            result.TextColor = DarkBlueThemeValues.PrimaryTextColor;
+            result.Font.Color = DarkBlueThemeValues.PrimaryTextColor;
             result.Position.Height = 37;
             result.Padding.Top = 9;
             result.Padding.SetLeftAndRight(10);
@@ -175,7 +175,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
         {
             var result = base.CreateTextBlock();
             result.Background = Colors.White;
-            result.TextColor = Colors.Black;
+            result.Font.Color = Colors.Black;
             result.Padding.SetAll(5);
 
             result.Renderer = new TextBlockRenderer(result);

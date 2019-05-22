@@ -15,23 +15,28 @@ namespace Medja.OpenTk.Themes.DarkBlue
         public CheckBoxRenderer(CheckBox control) 
             : base(control)
         {
-            _defaultBackgroundPaint = CreatePaint();
+            _defaultBackgroundPaint = new SKPaint();
             _defaultBackgroundPaint.Color = control.Background.ToSKColor();
             _defaultBackgroundPaint.ImageFilter = DarkBlueThemeValues.DropShadow;
+            _defaultBackgroundPaint.IsAntialias = true;
             
-            _disabledUncheckedBackgroundPaint = CreatePaint();
+            _disabledUncheckedBackgroundPaint = new SKPaint();
+            _disabledUncheckedBackgroundPaint.IsAntialias = true;
             _disabledUncheckedBackgroundPaint.Color = control.Background.GetDisabled().ToSKColor();
             _disabledUncheckedBackgroundPaint.ImageFilter = DarkBlueThemeValues.DropShadowDisabled;
 
-            _checkedBackgroundPaint = CreatePaint();
+            _checkedBackgroundPaint = new SKPaint();
+            _checkedBackgroundPaint.IsAntialias = true;
             _checkedBackgroundPaint.Color = DarkBlueThemeValues.PrimaryColor.ToSKColor(); // todo control.F.ToSKColor();
             _checkedBackgroundPaint.ImageFilter = DarkBlueThemeValues.DropShadow;
             
-            _disabledCheckedBackgroundPaint = CreatePaint();
+            _disabledCheckedBackgroundPaint = new SKPaint();
+            _disabledCheckedBackgroundPaint.IsAntialias = true;
             _disabledCheckedBackgroundPaint.Color = DarkBlueThemeValues.PrimaryColor.ToSKColor(); // todo control.F.ToSKColor();
             _disabledCheckedBackgroundPaint.ImageFilter = DarkBlueThemeValues.DropShadowDisabled;
 
-            _checkMarkPaint = CreatePaint();
+            _checkMarkPaint = new SKPaint();
+            _checkMarkPaint.IsAntialias = true;
             _checkMarkPaint.Color = DarkBlueThemeValues.PrimaryTextColor.ToSKColor();
             _checkMarkPaint.IsStroke = true;
             _checkMarkPaint.StrokeWidth = 2;

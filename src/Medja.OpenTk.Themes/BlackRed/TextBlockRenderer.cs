@@ -11,7 +11,6 @@ namespace Medja.OpenTk.Themes.BlackRed
 		
 		protected override void DrawTextControlBackground()
 		{
-			RenderBackground();
 		}
 	}
 }

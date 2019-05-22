@@ -123,5 +123,11 @@ namespace Medja.Controls
 			if (Content != null)
 				Content.UpdateAnimations();
 		}
+
+		protected override void Dispose(bool disposing)
+		{
+			Content?.Dispose();
+			base.Dispose(disposing);
+		}
 	}
 }

@@ -130,5 +130,13 @@ namespace Medja.Controls
 			ContentArranger.Position(area);
 			ContentArranger.Stretch(area);
 		}
+		
+		protected override void Dispose(bool disposing)
+		{
+			foreach(var tab in _tabs)
+				tab.Dispose();
+			
+			base.Dispose(disposing);
+		}
 	}
 }

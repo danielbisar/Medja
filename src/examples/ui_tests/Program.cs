@@ -5,6 +5,8 @@ using Medja;
 using Medja.Controls;
 using Medja.OpenTk;
 using Medja.OpenTk.Rendering;
+using Medja.OpenTk.Themes;
+using Medja.OpenTk.Themes.DarkBlue;
 using OpenTK.Graphics.OpenGL;
 using Medja.Primitives;
 using Medja.Theming;
@@ -22,13 +24,17 @@ namespace MedjaOpenGlTestApp
 
         public static void Main(string[] args)
         {
-            var library = new MedjaOpenTkLibrary(new TestAppTheme());
+            var theme = new DarkBlueTheme();
+            //var theme = new BlackRedTheme();
+            
+            var library = new MedjaOpenTkLibrary(theme);
             library.RendererFactory = CreateRenderer;
 
             var controlFactory = library.ControlFactory;
             var application = MedjaApplication.Create(library);
 
             //var test = new ButtonTest(controlFactory);
+            var test = new ButtonRendererPerformance(controlFactory);
             //var test = new ComboBoxTest(controlFactory);
             //var test = new ContentControlTest(controlFactory);
             //var test = new Control3DTest(controlFactory);
@@ -45,7 +51,7 @@ namespace MedjaOpenGlTestApp
             //var test = new SliderTest(controlFactory);
             //var test = new TabControlTest(controlFactory);
             //var test = new TextBoxTest(controlFactory);
-            var test = new TouchItemListTest(controlFactory);
+            //var test = new TouchItemListTest(controlFactory);
             //var test = new VerticalStackPanelTest(controlFactory);
             //var test = new VisibilityTest(controlFactory);
 

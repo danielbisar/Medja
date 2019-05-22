@@ -19,7 +19,7 @@ namespace Medja.OpenTk.Themes
             result.Font.Name = DefaultFont.Name;
             result.Position.Height = 50;
             result.Padding.Top = 14;
-            result.TextColor = BlackRedThemeValues.PrimaryTextColor;
+            result.Font.Color = BlackRedThemeValues.PrimaryTextColor;
             result.TextAlignment = TextAlignment.Center;
 
             result.Renderer = new ButtonRenderer(result);
@@ -195,7 +195,7 @@ namespace Medja.OpenTk.Themes
         {
             var result = base.CreateTextBox();
             result.Renderer = new TextBoxRenderer(result);
-            result.TextColor = BlackRedThemeValues.PrimaryTextColor;
+            result.Font.Color = BlackRedThemeValues.PrimaryTextColor;
             result.Background = BlackRedThemeValues.PrimaryColor;
             result.Font.Name = DefaultFont.Name;
             result.Position.Height = 26;
@@ -207,7 +207,7 @@ namespace Medja.OpenTk.Themes
         {
             var result = base.CreateTextBlock();
             result.Renderer = new TextBlockRenderer(result);
-            result.TextColor = BlackRedThemeValues.PrimaryTextColor;
+            result.Font.Color = BlackRedThemeValues.PrimaryTextColor;
             result.Font.Name = DefaultFont.Name;
             result.Position.Height = 23;
 

@@ -11,7 +11,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
 		public TextBlockRenderer(TextBlock control)
 			: base(control)
 		{
-			_defaultBackgroundPaint = CreatePaint();
+			_defaultBackgroundPaint = new SKPaint();
 			_defaultBackgroundPaint.Color = control.Background.ToSKColor();
 			_defaultBackgroundPaint.ImageFilter = SKImageFilter.CreateDropShadow(4,4,4,4, new SKColor(0,0,0,100), SKDropShadowImageFilterShadowMode.DrawShadowAndForeground);
 		}

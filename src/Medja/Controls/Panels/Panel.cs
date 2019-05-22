@@ -118,5 +118,13 @@ namespace Medja.Controls
 			foreach (var child in Children)
 				child.UpdateAnimations();
 		}
+
+		protected override void Dispose(bool disposing)
+		{
+			foreach(var child in Children)
+				child.Dispose();
+			
+			base.Dispose(disposing);
+		}
 	}
 }

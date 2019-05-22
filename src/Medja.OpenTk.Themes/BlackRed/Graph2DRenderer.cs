@@ -14,9 +14,8 @@ namespace Medja.OpenTk.Themes.BlackRed
         public Graph2DRenderer(Graph2D control)
             : base(control)
         {
-            _pointsPaint = CreatePaint();
+            _pointsPaint = new SKPaint();
             _pointsPaint.Color = SKColors.Green;
-            _pointsPaint.IsAntialias = false;
 
             _fpsCounter = new FramesPerSecondCounter(5);
             _fpsCounter.FramesCounted += (s, e) => Console.WriteLine("2D Graph FPS " + e.Value.ToString("F2"));
@@ -58,6 +57,12 @@ namespace Medja.OpenTk.Themes.BlackRed
                 _canvas.DrawPoints((SKPointMode)_control.RenderMode, points, _pointsPaint);
             //else
             //    _canvas.DrawPoints(SKPointMode.Lines, points, _pointsPaint);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _pointsPaint.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

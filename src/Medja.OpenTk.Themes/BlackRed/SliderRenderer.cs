@@ -21,8 +21,6 @@ namespace Medja.OpenTk.Themes.BlackRed
             _positionPaint = new SKPaint();
             _positionPaint.Color = BlackRedThemeValues.PrimaryTextColor.ToSKColor();
             _positionPaint.IsAntialias = true;
-
-            _paint.Color = BlackRedThemeValues.PrimaryTextColor.ToSKColor();
         }
 
         protected override void InternalRender()
@@ -34,6 +32,14 @@ namespace Medja.OpenTk.Themes.BlackRed
 			
             _canvas.DrawLine(_rect.Left, y, _rect.Right, y, _barPaint);
             _canvas.DrawCircle(new SKPoint(_rect.Left + _rect.Width * percentage, _rect.MidY), 10, _positionPaint);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _barPaint.Dispose();
+            _positionPaint.Dispose();
+            
+            base.Dispose(disposing);
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Medja.OpenTk.Rendering
 		{
 			_skia.Resize(rectangle.Width, rectangle.Height);
 		}
-
+		
 		public void Render(IEnumerable<Control> controls)
 		{
 			_skia.Canvas.Clear();

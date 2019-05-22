@@ -1,5 +1,8 @@
 using System;
+using System.Linq;
+using System.Reflection;
 using Medja.Controls;
+using Medja.Utils.Reflection;
 
 namespace Medja
 {
@@ -94,6 +97,28 @@ namespace Medja
             targetProperty.Set(sourceConverter(getSourceValue(obj)));
             
             return new TwoWayBinding<TTarget, TSource>(targetProperty, wrapper.PropertyValue, sourceConverter, targetConverter);
+        }
+
+        public static void OnAnyPropertyChanged(this object medjaObject, Action action)
+        {
+            if(medjaObject == null)
+                throw new ArgumentNullException(nameof(medjaObject));
+            
+            if(action == null)
+                throw new ArgumentNullException(nameof(action));
+            
+            var type = medjaObject.GetType();
+            var allFields = type.GetFields();
+            var medjaPropertyFields = allFields.Where(p => p.FieldType.Implements(typeof(IProperty)))
+                .ToList();
+            
+            if(medjaPropertyFields.Count == 0)
+                throw new InvalidOperationException("No field of type IProperty found on object of type " + type.Name);
+
+            foreach (var field in medjaPropertyFields)
+            {
+                (field.GetValue(medjaObject) as IProperty).PropertyChanged += (s, e) => action();
+            }
         }
     }
 }

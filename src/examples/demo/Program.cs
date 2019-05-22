@@ -120,25 +120,25 @@ namespace Medja.Demo
             checkBoxStackPanel.Add(checkedCheckBox);
             checkBoxStackPanel.Add(checkBoxDisabled);
 
-            var comboBox2 = controlFactory.Create<ComboBox>();
-            comboBox2.Title = "Select an item";
-            comboBox2.Add("123");
-            comboBox2.Add("456");
-            comboBox2.Add("789");
-
-            var comboBoxStackPanel = controlFactory.Create<HorizontalStackPanel>();
-            comboBoxStackPanel.ChildrenWidth = 200;
-            comboBoxStackPanel.SpaceBetweenChildren = 50;
-            //comboBoxStackPanel.Children.Add(comboBox);
-            comboBoxStackPanel.Add(comboBox2);
+            var comboBox = controlFactory.Create<ComboBox>();
+            comboBox.Title = "Select an item";
+            comboBox.Add("123");
+            comboBox.Add("456");
+            comboBox.Add("789");
 
             var menuItem = controlFactory.Create<MenuItem>();
             menuItem.Title = "MenuItem";
             
-            var menuItemPanel = controlFactory.Create<HorizontalStackPanel>();
-            menuItemPanel.ChildrenWidth = 150;
-            menuItemPanel.SpaceBetweenChildren = 10;
-            menuItemPanel.Add(menuItem);
+            var anotherStackPanel = controlFactory.Create<HorizontalStackPanel>();
+            anotherStackPanel.ChildrenWidth = 200;
+            anotherStackPanel.SpaceBetweenChildren = 50;
+            anotherStackPanel.Add(comboBox);
+            anotherStackPanel.Add(menuItem);
+            
+            var tabControl = controlFactory.Create<TabControl>();
+            tabControl.AddTab(new TabItem("Tab 1", controlFactory.Create<Control>()));
+            tabControl.AddTab(new TabItem("Tab 2", controlFactory.Create<Control>()));
+            tabControl.Position.Height = 100;
             
             var result = controlFactory.Create<VerticalStackPanel>();
             result.Padding.SetAll(20);
@@ -150,8 +150,8 @@ namespace Medja.Demo
             result.Add(slider);
             result.Add(textBoxStackPanel);
             result.Add(textBlock);
-            result.Add(comboBoxStackPanel);
-            result.Add(menuItemPanel);
+            result.Add(anotherStackPanel);
+            result.Add(tabControl);
 
             return result;
         }
