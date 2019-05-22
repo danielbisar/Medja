@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Medja.Controls.Animation;
 using Medja.Input;
 using Medja.Primitives;
@@ -9,7 +10,7 @@ namespace Medja.Controls
 	/// <summary>
 	/// Any control should inherit from this class.
 	/// </summary>
-	public class Control
+	public class Control : IDisposable
 	{
 		public AnimationManager AnimationManager { get; }
 		public Dictionary<int, object> AttachedProperties { get; }
@@ -208,6 +209,20 @@ namespace Medja.Controls
 				root = root.Parent;
 
 			return root;
+		}
+
+		protected virtual void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+				Renderer?.Dispose();
+			}
+		}
+
+		public void Dispose()
+		{
+			Dispose(true);
+			GC.SuppressFinalize(this);
 		}
 	}
 }

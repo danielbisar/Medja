@@ -10,15 +10,31 @@ namespace Medja.OpenTk.Themes.BlackRed
 	{
 		private readonly Stopwatch _caretStopWatch;
 		private readonly SKPaint _caretPaint;
-
+		private readonly SKPaint _paint2;
+		private readonly SKPaint _focusedPaint;
+		private readonly SKPaint _disabledPaint;
+		
 		public TextBoxRenderer(TextBox textBox)
 		: base(textBox)
 		{
-			_caretPaint = CreatePaint();
+			_caretPaint = new SKPaint();
 			_caretPaint.Color = BlackRedThemeValues.PrimaryTextColor.ToSKColor();
 			_caretPaint.IsStroke = true;
+			_caretPaint.IsAntialias = true;
 			
 			_caretStopWatch = Stopwatch.StartNew();
+			
+			_paint2 = new SKPaint();
+			_paint2.IsAntialias = true;
+			_paint2.Color = BlackRedThemeValues.SecondaryColor.ToSKColor();
+            
+			_focusedPaint = new SKPaint();
+			_focusedPaint.IsAntialias = true;
+			_focusedPaint.Color = BlackRedThemeValues.SecondaryColor.ToSKColor();
+			
+			_disabledPaint = new SKPaint();
+			_disabledPaint.IsAntialias = true;
+			_disabledPaint.Color = BlackRedThemeValues.SecondaryColor.ToSKColor();
 		}
 
 		protected override void DrawTextControlBackground()
@@ -28,21 +44,14 @@ namespace Medja.OpenTk.Themes.BlackRed
 
 		private void RenderBottomLine()
 		{
-			if (!_control.IsEnabled)
-				_paint.Color = BlackRedThemeValues.PrimaryLightColor.ToSKColor();
-			else
-			{
-				if (_control.IsFocused)
-				{
-					_paint.Color = BlackRedThemeValues.SecondaryColor.ToSKColor();
-				}
-				else
-				{
-					_paint.Color = BlackRedThemeValues.PrimaryLightColor.ToSKColor();
-				}
-			}
+			SKPaint paint;
 
-			_canvas.DrawLine(_rect.Left, _rect.Bottom, _rect.Right, _rect.Bottom, _paint);
+			if (_control.IsEnabled)
+				paint = _control.IsFocused ? _paint2 : _focusedPaint;
+			else
+				paint = _disabledPaint;
+			
+			_canvas.DrawLine(_rect.Left, _rect.Bottom, _rect.Right, _rect.Bottom, paint);
 		}
 		
 		protected override void DrawText()
@@ -76,6 +85,16 @@ namespace Medja.OpenTk.Themes.BlackRed
 					new SKPoint(caretLeft, bottom), 
 					_caretPaint);
 			}
+		}
+
+		protected override void Dispose(bool disposing)
+		{
+			_paint2.Dispose();
+			_disabledPaint.Dispose();
+			_focusedPaint.Dispose();
+			_caretPaint.Dispose();
+			
+			base.Dispose(disposing);
 		}
 	}
 }

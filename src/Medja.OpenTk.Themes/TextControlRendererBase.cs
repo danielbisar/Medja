@@ -26,7 +26,7 @@ namespace Medja.OpenTk.Themes
             _textPaint = CreateTextPaint();
             _textDisabledPaint = CreateTextDisabledPaint();
             
-            _control.PropertyTextColor.PropertyChanged += OnTextColorChanged;
+            _control.Font.PropertyColor.PropertyChanged += OnTextColorChanged;
         }
 
         private SKPaint CreateTextPaint()
@@ -34,28 +34,28 @@ namespace Medja.OpenTk.Themes
             // todo update on control.Font change
             var font = _control.Font;
             
-            var result = CreatePaint();
+            var result = new SKPaint();
             result.Typeface = font.Name == null ? null : SKTypeface.FromFamilyName(font.Name);
             result.TextSize = font.Size;
-            result.Color = _control.TextColor.ToSKColor();
+            result.Color = _control.Font.Color.ToSKColor();
 
             return result;
         }
         
         private SKPaint CreateTextDisabledPaint()
         {
-            var result = CreatePaint();
+            var result = new SKPaint();
             result.Typeface = _textPaint.Typeface;
             result.TextSize = _textPaint.TextSize;
-            result.Color = _control.TextColor.GetDisabled().ToSKColor();
+            result.Color = _control.Font.Color.GetDisabled().ToSKColor();
 
             return result;
         }
 
         private void OnTextColorChanged(object sender, PropertyChangedEventArgs e)
         {
-            _textPaint.Color = _control.TextColor.ToSKColor();
-            _textDisabledPaint.Color = _control.TextColor.GetDisabled().ToSKColor();
+            _textPaint.Color = _control.Font.Color.ToSKColor();
+            _textDisabledPaint.Color = _control.Font.Color.GetDisabled().ToSKColor();
         }
 
         protected override void InternalRender()
@@ -79,6 +79,7 @@ namespace Medja.OpenTk.Themes
             _canvas.Save();
             _canvas.ClipRect(_control.TextClippingArea.ToSKRect());
             
+            // todo set paints on change of IsEnabled to reduce CPU load
             _currentTextPaint = _control.IsEnabled ? _textPaint : _textDisabledPaint;
             var pos = _control.Position.ToSKPoint();
             // add the height also for the first line
@@ -137,6 +138,26 @@ namespace Medja.OpenTk.Themes
         private float GetTextWidth(string text)
         {
             return GetTextWidth(_currentTextPaint, text);
+        }
+        
+        protected float GetTextWidth(SKPaint paint, string text)
+        {
+            // paint.MeasureText throws an exception on text = null
+            if (string.IsNullOrEmpty(text))
+                return 0;
+
+            return paint.MeasureText(text);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _textPaint.Dispose();
+                _textDisabledPaint.Dispose();
+            }
+
+            base.Dispose(disposing);
         }
     }
 }

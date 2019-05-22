@@ -15,11 +15,11 @@ namespace Medja.OpenTk.Themes.DarkBlue
         public TextBoxRenderer(TextBox control) 
             : base(control)
         {
-            _textBoxBackground = CreatePaint();
+            _textBoxBackground = new SKPaint();
             _textBoxBackground.Color = DarkBlueThemeValues.ControlBorder.ToSKColor();
             _textBoxBackground.IsStroke = true;
 
-            _caretPaint = CreatePaint();
+            _caretPaint = new SKPaint();
             _caretPaint.Color = DarkBlueThemeValues.PrimaryTextColor.ToSKColor();
             _caretPaint.IsStroke = true;
             

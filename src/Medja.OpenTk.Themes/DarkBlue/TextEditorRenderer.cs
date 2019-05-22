@@ -10,7 +10,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
     {
         private static readonly SKPaint TextPaint;
         private static readonly SKPaint SelectionPaint;
-
+        
         static TextEditorRenderer()
         {
             TextPaint = new SKPaint();
@@ -25,16 +25,18 @@ namespace Medja.OpenTk.Themes.DarkBlue
 
         private readonly float _lineHeight;
         private bool _isInSelection;
+        private readonly BackgroundRenderer _backgroundRenderer;
 
         public TextEditorRenderer(TextEditor control)
             : base(control)
         {
+            _backgroundRenderer = new BackgroundRenderer(control);
             _lineHeight = TextPaint.TextSize * 1.3f;
         }
 
         protected override void InternalRender()
         {
-            RenderBackground();
+            _backgroundRenderer.Render(_canvas);
 
             var lines = _control.Lines;
             var x = _control.Position.X + 10;
@@ -138,6 +140,12 @@ namespace Medja.OpenTk.Themes.DarkBlue
             y -= TextPaint.TextSize;
 
             _canvas.DrawLine(x, y, x, y + TextPaint.FontSpacing, TextPaint);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _backgroundRenderer.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

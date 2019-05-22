@@ -7,7 +7,7 @@ namespace Medja.Theming
 		where TContext : class
 		where TControl : Control
 	{
-		protected readonly TControl _control;
+		protected TControl _control;
 		
 		protected ControlRendererBase(TControl control)
 		{
@@ -19,6 +19,17 @@ namespace Medja.Theming
 		public void Render(object context)
 		{
 			Render(context as TContext);
+		}
+
+		protected virtual void Dispose(bool disposing)
+		{
+			_control = null;
+		}
+
+		public void Dispose()
+		{
+			Dispose(true);
+			GC.SuppressFinalize(this);
 		}
 	}
 }

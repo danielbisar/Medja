@@ -79,6 +79,13 @@ namespace Medja.OpenTk
                 _renderer.Dispose();
                 _renderer = null;
             }
+
+//            _mouseHandler.Dispose();
+//            _keyboardHandler.Dispose();
+//            _focusManager.Dispose();
+            // todo ? BitmapFactory.Dispose();
+            TaskQueue.Dispose();
+            _medjaWindow.Dispose();
         }
 
         private void OnResize(object sender, EventArgs e)

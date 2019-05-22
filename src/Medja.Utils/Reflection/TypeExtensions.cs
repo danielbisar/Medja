@@ -16,5 +16,10 @@ namespace Medja.Utils.Reflection
 			
 			return index == -1 ? name : name.Substring(0, index);
 		}
+
+		public static bool Implements(this Type type, Type interfaceType)
+		{
+			return interfaceType.IsAssignableFrom(type);
+		}
 	}
 }

@@ -17,25 +17,25 @@ namespace Medja.OpenTk.Themes.DarkBlue
         
         public ComboBoxRenderer(ComboBox control) : base(control)
         {
-            _backgroundPaint = CreatePaint();
+            _backgroundPaint = new SKPaint();
             _backgroundPaint.Color = control.Background.ToSKColor();
             _backgroundPaint.ImageFilter = SKImageFilter.CreateDropShadow(4,4,4,4, new SKColor(0,0,0,100), SKDropShadowImageFilterShadowMode.DrawShadowAndForeground);
 
-            _buttonPaint = CreatePaint();
+            _buttonPaint = new SKPaint();
             _buttonPaint.Color = DarkBlueThemeValues.PrimaryColor.ToSKColor();
             //_buttonPaint.ImageFilter = _backgroundPaint.ImageFilter;
 
-            _dropDownArrowPaint = CreatePaint();
+            _dropDownArrowPaint = new SKPaint();
             _dropDownArrowPaint.Color = control.Background.ToSKColor();
             _dropDownArrowPaint.StrokeWidth = 1.5f;
             
-            _titlePaint = CreatePaint();
+            _titlePaint = new SKPaint();
             _titlePaint.Color = DarkBlueThemeValues.ControlBackground.ToSKColor();
             _titlePaint.Typeface = SKTypeface.FromFamilyName("Roboto", SKFontStyleWeight.Normal, SKFontStyleWidth.Normal, SKFontStyleSlant.Italic);
             _titlePaint.TextSize = 16;
             _lineHeight = _titlePaint.TextSize * 1.3f;
             
-            _displayTextPaint = CreatePaint();
+            _displayTextPaint = new SKPaint();
             _displayTextPaint.Color = DarkBlueThemeValues.ControlBackground.ToSKColor();
             _displayTextPaint.Typeface = SKTypeface.FromFamilyName("Roboto");
             _displayTextPaint.TextSize = _titlePaint.TextSize;

@@ -30,13 +30,6 @@ namespace Medja.Controls
 			set { PropertyTextWrapping.Set(value); }
 		}
 
-		public readonly Property<Color> PropertyTextColor;
-		public Color TextColor
-		{
-			get { return PropertyTextColor.Get(); }
-			set { PropertyTextColor.Set(value); }
-		}
-
 		public readonly Property<TextAlignment> PropertyTextAlignment;
 		public TextAlignment TextAlignment
 		{
@@ -62,9 +55,6 @@ namespace Medja.Controls
 				if(!IsLayoutUpdated)
 					InvalidateLines();
 			};
-			
-			PropertyTextColor = new Property<Color>();
-			PropertyTextColor.UnnotifiedSet(Colors.Black);
 			
 			Padding = new Thickness();
 			TextClippingArea = new MRect();

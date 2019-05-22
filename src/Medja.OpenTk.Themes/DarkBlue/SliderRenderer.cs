@@ -12,13 +12,13 @@ namespace Medja.OpenTk.Themes.DarkBlue
         public SliderRenderer(Slider control) 
             : base(control)
         {
-            _barPaint = CreatePaint();
+            _barPaint = new SKPaint();
             _barPaint.Color = _control.Background.ToSKColor();
             _barPaint.StrokeCap = SKStrokeCap.Round;
             _barPaint.Style = SKPaintStyle.Stroke;
             _barPaint.StrokeWidth = 4;
 
-            _positionPaint = CreatePaint();
+            _positionPaint = new SKPaint();
             _positionPaint.Color = _control.Foreground.ToSKColor();
         }
 

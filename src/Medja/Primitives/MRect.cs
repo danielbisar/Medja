@@ -5,10 +5,10 @@
 	/// </summary>
 	public class MRect : Rect
 	{
-		public Property<float> PropertyX { get; }
-		public Property<float> PropertyY { get; }
-		public Property<float> PropertyWidth { get; }
-		public Property<float> PropertyHeight { get; }
+		public readonly Property<float> PropertyX;
+		public readonly Property<float> PropertyY;
+		public readonly Property<float> PropertyWidth;
+		public readonly Property<float> PropertyHeight;
 
 		public override float X
 		{
