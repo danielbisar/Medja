@@ -17,32 +17,47 @@ namespace Medja.OpenTk.Themes.DarkBlue
         
         public ComboBoxRenderer(ComboBox control) : base(control)
         {
+            control.AffectRendering(control.PropertyTitle, 
+                control.PropertyDisplayText, 
+                control.PropertyIsDropDownOpen,
+                control.PropertyIsEnabled,
+                control.PropertyBackground);
+            
             _backgroundPaint = new SKPaint();
-            _backgroundPaint.Color = control.Background.ToSKColor();
+            _backgroundPaint.IsAntialias = true;
             _backgroundPaint.ImageFilter = SKImageFilter.CreateDropShadow(4,4,4,4, new SKColor(0,0,0,100), SKDropShadowImageFilterShadowMode.DrawShadowAndForeground);
 
             _buttonPaint = new SKPaint();
+            _buttonPaint.IsAntialias = true;
             _buttonPaint.Color = DarkBlueThemeValues.PrimaryColor.ToSKColor();
             //_buttonPaint.ImageFilter = _backgroundPaint.ImageFilter;
 
             _dropDownArrowPaint = new SKPaint();
+            _dropDownArrowPaint.IsAntialias = true;
             _dropDownArrowPaint.Color = control.Background.ToSKColor();
             _dropDownArrowPaint.StrokeWidth = 1.5f;
             
             _titlePaint = new SKPaint();
+            _titlePaint.IsAntialias = true;
             _titlePaint.Color = DarkBlueThemeValues.ControlBackground.ToSKColor();
             _titlePaint.Typeface = SKTypeface.FromFamilyName("Roboto", SKFontStyleWeight.Normal, SKFontStyleWidth.Normal, SKFontStyleSlant.Italic);
             _titlePaint.TextSize = 16;
             _lineHeight = _titlePaint.TextSize * 1.3f;
             
             _displayTextPaint = new SKPaint();
-            _displayTextPaint.Color = DarkBlueThemeValues.ControlBackground.ToSKColor();
+            _displayTextPaint.IsAntialias = true;
+            _displayTextPaint.Color = SKColors.Black;
             _displayTextPaint.Typeface = SKTypeface.FromFamilyName("Roboto");
             _displayTextPaint.TextSize = _titlePaint.TextSize;
         }
 
         protected override void InternalRender()
         {
+            if (_control.IsEnabled)
+                _backgroundPaint.Color = _control.Background.ToSKColor();
+            else
+                _backgroundPaint.Color = _control.Background.GetDisabled().ToSKColor();
+            
             var buttonRect = new SKRect(_rect.Right - 35, _rect.Top, _rect.Right, _rect.Bottom);
             
             _canvas.DrawRoundRect(_rect, 3, 3, _backgroundPaint);
@@ -57,6 +72,17 @@ namespace Medja.OpenTk.Themes.DarkBlue
             // draw the v for drop down
             _canvas.DrawLine(_rect.Right - 25, _rect.Top + 11, _rect.Right - 17, _rect.Bottom - 10, _dropDownArrowPaint);
             _canvas.DrawLine(_rect.Right - 17, _rect.Bottom - 10, _rect.Right - 9, _rect.Top + 11, _dropDownArrowPaint);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _backgroundPaint.Dispose();
+            _titlePaint.Dispose();
+            _buttonPaint.Dispose();
+            _displayTextPaint.Dispose();
+            _dropDownArrowPaint.Dispose();
+            
+            base.Dispose(disposing);
         }
     }
 }

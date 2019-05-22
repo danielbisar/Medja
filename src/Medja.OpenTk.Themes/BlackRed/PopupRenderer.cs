@@ -11,7 +11,7 @@ namespace Medja.OpenTk.Themes.BlackRed
         
         protected override void InternalRender()
         {
-            _canvas.DrawRect(_rect, DefaultBackgroundPaint);
+            _canvas.DrawRect(_rect, _backgroundPaint);
         }
     }
 }

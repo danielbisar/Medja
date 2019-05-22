@@ -8,27 +8,39 @@ namespace Medja.OpenTk.Themes.DarkBlue
 {
     public class TextBoxRenderer : TextControlRendererBase<TextBox>
     {
-        private readonly SKPaint _textBoxBackground;
+        private readonly SKPaint _backgroundPaint;
         private readonly SKPaint _caretPaint;
         private readonly Stopwatch _caretStopWatch;
         
         public TextBoxRenderer(TextBox control) 
             : base(control)
         {
-            _textBoxBackground = new SKPaint();
-            _textBoxBackground.Color = DarkBlueThemeValues.ControlBorder.ToSKColor();
-            _textBoxBackground.IsStroke = true;
+            _backgroundPaint = new SKPaint();
+            _backgroundPaint.IsStroke = true;
+            _backgroundPaint.IsAntialias = true;
 
             _caretPaint = new SKPaint();
             _caretPaint.Color = DarkBlueThemeValues.PrimaryTextColor.ToSKColor();
             _caretPaint.IsStroke = true;
             
             _caretStopWatch = Stopwatch.StartNew();
+            
+            _control.AffectRendering(_control.PropertyIsEnabled, 
+                _control.PropertyBackground, 
+                _control.PropertyCaretPos,
+                _control.PropertyIsFocused);
         }
 
         protected override void DrawTextControlBackground()
         {
-            _canvas.DrawRoundRect(_rect, 3, 3, _textBoxBackground);
+            var color = DarkBlueThemeValues.ControlBorder;
+
+            if (!_control.IsEnabled)
+                color = color.GetDisabled();
+            
+            _backgroundPaint.Color = color.ToSKColor();
+            
+            _canvas.DrawRoundRect(_rect, 3, 3, _backgroundPaint);
         }
 
         protected override void DrawText()
@@ -62,6 +74,14 @@ namespace Medja.OpenTk.Themes.DarkBlue
                     new SKPoint(caretLeft, bottom), 
                     _caretPaint);
             }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _backgroundPaint.Dispose();
+            _caretPaint.Dispose();
+            
+            base.Dispose(disposing);
         }
     }
 }

@@ -6,19 +6,29 @@ namespace Medja.OpenTk.Themes.DarkBlue
 {
 	public class TextBlockRenderer : TextControlRendererBase<TextBlock>
 	{
-		private readonly SKPaint _defaultBackgroundPaint;
+		private readonly SKPaint _backgroundPaint;
 		
 		public TextBlockRenderer(TextBlock control)
 			: base(control)
 		{
-			_defaultBackgroundPaint = new SKPaint();
-			_defaultBackgroundPaint.Color = control.Background.ToSKColor();
-			_defaultBackgroundPaint.ImageFilter = SKImageFilter.CreateDropShadow(4,4,4,4, new SKColor(0,0,0,100), SKDropShadowImageFilterShadowMode.DrawShadowAndForeground);
+			_backgroundPaint = new SKPaint();
+			_backgroundPaint.ImageFilter = SKImageFilter.CreateDropShadow(4,4,4,4, new SKColor(0,0,0,100), SKDropShadowImageFilterShadowMode.DrawShadowAndForeground);
+			
+			_control.AffectRendering(control.PropertyBackground, control.PropertyIsEnabled);
 		}
 
 		protected override void DrawTextControlBackground()
 		{
-			_canvas.DrawRoundRect(_rect, 3, 3, _defaultBackgroundPaint);
+			var color = _control.IsEnabled ? _control.Background : _control.Background.GetDisabled();
+			_backgroundPaint.Color = color.ToSKColor();
+
+			_canvas.DrawRoundRect(_rect, 3, 3, _backgroundPaint);
+		}
+
+		protected override void Dispose(bool disposing)
+		{
+			_backgroundPaint.Dispose();
+			base.Dispose(disposing);
 		}
 	}
 }

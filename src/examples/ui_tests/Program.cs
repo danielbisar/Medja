@@ -33,8 +33,8 @@ namespace MedjaOpenGlTestApp
             var controlFactory = library.ControlFactory;
             var application = MedjaApplication.Create(library);
 
-            //var test = new ButtonTest(controlFactory);
-            var test = new ButtonRendererPerformance(controlFactory);
+            var test = new ButtonTest(controlFactory);
+            //var test = new ButtonRendererPerformance(controlFactory);
             //var test = new ComboBoxTest(controlFactory);
             //var test = new ContentControlTest(controlFactory);
             //var test = new Control3DTest(controlFactory);
@@ -67,7 +67,7 @@ namespace MedjaOpenGlTestApp
 
         private static IRenderer CreateRenderer()
         {
-            var openTkRenderer = new OpenTkRenderer();
+            var openTkRenderer = new OpenTk2DOnlyRenderer();
             return openTkRenderer;
         }
     }

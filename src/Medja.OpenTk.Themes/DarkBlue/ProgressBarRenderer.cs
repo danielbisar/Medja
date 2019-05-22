@@ -6,36 +6,52 @@ namespace Medja.OpenTk.Themes.DarkBlue
 {
     public class ProgressBarRenderer : SkiaControlRendererBase<ProgressBar>
     {
+        private readonly SKPaint _backgroundPaint;
         private readonly SKPaint _filledPaint;
-        private readonly BackgroundRenderer _backgroundRenderer;
         
         public ProgressBarRenderer(ProgressBar control) 
             : base(control)
         {
-            _backgroundRenderer = new BackgroundRenderer(control);
+            _backgroundPaint = new SKPaint();
+            _backgroundPaint.IsAntialias = true;
             
             _filledPaint = new SKPaint();
-            _filledPaint.Color = _control.Foreground.ToSKColor();
+            _filledPaint.IsAntialias = true;
             _filledPaint.ImageFilter = SKImageFilter.CreateErode(2,2);
             
-            // todo update colors on change - required for all renders; find a good clean solution
+            control.AffectRendering(control.PropertyValue, 
+                control.PropertyMaxValue, 
+                control.PropertyForeground,
+                control.PropertyIsEnabled,
+                control.PropertyBackground);
         }
 
         protected override void InternalRender()
         {
-            _backgroundRenderer.Render(_canvas);
+            if (_control.IsEnabled)
+            {
+                _backgroundPaint.Color = _control.Background.ToSKColor();
+                _filledPaint.Color = _control.Foreground.ToSKColor();
+            }
+            else
+            {
+                _backgroundPaint.Color = _control.Background.GetDisabled().ToSKColor();
+                _filledPaint.Color = _control.Foreground.GetDisabled().ToSKColor();
+            }
+
+            var rect = _control.Position.ToSKRect();
+            var filledRect = new SKRect(rect.Left,
+                rect.Top,
+                rect.Left + rect.Width * _control.Percentage,
+                rect.Bottom);
             
-            var filledRect = new SKRect(_rect.Left,
-                _rect.Top,
-                _rect.Left + _rect.Width * _control.Percentage,
-                _rect.Bottom);
-            
+            _canvas.DrawRect(rect, _backgroundPaint);
             _canvas.DrawRect(filledRect, _filledPaint);
         }
 
         protected override void Dispose(bool disposing)
         {
-            _backgroundRenderer.Dispose();
+            _backgroundPaint.Dispose();
             _filledPaint.Dispose();
             
             base.Dispose(disposing);

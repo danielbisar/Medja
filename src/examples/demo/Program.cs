@@ -22,7 +22,7 @@ namespace Medja.Demo
             var library = new MedjaOpenTkLibrary(new DarkBlueTheme());
             //var library = new MedjaOpenTkLibrary(new BlackRedTheme());
             
-            library.RendererFactory = () => new OpenTkRenderer();
+            library.RendererFactory = () => new OpenTk2DOnlyRenderer();
             _application = MedjaApplication.Create(library);
         }
 
@@ -87,6 +87,8 @@ namespace Medja.Demo
             var slider = controlFactory.Create<Slider>();
             slider.MaxValue = 100;
             slider.Value = 75;
+
+            progressBar.PropertyValue.BindTo(slider.PropertyValue);
 
             var textBox = controlFactory.Create<TextBox>();
             textBox.Text = "TextBox";
