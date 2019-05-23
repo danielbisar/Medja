@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Reflection;
+using Medja.Binding;
 using Medja.Controls;
 using Medja.Utils.Reflection;
 
@@ -119,6 +120,39 @@ namespace Medja
             {
                 (field.GetValue(medjaObject) as IProperty).PropertyChanged += (s, e) => action();
             }
+        }
+
+        /// <summary>
+        /// On change of any of the source properties the target property will be updated by calling the given.
+        /// Adds this binding to the control, it will dispose it automatically if the control is disposed.
+        /// <see cref="getPropertyValue"/> function.
+        /// </summary>
+        /// <param name="control">The control.</param>
+        /// <param name="targetProperty">The target property.</param>
+        /// <param name="getPropertyValue">The method that returns the properties result.</param>
+        /// <param name="sourceProperties">The source properties.</param>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <returns>An object that destroys the bindings when dispose is called.</returns>
+        public static MultiSourcesToTargetBinding<T, T2> Bind<T, T2>(
+            this T control, 
+            Func<T, Property<T2>> targetProperty,
+            Func<T, T2> getPropertyValue,
+            params Func<T, IProperty>[] sourceProperties)
+        where T: Control
+        {
+            var targetProp = targetProperty(control);
+            var result = new MultiSourcesToTargetBinding<T, T2>(control, targetProp, getPropertyValue);
+
+            foreach(var property in sourceProperties)
+                result.AddSource(property(control));
+
+            control.AddDisposable(result);
+            
+            // init the target property
+            targetProp.Set(getPropertyValue(control));
+            
+            return result;
         }
     }
 }

@@ -65,6 +65,7 @@ namespace Medja.OpenTk
                 _gameWindow.Resize += OnResize;
                 _gameWindow.UpdateFrame += OnUpdateFrame;
                 _gameWindow.Closed += OnWindowClosed;
+                _gameWindow.Load += OnWindowLoad;
 
                 _mouseHandler = new OpenTkMouseHandler(_medjaWindow, _gameWindow, _focusManager);
                 _mouseHandler.Controls = _controls;
@@ -77,13 +78,14 @@ namespace Medja.OpenTk
             }
         }
 
+        private void OnWindowLoad(object sender, EventArgs e)
+        {
+            _renderer = RendererFactory();
+        }
+
         private void OnWindowClosed(object sender, EventArgs e)
         {
-            if (_renderer != null)
-            {
-                _renderer.Dispose();
-                _renderer = null;
-            }
+            _renderer?.Dispose();
 
 //            _mouseHandler.Dispose();
 //            _keyboardHandler.Dispose();
@@ -99,7 +101,6 @@ namespace Medja.OpenTk
             var clientRect = _gameWindow.ClientRectangle;
             GL.Viewport(0, 0, clientRect.Width, clientRect.Height);
 
-            AssureRenderer();
             _renderer.SetSize(clientRect);
         }
         
@@ -125,19 +126,11 @@ namespace Medja.OpenTk
             // executes all task requested by anyone in the requested order
             TaskQueue.ExecuteAll();
 
-            AssureRenderer();
-
             if (_renderer.Render(_controls))
             {
                 // display what was just drawn
                 _gameWindow.SwapBuffers();
             }
-        }
-
-        private void AssureRenderer()
-        {
-            if (_renderer == null)
-                _renderer = RendererFactory();
         }
     }
 }

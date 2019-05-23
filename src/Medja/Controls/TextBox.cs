@@ -1,4 +1,6 @@
-﻿using Medja.Input;
+﻿using System;
+using System.Threading;
+using Medja.Input;
 using Medja.Primitives;
 
 namespace Medja.Controls
@@ -6,12 +8,21 @@ namespace Medja.Controls
 	public class TextBox : TextControl
 	{
 		private bool _selfChangedText;
+		private readonly Timer _timer;
 		
 		public readonly Property<int> PropertyCaretPos;
 		public int CaretPos
 		{
 			get { return PropertyCaretPos.Get(); }
 			set { PropertyCaretPos.Set(value); }
+		}
+
+		public readonly Property<bool> PropertyIsCaretVisible;
+
+		public bool IsCaretVisible
+		{
+			get { return PropertyIsCaretVisible.Get(); }
+			set { PropertyIsCaretVisible.Set(value); }
 		}
 		
 		public TextBox()
@@ -20,12 +31,33 @@ namespace Medja.Controls
 			PropertyText.UnnotifiedSet(string.Empty);
 			PropertyText.PropertyChanged += OnTextChanged;
 			PropertyTextWrapping.UnnotifiedSet(TextWrapping.None);
+			PropertyIsCaretVisible = new Property<bool>();
+			
+			_timer = new Timer(OnTimerTick, null, TimeSpan.FromMilliseconds(1000), TimeSpan.FromMilliseconds(1000));
+			PropertyIsFocused.PropertyChanged += OnFocusChanged;
 			
 			InputState.KeyPressed += OnKeyPressed;
 			InputState.OwnsMouseEvents = true;
 		}
 
-		private void OnTextChanged(object sender, PropertyChangedEventArgs eventargs)
+		private void OnFocusChanged(object sender, PropertyChangedEventArgs e)
+		{
+			if (IsFocused == false)
+				IsCaretVisible = false;
+		}
+
+		private void OnTimerTick(object state)
+		{
+			MedjaApplication.Instance.Library.TaskQueue.TryEnqueue(p =>
+			{
+				if(IsFocused)
+					IsCaretVisible = !IsCaretVisible;
+
+				return null;
+			}, null);
+		}
+
+		private void OnTextChanged(object sender, PropertyChangedEventArgs e)
 		{
 			if (_selfChangedText)
 				return;
@@ -69,6 +101,12 @@ namespace Medja.Controls
 			}
 			
 			_selfChangedText = false;
+		}
+
+		protected override void Dispose(bool disposing)
+		{
+			_timer.Dispose();
+			base.Dispose(disposing);
 		}
 	}
 }

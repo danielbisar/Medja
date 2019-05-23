@@ -10,13 +10,13 @@ namespace Medja.OpenTk.Themes.BlackRed
 		private readonly TextRenderer _textRenderer;
 		private readonly SKPaint _headerBackgroundPaint;
 		private readonly SKPaint _selectedHeaderBackgroundPaint;
-		private readonly BackgroundRenderer _backgroundRenderer;
+		//private readonly BackgroundRenderer _backgroundRenderer;
 		
 		public TabControlRenderer(TabControl control)
 			:base(control)
 		{
 			_textRenderer = new TextRenderer(new Font());
-			_backgroundRenderer = new BackgroundRenderer(control);
+		//	_backgroundRenderer = new BackgroundRenderer(control);
 			
 			_headerBackgroundPaint = new SKPaint();
 			_headerBackgroundPaint.IsAntialias = true;
@@ -29,7 +29,7 @@ namespace Medja.OpenTk.Themes.BlackRed
 		
 		protected override void InternalRender()
 		{
-			_backgroundRenderer.Render(_canvas);
+		//	_backgroundRenderer.Render(_canvas);
 			
 			var tabs = _control.Tabs;
 			var tabHeaderWidth = _rect.Width / tabs.Count;
@@ -60,7 +60,6 @@ namespace Medja.OpenTk.Themes.BlackRed
 			_textRenderer.Dispose();
 			_headerBackgroundPaint.Dispose();
 			_selectedHeaderBackgroundPaint.Dispose();
-			_backgroundRenderer.Dispose();
 			
 			base.Dispose(disposing);
 		}

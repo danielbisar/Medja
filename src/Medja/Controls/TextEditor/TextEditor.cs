@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
+using System.Threading;
 using Medja.Input;
 
 namespace Medja.Controls
@@ -9,6 +10,8 @@ namespace Medja.Controls
     // todo refactor theoretical base class: textcontrol
     public class TextEditor : Control
     {
+        private readonly Timer _timer;
+        
         // maybe we will use another class instead of string later on
         // on every typing a line must be updated, since strings in c#
         // are read only this copies the whole line and adds the char
@@ -51,6 +54,13 @@ namespace Medja.Controls
             get { return PropertySelectionEnd.Get(); }
             private set { PropertySelectionEnd.Set(value); }
         }
+        
+        public readonly Property<bool> PropertyIsCaretVisible;
+        public bool IsCaretVisible
+        {
+            get { return PropertyIsCaretVisible.Get(); }
+            set { PropertyIsCaretVisible.Set(value); }
+        }
 
         public TextEditor()
         {
@@ -61,9 +71,31 @@ namespace Medja.Controls
             PropertyCaretY = new Property<int>();
             PropertySelectionStart = new Property<Caret>();
             PropertySelectionEnd = new Property<Caret>();
+            PropertyIsCaretVisible = new Property<bool>();
+            
+            _timer = new Timer(OnTimerTick, null, TimeSpan.FromMilliseconds(1000), TimeSpan.FromMilliseconds(1000));
+            
+            PropertyIsFocused.PropertyChanged += OnFocusChanged;
 
             InputState.KeyPressed += OnKeyPressed;
             InputState.OwnsMouseEvents = true;
+        }
+        
+        private void OnFocusChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (IsFocused == false)
+                IsCaretVisible = false;
+        }
+
+        private void OnTimerTick(object state)
+        {
+            MedjaApplication.Instance.Library.TaskQueue.TryEnqueue(p =>
+            {
+                if(IsFocused)
+                    IsCaretVisible = !IsCaretVisible;
+
+                return null;
+            }, null);
         }
 
         private void OnKeyPressed(object sender, KeyboardEventArgs e)
@@ -425,6 +457,8 @@ namespace Medja.Controls
             }
             else
                 throw new InvalidOperationException();
+
+            NeedsRendering = true;
         }
 
         private void UpdateCaretXAfterCaretYChange()

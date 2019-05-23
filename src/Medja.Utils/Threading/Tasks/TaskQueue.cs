@@ -76,6 +76,24 @@ namespace Medja.Utils.Threading.Tasks
             return task;
         }
 
+        /// <summary>
+        /// Same as <see cref="Enqueue"/> but does not throw an exception if the TaskQueue is already disposed.
+        /// </summary>
+        /// <param name="func">The function to execute.</param>
+        /// <param name="state">The state object (any param you want to pass)</param>
+        /// <returns>The task that was created and enqueued.</returns>
+        public Task<TResult> TryEnqueue(Func<object, TResult> func, object state)
+        {
+            try
+            {
+                return Enqueue(func, state);
+            }
+            catch (ObjectDisposedException)
+            {
+                return null;
+            }
+        }
+
         private void AssureNotDisposed()
         {
             if (IsDisposed)

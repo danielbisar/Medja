@@ -35,8 +35,8 @@ namespace Medja.OpenTk.Rendering
 
 			_needsRendering = false;
 			
-			_skia.Canvas.Clear();
 			_canvas = _skia.Canvas;
+			_canvas.Clear();
 			
 			for (int i = 0; i < controls.Count; i++)
 			{
@@ -49,22 +49,12 @@ namespace Medja.OpenTk.Rendering
 
 		protected bool NeedsRendering(IList<Control> controls)
 		{
-			// && !_needsRendering
-			
-			//_canvas.
-
-			for (int i = 0; i < controls.Count; i++)
+			for (int i = 0; i < controls.Count && !_needsRendering; i++)
 			{
 				if (controls[i].NeedsRendering)
-				{
 					_needsRendering = true;
-					Console.WriteLine("R: " + controls[i] + ": " + controls[i].Position);
-				}
 			}
 			
-			if(_needsRendering)
-				Console.WriteLine("<----");
-
 			return _needsRendering;
 		}
 

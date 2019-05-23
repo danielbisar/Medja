@@ -11,13 +11,13 @@ namespace Medja.OpenTk.Themes.BlackRed
         private readonly SKPaint _buttonPaint;
         private readonly SKPaint _dropDownArrowPaint;
         private readonly SKPaint _displayTextPaint;
-        private readonly BackgroundRenderer _backgroundRenderer;
+        //private readonly BackgroundRenderer _backgroundRenderer;
         
         private readonly float _lineHeight;
         
         public ComboBoxRenderer(ComboBox control) : base(control)
         {
-            _backgroundRenderer = new BackgroundRenderer(control);
+            //_backgroundRenderer = new BackgroundRenderer(control);
             
             _buttonPaint = new SKPaint();
             _buttonPaint.IsAntialias = true;
@@ -47,7 +47,7 @@ namespace Medja.OpenTk.Themes.BlackRed
         {
             var buttonRect = new SKRect(_rect.Right - 35, _rect.Top, _rect.Right, _rect.Bottom);
             
-            _backgroundRenderer.Render(_canvas);
+            //_backgroundRenderer.Render(_canvas);
 
             if(_control.SelectedItem == null)
                 _canvas.DrawTextSafe(_control.Title, _rect.Left + 10, _rect.Top + _lineHeight, _titlePaint);
@@ -63,7 +63,7 @@ namespace Medja.OpenTk.Themes.BlackRed
 
         protected override void Dispose(bool disposing)
         {
-            _backgroundRenderer.Dispose();
+            //_backgroundRenderer.Dispose();
             _buttonPaint.Dispose();
             _dropDownArrowPaint.Dispose();
             _titlePaint.Dispose();
