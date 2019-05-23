@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Threading;
@@ -48,11 +49,21 @@ namespace Medja.OpenTk.Rendering
 
 		protected bool NeedsRendering(IList<Control> controls)
 		{
-			for (int i = 0; i < controls.Count && !_needsRendering; i++)
+			// && !_needsRendering
+			
+			//_canvas.
+
+			for (int i = 0; i < controls.Count; i++)
 			{
 				if (controls[i].NeedsRendering)
+				{
 					_needsRendering = true;
+					Console.WriteLine("R: " + controls[i] + ": " + controls[i].Position);
+				}
 			}
+			
+			if(_needsRendering)
+				Console.WriteLine("<----");
 
 			return _needsRendering;
 		}
