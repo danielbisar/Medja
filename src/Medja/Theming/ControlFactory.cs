@@ -287,7 +287,7 @@ namespace Medja.Theming
 
 		protected virtual TabControl CreateTabControl()
 		{
-			return new TabControl();
+			return new TabControl(this);
 		}
 
 		protected virtual TabItem CreateTabItem()

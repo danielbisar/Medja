@@ -7,7 +7,7 @@ namespace Medja.OpenTk.Themes.BlackRed
     public class VerticalScrollBarRenderer : SkiaControlRendererBase<VerticalScrollBar>
     {
         private readonly SKPaint _fillPaint;
-        private readonly BackgroundRenderer _backgroundRenderer;
+        //private readonly BackgroundRenderer _backgroundRenderer;
         
         public VerticalScrollBarRenderer(VerticalScrollBar control)
         : base(control)
@@ -16,12 +16,12 @@ namespace Medja.OpenTk.Themes.BlackRed
             _fillPaint.IsAntialias = true;
             _fillPaint.Color = BlackRedThemeValues.PrimaryLightColor.ToSKColor();
             
-            _backgroundRenderer = new BackgroundRenderer(control);
+          //  _backgroundRenderer = new BackgroundRenderer(control);
         }
         
         protected override void InternalRender()
         {
-            _backgroundRenderer.Render(_canvas);
+            //_backgroundRenderer.Render(_canvas);
 
             var scrollBarPos = _rect.Top + _rect.Height * _control.Percentage;
             var top = scrollBarPos - 10;

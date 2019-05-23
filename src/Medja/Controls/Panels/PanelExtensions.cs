@@ -6,5 +6,10 @@ namespace Medja.Controls
         {
             panel.Children.Add(child);
         }
+
+        public static void Remove(this Panel panel, Control child)
+        {
+            panel.Children.Remove(child);
+        }
     }
 }

@@ -96,7 +96,17 @@ namespace Medja.OpenTk.Themes.DarkBlue
         protected override MedjaWindow CreateMedjaWindow()
         {
             var result = new OpenTkWindow();
-            result.Background = Colors.Black;
+            result.Background = DarkBlueThemeValues.WindowBackground;
+            result.Renderer = new WindowRenderer(result);
+
+            return result;
+        }
+        
+        protected override MenuItem CreateMenuItem()
+        {
+            var result = base.CreateMenuItem();
+            result.Position.Height = 25;
+            result.Renderer = new MenuItemRenderer(result);
 
             return result;
         }
@@ -108,17 +118,8 @@ namespace Medja.OpenTk.Themes.DarkBlue
 
             result.Renderer = new PopupRenderer(result);
 			return result;
-		}            
-
-        protected override MenuItem CreateMenuItem()
-        {
-            var result = base.CreateMenuItem();
-            result.Position.Height = 25;
-            result.Renderer = new MenuItemRenderer(result);
-
-            return result;
-        }
-
+		}
+        
         protected override ProgressBar CreateProgressBar()
         {
             var result = base.CreateProgressBar();
@@ -145,6 +146,41 @@ namespace Medja.OpenTk.Themes.DarkBlue
             result.Background = DarkBlueThemeValues.ControlBackground;
             result.Foreground = DarkBlueThemeValues.PrimaryTextColor;
             result.Renderer = new SliderRenderer(result);
+
+            return result;
+        }
+
+        protected override TabControl CreateTabControl()
+        {
+            var result = base.CreateTabControl();
+            result.TabHeaderPanel.ChildrenWidth = 150;
+            result.TabHeaderPanel.SpaceBetweenChildren = 1;
+            result.Renderer = new TabControlRenderer(result);
+
+            return result;
+        }
+
+        protected override TabItem CreateTabItem()
+        {
+            var result = base.CreateTabItem();
+
+            result.Bind(
+                p => p.PropertyBackground, 
+                GetTabItemBackground, 
+                p => p.PropertyIsSelected, 
+                p => p.PropertyIsEnabled);
+            
+            result.Renderer = new TabItemRenderer(result);
+
+            return result;
+        }
+        
+        private static Color GetTabItemBackground(TabItem tabItem)
+        {
+            var result = tabItem.IsSelected ? DarkBlueThemeValues.PrimaryColor : DarkBlueThemeValues.ControlBackground;
+
+            if (!tabItem.IsEnabled)
+                result = result.GetDisabled();
 
             return result;
         }

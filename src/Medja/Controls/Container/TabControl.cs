@@ -1,14 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
+using Medja.Input;
 using Medja.Primitives;
+using Medja.Theming;
+using Medja.Utils;
 
 namespace Medja.Controls
 {
 	public class TabControl : ContentControl
 	{
+		private readonly IControlFactory _controlFactory;
 		private readonly List<TabItem> _tabs;
+		
+		private HorizontalStackPanel _tabHeaderPanel;
+		public HorizontalStackPanel TabHeaderPanel
+		{
+			get { return _tabHeaderPanel; }
+		}
 
-		public float HeaderHeight { get; }
+		private ContentControl _tabContentControl;
+		private IDisposable _headerHeightBinding;
+
+		public readonly Property<float> PropertyHeaderHeight;
+
+		public float HeaderHeight
+		{
+			get { return PropertyHeaderHeight.Get(); }
+			set { PropertyHeaderHeight.Set(value); }
+		}
 
 		/// <summary>
 		/// Gets the tabs. Use AddTabs/RemoveTabs of TabControl to modify.
@@ -31,65 +50,41 @@ namespace Medja.Controls
 			}
 		}
 
-		public TabControl()
+		public TabControl(IControlFactory controlFactory)
 		{
-			HeaderHeight = 40;
+			_controlFactory = controlFactory;
 			_tabs = new List<TabItem>();
 			Tabs = _tabs.AsReadOnly();
 
+			PropertyHeaderHeight = new Property<float>();
+			PropertyHeaderHeight.UnnotifiedSet(30);
 			PropertySelectedTab = new Property<TabItem>();
 			PropertySelectedTab.PropertyChanged += OnSelectedTabChanged;
 			PropertySelectedTab.AffectsLayout(this);
+
+			Content = CreateContent();
+		}
+
+		protected Control CreateContent()
+		{
+			_tabHeaderPanel = _controlFactory.Create<HorizontalStackPanel>();
+			_headerHeightBinding = _tabHeaderPanel.Position.PropertyHeight.BindTo(PropertyHeaderHeight);
+			_tabContentControl = _controlFactory.Create<ContentControl>();
 			
-			InputState.Clicked += OnClicked;
-		}
+			var dockPanel = _controlFactory.Create<DockPanel>();
+			dockPanel.Add(Dock.Top, _tabHeaderPanel);
+			dockPanel.Add(Dock.Fill, _tabContentControl);
 
-		protected virtual void OnClicked(object sender, EventArgs e)
-		{
-			var pointerPos = InputState.PointerPosition;
-
-			var tab = GetTabFromPoint(pointerPos);
-
-			if (tab != null)
-				SelectedTab = tab;
-		}
-
-		/// <summary>
-		/// Gets the tab from point (if clicked on it's header).
-		/// </summary>
-		/// <returns>The tab from point.</returns>
-		/// <param name="pointerPos">Pointer position.</param>
-		protected virtual TabItem GetTabFromPoint(Point pointerPos)
-		{
-			if (Position.X <= pointerPos.X && pointerPos.X <= Position.X + Position.Width)
-			{
-				if (pointerPos.Y >= Position.Y
-				    && pointerPos.Y <= Position.Y + HeaderHeight)
-				{
-					var tabWidth = Position.Width / _tabs.Count;
-					var tabIndex = (int)(pointerPos.X / tabWidth);
-
-					return _tabs[tabIndex];
-				}
-			}
-
-			return null;
+			return dockPanel;
 		}
 
 		protected virtual void OnSelectedTabChanged(object sender, PropertyChangedEventArgs eventArgs)
 		{
-			if (SelectedTab == null || SelectedTab.Content == null)
-				Content = null;
+			if (SelectedTab?.Content == null)
+				_tabContentControl.Content = null;
 			else
 			{
-				Content = SelectedTab.Content;
-				
-				if (Content.VerticalAlignment == VerticalAlignment.None)
-					Content.VerticalAlignment = VerticalAlignment.Stretch;
-				
-				if (Content.HorizontalAlignment == HorizontalAlignment.None)
-					Content.HorizontalAlignment = HorizontalAlignment.Stretch;
-				
+				_tabContentControl.Content = SelectedTab.Content;
 				SelectedTab.IsSelected = true;
 			}
 		}
@@ -100,17 +95,32 @@ namespace Medja.Controls
 				throw new ArgumentNullException(nameof(tabItem));
 			
 			_tabs.Add(tabItem);
+			_tabHeaderPanel.Add(tabItem);
+			tabItem.InputState.Clicked += OnTabClicked;
 
 			if (_tabs.Count > 0 && !_tabs.Contains(SelectedTab))
 				SelectedTab = _tabs[0];
+
+			IsLayoutUpdated = false;
+		}
+
+		private void OnTabClicked(object sender, EventArgs e)
+		{
+			var inputState = (InputState) sender;
+			SelectedTab = (TabItem) inputState.Control;
 		}
 
 		public virtual void RemoveTab(TabItem tabItem)
 		{
 			_tabs.Remove(tabItem);
+			_tabHeaderPanel.Remove(tabItem);
+			
+			tabItem.InputState.Clicked -= OnTabClicked;
 
 			if (SelectedTab == tabItem)
 				SelectedTab = _tabs.Count > 0 ? _tabs[0] : null;
+
+			IsLayoutUpdated = false;
 		}
 
 		public virtual void Clear()
@@ -119,23 +129,9 @@ namespace Medja.Controls
 			SelectedTab = null;
 		}
 
-		public override void Arrange(Size availableSize)
-		{
-			//base.Arrange(availableSize);
-			
-			var area = new Rect(Position.X, Position.Y, availableSize.Width, availableSize.Height);
-			area.SubtractTop(HeaderHeight);
-			area.Subtract(Padding);
-			
-			ContentArranger.Position(area);
-			ContentArranger.Stretch(area);
-		}
-		
 		protected override void Dispose(bool disposing)
 		{
-			foreach(var tab in _tabs)
-				tab.Dispose();
-			
+			_headerHeightBinding.Dispose();
 			base.Dispose(disposing);
 		}
 	}

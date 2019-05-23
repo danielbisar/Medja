@@ -2,6 +2,7 @@ using System.Diagnostics;
 using Medja.Controls;
 using Medja.OpenTk.Rendering;
 using Medja.OpenTk.Utils;
+using Medja.Primitives;
 using SkiaSharp;
 
 namespace Medja.OpenTk.Themes.DarkBlue
@@ -20,23 +21,39 @@ namespace Medja.OpenTk.Themes.DarkBlue
 
             SelectionPaint = new SKPaint();
             SelectionPaint.IsAntialias = true;
-            SelectionPaint.Color = DarkBlueThemeValues.Background.ToSKColor().WithAlpha(178);
+            SelectionPaint.Color = DarkBlueThemeValues.ControlBackground.ToSKColor().WithAlpha(178);
         }
 
         private readonly float _lineHeight;
         private bool _isInSelection;
-        private readonly BackgroundRenderer _backgroundRenderer;
+
+        private readonly SKPaint _backgroundPaint;
 
         public TextEditorRenderer(TextEditor control)
             : base(control)
         {
-            _backgroundRenderer = new BackgroundRenderer(control);
+            _backgroundPaint = new SKPaint();
+            _backgroundPaint.IsAntialias = true;
+            
             _lineHeight = TextPaint.TextSize * 1.3f;
+            
+            _control.AffectRendering(
+                _control.PropertyBackground, 
+                _control.PropertyCaretX, 
+                _control.PropertyCaretY, 
+                _control.PropertySelectionStart, 
+                _control.PropertySelectionEnd, 
+                _control.PropertyIsCaretVisible);
         }
 
         protected override void InternalRender()
         {
-            _backgroundRenderer.Render(_canvas);
+            var rect = _control.Position.ToSKRect();
+            var color = _control.IsEnabled
+                ? _control.Background
+                : _control.Background.GetDisabled();
+            _backgroundPaint.Color = color.ToSKColor();
+            _canvas.DrawRect(rect, _backgroundPaint);
 
             var lines = _control.Lines;
             var x = _control.Position.X + 10;
@@ -123,8 +140,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
 
         private void DrawCaret(float startX, float y)
         {
-            if (!_control.IsFocused
-                || Stopwatch.GetTimestamp() % 10000000 > 5000000)
+            if (!_control.IsCaretVisible)
                 return;
 
             // todo use intptr version and specify length, so we don't need to 
@@ -144,7 +160,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
 
         protected override void Dispose(bool disposing)
         {
-            _backgroundRenderer.Dispose();
+            _backgroundPaint.Dispose();
             base.Dispose(disposing);
         }
     }

@@ -3,10 +3,12 @@ using SkiaSharp;
 
 namespace Medja.OpenTk.Themes.DarkBlue
 {
+    /// <summary>
+    /// Values used by this theme.
+    /// </summary>
     public static class DarkBlueThemeValues
     {
-        public static Color Background = Colors.LightGray;
-        
+        public static Color WindowBackground = Colors.LightGray;
         public static Color ControlBackground = Colors.Gray;
         public static Color ControlBorder = Colors.White;
         

@@ -28,7 +28,8 @@ namespace Medja.OpenTk.Themes.DarkBlue
             _control.AffectRendering(_control.PropertyIsEnabled, 
                 _control.PropertyBackground, 
                 _control.PropertyCaretPos,
-                _control.PropertyIsFocused);
+                _control.PropertyIsFocused,
+                _control.PropertyIsCaretVisible);
         }
 
         protected override void DrawTextControlBackground()
@@ -63,7 +64,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
             
             base.DrawText();
             
-            if (_control.IsFocused && _caretStopWatch.ElapsedTicks % 10000000 <= 5000000)
+            if (_control.IsCaretVisible)
             {
                 var top = StartingY - _textPaint.TextSize;
                 var bottom = top + _textPaint.FontSpacing;

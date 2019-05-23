@@ -36,7 +36,7 @@ namespace Medja.Demo
         {
             var window = _application.CreateWindow();
             window.CenterOnScreen(800, 600);
-            //window.Background = DemoThemeColors.Background;
+            window.Background = DarkBlueThemeValues.WindowBackground;
             window.Content = CreateContent();
 
             _application.MainWindow = window;
@@ -138,13 +138,20 @@ namespace Medja.Demo
             anotherStackPanel.Add(menuItem);
             
             var tabControl = controlFactory.Create<TabControl>();
-            tabControl.AddTab(new TabItem("Tab 1", controlFactory.Create<Control>()));
-            tabControl.AddTab(new TabItem("Tab 2", controlFactory.Create<Control>()));
-            tabControl.Position.Height = 100;
+            tabControl.AddTab(controlFactory.Create<TabItem>(p =>
+            {
+                p.Header = "Tab 1";
+                p.Content = controlFactory.Create<TextEditor>(x => x.SetText("Multiline text editor\ncheck it out"));
+            }));
+            tabControl.AddTab(controlFactory.Create<TabItem>(p =>
+            {
+                p.Header = "Tab 2";
+                p.Content = controlFactory.Create<Control>(x => x.Background = Colors.Black);
+            }));
+            tabControl.Position.Height = 200;
             
             var result = controlFactory.Create<VerticalStackPanel>();
             result.Padding.SetAll(20);
-            result.Background = DarkBlueThemeValues.Background;
             result.SpaceBetweenChildren = 25;
             result.Add(buttonStackPanel);
             result.Add(checkBoxStackPanel);

@@ -13,6 +13,7 @@ namespace Medja.Controls
 	public class Control : IDisposable
 	{
 		private readonly HashSet<IProperty> _propertiesAffectingRendering;
+		private readonly HashSet<IDisposable> _disposables;
 		
 		public AnimationManager AnimationManager { get; }
 		public Dictionary<int, object> AttachedProperties { get; }
@@ -121,6 +122,7 @@ namespace Medja.Controls
 
 		public Control()
 		{
+			_disposables = new HashSet<IDisposable>();
 			_propertiesAffectingRendering = new HashSet<IProperty>();
 			
 			AnimationManager = new AnimationManager();
@@ -248,6 +250,9 @@ namespace Medja.Controls
 
 				foreach (var property in _propertiesAffectingRendering)
 					property.PropertyChanged -= OnRenderingRelevantPropertyChanged;
+				
+				foreach(var disposable in _disposables)
+					disposable.Dispose();
 			}
 			
 			// unmanaged objects go here
@@ -283,6 +288,11 @@ namespace Medja.Controls
 		private void OnRenderingRelevantPropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
 			NeedsRendering = true;
+		}
+
+		public void AddDisposable(IDisposable disposable)
+		{
+			_disposables.Add(disposable);
 		}
 	}
 }
