@@ -40,6 +40,7 @@ namespace Medja.OpenTk.Themes
             result.Typeface = font.Name == null ? null : SKTypeface.FromFamilyName(font.Name);
             result.TextSize = font.Size;
             result.Color = _control.Font.Color.ToSKColor();
+            result.IsAntialias = true;
 
             return result;
         }
@@ -50,6 +51,7 @@ namespace Medja.OpenTk.Themes
             result.Typeface = _textPaint.Typeface;
             result.TextSize = _textPaint.TextSize;
             result.Color = _control.Font.Color.GetDisabled().ToSKColor();
+            result.IsAntialias = true;
 
             return result;
         }
