@@ -22,7 +22,8 @@ namespace Medja.OpenTk.Themes.BlackRed
 
         protected override void DrawTextControlBackground()
         {
-            var checkMarkBorder = new SKRect(_rect.Left, _rect.Top, _rect.Left + _rect.Height, _rect.Bottom);
+            var rect = _control.Position.ToSKRect();
+            var checkMarkBorder = new SKRect(rect.Left, rect.Top, rect.Left + rect.Height, rect.Bottom);
 
             _borderPaint.IsStroke = !_control.IsChecked;
             _borderPaint.Color = _control.Background.ToSKColor();

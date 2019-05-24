@@ -62,7 +62,22 @@ namespace Medja.Controls
 			PropertySelectedTab.PropertyChanged += OnSelectedTabChanged;
 			PropertySelectedTab.AffectsLayout(this);
 
+			Padding.PropertyBottom.PropertyChanged += OnPaddingChanged;
+			Padding.PropertyTop.PropertyChanged += OnPaddingChanged;
+			Padding.PropertyLeft.PropertyChanged += OnPaddingChanged;
+			Padding.PropertyRight.PropertyChanged += OnPaddingChanged;
+
 			Content = CreateContent();
+		}
+
+		private void OnPaddingChanged(object sender, PropertyChangedEventArgs e)
+		{
+			ForwardPaddingToContent();
+		}
+
+		private void ForwardPaddingToContent()
+		{
+			_tabContentControl.Padding.SetFrom(Padding);
 		}
 
 		protected Control CreateContent()
@@ -89,6 +104,15 @@ namespace Medja.Controls
 			}
 		}
 
+		public void AddTab(string header, Control content)
+		{
+			var tabItem = _controlFactory.Create<TabItem>();
+			tabItem.Header = header;
+			tabItem.Content = content;
+			
+			AddTab(tabItem);
+		}
+
 		public virtual void AddTab(TabItem tabItem)
 		{
 			if(tabItem == null)
@@ -102,6 +126,17 @@ namespace Medja.Controls
 				SelectedTab = _tabs[0];
 
 			IsLayoutUpdated = false;
+		}
+		
+		public override void Arrange(Size availableSize)
+		{
+			base.Arrange(availableSize);
+
+			var area = new Rect(Position.X, Position.Y, availableSize.Width, availableSize.Height);
+			area.Subtract(Margin);
+			
+			ContentArranger.Position(area);
+			ContentArranger.Stretch(area);
 		}
 
 		private void OnTabClicked(object sender, EventArgs e)

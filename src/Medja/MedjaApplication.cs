@@ -119,6 +119,18 @@ namespace Medja
         {
             return _library.ControlFactory.Create<MedjaWindow>();
         }
+        
+        /// <summary>
+        /// Same as <see cref="CreateWindow"/> but makes the window the application main window.
+        /// </summary>
+        /// <returns>The new window.</returns>
+        public MedjaWindow CreateMainWindow()
+        {
+            var result = CreateWindow();
+            MainWindow = result;
+
+            return result;
+        }
 
         /// <summary>
         /// Starts the application (shows the main window, starts message queue, ...)

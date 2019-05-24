@@ -180,8 +180,25 @@ namespace Medja.OpenTk.Themes
         protected override Graph2D CreateGraph2D()
         {
             var result = base.CreateGraph2D();
-            result.Renderer = new Graph2DRenderer(result);
 
+            result.AxisX.Position.Width = 75;
+            result.AxisX.Margin.Bottom = 50;
+            result.AxisY.Position.Height = 50;
+            
+            //result.Renderer = new Graph2DRenderer(result);
+
+            return result;
+        }
+
+        protected override Graph2DAxis CreateGraph2DAxis()
+        {
+            var result = base.CreateGraph2DAxis();
+            result.Background = BlackRedThemeValues.PrimaryTextColor;
+            result.Renderer = new Graph2DAxisRenderer(result);
+            result.Font.Color = DefaultFont.Color;
+            result.Font.Size = 10;
+            result.Font.Name = DefaultFont.Name;
+            
             return result;
         }
 

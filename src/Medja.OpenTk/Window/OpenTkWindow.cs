@@ -17,10 +17,11 @@ namespace Medja.OpenTk
 			_ignoreNextNResizeEvents = 0;
 			GameWindow = new GameWindow();
 
-			GameWindow.Load += OnWindowLoad;
 			GameWindow.Resize += OnGameWindowResize;
 			GameWindow.Closed += OnGameWindowClosed;
 
+			GameWindow.Title = Title;
+			
 			PropertyTitle.PropertyChanged += (s,e) => GameWindow.Title = e.NewValue as string;
 			Position.PropertyX.PropertyChanged += (s,e) => GameWindow.X = (int)Position.X;
 			Position.PropertyY.PropertyChanged += (s,e) => GameWindow.Y = (int)Position.Y;
@@ -28,20 +29,8 @@ namespace Medja.OpenTk
 			Position.PropertyHeight.PropertyChanged += (s,e) => GameWindow.Height = (int)Position.Height;
 		}
 
-		private void OnWindowLoad(object sender, EventArgs e)
-		{
-			// OpenTK call OnResize for Width and Height after Load, but the values are not up to date yet, so we just ignore the events
-			_ignoreNextNResizeEvents = 2;
-		}
-
 		private void OnGameWindowResize(object sender, EventArgs eventArgs)
 		{
-			if (_ignoreNextNResizeEvents > 0)
-			{
-				_ignoreNextNResizeEvents--;
-				return;
-			}
-
 			Position.Width = GameWindow.ClientRectangle.Width;
 			Position.Height = GameWindow.ClientRectangle.Height;
 		}

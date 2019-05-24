@@ -23,5 +23,19 @@ namespace Medja.OpenTk.Utils
             
             canvas.DrawText(text, x, y, paint);
         }
+
+        /// <summary>
+        /// Gets the width of a text.
+        /// </summary>
+        /// <param name="paint"></param>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        public static float GetTextWidth(this SKPaint paint, string text)
+        {
+            if (string.IsNullOrEmpty(text))
+                return 0;
+
+            return paint.MeasureText(text);
+        }
     }
 }

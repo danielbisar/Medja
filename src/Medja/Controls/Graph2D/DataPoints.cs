@@ -1,19 +1,30 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Medja.Primitives;
 
 namespace Medja.Controls
 {
+    /// <summary>
+    /// Contains a list of ordered points. These points must be ordered according to their X-value.
+    /// </summary>
     public class DataPoints
     {
+        // The last added point, is used to compare with new point see Add(...)
         private Point _last;
 
         private readonly List<Point> _points;
+        /// <summary>
+        /// The ordered points (raw, not down sampled)
+        /// </summary>
         public IReadOnlyList<Point> Points
         {
             get { return _points;}
         }
 
+        /// <summary>
+        /// Gets the count of points in the list.
+        /// </summary>
         public int Count
         {
             get { return _points.Count; }
@@ -33,7 +44,7 @@ namespace Medja.Controls
         public void Add(Point p)
         {
             if (_last != null && _last.X > p.X)
-                throw new NotSupportedException("Points must be added in correct order (x must <= the previous value)");
+                throw new NotSupportedException("Points must be added in correct order (x must be <= the previous value).");
 
             _points.Add(p);
             _last = p;
@@ -49,33 +60,27 @@ namespace Medja.Controls
                 Add(point);
         }
 
-        /// <summary>
-        /// Deletes all points and frees the reserved memory.
-        /// </summary>
         public void Clear()
         {
             _points.Clear();
-            _points.TrimExcess();
             _last = null;
         }
 
-        /// <summary>
-        /// Get all points relevant for rendering with the given settings.
-        /// </summary>
-        /// <param name="settings">The rendering settings.</param>
-        /// <returns>The points relevant for rendering.</returns>
-        public virtual List<Point> GetForRendering(DataPointsRenderingSettings settings)
-        {
-            
-            
-            // very naive implementation
-            var result = _points.Where(p => p.X >= settings.MinX
-                                      && p.X <= settings.MaxX
-                                      && p.Y >= settings.MinY
-                                      && p.Y <= settings.MaxY).ToList();
-            
-            if(result.Distinct(p => p.X).Count() > settings.WidthPixels)
-                // reduce 
-        }
+//        /// <summary>
+//        /// Get all points relevant for rendering with the given settings.
+//        /// </summary>
+//        /// <param name="settings">The rendering settings.</param>
+//        /// <returns>The points relevant for rendering.</returns>
+//        public virtual List<Point> GetForRendering(DataPointsRenderingSettings settings)
+//        {
+//            // very naive implementation
+//            var result = _points.Where(p => p.X >= settings.MinX
+//                                      && p.X <= settings.MaxX
+//                                      && p.Y >= settings.MinY
+//                                      && p.Y <= settings.MaxY).ToList();
+//            
+//            if(result.Distinct(p => p.X).Count() > settings.WidthPixels)
+//                // reduce 
+//        }
     }
 }
