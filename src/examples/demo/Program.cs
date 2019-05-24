@@ -35,7 +35,7 @@ namespace Medja.Demo
         private void CreateMainWindow()
         {
             var window = _application.CreateWindow();
-            window.CenterOnScreen(800, 600);
+            window.CenterOnScreen(800, 800);
             window.Background = DarkBlueThemeValues.WindowBackground;
             window.Content = CreateContent();
 
@@ -128,6 +128,10 @@ namespace Medja.Demo
             comboBox.Add("456");
             comboBox.Add("789");
 
+            var disabledComboBox = controlFactory.Create<ComboBox>();
+            disabledComboBox.IsEnabled = false;
+            disabledComboBox.Title = "disabled";
+
             var menuItem = controlFactory.Create<MenuItem>();
             menuItem.Title = "MenuItem";
             
@@ -135,6 +139,7 @@ namespace Medja.Demo
             anotherStackPanel.ChildrenWidth = 200;
             anotherStackPanel.SpaceBetweenChildren = 50;
             anotherStackPanel.Add(comboBox);
+            anotherStackPanel.Add(disabledComboBox);
             anotherStackPanel.Add(menuItem);
             
             var tabControl = controlFactory.Create<TabControl>();

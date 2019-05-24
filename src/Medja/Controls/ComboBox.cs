@@ -89,6 +89,8 @@ namespace Medja.Controls
             get { return PropertyDisplayText.Get(); }
             private set { PropertyDisplayText.Set(value); }
         }
+        
+        // todo: title font, displaytext font
 
         public ComboBox(IControlFactory controlFactory)
         {
@@ -165,7 +167,7 @@ namespace Medja.Controls
         /// <returns>The created <see cref="MenuItem"/>.</returns>
         public MenuItem Add(string title)
         {
-            var menuItem = _controlFactory.Create<MenuItem>(_controlFactory.ComboBoxMenuItemStyle);
+            var menuItem = _controlFactory.Create<ComboBoxMenuItem>();
             menuItem.Title = title;
             
             ItemsPanel.Add(menuItem);

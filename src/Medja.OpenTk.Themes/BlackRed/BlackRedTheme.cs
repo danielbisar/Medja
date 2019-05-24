@@ -1,7 +1,17 @@
 ﻿using Medja.Controls;
 using Medja.OpenTk.Themes.BlackRed;
+using Medja.OpenTk.Themes.DarkBlue;
 using Medja.Primitives;
 using Medja.Theming;
+using ButtonRenderer = Medja.OpenTk.Themes.BlackRed.ButtonRenderer;
+using CheckBoxRenderer = Medja.OpenTk.Themes.BlackRed.CheckBoxRenderer;
+using ComboBoxRenderer = Medja.OpenTk.Themes.BlackRed.ComboBoxRenderer;
+using MenuItemRenderer = Medja.OpenTk.Themes.BlackRed.MenuItemRenderer;
+using ProgressBarRenderer = Medja.OpenTk.Themes.BlackRed.ProgressBarRenderer;
+using SliderRenderer = Medja.OpenTk.Themes.BlackRed.SliderRenderer;
+using TabControlRenderer = Medja.OpenTk.Themes.BlackRed.TabControlRenderer;
+using TextBlockRenderer = Medja.OpenTk.Themes.BlackRed.TextBlockRenderer;
+using TextBoxRenderer = Medja.OpenTk.Themes.BlackRed.TextBoxRenderer;
 
 namespace Medja.OpenTk.Themes
 {
@@ -48,12 +58,6 @@ namespace Medja.OpenTk.Themes
             result.Renderer = new ComboBoxRenderer(result);
             
             return result;
-        }
-
-        public override void ComboBoxMenuItemStyle(MenuItem menuItem)
-        {
-            base.ComboBoxMenuItemStyle(menuItem);
-            menuItem.Background = BlackRedThemeValues.PrimaryColor;
         }
 
         protected override Control CreateControl()

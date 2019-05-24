@@ -16,7 +16,5 @@ namespace Medja.Theming
         
         bool HasControl<TControl>() where TControl : Control;
         bool HasControl(Type type);
-
-        void ComboBoxMenuItemStyle(MenuItem menuItem);
     }
 }

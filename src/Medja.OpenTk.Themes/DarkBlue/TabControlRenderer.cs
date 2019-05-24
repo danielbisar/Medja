@@ -10,7 +10,8 @@ namespace Medja.OpenTk.Themes.DarkBlue
 		private readonly TextRenderer _textRenderer;
 		private readonly SKPaint _headerBackgroundPaint;
 		private readonly SKPaint _backgroundPaint;
-		
+		private readonly SKPaint _borderPaint;
+
 		public TabControlRenderer(TabControl control)
 			:base(control)
 		{
@@ -21,6 +22,11 @@ namespace Medja.OpenTk.Themes.DarkBlue
 			
 			_backgroundPaint = new SKPaint();
 			_backgroundPaint.IsAntialias = true;
+			
+			_borderPaint = new SKPaint();
+			_borderPaint.IsAntialias = true;
+			_borderPaint.IsStroke = true;
+			_borderPaint.Color = DarkBlueThemeValues.ControlBorder.ToSKColor();
 		}
 		
 		protected override void InternalRender()
@@ -29,19 +35,11 @@ namespace Medja.OpenTk.Themes.DarkBlue
 
 			if (_control.Background != null)
 			{
-				var color = _control.IsEnabled ? _control.Background : _control.Background.GetDisabled();
-
-				_backgroundPaint.IsStroke = false;
-				_backgroundPaint.Color = color.ToSKColor();
+				_backgroundPaint.Color = _control.Background.ToSKColor();
 				_canvas.DrawRect(rect, _backgroundPaint);
 			}
 
-			_backgroundPaint.Color = DarkBlueThemeValues.ControlBorder.ToSKColor();
-			_backgroundPaint.IsStroke = true;
-			_canvas.DrawRoundRect(rect, 3, 3, _backgroundPaint);
-
-			//_canvas.Save();
-			//_canvas.ClipRoundRect(new SKRoundRect(rect, 3, 3), SKClipOperation.Intersect, true);
+			_canvas.DrawRoundRect(rect, 3, 3, _borderPaint);
 		}
 
 		protected override void Dispose(bool disposing)
@@ -49,6 +47,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
 			_textRenderer.Dispose();
 			_headerBackgroundPaint.Dispose();
 			_backgroundPaint.Dispose();
+			_borderPaint.Dispose();
 			
 			base.Dispose(disposing);
 		}

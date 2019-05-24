@@ -18,18 +18,17 @@ namespace Medja.OpenTk.Themes.DarkBlue
             
             control.AffectRendering(control.PropertyBackground, 
                 control.PropertyIsEnabled,
-                control.InputState.PropertyIsMouseOver, 
                 control.InputState.PropertyIsLeftMouseDown);
         }
 
         protected override void DrawTextControlBackground()
         {
             var rect = _control.Position.ToSKRect();
+
+            _backgroundPaint.Color = _control.Background.ToSKColor();
             
             if (_control.IsEnabled)
             {
-                _backgroundPaint.Color = _control.Background.ToSKColor();
-
                 if (_control.InputState.IsLeftMouseDown)
                     _backgroundPaint.ImageFilter = DarkBlueThemeValues.DropShadowElevated;
                 else
@@ -37,7 +36,6 @@ namespace Medja.OpenTk.Themes.DarkBlue
             }
             else
             {
-                _backgroundPaint.Color = _control.Background.GetDisabled().ToSKColor();
                 _backgroundPaint.ImageFilter = DarkBlueThemeValues.DropShadowDisabled;
             }
             

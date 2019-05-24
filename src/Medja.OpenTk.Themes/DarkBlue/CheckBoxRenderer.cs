@@ -21,27 +21,17 @@ namespace Medja.OpenTk.Themes.DarkBlue
             _checkMarkPaint.IsStroke = true;
             _checkMarkPaint.StrokeWidth = 2;
             
-            control.AffectRendering(control.PropertyIsChecked, 
-                control.PropertyBackground, 
-                control.PropertyIsEnabled);
+            _control.AffectRendering(_control.PropertyBackground);
         }
 
         protected override void DrawTextControlBackground()
         {
-            var backgroundColor = _control.IsChecked 
-                ? DarkBlueThemeValues.PrimaryColor 
-                : _control.Background;
+            _backgroundPaint.Color = _control.Background.ToSKColor();
             
             if (_control.IsEnabled)
-            {
-                _backgroundPaint.Color = backgroundColor.ToSKColor();
                 _backgroundPaint.ImageFilter = DarkBlueThemeValues.DropShadow;
-            }
             else
-            {
-                _backgroundPaint.Color = backgroundColor.GetDisabled().ToSKColor();
                 _backgroundPaint.ImageFilter = DarkBlueThemeValues.DropShadowDisabled;
-            }
             
             var checkMarkBorder = new SKRect(_rect.Left, _rect.Top, _rect.Left + _rect.Height, _rect.Bottom);
             _canvas.DrawRoundRect(checkMarkBorder, 2, 2, _backgroundPaint);

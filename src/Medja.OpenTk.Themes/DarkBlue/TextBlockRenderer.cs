@@ -14,14 +14,12 @@ namespace Medja.OpenTk.Themes.DarkBlue
 			_backgroundPaint = new SKPaint();
 			_backgroundPaint.ImageFilter = SKImageFilter.CreateDropShadow(4,4,4,4, new SKColor(0,0,0,100), SKDropShadowImageFilterShadowMode.DrawShadowAndForeground);
 			
-			_control.AffectRendering(control.PropertyBackground, control.PropertyIsEnabled);
+			_control.AffectRendering(control.PropertyBackground);
 		}
 
 		protected override void DrawTextControlBackground()
 		{
-			var color = _control.IsEnabled ? _control.Background : _control.Background.GetDisabled();
-			_backgroundPaint.Color = color.ToSKColor();
-
+			_backgroundPaint.Color = _control.Background.ToSKColor();
 			_canvas.DrawRoundRect(_rect, 3, 3, _backgroundPaint);
 		}
 

@@ -1,4 +1,5 @@
 using Medja.Controls;
+using Medja.OpenTk.Rendering;
 using Medja.Primitives;
 using Medja.Theming;
 
@@ -15,7 +16,11 @@ namespace Medja.OpenTk.Themes.DarkBlue
         protected override Button CreateButton()
         {
             var result = base.CreateButton();
-            result.Background = DarkBlueThemeValues.PrimaryColor;
+
+            result.Bind(p => p.PropertyBackground, 
+                GetButtonBackground,
+                p => p.PropertyIsEnabled);
+            
             result.Font.Color = DarkBlueThemeValues.PrimaryTextColor;
             result.Position.Height = 40;
             //result.Position.Width = 100;
@@ -26,6 +31,11 @@ namespace Medja.OpenTk.Themes.DarkBlue
             result.Renderer = new ButtonRenderer(result);
 
             return result;
+        }
+
+        private static Color GetButtonBackground(Button button)
+        {
+            return button.IsEnabled ? DarkBlueThemeValues.PrimaryColor : DarkBlueThemeValues.PrimaryColor.GetDisabled();
         }
 
         protected override Canvas CreateCanvas()
@@ -39,7 +49,12 @@ namespace Medja.OpenTk.Themes.DarkBlue
         protected override CheckBox CreateCheckBox()
         {
             var result = base.CreateCheckBox();
-            result.Background = DarkBlueThemeValues.ControlBackground;
+
+            result.Bind(p => p.PropertyBackground, 
+                GetCheckBoxBackground, 
+                p => p.PropertyIsChecked, 
+                p => p.PropertyIsEnabled);
+            
             result.Font.Color = DarkBlueThemeValues.PrimaryTextColor;
             result.Position.Height = 19;
             result.Padding.Left = 27;
@@ -49,10 +64,24 @@ namespace Medja.OpenTk.Themes.DarkBlue
             return result;
         }
 
+        private static Color GetCheckBoxBackground(CheckBox checkBox)
+        {
+            var result = checkBox.IsChecked ? DarkBlueThemeValues.PrimaryColor : DarkBlueThemeValues.ControlBackground;
+
+            if (!checkBox.IsEnabled)
+                result = result.GetDisabled();
+
+            return result;
+        }
+
         protected override ComboBox CreateComboBox()
         {
             var result = base.CreateComboBox();
-            result.Background = Colors.White;
+
+            result.Bind(p => p.PropertyBackground, 
+                GetComboBoxBackground, 
+                p => p.PropertyIsEnabled);
+            
             result.Position.Height = 30;
             
             result.ItemsPanel.ChildrenHeight = 30;
@@ -63,10 +92,34 @@ namespace Medja.OpenTk.Themes.DarkBlue
             return result;
         }
 
-        public override void ComboBoxMenuItemStyle(MenuItem menuItem)
+        private static Color GetComboBoxBackground(ComboBox comboBox)
         {
-            base.ComboBoxMenuItemStyle(menuItem);
-            menuItem.Background = DarkBlueThemeValues.ControlBackground;
+            return comboBox.IsEnabled ? Colors.White : Colors.White.GetDisabled();
+        }
+
+        protected override ComboBoxMenuItem CreateComboBoxMenuItem()
+        {
+            var result = base.CreateComboBoxMenuItem();
+
+            result.Bind(p => p.PropertyBackground, 
+                GetComboBoxMenuItemBackground, 
+                p => p.PropertyIsSelected,
+                p => p.PropertyIsEnabled);
+            
+            result.Position.Height = 25;
+            result.Renderer = new MenuItemRenderer(result);
+
+            return result;
+        }
+
+        private static Color GetComboBoxMenuItemBackground(ComboBoxMenuItem menuItem)
+        {
+            var result = menuItem.IsSelected ? DarkBlueThemeValues.PrimaryColor : DarkBlueThemeValues.ControlBackground;
+
+            if (!menuItem.IsEnabled)
+                result = result.GetDisabled();
+
+            return result;
         }
 
         protected override ContentControl CreateContentControl()
@@ -105,8 +158,24 @@ namespace Medja.OpenTk.Themes.DarkBlue
         protected override MenuItem CreateMenuItem()
         {
             var result = base.CreateMenuItem();
+
+            result.Bind(p => p.PropertyBackground, 
+                GetMenuItemBackground, 
+                p => p.PropertyIsSelected,
+                p => p.PropertyIsEnabled);
+            
             result.Position.Height = 25;
             result.Renderer = new MenuItemRenderer(result);
+
+            return result;
+        }
+
+        private static Color GetMenuItemBackground(MenuItem menuItem)
+        {
+            var result = menuItem.IsSelected ? DarkBlueThemeValues.PrimaryColor : null;
+
+            if (result != null && !menuItem.IsEnabled)
+                result = result.GetDisabled();
 
             return result;
         }
@@ -114,17 +183,29 @@ namespace Medja.OpenTk.Themes.DarkBlue
         protected override Popup CreatePopup()
         {
             var result = base.CreatePopup();
-            result.Background = DarkBlueThemeValues.ControlBackground;
+            result.Bind(p => p.PropertyBackground, GetPopupBackground, p => p.PropertyIsEnabled);
 
             result.Renderer = new PopupRenderer(result);
 			return result;
 		}
-        
+
+        private Color GetPopupBackground(Popup popup)
+        {
+            return popup.IsEnabled ? DarkBlueThemeValues.ControlBackground : DarkBlueThemeValues.ControlBackground.GetDisabled();
+        }
+
         protected override ProgressBar CreateProgressBar()
         {
             var result = base.CreateProgressBar();
-            result.Background = DarkBlueThemeValues.ControlBackground;
-            result.Foreground = DarkBlueThemeValues.PrimaryColor;
+            
+            result.Bind(p => p.PropertyBackground, 
+                GetProgressBarBackground, 
+                p => p.PropertyIsEnabled);
+
+            result.Bind(p => p.PropertyProgressColor, 
+                GetProgressBarProgressColor,
+                p => p.PropertyIsEnabled);
+            
             result.Position.Height = 25;
 
             result.Renderer = new ProgressBarRenderer(result);
@@ -132,10 +213,23 @@ namespace Medja.OpenTk.Themes.DarkBlue
             return result;
         }
 
+        private Color GetProgressBarProgressColor(ProgressBar progressBar)
+        {
+            return progressBar.IsEnabled 
+                ? DarkBlueThemeValues.PrimaryColor 
+                : DarkBlueThemeValues.PrimaryColor.GetDisabled();
+        }
+
+        private Color GetProgressBarBackground(ProgressBar progressBar)
+        {
+            return progressBar.IsEnabled
+                ? DarkBlueThemeValues.ControlBackground
+                : DarkBlueThemeValues.ControlBackground.GetDisabled();
+        }
+
         protected override ScrollingGrid CreateScrollingGrid()
         {
             var result = base.CreateScrollingGrid();
-
             result.Renderer = new ControlRenderer(result);
             return result;
         }
@@ -143,18 +237,43 @@ namespace Medja.OpenTk.Themes.DarkBlue
         protected override Slider CreateSlider()
         {
             var result = base.CreateSlider();
-            result.Background = DarkBlueThemeValues.ControlBackground;
-            result.Foreground = DarkBlueThemeValues.PrimaryTextColor;
+
+            result.Bind(p => p.PropertyBackground,
+                GetSliderBackground,
+                p => p.PropertyIsEnabled);
+
+            result.Bind(p => p.PropertyThumbColor, 
+                GetSliderThumbColor, 
+                p => p.PropertyIsEnabled);
+
+            result.Position.Height = 20;
+            
             result.Renderer = new SliderRenderer(result);
 
             return result;
         }
 
+        private Color GetSliderBackground(Slider slider)
+        {
+            return slider.IsEnabled
+                ? DarkBlueThemeValues.ControlBackground
+                : DarkBlueThemeValues.ControlBackground.GetDisabled();
+        }
+
+        private Color GetSliderThumbColor(Slider slider)
+        {
+            return slider.IsEnabled
+                ? DarkBlueThemeValues.PrimaryTextColor
+                : DarkBlueThemeValues.PrimaryTextColor.GetDisabled();
+        }
+
         protected override TabControl CreateTabControl()
         {
             var result = base.CreateTabControl();
+
             result.TabHeaderPanel.ChildrenWidth = 150;
             result.TabHeaderPanel.SpaceBetweenChildren = 1;
+            
             result.Renderer = new TabControlRenderer(result);
 
             return result;
@@ -192,11 +311,36 @@ namespace Medja.OpenTk.Themes.DarkBlue
             result.Renderer = new ControlRenderer(result);
             return result;
         }
+        
+        protected override TextBlock CreateTextBlock()
+        {
+            var result = base.CreateTextBlock();
+
+            result.Bind(p => p.PropertyBackground,
+                GetTextBlockBackground,
+                p => p.PropertyIsEnabled);
+            
+            result.Font.Color = Colors.Black;
+            result.Padding.SetAll(5);
+
+            result.Renderer = new TextBlockRenderer(result);
+
+            return result;
+        }
+
+        private Color GetTextBlockBackground(TextBlock textBlock)
+        {
+            return textBlock.IsEnabled ? Colors.White : Colors.White.GetDisabled();
+        }
 
         protected override TextBox CreateTextBox()
         {
             var result = base.CreateTextBox();
-            result.Background = DarkBlueThemeValues.ControlBackground;
+
+            result.Bind(p => p.PropertyBackground,
+                GetTextBoxBackground, 
+                p => p.PropertyIsEnabled);
+            
             result.Font.Color = DarkBlueThemeValues.PrimaryTextColor;
             result.Position.Height = 37;
             result.Padding.Top = 9;
@@ -207,26 +351,29 @@ namespace Medja.OpenTk.Themes.DarkBlue
             return result;
         }
 
-        protected override TextBlock CreateTextBlock()
+        private Color GetTextBoxBackground(TextBox textBox)
         {
-            var result = base.CreateTextBlock();
-            result.Background = Colors.White;
-            result.Font.Color = Colors.Black;
-            result.Padding.SetAll(5);
-
-            result.Renderer = new TextBlockRenderer(result);
-
-            return result;
+            return textBox.IsEnabled
+                ? DarkBlueThemeValues.ControlBorder
+                : DarkBlueThemeValues.ControlBackground.GetDisabled();
         }
 
         protected override TextEditor CreateTextEditor()
         {
             var result = base.CreateTextEditor();
-            result.Background = DarkBlueThemeValues.ControlBackground;
-
+            result.Bind(p => p.PropertyBackground,
+                GetTextEditorBackground, 
+                p => p.PropertyIsEnabled);
             result.Renderer = new TextEditorRenderer(result);
 
             return result;
+        }
+
+        private Color GetTextEditorBackground(TextEditor textEditor)
+        {
+            return textEditor.IsEnabled
+                ? DarkBlueThemeValues.ControlBackground
+                : DarkBlueThemeValues.ControlBackground.GetDisabled();
         }
 
         protected override VerticalStackPanel CreateVerticalStackPanel()

@@ -28,12 +28,19 @@ namespace Medja.Controls
             get { return PropertyValue.Get(); }
             set { PropertyValue.Set(value); }
         }
-        
-        public readonly Property<Color> PropertyForeground;
-        public Color Foreground
+
+        public readonly Property<float> PropertyPercentage;
+        public float Percentage
         {
-            get { return PropertyForeground.Get(); }
-            set { PropertyForeground.Set(value); }
+            get { return PropertyPercentage.Get(); }
+            private set { PropertyPercentage.Set(value); }
+        }
+        
+        public readonly Property<Color> PropertyThumbColor;
+        public Color ThumbColor
+        {
+            get { return PropertyThumbColor.Get(); }
+            set { PropertyThumbColor.Set(value); }
         }
 
         public Slider()
@@ -41,12 +48,29 @@ namespace Medja.Controls
             PropertyMinValue = new Property<float>();
             PropertyMaxValue = new Property<float>();
             PropertyValue = new Property<float>();
-            PropertyForeground = new Property<Color>();
+            PropertyThumbColor = new Property<Color>();
+            PropertyPercentage = new Property<float>();
 
+            PropertyMinValue.PropertyChanged += OnPercentageRelevantPropertyChanged;
+            PropertyMaxValue.PropertyChanged += OnPercentageRelevantPropertyChanged;
+            PropertyValue.PropertyChanged += OnPercentageRelevantPropertyChanged;
+            
             InputState.Clicked += OnClicked;
             InputState.HandlesDrag = true;
             InputState.OwnsMouseEvents = true;
             InputState.Dragged += OnDragged;
+        }
+
+        private void OnPercentageRelevantPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            UpdatePercentage();
+        }
+
+        private void UpdatePercentage()
+        {
+            var distance = MaxValue - MinValue;
+            var value = Value - MinValue;
+            PropertyPercentage.Set(distance == 0 ? 0 : value / distance);
         }
 
         protected virtual void OnDragged(object sender, MouseDraggedEventArgs e)

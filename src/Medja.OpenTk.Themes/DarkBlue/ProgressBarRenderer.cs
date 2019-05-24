@@ -19,26 +19,16 @@ namespace Medja.OpenTk.Themes.DarkBlue
             _filledPaint.IsAntialias = true;
             _filledPaint.ImageFilter = SKImageFilter.CreateErode(2,2);
             
-            control.AffectRendering(control.PropertyValue, 
-                control.PropertyMaxValue, 
-                control.PropertyForeground,
-                control.PropertyIsEnabled,
+            control.AffectRendering(control.PropertyPercentage, 
+                control.PropertyProgressColor,
                 control.PropertyBackground);
         }
 
         protected override void InternalRender()
         {
-            if (_control.IsEnabled)
-            {
-                _backgroundPaint.Color = _control.Background.ToSKColor();
-                _filledPaint.Color = _control.Foreground.ToSKColor();
-            }
-            else
-            {
-                _backgroundPaint.Color = _control.Background.GetDisabled().ToSKColor();
-                _filledPaint.Color = _control.Foreground.GetDisabled().ToSKColor();
-            }
-
+            _backgroundPaint.Color = _control.Background.ToSKColor();
+            _filledPaint.Color = _control.ProgressColor.ToSKColor();
+            
             var rect = _control.Position.ToSKRect();
             var filledRect = new SKRect(rect.Left,
                 rect.Top,
