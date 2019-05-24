@@ -25,8 +25,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
             
             _caretStopWatch = Stopwatch.StartNew();
             
-            _control.AffectRendering(_control.PropertyIsEnabled, 
-                _control.PropertyBackground, 
+            _control.AffectRendering(_control.PropertyBackground, 
                 _control.PropertyCaretPos,
                 _control.PropertyIsFocused,
                 _control.PropertyIsCaretVisible);
@@ -34,13 +33,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
 
         protected override void DrawTextControlBackground()
         {
-            var color = DarkBlueThemeValues.ControlBorder;
-
-            if (!_control.IsEnabled)
-                color = color.GetDisabled();
-            
-            _backgroundPaint.Color = color.ToSKColor();
-            
+            _backgroundPaint.Color = _control.Background.ToSKColor();
             _canvas.DrawRoundRect(_rect, 3, 3, _backgroundPaint);
         }
 

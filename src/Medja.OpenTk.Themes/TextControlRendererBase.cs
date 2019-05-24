@@ -12,9 +12,6 @@ namespace Medja.OpenTk.Themes
         // - changing of any value in font of the control
         
         protected readonly SKPaint _textPaint;
-        protected readonly SKPaint _textDisabledPaint;
-        
-        private SKPaint _currentTextPaint;
         
         private bool _isControlInitialized;
         protected float StartingY { get; private set; }
@@ -23,43 +20,16 @@ namespace Medja.OpenTk.Themes
         protected TextControlRendererBase(T control) 
             : base(control)
         {
-            _textPaint = CreateTextPaint();
-            _textDisabledPaint = CreateTextDisabledPaint();
-            
-            _control.Font.PropertyColor.PropertyChanged += OnTextColorChanged;
-            
-            _control.AffectRendering(_control.PropertyText);
-        }
-
-        private SKPaint CreateTextPaint()
-        {
-            // todo update on control.Font change
             var font = _control.Font;
+            _textPaint = new SKPaint();
+            _textPaint.Typeface = font.Name == null ? null : SKTypeface.FromFamilyName(font.Name);
+            _textPaint.TextSize = font.Size;
+            _textPaint.IsAntialias = true;
             
-            var result = new SKPaint();
-            result.Typeface = font.Name == null ? null : SKTypeface.FromFamilyName(font.Name);
-            result.TextSize = font.Size;
-            result.Color = _control.Font.Color.ToSKColor();
-            result.IsAntialias = true;
-
-            return result;
-        }
-        
-        private SKPaint CreateTextDisabledPaint()
-        {
-            var result = new SKPaint();
-            result.Typeface = _textPaint.Typeface;
-            result.TextSize = _textPaint.TextSize;
-            result.Color = _control.Font.Color.GetDisabled().ToSKColor();
-            result.IsAntialias = true;
-
-            return result;
-        }
-
-        private void OnTextColorChanged(object sender, PropertyChangedEventArgs e)
-        {
-            _textPaint.Color = _control.Font.Color.ToSKColor();
-            _textDisabledPaint.Color = _control.Font.Color.GetDisabled().ToSKColor();
+            _control.AffectRendering(_control.PropertyText, _control.Font.PropertyColor);
+            
+            // todo update textpaint on font changed; do not do this in InternalRender because SKTypeface lookup is
+            // expensive
         }
 
         protected override void InternalRender()
@@ -83,14 +53,15 @@ namespace Medja.OpenTk.Themes
             _canvas.Save();
             _canvas.ClipRect(_control.TextClippingArea.ToSKRect());
             
+            _textPaint.Color = _control.Font.Color.ToSKColor();
+           
             // todo set paints on change of IsEnabled to reduce CPU load
-            _currentTextPaint = _control.IsEnabled ? _textPaint : _textDisabledPaint;
             var pos = _control.Position.ToSKPoint();
             // add the height also for the first line
             // else it seems the text is drawn at a 
             // too high position
             
-            pos.Y += _currentTextPaint.TextSize + _control.Padding.Top;
+            pos.Y += _textPaint.TextSize + _control.Padding.Top;
 
             StartingY = pos.Y;
 
@@ -102,7 +73,7 @@ namespace Medja.OpenTk.Themes
             // todo check if multiline is allowed
             
             var lines = _control.GetLines();
-            var lineHeight = _currentTextPaint.TextSize * 1.3f;
+            var lineHeight = _textPaint.TextSize * 1.3f;
 
             for (int i = 0; i < lines.Length && pos.Y <= _rect.Bottom; i++)
             {
@@ -118,13 +89,13 @@ namespace Medja.OpenTk.Themes
             switch (_control.TextAlignment)
             {
                 case TextAlignment.Left:
-                    _canvas.DrawText(text, pos.X + _control.Padding.Left + XOffset, pos.Y, _currentTextPaint);
+                    _canvas.DrawText(text, pos.X + _control.Padding.Left + XOffset, pos.Y, _textPaint);
                     break;
                 case TextAlignment.Right:
-                    _canvas.DrawText(text, _rect.Right - _control.Padding.Right - GetTextWidth(text) + XOffset, pos.Y, _currentTextPaint);
+                    _canvas.DrawText(text, _rect.Right - _control.Padding.Right - GetTextWidth(text) + XOffset, pos.Y, _textPaint);
                     break;
                 case TextAlignment.Center:
-                    _canvas.DrawText(text, _rect.MidX - GetTextWidth(text) / 2 + XOffset, pos.Y, _currentTextPaint);
+                    _canvas.DrawText(text, _rect.MidX - GetTextWidth(text) / 2 + XOffset, pos.Y, _textPaint);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -141,7 +112,7 @@ namespace Medja.OpenTk.Themes
 
         private float GetTextWidth(string text)
         {
-            return GetTextWidth(_currentTextPaint, text);
+            return GetTextWidth(_textPaint, text);
         }
         
         protected float GetTextWidth(SKPaint paint, string text)
@@ -155,12 +126,7 @@ namespace Medja.OpenTk.Themes
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
-            {
-                _textPaint.Dispose();
-                _textDisabledPaint.Dispose();
-            }
-
+            _textPaint.Dispose();
             base.Dispose(disposing);
         }
     }

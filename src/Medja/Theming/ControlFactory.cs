@@ -30,6 +30,7 @@ namespace Medja.Theming
 			_factoryMethods.Add(typeof(Canvas), CreateCanvas);
 			_factoryMethods.Add(typeof(CheckBox), CreateCheckBox);
 			_factoryMethods.Add(typeof(ComboBox), CreateComboBox);
+			_factoryMethods.Add(typeof(ComboBoxMenuItem), CreateComboBoxMenuItem);
 			_factoryMethods.Add(typeof(ConfirmableDialog), CreateConfirmableDialog);
 			_factoryMethods.Add(typeof(Control), CreateControl);
 			_factoryMethods.Add(typeof(ContentControl), CreateContentControl);
@@ -173,6 +174,11 @@ namespace Medja.Theming
 		protected virtual ComboBox CreateComboBox()
 		{
 			return new ComboBox(this);
+		}
+
+		protected virtual ComboBoxMenuItem CreateComboBoxMenuItem()
+		{
+			return new ComboBoxMenuItem();
 		}
 
 		protected virtual ConfirmableDialog CreateConfirmableDialog()
@@ -333,14 +339,6 @@ namespace Medja.Theming
 		protected virtual VerticalScrollBar CreateVerticalScrollBar()
 		{
 			return new VerticalScrollBar();
-		}
-		
-		
-		// style methods - they allow modification of controls that are created by other controls (f.e. the MenuItem
-		// used by a ComboBox might look different, than the one used by a Menu)
-
-		public virtual void ComboBoxMenuItemStyle(MenuItem menuItem)
-		{
 		}
 	}
 }

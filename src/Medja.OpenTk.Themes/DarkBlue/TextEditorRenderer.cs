@@ -49,10 +49,8 @@ namespace Medja.OpenTk.Themes.DarkBlue
         protected override void InternalRender()
         {
             var rect = _control.Position.ToSKRect();
-            var color = _control.IsEnabled
-                ? _control.Background
-                : _control.Background.GetDisabled();
-            _backgroundPaint.Color = color.ToSKColor();
+
+            _backgroundPaint.Color = _control.Background.ToSKColor();
             _canvas.DrawRect(rect, _backgroundPaint);
 
             var lines = _control.Lines;

@@ -20,7 +20,6 @@ namespace Medja.OpenTk.Themes.DarkBlue
             control.AffectRendering(control.PropertyTitle, 
                 control.PropertyDisplayText, 
                 control.PropertyIsDropDownOpen,
-                control.PropertyIsEnabled,
                 control.PropertyBackground);
             
             _backgroundPaint = new SKPaint();
@@ -53,10 +52,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
 
         protected override void InternalRender()
         {
-            if (_control.IsEnabled)
-                _backgroundPaint.Color = _control.Background.ToSKColor();
-            else
-                _backgroundPaint.Color = _control.Background.GetDisabled().ToSKColor();
+            _backgroundPaint.Color = _control.Background.ToSKColor();
             
             var buttonRect = new SKRect(_rect.Right - 35, _rect.Top, _rect.Right, _rect.Bottom);
             

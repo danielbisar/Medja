@@ -18,16 +18,17 @@ namespace Medja.Controls
 			set { PropertyValue.Set(value); }
 		}
 
+		public readonly Property<float> PropertyPercentage;
 		public float Percentage
 		{
-			get { return Value == 0 || MaxValue == 0 ? 0 : Value / MaxValue; }
+			get { return PropertyPercentage.Get(); }
 		}
 		
-		public readonly Property<Color> PropertyForeground;
-		public Color Foreground
+		public readonly Property<Color> PropertyProgressColor;
+		public Color ProgressColor
 		{
-			get { return PropertyForeground.Get(); }
-			set { PropertyForeground.Set(value); }
+			get { return PropertyProgressColor.Get(); }
+			set { PropertyProgressColor.Set(value); }
 		}
 
 		public ProgressBar()
@@ -37,8 +38,9 @@ namespace Medja.Controls
 
 			PropertyValue = new Property<float>();
 			PropertyValue.PropertyChanged += OnValueChanged;
+			PropertyPercentage = new Property<float>();
 			
-			PropertyForeground = new Property<Color>();
+			PropertyProgressColor = new Property<Color>();
 		}
 
 		private void OnValueChanged(object sender, PropertyChangedEventArgs e)
@@ -49,6 +51,8 @@ namespace Medja.Controls
 				Value = MaxValue;
 			else if (value < 0)
 				Value = 0;
+			
+			PropertyPercentage.Set(Value == 0 || MaxValue == 0 ? 0 : Value / MaxValue);
 		}
 	}
 }
