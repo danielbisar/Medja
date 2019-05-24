@@ -18,12 +18,12 @@ namespace Medja.Test.Controls
         }
 
         [Fact]
-        public void AddAppliesComboBoxMenuItemStyle()
+        public void ComboBoxMenuItemIsUsedAsChild()
         {
-            var comboBox = new TestControlFactory().Create<ComboBox>();
-            var menuItem = comboBox.Add("item");
+            var comboBox = new ControlFactory().Create<ComboBox>();
+            var menuItem = comboBox.Add("item"); 
             
-            Assert.Equal(Colors.Green, menuItem.Background);
+            Assert.True(menuItem is ComboBoxMenuItem);
         }
 
         [Fact]
