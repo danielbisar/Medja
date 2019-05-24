@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net472</TargetFramework>
+        <RootNamespace>Medja.UITests</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Medja.OpenTk.Themes\Medja.OpenTk.Themes.csproj" />
+      <ProjectReference Include="..\..\Medja.OpenTk\Medja.OpenTk.csproj" />
+      <ProjectReference Include="..\..\Medja.Utils\Medja.Utils.csproj" />
+      <ProjectReference Include="..\..\Medja\Medja.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="OpenTK" Version="3.0.1" />
+      <PackageReference Include="SkiaSharp" Version="1.68.0" />
+    </ItemGroup>
+
+</Project>
