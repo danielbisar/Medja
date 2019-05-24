@@ -8,93 +8,72 @@ namespace Medja.OpenTk.Themes.BlackRed
 {
 	public class TextBoxRenderer : TextControlRendererBase<TextBox>
 	{
-		private readonly Stopwatch _caretStopWatch;
-		private readonly SKPaint _caretPaint;
-		private readonly SKPaint _paint2;
-		private readonly SKPaint _focusedPaint;
-		private readonly SKPaint _disabledPaint;
-		
-		public TextBoxRenderer(TextBox textBox)
-		: base(textBox)
-		{
-			_caretPaint = new SKPaint();
-			_caretPaint.Color = BlackRedThemeValues.PrimaryTextColor.ToSKColor();
-			_caretPaint.IsStroke = true;
-			_caretPaint.IsAntialias = true;
-			
-			_caretStopWatch = Stopwatch.StartNew();
-			
-			_paint2 = new SKPaint();
-			_paint2.IsAntialias = true;
-			_paint2.Color = BlackRedThemeValues.SecondaryColor.ToSKColor();
-            
-			_focusedPaint = new SKPaint();
-			_focusedPaint.IsAntialias = true;
-			_focusedPaint.Color = BlackRedThemeValues.SecondaryColor.ToSKColor();
-			
-			_disabledPaint = new SKPaint();
-			_disabledPaint.IsAntialias = true;
-			_disabledPaint.Color = BlackRedThemeValues.SecondaryColor.ToSKColor();
-		}
+		private readonly SKPaint _backgroundPaint;
+        private readonly SKPaint _caretPaint;
+        
+        public TextBoxRenderer(TextBox control) 
+            : base(control)
+        {
+            _backgroundPaint = new SKPaint();
+            _backgroundPaint.IsStroke = true;
+            _backgroundPaint.IsAntialias = true;
 
-		protected override void DrawTextControlBackground()
-		{
-			RenderBottomLine();
-		}
+            _caretPaint = new SKPaint();
+            _caretPaint.Color = BlackRedThemeValues.PrimaryTextColor.ToSKColor();
+            _caretPaint.IsStroke = true;
+            
+            _control.AffectRendering(_control.PropertyBackground, 
+                _control.PropertyCaretPos,
+                _control.PropertyIsFocused,
+                _control.PropertyIsCaretVisible);
+        }
 
-		private void RenderBottomLine()
-		{
-			SKPaint paint;
+        protected override void DrawTextControlBackground()
+        {
+            var rect = _control.Position.ToSKRect();
+            _backgroundPaint.Color = _control.Background.ToSKColor();
+            _canvas.DrawLine(rect.Left, rect.Bottom, rect.Right, rect.Bottom, _backgroundPaint);
+        }
 
-			if (_control.IsEnabled)
-				paint = _control.IsFocused ? _paint2 : _focusedPaint;
-			else
-				paint = _disabledPaint;
-			
-			_canvas.DrawLine(_rect.Left, _rect.Bottom, _rect.Right, _rect.Bottom, paint);
-		}
-		
-		protected override void DrawText()
-		{
-			var textWidth = 0f;
+        protected override void DrawText()
+        {
+            var textWidth = 0f;
             
-			if(!string.IsNullOrEmpty(_control.Text))
-				textWidth = GetTextWidth(_textPaint, _control.Text.Substring(0, _control.CaretPos));
+            if(!string.IsNullOrEmpty(_control.Text))
+                textWidth = GetTextWidth(_textPaint, _control.Text.Substring(0, _control.CaretPos));
             
-			var caretLeft = _rect.Left + _control.Padding.Left + textWidth;
-			var maxX = _rect.Right - _control.Padding.Right;
+            var caretLeft = _rect.Left + _control.Padding.Left + textWidth;
+            var maxX = _rect.Right - _control.Padding.Right;
 
-			if (caretLeft > maxX)
-			{
-				var distance = caretLeft - maxX;
-				XOffset = -distance;
-			}
-			else
-				XOffset = 0;
+            if (caretLeft > maxX)
+            {
+               var distance = caretLeft - maxX;
+               XOffset = -distance;
+            }
+            else
+                XOffset = 0;
             
-			base.DrawText();
+            base.DrawText();
             
-			if (_control.IsFocused && _caretStopWatch.ElapsedTicks % 10000000 <= 5000000)
-			{
-				var top = StartingY - _textPaint.TextSize;
-				var bottom = top + _textPaint.FontSpacing;
+            if (_control.IsCaretVisible)
+            {
+                var top = StartingY - _textPaint.TextSize;
+                var bottom = top + _textPaint.FontSpacing;
                 
-				caretLeft = Math.Min(caretLeft, maxX);
+                caretLeft = Math.Min(caretLeft, maxX);
 
-				_canvas.DrawLine(new SKPoint(caretLeft, top), 
-					new SKPoint(caretLeft, bottom), 
-					_caretPaint);
-			}
-		}
+                _canvas.DrawLine(new SKPoint(caretLeft, top), 
+                    new SKPoint(caretLeft, bottom), 
+                    _caretPaint);
+            }
+        }
 
-		protected override void Dispose(bool disposing)
-		{
-			_paint2.Dispose();
-			_disabledPaint.Dispose();
-			_focusedPaint.Dispose();
-			_caretPaint.Dispose();
-			
-			base.Dispose(disposing);
-		}
+        protected override void Dispose(bool disposing)
+        {
+            _backgroundPaint.Dispose();
+            _caretPaint.Dispose();
+            
+            base.Dispose(disposing);
+        }
 	}
 }

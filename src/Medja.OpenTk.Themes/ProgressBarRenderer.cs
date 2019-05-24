@@ -2,7 +2,7 @@ using Medja.Controls;
 using Medja.OpenTk.Rendering;
 using SkiaSharp;
 
-namespace Medja.OpenTk.Themes.DarkBlue
+namespace Medja.OpenTk.Themes
 {
     public class ProgressBarRenderer : SkiaControlRendererBase<ProgressBar>
     {

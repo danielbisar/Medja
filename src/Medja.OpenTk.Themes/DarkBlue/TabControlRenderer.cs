@@ -7,19 +7,12 @@ namespace Medja.OpenTk.Themes.DarkBlue
 {
 	public class TabControlRenderer : SkiaControlRendererBase<TabControl>
 	{
-		private readonly TextRenderer _textRenderer;
-		private readonly SKPaint _headerBackgroundPaint;
 		private readonly SKPaint _backgroundPaint;
 		private readonly SKPaint _borderPaint;
 
 		public TabControlRenderer(TabControl control)
 			:base(control)
 		{
-			_textRenderer = new TextRenderer(new Font());
-			
-			_headerBackgroundPaint = new SKPaint();
-			_headerBackgroundPaint.IsAntialias = true;
-			
 			_backgroundPaint = new SKPaint();
 			_backgroundPaint.IsAntialias = true;
 			
@@ -44,8 +37,6 @@ namespace Medja.OpenTk.Themes.DarkBlue
 
 		protected override void Dispose(bool disposing)
 		{
-			_textRenderer.Dispose();
-			_headerBackgroundPaint.Dispose();
 			_backgroundPaint.Dispose();
 			_borderPaint.Dispose();
 			
