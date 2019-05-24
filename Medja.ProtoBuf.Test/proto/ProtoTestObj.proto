@@ -1,8 +1,0 @@
-syntax = "proto3";
-
-message ProtoTestObj
-{
-    int32 SomeInt = 1;
-    string SomeText = 2;
-    bool SomeBool = 3;    
-}
