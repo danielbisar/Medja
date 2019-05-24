@@ -19,6 +19,7 @@ namespace Medja.Controls
 		public MedjaWindow()
 		{
 			PropertyTitle = new Property<string>();
+			PropertyTitle.UnnotifiedSet("");
 		}
 
 		public override void Arrange(Size availableSize)

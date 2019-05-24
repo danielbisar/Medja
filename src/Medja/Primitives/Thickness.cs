@@ -2,12 +2,37 @@
 {
     public class Thickness
     {
-        public float Top { get; set; }
-        public float Bottom { get; set; }
-        public float Left { get; set; }
-        public float Right { get; set; }
+        public readonly Property<float> PropertyTop;
 
-        // TODO check performance implications of the calculation inside the getter (verify overall performance)
+        public float Top
+        {
+            get { return PropertyTop.Get(); }
+            set { PropertyTop.Set(value); }
+        }
+
+        public readonly Property<float> PropertyBottom;
+
+        public float Bottom
+        {
+            get { return PropertyBottom.Get(); }
+            set { PropertyBottom.Set(value); }
+        }
+
+        public readonly Property<float> PropertyLeft;
+
+        public float Left
+        {
+            get { return PropertyLeft.Get(); }
+            set { PropertyLeft.Set(value); }
+        }
+
+        public readonly Property<float> PropertyRight;
+
+        public float Right
+        {
+            get { return PropertyRight.Get(); }
+            set { PropertyRight.Set(value); }
+        }
         
         public float TopAndBottom { get { return Top + Bottom; } }
         public float LeftAndRight { get { return Left + Right; } }
@@ -29,6 +54,11 @@
 
         public Thickness(float left, float top, float right, float bottom)
         {
+            PropertyBottom = new Property<float>();
+            PropertyTop = new Property<float>();
+            PropertyLeft = new Property<float>();
+            PropertyRight = new Property<float>();
+            
             Left = left;
             Top = top;
             Right = right;

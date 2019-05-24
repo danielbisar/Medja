@@ -120,6 +120,11 @@ namespace Medja.Controls
 		
 		public MRect ClippingArea { get; }
 
+		/// <summary>
+		/// This event is triggered after the control was arranged.
+		/// </summary>
+		public event EventHandler Arranged;
+
 		public Control()
 		{
 			_disposables = new HashSet<IDisposable>();
@@ -191,6 +196,7 @@ namespace Medja.Controls
 		/// <param name="availableSize">Available size.</param>
 		public virtual void Arrange(Size availableSize)
 		{
+			Arranged?.Invoke(this, EventArgs.Empty);
 		}
 
 		public void SetAttachedProperty(int id, object value)
