@@ -1,6 +1,7 @@
 using Medja.Controls;
 using Medja.OpenTk.Rendering;
 using Medja.OpenTk.Utils;
+using Medja.Primitives;
 using SkiaSharp;
 
 namespace Medja.OpenTk.Themes.DarkBlue
@@ -10,7 +11,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
         private readonly SKPaint _backgroundPaint;
         private readonly SKPaint _textPaint;
         
-        public TabItemRenderer(TabItem control) 
+        public TabItemRenderer(TabItem control, Color textColor) 
             : base(control)
         {
             _backgroundPaint = new SKPaint();
@@ -18,7 +19,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
             
             _textPaint = new SKPaint();
             _textPaint.IsAntialias = true;
-            _textPaint.Color = DarkBlueThemeValues.PrimaryTextColor.ToSKColor();
+            _textPaint.Color = textColor.ToSKColor();
             _textPaint.TextSize = 16;
             
             _control.AffectRendering(_control.PropertyHeader);

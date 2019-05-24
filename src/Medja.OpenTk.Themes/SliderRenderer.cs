@@ -2,42 +2,46 @@ using Medja.Controls;
 using Medja.OpenTk.Rendering;
 using SkiaSharp;
 
-namespace Medja.OpenTk.Themes.BlackRed
+namespace Medja.OpenTk.Themes
 {
     public class SliderRenderer : SkiaControlRendererBase<Slider>
     {
         private readonly SKPaint _barPaint;
-        private readonly SKPaint _positionPaint;
+        private readonly SKPaint _thumbPaint;
         
         public SliderRenderer(Slider control) 
-                : base(control)
+            : base(control)
         {
             _barPaint = new SKPaint();
-            _barPaint.Color = BlackRedThemeValues.PrimaryColor.ToSKColor();
             _barPaint.StrokeCap = SKStrokeCap.Round;
             _barPaint.Style = SKPaintStyle.Stroke;
             _barPaint.StrokeWidth = 4;
-			
-            _positionPaint = new SKPaint();
-            _positionPaint.Color = BlackRedThemeValues.PrimaryTextColor.ToSKColor();
-            _positionPaint.IsAntialias = true;
+            _barPaint.IsAntialias = true;
+            
+            _thumbPaint = new SKPaint();
+            _thumbPaint.IsAntialias = true;
+            
+            control.AffectRendering(
+                control.PropertyBackground, 
+                control.PropertyThumbColor,
+                control.PropertyPercentage);
         }
 
         protected override void InternalRender()
         {
+            _barPaint.Color = _control.Background.ToSKColor();
+            _thumbPaint.Color = _control.ThumbColor.ToSKColor();
+            
             var y = _rect.MidY;
-            var distance = _control.MaxValue - _control.MinValue;
-            var value = _control.Value - _control.MinValue;
-            var percentage = distance == 0 ? 0 : value / distance;
 			
             _canvas.DrawLine(_rect.Left, y, _rect.Right, y, _barPaint);
-            _canvas.DrawCircle(new SKPoint(_rect.Left + _rect.Width * percentage, _rect.MidY), 10, _positionPaint);
+            _canvas.DrawCircle(new SKPoint(_rect.Left + _rect.Width * _control.Percentage, _rect.MidY), 10, _thumbPaint);
         }
 
         protected override void Dispose(bool disposing)
         {
             _barPaint.Dispose();
-            _positionPaint.Dispose();
+            _thumbPaint.Dispose();
             
             base.Dispose(disposing);
         }

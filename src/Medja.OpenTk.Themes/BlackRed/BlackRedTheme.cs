@@ -6,9 +6,6 @@ using Medja.Theming;
 using ButtonRenderer = Medja.OpenTk.Themes.BlackRed.ButtonRenderer;
 using CheckBoxRenderer = Medja.OpenTk.Themes.BlackRed.CheckBoxRenderer;
 using ComboBoxRenderer = Medja.OpenTk.Themes.BlackRed.ComboBoxRenderer;
-using MenuItemRenderer = Medja.OpenTk.Themes.BlackRed.MenuItemRenderer;
-using ProgressBarRenderer = Medja.OpenTk.Themes.BlackRed.ProgressBarRenderer;
-using SliderRenderer = Medja.OpenTk.Themes.BlackRed.SliderRenderer;
 using TabControlRenderer = Medja.OpenTk.Themes.BlackRed.TabControlRenderer;
 using TextBlockRenderer = Medja.OpenTk.Themes.BlackRed.TextBlockRenderer;
 using TextBoxRenderer = Medja.OpenTk.Themes.BlackRed.TextBoxRenderer;
@@ -21,6 +18,7 @@ namespace Medja.OpenTk.Themes
         {
             DefaultFont = new Font();
             DefaultFont.Name = "Monospace";
+            DefaultFont.Color = BlackRedThemeValues.PrimaryTextColor;
         }
         
         protected override Button CreateButton()
@@ -29,12 +27,37 @@ namespace Medja.OpenTk.Themes
             result.Font.Name = DefaultFont.Name;
             result.Position.Height = 50;
             result.Padding.Top = 14;
-            result.Font.Color = BlackRedThemeValues.PrimaryTextColor;
             result.TextAlignment = TextAlignment.Center;
 
+            result.Bind(p => p.PropertyBackground,
+                GetButtonBackground,
+                p => p.PropertyIsEnabled,
+                p => p.InputState.PropertyIsLeftMouseDown);
+
+            result.Bind(p => p.Font.PropertyColor,
+                GetButtonFontColor,
+                p => p.PropertyIsEnabled);
+            
             result.Renderer = new ButtonRenderer(result);
             
             return result;
+        }
+
+        private Color GetButtonFontColor(Button button)
+        {
+            return button.IsEnabled 
+                ? BlackRedThemeValues.PrimaryTextColor 
+                : BlackRedThemeValues.PrimaryTextColor.GetDisabled();
+        }
+
+        private Color GetButtonBackground(Button button)
+        {
+            if (!button.IsEnabled)
+                return null;
+
+            return button.InputState.IsLeftMouseDown 
+                ? BlackRedThemeValues.PrimaryColor 
+                : BlackRedThemeValues.SecondaryColor;
         }
 
         protected override CheckBox CreateCheckBox()
@@ -42,14 +65,42 @@ namespace Medja.OpenTk.Themes
             var result = base.CreateCheckBox();
             result.Renderer = new CheckBoxRenderer(result);
             result.Position.Height = 26;
+            result.Padding.Left = 35;
+            result.Padding.Top = 2;
 
+            result.Bind(p => p.PropertyBackground, 
+                GetCheckBoxBackground, 
+                p => p.PropertyIsChecked);
+
+            result.Bind(p => p.Font.PropertyColor, 
+                GetCheckBoxFontColor, 
+                p => p.PropertyIsEnabled);
+            
             return result;
+        }
+
+        private Color GetCheckBoxFontColor(CheckBox checkBox)
+        {
+            return checkBox.IsEnabled
+                ? DarkBlueThemeValues.PrimaryTextColor
+                : DarkBlueThemeValues.PrimaryTextColor.GetDisabled();
+        }
+
+        private Color GetCheckBoxBackground(CheckBox checkBox)
+        {
+            return checkBox.IsChecked 
+                ? BlackRedThemeValues.SecondaryColor 
+                : BlackRedThemeValues.PrimaryColor;
         }
 
         protected override ComboBox CreateComboBox()
         {
             var result = base.CreateComboBox();
-            result.Background = BlackRedThemeValues.PrimaryColor;
+            
+            result.Bind(p => p.PropertyBackground, 
+                GetComboBoxBackground, 
+                p => p.PropertyIsEnabled);
+            
             result.Position.Height = 30;
             
             result.ItemsPanel.ChildrenHeight = 30;
@@ -57,6 +108,40 @@ namespace Medja.OpenTk.Themes
 
             result.Renderer = new ComboBoxRenderer(result);
             
+            return result;
+        }
+
+        private Color GetComboBoxBackground(ComboBox comboBox)
+        {
+            return comboBox.IsEnabled 
+                ? BlackRedThemeValues.PrimaryColor 
+                : BlackRedThemeValues.PrimaryColor.GetDisabled();
+        }
+
+        protected override ComboBoxMenuItem CreateComboBoxMenuItem()
+        {
+            var result = base.CreateComboBoxMenuItem();
+
+            result.Bind(p => p.PropertyBackground, 
+                GetComboBoxMenuItemBackground, 
+                p => p.PropertyIsSelected,
+                p => p.PropertyIsEnabled);
+            
+            result.Position.Height = 30;
+            result.Renderer = new MenuItemRenderer(result, DefaultFont.Name, DefaultFont.Color);
+
+            return result;
+        }
+
+        private Color GetComboBoxMenuItemBackground(ComboBoxMenuItem menuItem)
+        {
+            var result = menuItem.IsSelected 
+                ? BlackRedThemeValues.SecondaryColor
+                : BlackRedThemeValues.PrimaryColor;
+
+            if (!menuItem.IsEnabled)
+                result = result.GetDisabled();
+
             return result;
         }
 
@@ -130,7 +215,22 @@ namespace Medja.OpenTk.Themes
         {
             var result = base.CreateMenuItem();
             result.Position.Height = 40;
-            result.Renderer = new MenuItemRenderer(result);
+            result.Renderer = new MenuItemRenderer(result, DefaultFont.Name, DefaultFont.Color);
+
+            result.Bind(p => p.PropertyBackground, 
+                GetMenuItemBackground, 
+                p => p.PropertyIsSelected,
+                p => p.PropertyIsEnabled);
+            
+            return result;
+        }
+
+        private Color GetMenuItemBackground(MenuItem menuItem)
+        {
+            var result = menuItem.IsSelected ? BlackRedThemeValues.SecondaryColor : null;
+
+            if (result != null && !menuItem.IsEnabled)
+                result = result.GetDisabled();
 
             return result;
         }
@@ -181,16 +281,70 @@ namespace Medja.OpenTk.Themes
         protected override Slider CreateSlider()
         {
             var result = base.CreateSlider();
-            result.Renderer = new SliderRenderer(result);
+
+            result.Bind(p => p.PropertyBackground,
+                GetSliderBackground,
+                p => p.PropertyIsEnabled);
+
+            result.Bind(p => p.PropertyThumbColor, 
+                GetSliderThumbColor, 
+                p => p.PropertyIsEnabled);
+
             result.Position.Height = 30;
+            
+            result.Renderer = new SliderRenderer(result);
 
             return result;
+        }
+
+        private Color GetSliderThumbColor(Slider slider)
+        {
+            return slider.IsEnabled
+                ? BlackRedThemeValues.PrimaryTextColor
+                : BlackRedThemeValues.PrimaryTextColor.GetDisabled();
+        }
+
+        private Color GetSliderBackground(Slider slider)
+        {
+            return slider.IsEnabled
+                ? BlackRedThemeValues.PrimaryColor
+                : BlackRedThemeValues.PrimaryColor.GetDisabled();
         }
 
         protected override TabControl CreateTabControl()
         {
             var result = base.CreateTabControl();
+            result.TabHeaderPanel.ChildrenWidth = 200;
+            result.TabHeaderPanel.SpaceBetweenChildren = 1;
+            result.TabHeaderHeight = 40;
             result.Renderer = new TabControlRenderer(result);
+           
+            return result;
+        }
+
+        protected override TabItem CreateTabItem()
+        {
+            var result = base.CreateTabItem();
+            
+            result.Bind(
+                p => p.PropertyBackground, 
+                GetTabItemBackground, 
+                p => p.PropertyIsSelected, 
+                p => p.PropertyIsEnabled);
+            
+            result.Renderer = new TabItemRenderer(result, DefaultFont.Color);
+
+            return result;
+        }
+
+        private Color GetTabItemBackground(TabItem tabItem)
+        {
+            var result = tabItem.IsSelected 
+                ? BlackRedThemeValues.SecondaryColor
+                : BlackRedThemeValues.PrimaryColor;
+
+            if (!tabItem.IsEnabled)
+                result = result.GetDisabled();
 
             return result;
         }
@@ -200,9 +354,25 @@ namespace Medja.OpenTk.Themes
             var result = base.CreateTextBox();
             result.Renderer = new TextBoxRenderer(result);
             result.Font.Color = BlackRedThemeValues.PrimaryTextColor;
-            result.Background = BlackRedThemeValues.PrimaryColor;
             result.Font.Name = DefaultFont.Name;
             result.Position.Height = 26;
+
+            result.Bind(p => p.PropertyBackground, 
+                GetTextBoxBackground, 
+                p => p.PropertyIsFocused, 
+                p => p.PropertyIsEnabled);
+            
+            return result;
+        }
+
+        private Color GetTextBoxBackground(TextBox textBox)
+        {
+            var result = textBox.IsFocused
+                ? BlackRedThemeValues.SecondaryColor
+                : BlackRedThemeValues.PrimaryColor;
+
+            if (!textBox.IsEnabled)
+                result = result.GetDisabled();
 
             return result;
         }
@@ -221,9 +391,33 @@ namespace Medja.OpenTk.Themes
         protected override ProgressBar CreateProgressBar()
         {
             var result = base.CreateProgressBar();
-            result.Renderer = new ProgressBarRenderer(result);
+            
+            result.Bind(p => p.PropertyBackground, 
+                GetProgressBarBackground, 
+                p => p.PropertyIsEnabled);
 
+            result.Bind(p => p.PropertyProgressColor, 
+                GetProgressBarProgressColor,
+                p => p.PropertyIsEnabled);
+            
+            result.Renderer = new ProgressBarRenderer(result);
+            result.Position.Height = 25;
+            
             return result;
+        }
+
+        private Color GetProgressBarProgressColor(ProgressBar progressBar)
+        {
+            return progressBar.IsEnabled
+                ? BlackRedThemeValues.SecondaryColor
+                : BlackRedThemeValues.SecondaryColor.GetDisabled();
+        }
+
+        private Color GetProgressBarBackground(ProgressBar progressBar)
+        {
+            return progressBar.IsEnabled ? 
+                BlackRedThemeValues.PrimaryColor : 
+                BlackRedThemeValues.PrimaryColor.GetDisabled();
         }
 
         protected override QuestionDialog CreateQuestionDialog()

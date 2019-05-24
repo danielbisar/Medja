@@ -21,12 +21,12 @@ namespace Medja.Controls
 		private ContentControl _tabContentControl;
 		private IDisposable _headerHeightBinding;
 
-		public readonly Property<float> PropertyHeaderHeight;
+		public readonly Property<float> PropertyTabHeaderHeight;
 
-		public float HeaderHeight
+		public float TabHeaderHeight
 		{
-			get { return PropertyHeaderHeight.Get(); }
-			set { PropertyHeaderHeight.Set(value); }
+			get { return PropertyTabHeaderHeight.Get(); }
+			set { PropertyTabHeaderHeight.Set(value); }
 		}
 
 		/// <summary>
@@ -56,8 +56,8 @@ namespace Medja.Controls
 			_tabs = new List<TabItem>();
 			Tabs = _tabs.AsReadOnly();
 
-			PropertyHeaderHeight = new Property<float>();
-			PropertyHeaderHeight.UnnotifiedSet(30);
+			PropertyTabHeaderHeight = new Property<float>();
+			PropertyTabHeaderHeight.UnnotifiedSet(30);
 			PropertySelectedTab = new Property<TabItem>();
 			PropertySelectedTab.PropertyChanged += OnSelectedTabChanged;
 			PropertySelectedTab.AffectsLayout(this);
@@ -68,7 +68,7 @@ namespace Medja.Controls
 		protected Control CreateContent()
 		{
 			_tabHeaderPanel = _controlFactory.Create<HorizontalStackPanel>();
-			_headerHeightBinding = _tabHeaderPanel.Position.PropertyHeight.BindTo(PropertyHeaderHeight);
+			_headerHeightBinding = _tabHeaderPanel.Position.PropertyHeight.BindTo(PropertyTabHeaderHeight);
 			_tabContentControl = _controlFactory.Create<ContentControl>();
 			
 			var dockPanel = _controlFactory.Create<DockPanel>();

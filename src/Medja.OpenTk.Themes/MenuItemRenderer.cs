@@ -1,23 +1,26 @@
 using Medja.Controls;
 using Medja.OpenTk.Rendering;
 using Medja.OpenTk.Utils;
+using Medja.Primitives;
 using SkiaSharp;
 
-namespace Medja.OpenTk.Themes.DarkBlue
+namespace Medja.OpenTk.Themes
 {
     public class MenuItemRenderer : SkiaControlRendererBase<MenuItem>
     {
         private readonly SKPaint _textPaint;
         private readonly SKPaint _backgroundPaint;
 
-        public MenuItemRenderer(MenuItem control)
+        // todo dynamic font
+        public MenuItemRenderer(MenuItem control, string fontName, Color
+         textColor)
             : base(control)
         {
             control.AffectRendering(_control.PropertyBackground);
             
             _textPaint = new SKPaint();
-            _textPaint.Color = DarkBlueThemeValues.PrimaryTextColor.ToSKColor();
-            _textPaint.Typeface = SKTypeface.FromFamilyName("Roboto");
+            _textPaint.Color = textColor.ToSKColor();
+            _textPaint.Typeface = SKTypeface.FromFamilyName(fontName);
             _textPaint.TextSize = 16;
             _textPaint.IsAntialias = true;
             

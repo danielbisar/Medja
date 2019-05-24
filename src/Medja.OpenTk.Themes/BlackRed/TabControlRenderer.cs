@@ -7,60 +7,29 @@ namespace Medja.OpenTk.Themes.BlackRed
 {
 	public class TabControlRenderer : SkiaControlRendererBase<TabControl>
 	{
-		private readonly TextRenderer _textRenderer;
-		private readonly SKPaint _headerBackgroundPaint;
-		private readonly SKPaint _selectedHeaderBackgroundPaint;
-		//private readonly BackgroundRenderer _backgroundRenderer;
-		
+		private readonly SKPaint _backgroundPaint;
+
 		public TabControlRenderer(TabControl control)
 			:base(control)
 		{
-			_textRenderer = new TextRenderer(new Font());
-		//	_backgroundRenderer = new BackgroundRenderer(control);
-			
-			_headerBackgroundPaint = new SKPaint();
-			_headerBackgroundPaint.IsAntialias = true;
-			_headerBackgroundPaint.Color = BlackRedThemeValues.PrimaryColor.ToSKColor();
-			
-			_selectedHeaderBackgroundPaint = new SKPaint();
-			_selectedHeaderBackgroundPaint.IsAntialias = true;
-			_selectedHeaderBackgroundPaint.Color = BlackRedThemeValues.PrimaryLightColor.ToSKColor();
+			_backgroundPaint = new SKPaint();
+			_backgroundPaint.IsAntialias = true;
 		}
 		
 		protected override void InternalRender()
 		{
-		//	_backgroundRenderer.Render(_canvas);
-			
-			var tabs = _control.Tabs;
-			var tabHeaderWidth = _rect.Width / tabs.Count;
-			var headerRect = new SKRect(_rect.Left,
-										_rect.Top,
-										_rect.Left + tabHeaderWidth,
-										_rect.Top + _control.HeaderHeight);
+			var rect = _control.Position.ToSKRect();
 
-			foreach (var tab in tabs)
+			if (_control.Background != null)
 			{
-				var paint = tab.IsSelected ? _selectedHeaderBackgroundPaint : _headerBackgroundPaint;
-				_canvas.DrawRect(headerRect, paint);
-
-				_textRenderer.X = headerRect.Left + 5;
-				_textRenderer.Y = headerRect.Top;
-				_textRenderer.Render(tab.Header, _canvas);
-
-				headerRect.Left += tabHeaderWidth;
-				headerRect.Right += tabHeaderWidth;
+				_backgroundPaint.Color = _control.Background.ToSKColor();
+				_canvas.DrawRect(rect, _backgroundPaint);
 			}
-
-			// content itself is rendered via rendering behavior of
-			// content control
 		}
 
 		protected override void Dispose(bool disposing)
 		{
-			_textRenderer.Dispose();
-			_headerBackgroundPaint.Dispose();
-			_selectedHeaderBackgroundPaint.Dispose();
-			
+			_backgroundPaint.Dispose();
 			base.Dispose(disposing);
 		}
 	}

@@ -7,38 +7,35 @@ namespace Medja.OpenTk.Themes.BlackRed
 {
 	public class ButtonRenderer : TextControlRendererBase<Button>
 	{
-		private readonly SKPaint _mouseDownPaint;
-		private readonly SKPaint _mouseOverPaint;
-		private readonly SKPaint _defaultPaint;
+		private readonly SKPaint _backgroundPaint;
 		
 		public ButtonRenderer(Button button)
 			: base(button)
 		{
+			_backgroundPaint = new SKPaint();
+			_backgroundPaint.IsAntialias = true;
 			
-			_defaultPaint = new SKPaint();
-			_defaultPaint.IsAntialias = true;
-			_defaultPaint.Color = BlackRedThemeValues.SecondaryColor.ToSKColor();
-			
-			_mouseDownPaint = new SKPaint();
-			_mouseDownPaint.IsAntialias = true;
-			_mouseDownPaint.Color = BlackRedThemeValues.SecondaryLightColor.ToSKColor();
-			
-			_mouseOverPaint = new SKPaint();
-			_mouseOverPaint.IsAntialias = true;
-			_mouseOverPaint.Color = BlackRedThemeValues.SecondaryColor.ToSKColor();
+			_control.AffectRendering(_control.PropertyBackground);
 		}
 		
 		protected override void DrawTextControlBackground()
 		{
-			if (!_control.IsEnabled) 
+			if (_control.Background == null) 
 				return;
-			
+
+			var rect = _control.Position.ToSKRect();
+			_backgroundPaint.Color = _control.Background.ToSKColor();
+
 			if (_control.InputState.IsLeftMouseDown)
-				_canvas.DrawRect(_rect, _mouseDownPaint);
-			else if (_control.InputState.IsMouseOver)
-				_canvas.DrawRect(_rect, _mouseOverPaint);
+				_canvas.DrawRect(rect, _backgroundPaint);
 			else
-				_canvas.DrawLine(_rect.Left, _rect.Bottom, _rect.Right, _rect.Bottom, _defaultPaint);
+				_canvas.DrawLine(rect.Left, rect.Bottom, rect.Right, rect.Bottom, _backgroundPaint);
+		}
+
+		protected override void Dispose(bool disposing)
+		{
+			_backgroundPaint.Dispose();
+			base.Dispose(disposing);
 		}
 	}
 }

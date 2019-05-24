@@ -7,18 +7,25 @@ namespace Medja.OpenTk.Themes.BlackRed
 {
     public class ComboBoxRenderer : SkiaControlRendererBase<ComboBox>
     {
+        private readonly SKPaint _backgroundPaint;
         private readonly SKPaint _titlePaint;
         private readonly SKPaint _buttonPaint;
         private readonly SKPaint _dropDownArrowPaint;
         private readonly SKPaint _displayTextPaint;
-        //private readonly BackgroundRenderer _backgroundRenderer;
         
         private readonly float _lineHeight;
         
         public ComboBoxRenderer(ComboBox control) : base(control)
         {
-            //_backgroundRenderer = new BackgroundRenderer(control);
+            control.AffectRendering(control.PropertyTitle, 
+                control.PropertyDisplayText, 
+                control.PropertyIsDropDownOpen,
+                control.PropertyBackground);
             
+            _backgroundPaint = new SKPaint();
+            _backgroundPaint.IsAntialias = true;
+            _backgroundPaint.ImageFilter = SKImageFilter.CreateDropShadow(4,4,4,4, new SKColor(0,0,0,100), SKDropShadowImageFilterShadowMode.DrawShadowAndForeground);
+
             _buttonPaint = new SKPaint();
             _buttonPaint.IsAntialias = true;
             _buttonPaint.Color = BlackRedThemeValues.SecondaryColor.ToSKColor();
@@ -38,16 +45,18 @@ namespace Medja.OpenTk.Themes.BlackRed
             
             _displayTextPaint = new SKPaint();
             _displayTextPaint.IsAntialias = true;
-            _displayTextPaint.Color = BlackRedThemeValues.PrimaryTextColor.ToSKColor();
+            _displayTextPaint.Color = SKColors.White;
             _displayTextPaint.Typeface = SKTypeface.FromFamilyName("Monospace");
             _displayTextPaint.TextSize = _titlePaint.TextSize;
         }
 
         protected override void InternalRender()
         {
+            _backgroundPaint.Color = _control.Background.ToSKColor();
+            
             var buttonRect = new SKRect(_rect.Right - 35, _rect.Top, _rect.Right, _rect.Bottom);
             
-            //_backgroundRenderer.Render(_canvas);
+            _canvas.DrawRect(_rect, _backgroundPaint);
 
             if(_control.SelectedItem == null)
                 _canvas.DrawTextSafe(_control.Title, _rect.Left + 10, _rect.Top + _lineHeight, _titlePaint);
@@ -63,11 +72,11 @@ namespace Medja.OpenTk.Themes.BlackRed
 
         protected override void Dispose(bool disposing)
         {
-            //_backgroundRenderer.Dispose();
-            _buttonPaint.Dispose();
-            _dropDownArrowPaint.Dispose();
+            _backgroundPaint.Dispose();
             _titlePaint.Dispose();
+            _buttonPaint.Dispose();
             _displayTextPaint.Dispose();
+            _dropDownArrowPaint.Dispose();
             
             base.Dispose(disposing);
         }

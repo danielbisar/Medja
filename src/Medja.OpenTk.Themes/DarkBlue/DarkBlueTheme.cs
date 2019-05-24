@@ -11,6 +11,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
         {
             DefaultFont = new Font();
             DefaultFont.Name = "Roboto";
+            DefaultFont.Color = DarkBlueThemeValues.PrimaryTextColor;
         }
         
         protected override Button CreateButton()
@@ -23,10 +24,8 @@ namespace Medja.OpenTk.Themes.DarkBlue
             
             result.Font.Color = DarkBlueThemeValues.PrimaryTextColor;
             result.Position.Height = 40;
-            //result.Position.Width = 100;
             result.TextAlignment = TextAlignment.Center;
             result.Padding.Top = 9;
-            result.Padding.SetLeftAndRight(0);
 
             result.Renderer = new ButtonRenderer(result);
 
@@ -94,7 +93,9 @@ namespace Medja.OpenTk.Themes.DarkBlue
 
         private static Color GetComboBoxBackground(ComboBox comboBox)
         {
-            return comboBox.IsEnabled ? Colors.White : Colors.White.GetDisabled();
+            return comboBox.IsEnabled 
+                ? Colors.White 
+                : Colors.White.GetDisabled();
         }
 
         protected override ComboBoxMenuItem CreateComboBoxMenuItem()
@@ -107,7 +108,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
                 p => p.PropertyIsEnabled);
             
             result.Position.Height = 25;
-            result.Renderer = new MenuItemRenderer(result);
+            result.Renderer = new MenuItemRenderer(result, DefaultFont.Name, DefaultFont.Color);
 
             return result;
         }
@@ -165,7 +166,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
                 p => p.PropertyIsEnabled);
             
             result.Position.Height = 25;
-            result.Renderer = new MenuItemRenderer(result);
+            result.Renderer = new MenuItemRenderer(result, DefaultFont.Name, DefaultFont.Color);
 
             return result;
         }
@@ -289,7 +290,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
                 p => p.PropertyIsSelected, 
                 p => p.PropertyIsEnabled);
             
-            result.Renderer = new TabItemRenderer(result);
+            result.Renderer = new TabItemRenderer(result, DefaultFont.Color);
 
             return result;
         }

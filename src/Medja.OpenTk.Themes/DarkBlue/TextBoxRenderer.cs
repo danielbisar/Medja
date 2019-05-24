@@ -10,7 +10,6 @@ namespace Medja.OpenTk.Themes.DarkBlue
     {
         private readonly SKPaint _backgroundPaint;
         private readonly SKPaint _caretPaint;
-        private readonly Stopwatch _caretStopWatch;
         
         public TextBoxRenderer(TextBox control) 
             : base(control)
@@ -22,8 +21,6 @@ namespace Medja.OpenTk.Themes.DarkBlue
             _caretPaint = new SKPaint();
             _caretPaint.Color = DarkBlueThemeValues.PrimaryTextColor.ToSKColor();
             _caretPaint.IsStroke = true;
-            
-            _caretStopWatch = Stopwatch.StartNew();
             
             _control.AffectRendering(_control.PropertyBackground, 
                 _control.PropertyCaretPos,
