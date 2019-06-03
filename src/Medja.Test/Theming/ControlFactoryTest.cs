@@ -45,7 +45,8 @@ namespace Medja.Test.Theming
             var assembly = typeof(ControlFactory).Assembly;
             var controls = assembly.ExportedTypes.Where(p => p.IsSubclassOf(typeof(Control)) 
                                                              && !p.IsGenericType 
-                                                             && !p.IsAbstract);
+                                                             && !p.IsAbstract
+                                                             && p != typeof(Panel));
             var factory = new ControlFactory();
 
             foreach (var control in controls)

@@ -121,6 +121,14 @@ namespace Medja.Controls
 		
 		public MRect ClippingArea { get; }
 
+		public readonly Property<bool> PropertyIsDisposed;
+
+		public bool IsDisposed
+		{
+			get { return PropertyIsDisposed.Get(); }
+			private set { PropertyIsDisposed.Set(value); }
+		}
+
 		/// <summary>
 		/// This event is triggered after the control was arranged.
 		/// </summary>
@@ -145,7 +153,8 @@ namespace Medja.Controls
 			PropertyIsEnabled = new OverwritableProperty<bool>();
 			PropertyIsEnabled.UnnotifiedSet(true);
 			PropertyIsFocused = new Property<bool>();
-
+			PropertyIsDisposed = new Property<bool>();
+			
 			PropertyVisibility = new Property<Visibility>();
 			PropertyIsVisible = new Property<bool>();
 			PropertyIsVisible.UnnotifiedSet(true);
@@ -260,6 +269,8 @@ namespace Medja.Controls
 				
 				foreach(var disposable in _disposables)
 					disposable.Dispose();
+
+				IsDisposed = true;
 			}
 			
 			// unmanaged objects go here

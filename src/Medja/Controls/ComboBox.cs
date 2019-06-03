@@ -176,6 +176,11 @@ namespace Medja.Controls
             return menuItem;
         }
 
+        public void Clear()
+        {
+            ItemsPanel.Clear();
+        }
+
         private void OnItemClicked(object sender, EventArgs e)
         {
             var inputState = (InputState) sender;

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using Medja.Primitives;
@@ -7,17 +8,35 @@ using Medja.Properties;
 
 namespace Medja.Controls
 {
-	public abstract class Panel : Control
+	public class Panel : Control
 	{		
 		public ObservableCollection<Control> Children { get; }
 		public Thickness Padding { get; set; }
 
-		protected Panel()
+		public readonly Property<bool> PropertyDisposeChildren;
+
+		/// <summary>
+		/// Gets or sets if a child control should be disposed in <see cref="Dispose"/> and on remove from the panel.
+		/// Default = true.
+		/// </summary>
+		public bool DisposeChildren
+		{
+			get { return PropertyDisposeChildren.Get(); }
+			set { PropertyDisposeChildren.Set(value); }
+		}
+
+		/// <summary>
+		/// Do use subclasses instead. This is just for testing purposes.
+		/// </summary>
+		public Panel()
 		{
 			Children = new ObservableCollection<Control>();
 			Children.CollectionChanged += OnChildrenCollectionChanged;
 			
 			Padding = new Thickness();
+			PropertyDisposeChildren = new Property<bool>();
+			PropertyDisposeChildren.UnnotifiedSet(true);
+			
 			PropertyIsEnabled.PropertyChanged += OnIsEnabledChanged;
 			PropertyIsLayoutUpdated.PropertyChanged += OnIsLayoutUpdatedChanged;
 			
@@ -31,6 +50,7 @@ namespace Medja.Controls
 		{
 			if (e.Action == NotifyCollectionChangedAction.Reset)
 			{
+				// todo? - see local clear
 				foreach(var item in Children)
 					OnItemAdded(item);
 			}
@@ -64,6 +84,9 @@ namespace Medja.Controls
 		protected virtual void OnItemRemoved(Control child)
 		{
 			child.Parent = null;
+			
+			if(DisposeChildren)
+				child.Dispose();
 		}
 
 		private void ForwardClippingArea(Control child)
@@ -119,12 +142,17 @@ namespace Medja.Controls
 			foreach (var child in Children)
 				child.UpdateAnimations();
 		}
+		
+		public void Clear()
+		{
+			// do not use Children.Clear(), because then you would only get a reset event and Old and NewItems of will be empty
+			while(Children.Count > 0)
+				Children.RemoveAt(Children.Count - 1);
+		}
 
 		protected override void Dispose(bool disposing)
 		{
-			foreach(var child in Children)
-				child.Dispose();
-			
+			Clear(); // will cause dispose of children if this object is configured like this
 			base.Dispose(disposing);
 		}
 	}

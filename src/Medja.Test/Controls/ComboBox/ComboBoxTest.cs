@@ -215,5 +215,37 @@ namespace Medja.Test.Controls
             
             Assert.Equal("Test", comboBox.DisplayText);
         }
+
+        [Fact]
+        public void ItemClickSelectsItem()
+        {
+            var controlFactory = new ControlFactory();
+            var comboBox = controlFactory.Create<ComboBox>();
+
+            comboBox.Add("123");
+            var item2 = comboBox.Add("456");
+
+            Assert.NotEqual(item2, comboBox.SelectedItem);
+            
+            item2.InputState.SendClick();
+            
+            Assert.Equal(item2, comboBox.SelectedItem);
+        }
+
+        [Fact]
+        public void ClearRemovesClickHandler()
+        {
+            var controlFactory = new ControlFactory();
+            var comboBox = controlFactory.Create<ComboBox>();
+
+            comboBox.Add("123");
+            var item2 = comboBox.Add("456");
+
+            comboBox.Clear();
+            
+            item2.InputState.SendClick();
+            
+            Assert.NotEqual(item2, comboBox.SelectedItem);
+        }
     }
 }
