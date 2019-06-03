@@ -1,4 +1,5 @@
 ﻿using System;
+using Medja.Properties;
 
 namespace Medja.Primitives
 {

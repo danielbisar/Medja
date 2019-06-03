@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using Medja.Utils.Collections.Generic;
 
-namespace Medja
+namespace Medja.Properties
 {
 	/// <summary>
 	/// Provides change notification for properties.

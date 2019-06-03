@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using Medja.Input;
 using Medja.Primitives;
+using Medja.Properties;
 using Medja.Theming;
 
 namespace Medja.Controls

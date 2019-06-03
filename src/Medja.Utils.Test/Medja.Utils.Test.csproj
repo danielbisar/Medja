@@ -23,4 +23,8 @@
       <ProjectReference Include="..\Medja.Utils\Medja.Utils.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Serialization" />
+    </ItemGroup>
+
 </Project>

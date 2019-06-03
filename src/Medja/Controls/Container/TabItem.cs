@@ -1,4 +1,6 @@
-﻿namespace Medja.Controls
+﻿using Medja.Properties;
+
+namespace Medja.Controls
 {
 	public class TabItem : Control
 	{

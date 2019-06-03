@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Text;
 using System.Threading;
 using Medja.Input;
+using Medja.Properties;
 
 namespace Medja.Controls
 {

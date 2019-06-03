@@ -1,3 +1,5 @@
+using Medja.Properties;
+
 namespace Medja.Controls
 {
     /// <summary>

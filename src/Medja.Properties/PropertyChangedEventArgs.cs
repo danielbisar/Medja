@@ -1,6 +1,6 @@
 using System;
 
-namespace Medja
+namespace Medja.Properties
 {
     public class PropertyChangedEventArgs : EventArgs
     {
