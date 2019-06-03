@@ -1,6 +1,7 @@
 using System;
 using Medja.Theming;
 using Medja.Primitives;
+using Medja.Properties;
 
 namespace Medja.Controls
 {

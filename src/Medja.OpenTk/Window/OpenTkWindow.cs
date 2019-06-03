@@ -7,14 +7,12 @@ namespace Medja.OpenTk
 {
 	public class OpenTkWindow : MedjaWindow
 	{
-		private int _ignoreNextNResizeEvents;
 		private bool _calledClose;
 
 		public GameWindow GameWindow { get; }
 
 		public OpenTkWindow()
 		{
-			_ignoreNextNResizeEvents = 0;
 			GameWindow = new GameWindow();
 
 			GameWindow.Resize += OnGameWindowResize;

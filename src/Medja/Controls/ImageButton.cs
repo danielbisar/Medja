@@ -1,3 +1,4 @@
+using Medja.Properties;
 using Medja.Theming;
 
 namespace Medja.Controls

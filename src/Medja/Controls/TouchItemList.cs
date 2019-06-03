@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Medja.Properties;
 using Medja.Theming;
 
 namespace Medja.Controls

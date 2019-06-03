@@ -1,4 +1,6 @@
-﻿namespace Medja.Primitives
+﻿using Medja.Properties;
+
+namespace Medja.Primitives
 {
     public class Thickness
     {

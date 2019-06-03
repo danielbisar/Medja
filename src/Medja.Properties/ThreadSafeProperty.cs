@@ -1,4 +1,4 @@
-namespace Medja
+namespace Medja.Properties
 {
     /// <summary>
     /// A thread safe version of <see cref="Property{T}"/>

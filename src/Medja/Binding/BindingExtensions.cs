@@ -1,8 +1,11 @@
 using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 using Medja.Binding;
 using Medja.Controls;
+using Medja.Properties;
+using Medja.Utils;
 using Medja.Utils.Reflection;
 
 namespace Medja
@@ -100,6 +103,11 @@ namespace Medja
             return new TwoWayBinding<TTarget, TSource>(targetProperty, wrapper.PropertyValue, sourceConverter, targetConverter);
         }
 
+        public static TwoWayBinding<T, T> BindTwoWay<T>(this Property<T> targetProperty, Property<T> sourceProperty)
+        {
+            return new TwoWayBinding<T, T>(targetProperty, sourceProperty, p => p, p => p);
+        }
+
         public static void OnAnyPropertyChanged(this object medjaObject, Action action)
         {
             if(medjaObject == null)
@@ -108,18 +116,13 @@ namespace Medja
             if(action == null)
                 throw new ArgumentNullException(nameof(action));
             
-            var type = medjaObject.GetType();
-            var allFields = type.GetFields();
-            var medjaPropertyFields = allFields.Where(p => p.FieldType.Implements(typeof(IProperty)))
-                .ToList();
+            var medjaPropertyFields = medjaObject.GetMedjaPropertyFields().ToList();
             
             if(medjaPropertyFields.Count == 0)
-                throw new InvalidOperationException("No field of type IProperty found on object of type " + type.Name);
+                throw new InvalidOperationException("No field of type IProperty found on object of type " + medjaObject.GetType().Name);
 
             foreach (var field in medjaPropertyFields)
-            {
                 (field.GetValue(medjaObject) as IProperty).PropertyChanged += (s, e) => action();
-            }
         }
 
         /// <summary>
@@ -153,6 +156,15 @@ namespace Medja
             targetProp.Set(getPropertyValue(control));
             
             return result;
+        }
+
+        public static void BindTo<T>(ObservableCollection<T> observableCollection, Action<ObservableCollection<T>> onChanged)
+        {
+            if(onChanged == null)
+                throw new ArgumentNullException(nameof(onChanged));
+
+            onChanged(observableCollection);
+            observableCollection.CollectionChanged += (s, e) => onChanged(observableCollection);
         }
     }
 }

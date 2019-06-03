@@ -1,4 +1,4 @@
-namespace Medja
+namespace Medja.Properties
 {
     /// <summary>
     /// Allows temporal overwriting of the actual value.
@@ -8,11 +8,7 @@ namespace Medja
     {
         private T _overwrittenValue;
         private bool _isValueOverwritten;
-
-        public OverwritableProperty()
-        {
-        }
-		
+        
         protected override void InternalSet(T value)
         {
             var oldValue = _value;

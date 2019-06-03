@@ -1,4 +1,6 @@
-﻿namespace Medja.Primitives
+﻿using Medja.Properties;
+
+namespace Medja.Primitives
 {
 	/// <summary>
 	/// M for MedjaObject

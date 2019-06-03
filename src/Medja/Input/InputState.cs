@@ -1,6 +1,7 @@
 ﻿using System;
 using Medja.Controls;
 using Medja.Primitives;
+using Medja.Properties;
 using Medja.Utils;
 
 namespace Medja.Input

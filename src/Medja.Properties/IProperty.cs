@@ -1,4 +1,4 @@
-﻿namespace Medja
+﻿namespace Medja.Properties
 {
     /// <summary>
     /// The interface for values that support change notifications.

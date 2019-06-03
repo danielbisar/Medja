@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Medja.Controls.Animation;
 using Medja.Input;
 using Medja.Primitives;
+using Medja.Properties;
 using Medja.Theming;
 
 namespace Medja.Controls

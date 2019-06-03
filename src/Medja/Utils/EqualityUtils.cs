@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Medja.Properties;
 using Medja.Utils.Collections.Generic;
 
 namespace Medja.Utils

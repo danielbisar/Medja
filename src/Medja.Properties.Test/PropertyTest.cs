@@ -1,6 +1,6 @@
 using Xunit;
 
-namespace Medja.Test.Property
+namespace Medja.Properties.Test
 {
     public class PropertyTest
     {
@@ -27,9 +27,12 @@ namespace Medja.Test.Property
         [Fact]
         public void UnnotifiedSetSetValue()
         {
+            var wasNotified = false;
             var property = new Property<int>();
+            property.PropertyChanged += (s, e) => wasNotified = true;
             property.UnnotifiedSet(10);
             Assert.Equal(10, property.Get());
+            Assert.False(wasNotified);
         }
         
         [Fact]

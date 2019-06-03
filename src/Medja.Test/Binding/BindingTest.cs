@@ -1,5 +1,6 @@
 using System;
 using Medja.Primitives;
+using Medja.Properties;
 using Xunit;
 
 namespace Medja.Test.Binding

@@ -1,4 +1,5 @@
 using Medja.Controls.Images;
+using Medja.Properties;
 
 namespace Medja.Controls
 {

@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 
-namespace Medja.Utils.Collections.Generic
+namespace Medja.Properties
 {
     /// <summary>
-    /// It seems that <see cref="EqualityComparer{T}.Default"/> does more than just returning the value.
+    /// It seems that <see cref="System.Collections.Generic.EqualityComparer{T}.Default"/> does more than just returning the value.
     /// So we cache it inside this class (Singleton, Generic -> for each type).
     /// Brings a little performance for Property object creation (Factor 1.26)
     /// </summary>
