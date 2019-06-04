@@ -372,7 +372,7 @@ namespace Medja.OpenTk.Themes
             result.Renderer = new TextBoxRenderer(result);
             result.Font.Color = BlackRedThemeValues.PrimaryTextColor;
             result.Font.Name = DefaultFont.Name;
-            result.Position.Height = 26;
+            result.Position.Height = 30;
 
             result.Bind(p => p.PropertyBackground, 
                 GetTextBoxBackground, 
@@ -400,7 +400,7 @@ namespace Medja.OpenTk.Themes
             result.Renderer = new TextBlockRenderer(result);
             result.Font.Color = BlackRedThemeValues.PrimaryTextColor;
             result.Font.Name = DefaultFont.Name;
-            result.Position.Height = 23;
+            result.Position.Height = 30;
 
             return result;
         }
