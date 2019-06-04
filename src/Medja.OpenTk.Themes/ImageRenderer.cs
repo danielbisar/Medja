@@ -1,13 +1,14 @@
 using Medja.Controls;
 using SkiaSharp;
 
-namespace Medja.OpenTk.Themes.BlackRed
+namespace Medja.OpenTk.Themes
 {
     public class ImageRenderer : SkiaControlRendererBase<Image>
     {
         public ImageRenderer(Image control) 
                 : base(control)
         {
+            _control.AffectsRendering(_control.PropertyBitmap);
         }
 
         protected override void InternalRender()

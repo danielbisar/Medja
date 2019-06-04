@@ -146,6 +146,14 @@ namespace Medja.OpenTk.Themes.DarkBlue
 
             return result;
         }
+        
+        protected override Image CreateImage()
+        {
+            var result = base.CreateImage();
+            result.Renderer = new ImageRenderer(result);
+
+            return result;
+        }
 
         protected override MedjaWindow CreateMedjaWindow()
         {
