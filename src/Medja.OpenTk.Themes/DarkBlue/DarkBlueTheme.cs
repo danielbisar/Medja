@@ -323,6 +323,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
             
             result.Font.Color = Colors.Black;
             result.Padding.SetAll(5);
+            result.Position.Height = 30;
 
             result.Renderer = new TextBlockRenderer(result);
 

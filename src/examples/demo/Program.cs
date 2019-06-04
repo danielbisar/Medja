@@ -19,8 +19,8 @@ namespace Medja.Demo
 
         public Program()
         {
-            var library = new MedjaOpenTkLibrary(new DarkBlueTheme());
-            //var library = new MedjaOpenTkLibrary(new BlackRedTheme());
+            //var library = new MedjaOpenTkLibrary(new DarkBlueTheme());
+            var library = new MedjaOpenTkLibrary(new BlackRedTheme());
             
             library.RendererFactory = () => new OpenTk2DOnlyRenderer();
             _application = MedjaApplication.Create(library);
@@ -151,7 +151,14 @@ namespace Medja.Demo
             tabControl.AddTab(controlFactory.Create<TabItem>(p =>
             {
                 p.Header = "Tab 2";
-                p.Content = controlFactory.Create<Control>(x => x.Background = Colors.Black);
+                p.Content = controlFactory.Create<HorizontalStackPanel>(x =>
+                {
+                    x.ChildrenWidth = 120;
+                    x.SpaceBetweenChildren = 50;
+                    x.VerticalAlignment = VerticalAlignment.Top;
+                    x.Add(controlFactory.CreateTextBlock("ABC def"));
+                    x.Add(controlFactory.CreateTextBlock("ghi jkl"));
+                });
             }));
             tabControl.Position.Height = 200;
             
