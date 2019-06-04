@@ -331,11 +331,13 @@ namespace Medja.OpenTk.Themes
         protected override TabControl CreateTabControl()
         {
             var result = base.CreateTabControl();
-            result.TabHeaderPanel.ChildrenWidth = 200;
-            result.TabHeaderPanel.SpaceBetweenChildren = 1;
+            result.TabHeaderSpacing = 5;
             result.TabHeaderHeight = 40;
+            result.TabHeaderWidth = 200;
+            result.Padding.SetLeftAndRight(5);
+            result.Padding.SetTopAndBottom(10);
             result.Renderer = new TabControlRenderer(result);
-           
+            
             return result;
         }
 
