@@ -101,7 +101,7 @@ namespace Medja.Controls
 
         private void OnKeyPressed(object sender, KeyboardEventArgs e)
         {
-            if (e.KeyChar == 0)
+            if (e.KeyChar == 0 || e.KeyChar == 63272)
                 return;
 
             switch (e.Key)
