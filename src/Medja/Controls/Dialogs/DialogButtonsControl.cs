@@ -34,7 +34,7 @@ namespace Medja.Controls
 
 		public virtual void CreateContent()
 		{
-			Position.Height = _buttonHeight;
+			Position.Height = _buttonHeight + Margin.TopAndBottom;
 			CreateButtons();
 
 			var buttonDockPanel = _factory.Create<DockPanel>();

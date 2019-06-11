@@ -164,12 +164,19 @@ namespace Medja.Controls
 			PropertyVerticalAlignment = new Property<VerticalAlignment>();
 			PropertyHorizontalAlignment = new Property<HorizontalAlignment>();
 			PropertyIsLayoutUpdated = new Property<bool>();
+			PropertyIsLayoutUpdated.PropertyChanged += OnIsLayoutUpdatedChanged;
 			PropertyNeedsRendering = new Property<bool>();
 			PropertyNeedsRendering.PropertyChanged += OnNeedsRenderingChanged;
 			
 			PropertyIsTopMost = new Property<bool>();
 			
 			ClippingArea = new MRect();
+		}
+
+		private void OnIsLayoutUpdatedChanged(object sender, PropertyChangedEventArgs e)
+		{
+			if((bool)e.NewValue)
+				NeedsRendering = true;
 		}
 
 		private void OnNeedsRenderingChanged(object sender, PropertyChangedEventArgs e)

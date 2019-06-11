@@ -104,5 +104,10 @@ namespace Medja.Controls
 			TextClippingArea.Width = Position.Width - Padding.LeftAndRight;
 			TextClippingArea.Height = Position.Height - Padding.TopAndBottom;
 		}
+
+		public override string ToString()
+		{
+			return GetType().FullName + " '" + Text + "'";
+		}
 	}
 }

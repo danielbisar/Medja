@@ -242,7 +242,53 @@ namespace Medja.OpenTk.Themes.DarkBlue
             result.Renderer = new ControlRenderer(result);
             return result;
         }
+
+        protected override SimpleMessageDialog CreateSimpleMessageDialog()
+        {
+            var result = base.CreateSimpleMessageDialog();
+            result.Renderer = new ControlRenderer(result);
+            result.Background = DarkBlueThemeValues.ControlBackground;
+            
+            return result;
+        }
         
+        protected override NumericKeypadDialog CreateNumericKeypadDialog()
+        {
+            var result = base.CreateNumericKeypadDialog();
+            result.Background = DarkBlueThemeValues.ControlBackground;
+            result.Renderer = new ControlRenderer(result);
+
+            return result;
+        }
+        
+        protected override InputBoxDialog CreateInputBoxDialog()
+        {
+            var result = base.CreateInputBoxDialog();
+            result.Renderer = new ControlRenderer(result);
+            result.Background = DarkBlueThemeValues.ControlBackground;
+
+            return result;
+        }
+        
+        protected override QuestionDialog CreateQuestionDialog()
+        {
+            var result = base.CreateQuestionDialog();
+            result.Renderer = new ControlRenderer(result);
+            result.Background = DarkBlueThemeValues.ControlBackground;
+
+            return result;
+        }
+        
+        protected override DialogButtonsControl CreateDialogButtonsControl()
+        {
+            var result = base.CreateDialogButtonsControl();
+            result.ButtonWidth = 150;
+            result.ButtonHeight = 40;
+            result.Margin.Top = 20;
+            
+            return result;
+        }
+
         protected override Slider CreateSlider()
         {
             var result = base.CreateSlider();
