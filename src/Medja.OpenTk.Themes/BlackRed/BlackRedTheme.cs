@@ -173,7 +173,9 @@ namespace Medja.OpenTk.Themes
         {
             var result = base.CreateDialogButtonsControl();
             result.ButtonWidth = 150;
-
+            result.ButtonHeight = 50;
+            result.Margin.Top = 20;
+            
             return result;
         }
 
@@ -388,7 +390,7 @@ namespace Medja.OpenTk.Themes
         {
             var result = textBox.IsFocused
                 ? BlackRedThemeValues.SecondaryColor
-                : BlackRedThemeValues.PrimaryColor;
+                : BlackRedThemeValues.SecondaryLightColor;
 
             if (!textBox.IsEnabled)
                 result = result.GetDisabled();

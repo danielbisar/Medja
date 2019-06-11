@@ -19,8 +19,8 @@ namespace Medja.Demo
 
         public Program()
         {
-            var library = new MedjaOpenTkLibrary(new DarkBlueTheme());
-            //var library = new MedjaOpenTkLibrary(new BlackRedTheme());
+            //var library = new MedjaOpenTkLibrary(new DarkBlueTheme());
+            var library = new MedjaOpenTkLibrary(new BlackRedTheme());
             
             library.RendererFactory = () => new OpenTk2DOnlyRenderer();
             _application = MedjaApplication.Create(library);
@@ -145,12 +145,12 @@ namespace Medja.Demo
             var tabControl = controlFactory.Create<TabControl>();
             tabControl.AddTab(controlFactory.Create<TabItem>(p =>
             {
-                p.Header = "Tab 1";
+                p.Header = "Text Editor";
                 p.Content = controlFactory.Create<TextEditor>(x => x.SetText("Multiline text editor\ncheck it out"));
             }));
             tabControl.AddTab(controlFactory.Create<TabItem>(p =>
             {
-                p.Header = "Tab 2";
+                p.Header = "Left Tabs";
                 p.Content = controlFactory.Create<TabControl>(t =>
                 {
                     t.TabHeaderPosition = TabHeaderPosition.Left;
@@ -165,21 +165,61 @@ namespace Medja.Demo
                     t.AddTab("SubTab2", null);
                 });
             }));
+            tabControl.AddTab(controlFactory.Create<TabItem>(t =>
+            {
+                t.Header = "Dialogs";
+                t.Content = controlFactory.Create<VerticalStackPanel>(s =>
+                    {
+                        s.HorizontalAlignment = HorizontalAlignment.Left;
+                        s.Position.Width = 200;
+                        s.Add(controlFactory.Create<Button>(b =>
+                        {
+                            b.Text = "Message dialog";
+                            b.InputState.Clicked += (sender, args) => DialogService.Show(
+                                controlFactory.Create<SimpleMessageDialog>(
+                                    d =>
+                                    {
+                                        d.Text = "This is a simple overlay dialog";
+                                    }));
+                        }));
+                        s.Add(controlFactory.Create<Button>(b =>
+                        {
+                            b.Text = "Question";
+                            b.InputState.Clicked += (sender, args) => DialogService.Show(
+                                controlFactory.Create<QuestionDialog>(
+                                    d =>
+                                    {
+                                        d.Message = "Are you alright?";
+                                    }));
+                        }));
+                        s.Add(controlFactory.Create<Button>(b =>
+                        {
+                            b.Text = "Input";
+                            b.InputState.Clicked += (sender, args) => DialogService.Show(
+                                controlFactory.Create<InputBoxDialog>(
+                                    d =>
+                                    {
+                                        d.Message = "Give me some input...";
+                                    }));
+                        }));
+                    });
+            }));
             tabControl.Position.Height = 200;
             
-            var result = controlFactory.Create<VerticalStackPanel>();
-            result.Padding.SetAll(20);
-            result.SpaceBetweenChildren = 25;
-            result.Add(buttonStackPanel);
-            result.Add(checkBoxStackPanel);
-            result.Add(progressBar);
-            result.Add(slider);
-            result.Add(textBoxStackPanel);
-            result.Add(textBlock);
-            result.Add(anotherStackPanel);
-            result.Add(tabControl);
+            var rootStackPanel = controlFactory.Create<VerticalStackPanel>();
+            rootStackPanel.Padding.SetAll(20);
+            rootStackPanel.SpaceBetweenChildren = 25;
+            rootStackPanel.Add(buttonStackPanel);
+            rootStackPanel.Add(checkBoxStackPanel);
+            rootStackPanel.Add(progressBar);
+            rootStackPanel.Add(slider);
+            rootStackPanel.Add(textBoxStackPanel);
+            rootStackPanel.Add(textBlock);
+            rootStackPanel.Add(anotherStackPanel);
+            rootStackPanel.Add(tabControl);
 
-            return result;
+            var dialogContainer = DialogService.CreateContainer(controlFactory, rootStackPanel);
+            return dialogContainer;
         }
     }
 }

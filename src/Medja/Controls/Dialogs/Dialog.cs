@@ -19,6 +19,7 @@ namespace Medja.Controls
 		public void Show()
 		{
 			DialogService.Show(this);
+			NeedsRendering = true;
 		}
 		
 		public void Hide()

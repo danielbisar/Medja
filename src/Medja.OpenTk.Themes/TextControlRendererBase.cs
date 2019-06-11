@@ -35,17 +35,17 @@ namespace Medja.OpenTk.Themes
         protected override void InternalRender()
         {
             DrawTextControlBackground();
-            
+
             // IsLayoutUpdated = true is necessary to be able to call GetLines
             if (!_control.IsLayoutUpdated)
                 return;
 
             if (!_isControlInitialized)
                 InitControl();
-            
+
             DrawText();
         }
-        
+
         protected abstract void DrawTextControlBackground();
         
         protected virtual void DrawText()

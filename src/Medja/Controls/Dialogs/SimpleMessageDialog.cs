@@ -37,10 +37,6 @@ namespace Medja.Controls
 		private Control CreateContent()
 		{
 			_messageTextBlock.TextWrapping = TextWrapping.Auto;
-			
-			var innerContentControl = _controlFactory.Create<ContentControl>();
-			innerContentControl.Padding.SetAll(10);
-			innerContentControl.Content = _messageTextBlock;
 			_messageTextBlock.HorizontalAlignment = HorizontalAlignment.Stretch;
 			_messageTextBlock.VerticalAlignment = VerticalAlignment.Stretch;
 
@@ -51,9 +47,7 @@ namespace Medja.Controls
 
 			var dockPanel = _controlFactory.Create<DockPanel>();
 			dockPanel.Add(Dock.Bottom, buttons);
-			dockPanel.Add(Dock.Fill, innerContentControl);
-			dockPanel.VerticalAlignment = VerticalAlignment.Stretch;
-			dockPanel.HorizontalAlignment = HorizontalAlignment.Stretch;
+			dockPanel.Add(Dock.Fill, _messageTextBlock);
 
 			return dockPanel;
 		}
