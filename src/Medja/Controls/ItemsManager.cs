@@ -77,16 +77,16 @@ namespace Medja.Controls
             if (oldSelectedItem != null)
             {
                 // we need to use try, because the button might not be visible
-                if(_itemToMenuMap.TryGetValue(oldSelectedItem, out var button))
-                    button.IsSelected = false;
+                if(_itemToMenuMap.TryGetValue(oldSelectedItem, out var menuItem))
+                    menuItem.IsSelected = false;
             }
 
             if (newSelectedItem != null)
             {
                 // we need to use try, because the button might not be visible
                 // if user sets it manually
-                if(_itemToMenuMap.TryGetValue(newSelectedItem, out var button))
-                    button.IsSelected = true;
+                if(_itemToMenuMap.TryGetValue(newSelectedItem, out var menuItem))
+                    menuItem.IsSelected = true;
             }
         }
         
@@ -112,7 +112,8 @@ namespace Medja.Controls
             var result = _controlFactory.Create<MenuItem>();
             InitMenuItemFromItem(item, result);
             result.InputState.Clicked += OnMenuItemClicked;
-
+            result.SelectOnMouseOver = false;
+            
             if (IsSelectable && ReferenceEquals(item, SelectedItem))
                 result.IsSelected = true;
 

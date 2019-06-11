@@ -1,4 +1,5 @@
-﻿using Medja.Controls;
+﻿using System;
+using Medja.Controls;
 using Medja.OpenTk.Themes.BlackRed;
 using Medja.OpenTk.Themes.DarkBlue;
 using Medja.Primitives;
@@ -246,6 +247,8 @@ namespace Medja.OpenTk.Themes
 
         private Color GetMenuItemBackground(MenuItem menuItem)
         {
+            Console.WriteLine("GetMenuItemBackground");
+            
             var result = menuItem.IsSelected ? BlackRedThemeValues.SecondaryColor : null;
 
             if (result != null && !menuItem.IsEnabled)
