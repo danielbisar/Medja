@@ -16,6 +16,14 @@ namespace Medja.Controls
             get { return PropertyIsSelected.Get(); }
             set { PropertyIsSelected.Set(value); }
         }
+
+        public readonly Property<bool> PropertySelectOnMouseOver;
+
+        public bool SelectOnMouseOver
+        {
+            get { return PropertySelectOnMouseOver.Get(); }
+            set { PropertySelectOnMouseOver.Set(value); }
+        }
         
         public readonly Property<string> PropertyTitle;
         /// <summary>
@@ -30,10 +38,21 @@ namespace Medja.Controls
         public MenuItem()
         {
             PropertyIsSelected = new Property<bool>();
+            PropertySelectOnMouseOver = new Property<bool>();
+            PropertySelectOnMouseOver.PropertyChanged += OnSelectOnMouseOverChanged;
+            SelectOnMouseOver = true; // trigger the event
+
             PropertyTitle = new Property<string>();
             
             InputState.OwnsMouseEvents = true;
-            InputState.PropertyIsMouseOver.PropertyChanged += OnMouseOverChanged;
+        }
+
+        private void OnSelectOnMouseOverChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if((bool)e.NewValue)
+                InputState.PropertyIsMouseOver.PropertyChanged += OnMouseOverChanged;
+            else
+                InputState.PropertyIsMouseOver.PropertyChanged -= OnMouseOverChanged;
         }
 
         private void OnMouseOverChanged(object sender, PropertyChangedEventArgs e)
@@ -45,6 +64,11 @@ namespace Medja.Controls
         {
             IsSelected = InputState.IsMouseOver;
             // todo also check for IsFocused or KeyboardFocus?
+        }
+
+        public override string ToString()
+        {
+            return GetType().FullName + ": '" + Title + "'" + (IsSelected ? " *" : "");
         }
     }
 }

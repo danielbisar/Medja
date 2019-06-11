@@ -204,6 +204,15 @@ namespace Medja.Demo
                         }));
                     });
             }));
+            tabControl.AddTab(controlFactory.Create<TabItem>(t =>
+            {
+                t.Header = "Touch item list";
+                t.Content = controlFactory.Create<TouchItemList<string>>(p =>
+                {
+                    p.AddItem("Item 1");
+                    p.AddItem("Item 2");
+                });
+            }));
             tabControl.Position.Height = 200;
             
             var rootStackPanel = controlFactory.Create<VerticalStackPanel>();

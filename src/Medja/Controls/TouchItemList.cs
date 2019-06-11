@@ -58,7 +58,7 @@ namespace Medja.Controls
 		
 		public readonly Property<bool> PropertyIsSelectable;
 		/// <summary>
-		/// If true the control supports selection via click of a button.
+		/// If true the control supports selection via click of an entry.
 		/// </summary>
 		public bool IsSelectable
 		{
@@ -91,6 +91,8 @@ namespace Medja.Controls
 			_buttonUp = _controlFactory.Create<Button>();
 			_buttonDown = _controlFactory.Create<Button>();
 			_visibleItems = new PagedListView<TItem>(_itemsManager.Items);
+
+			IsSelectable = true;
 			
 			CreateContent();
 		}
