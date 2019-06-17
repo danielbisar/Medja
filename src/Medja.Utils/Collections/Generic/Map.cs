@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Medja.Utils.Collections.Generic
 {
@@ -10,6 +11,11 @@ namespace Medja.Utils.Collections.Generic
         private readonly Dictionary<T, T2> _dictionary;
         private readonly Dictionary<T2, T> _reverseDictionary;
 
+        public int Count
+        {
+            get => _dictionary.Count;
+        }
+        
         public Map()
         {
             _dictionary = new Dictionary<T, T2>();
@@ -39,9 +45,30 @@ namespace Medja.Utils.Collections.Generic
             return _reverseDictionary[value];
         }
 
+        public IEnumerable<KeyValuePair<T, T2>> GetKeyAndValues()
+        {
+            return _dictionary;
+        }
+
+        public IEnumerable<T> GetKeys()
+        {
+            return _dictionary.Keys;
+        }
+        
         public T2 GetValue(T key)
         {
             return _dictionary[key];
+        }
+
+        public IEnumerable<T2> GetValues()
+        {
+            return _reverseDictionary.Keys;
+        }
+
+        public void Clear()
+        {
+            _dictionary.Clear();
+            _reverseDictionary.Clear();
         }
     }
 }

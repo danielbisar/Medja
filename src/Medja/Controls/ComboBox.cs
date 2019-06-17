@@ -263,5 +263,15 @@ namespace Medja.Controls
             if (IsDropDownOpen)
                 yield return _popup;
         }
+
+        /// <summary>
+        /// Selects an item based on its <see cref="MenuItem.Title"/>.
+        /// </summary>
+        /// <param name="title">The items title.</param>
+        public void SelectItem(string title)
+        {
+            var item = _itemsPanel.Children.OfType<MenuItem>().FirstOrDefault(p => p.Title == title);
+            SelectedItem = item;
+        }
     }
 }
