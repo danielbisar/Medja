@@ -1,4 +1,4 @@
-﻿# This is the default git ignore file used for projects at SprintWORX GmbH
+# This is the default git ignore file used for projects at SprintWORX GmbH
 # if you need to make any changes follow the following steps
 #
 # - are these changes 100% just for this project? Add them at the beginning 
@@ -31,5 +31,4 @@ packages/
 .idea/
 .vscode/
 build/test_runs/
-*.sln.DotSettings
 *.DotSettings.user
