@@ -247,5 +247,21 @@ namespace Medja.Test.Controls
             
             Assert.NotEqual(item2, comboBox.SelectedItem);
         }
+        
+        [Fact]
+        public void SelectItem()
+        {
+            var controlFactory = new ControlFactory();
+            var comboBox = controlFactory.Create<ComboBox>();
+            
+            comboBox.Add("123");
+            comboBox.Add("234");
+            
+            Assert.NotEqual(((MenuItem)comboBox.SelectedItem)?.Title, "234");
+            
+            comboBox.SelectItem("234");
+            
+            Assert.Equal(((MenuItem)comboBox.SelectedItem)?.Title, "234");
+        }
     }
 }
