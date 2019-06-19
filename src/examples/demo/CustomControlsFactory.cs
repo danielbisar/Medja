@@ -1,8 +1,9 @@
 using Medja.OpenTk.Themes;
+using Medja.OpenTk.Themes.DarkBlue;
 
 namespace Medja.Demo
 {
-    public class CustomControlsFactory : BlackRedTheme
+    public class CustomControlsFactory : DarkBlueTheme
     {
         public CustomControlsFactory()
         {

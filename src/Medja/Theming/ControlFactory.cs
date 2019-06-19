@@ -50,6 +50,7 @@ namespace Medja.Theming
 			_factoryMethods.Add(typeof(NumericKeypadDialog), CreateNumericKeypadDialog);
 			_factoryMethods.Add(typeof(MedjaWindow), CreateMedjaWindow);
 			_factoryMethods.Add(typeof(Popup), CreatePopup);
+            _factoryMethods.Add(typeof(RepeatButton), CreateRepeatButton);
 			_factoryMethods.Add(typeof(ScrollableContainer), CreateScrollableContainer);
 			_factoryMethods.Add(typeof(ScrollingGrid), CreateScrollingGrid);
 			_factoryMethods.Add(typeof(SideControlsContainer), CreateSideControlContainer);
@@ -272,6 +273,11 @@ namespace Medja.Theming
 		{
 			return new Popup();
 		}
+
+        protected virtual RepeatButton CreateRepeatButton()
+        {
+            return new RepeatButton();
+        }
 
 		protected virtual ScrollableContainer CreateScrollableContainer()
 		{
