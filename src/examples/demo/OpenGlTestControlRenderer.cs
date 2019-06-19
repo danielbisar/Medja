@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using OpenTK;
-using OpenTK.Graphics.OpenGL;
-using OpenTK.Graphics;
 using Medja.OpenTk.Rendering;
+using OpenTK;
+using OpenTK.Graphics;
+using OpenTK.Graphics.OpenGL;
 
-namespace MedjaOpenGlTestApp
+namespace Medja.Demo
 {
 	public class OpenGlTestControlRenderer : OpenTKControlRendererBase<OpenGlTestControl>
 	{
