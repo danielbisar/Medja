@@ -25,23 +25,28 @@ namespace Medja.OpenTk.Themes
         protected override Button CreateButton()
         {
             var result = base.CreateButton();
-            result.Font.Name = DefaultFont.Name;
-            result.Position.Height = 50;
-            result.Padding.Top = 14;
-            result.TextAlignment = TextAlignment.Center;
+            SetupButton(result);
+            
+            return result;
+        }
 
-            result.Bind(p => p.PropertyBackground,
+        private void SetupButton(Button button)
+        {
+            button.Font.Name = DefaultFont.Name;
+            button.Position.Height = 50;
+            button.Padding.Top = 14;
+            button.TextAlignment = TextAlignment.Center;
+
+            button.Bind(p => p.PropertyBackground,
                 GetButtonBackground,
                 p => p.PropertyIsEnabled,
                 p => p.InputState.PropertyIsLeftMouseDown);
 
-            result.Bind(p => p.Font.PropertyColor,
+            button.Bind(p => p.Font.PropertyColor,
                 GetButtonFontColor,
                 p => p.PropertyIsEnabled);
-            
-            result.Renderer = new ButtonRenderer(result);
-            
-            return result;
+
+            button.Renderer = new ButtonRenderer(button);
         }
 
         private Color GetButtonFontColor(Button button)
@@ -279,6 +284,14 @@ namespace Medja.OpenTk.Themes
         {
             var result = base.CreatePopup();
             result.Renderer = new PopupRenderer(result);
+
+            return result;
+        }
+
+        protected override RepeatButton CreateRepeatButton()
+        {
+            var result = base.CreateRepeatButton();
+            SetupButton(result);
 
             return result;
         }

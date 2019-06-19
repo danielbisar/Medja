@@ -81,11 +81,31 @@ namespace Medja.Demo
             var progressBar = controlFactory.Create<ProgressBar>();
             progressBar.MaxValue = 100;
             progressBar.Value = 75;
+            progressBar.Margin.SetLeftAndRight(60);
 
             var slider = controlFactory.Create<Slider>();
             slider.MaxValue = 100;
             slider.Value = 75;
+            
+            var sliderPanel = controlFactory.Create<DockPanel>();
+            sliderPanel.Add(Dock.Left, controlFactory.Create<RepeatButton>(b =>
+            {
+                b.Text = "-";
+                b.Position.Width = 50;
+                b.InputState.Clicked += (s, e) => slider.Value--;
+                b.Margin.Right = 10;
+            }));
+            sliderPanel.Add(Dock.Right, controlFactory.Create<RepeatButton>(b =>
+            {
+                b.Text = "+";
+                b.Position.Width = 50;
+                b.InputState.Clicked += (s, e) => slider.Value++;
+                b.Margin.Left = 10;
+            }));
+            sliderPanel.Add(Dock.Fill, slider);
+            sliderPanel.Position.Height = sliderPanel.Children[0].Position.Height;
 
+            
             progressBar.PropertyValue.BindTo(slider.PropertyValue);
 
             var textBox = controlFactory.Create<TextBox>();
@@ -125,7 +145,7 @@ namespace Medja.Demo
             comboBox.Add("123");
             comboBox.Add("456");
             comboBox.Add("789");
-
+            
             var disabledComboBox = controlFactory.Create<ComboBox>();
             disabledComboBox.IsEnabled = false;
             disabledComboBox.Title = "disabled";
@@ -231,7 +251,7 @@ namespace Medja.Demo
             rootStackPanel.Add(buttonStackPanel);
             rootStackPanel.Add(checkBoxStackPanel);
             rootStackPanel.Add(progressBar);
-            rootStackPanel.Add(slider);
+            rootStackPanel.Add(sliderPanel);
             rootStackPanel.Add(textBoxStackPanel);
             rootStackPanel.Add(textBlock);
             rootStackPanel.Add(anotherStackPanel);

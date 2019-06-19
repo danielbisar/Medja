@@ -17,19 +17,23 @@ namespace Medja.OpenTk.Themes.DarkBlue
         protected override Button CreateButton()
         {
             var result = base.CreateButton();
+            SetupButton(result);
+            
+            return result;
+        }
 
-            result.Bind(p => p.PropertyBackground, 
+        private void SetupButton(Button button)
+        {
+            button.Bind(p => p.PropertyBackground,
                 GetButtonBackground,
                 p => p.PropertyIsEnabled);
-            
-            result.Font.Color = DarkBlueThemeValues.PrimaryTextColor;
-            result.Position.Height = 40;
-            result.TextAlignment = TextAlignment.Center;
-            result.Padding.Top = 9;
 
-            result.Renderer = new ButtonRenderer(result);
+            button.Font.Color = DarkBlueThemeValues.PrimaryTextColor;
+            button.Position.Height = 40;
+            button.TextAlignment = TextAlignment.Center;
+            button.Padding.Top = 9;
 
-            return result;
+            button.Renderer = new ButtonRenderer(button);
         }
 
         private static Color GetButtonBackground(Button button)
@@ -201,6 +205,14 @@ namespace Medja.OpenTk.Themes.DarkBlue
         private Color GetPopupBackground(Popup popup)
         {
             return popup.IsEnabled ? DarkBlueThemeValues.ControlBackground : DarkBlueThemeValues.ControlBackground.GetDisabled();
+        }
+
+        protected override RepeatButton CreateRepeatButton()
+        {
+            var result = base.CreateRepeatButton();
+            SetupButton(result);
+            
+            return result;
         }
 
         protected override ProgressBar CreateProgressBar()
