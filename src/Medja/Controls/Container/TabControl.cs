@@ -188,13 +188,15 @@ namespace Medja.Controls
 			}
 		}
 
-		public void AddTab(string header, Control content)
+		public TabItem AddTab(string header, Control content)
 		{
 			var tabItem = _controlFactory.Create<TabItem>();
 			tabItem.Header = header;
 			tabItem.Content = content;
 			
 			AddTab(tabItem);
+            
+            return tabItem;
 		}
 
 		public virtual void AddTab(TabItem tabItem)
