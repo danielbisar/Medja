@@ -1,20 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using Medja;
+﻿using Medja;
 using Medja.Controls;
 using Medja.OpenTk;
 using Medja.OpenTk.Rendering;
-using Medja.OpenTk.Themes;
 using Medja.OpenTk.Themes.DarkBlue;
-using OpenTK.Graphics.OpenGL;
 using Medja.Primitives;
-using Medja.Theming;
-using Medja.Utils;
 using MedjaOpenGlTestApp.Tests;
-using MedjaOpenGlTestApp.Tests.Performance;
-using OpenTK;
-using SkiaSharp;
 
 namespace MedjaOpenGlTestApp
 {
