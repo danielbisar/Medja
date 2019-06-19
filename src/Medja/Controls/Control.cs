@@ -179,7 +179,7 @@ namespace Medja.Controls
 				NeedsRendering = true;
 		}
 
-		private void OnNeedsRenderingChanged(object sender, PropertyChangedEventArgs e)
+		protected virtual void OnNeedsRenderingChanged(object sender, PropertyChangedEventArgs e)
 		{
 			if (Renderer == null)
 				NeedsRendering = false;

@@ -19,10 +19,8 @@ namespace Medja.Demo
 
         public Program()
         {
-            //var library = new MedjaOpenTkLibrary(new DarkBlueTheme());
-            var library = new MedjaOpenTkLibrary(new BlackRedTheme());
-            
-            library.RendererFactory = () => new OpenTk2DOnlyRenderer();
+            var library = new MedjaOpenTkLibrary(new CustomControlsFactory());
+            library.RendererFactory = () => new OpenTk2DAnd3DRenderer();
             _application = MedjaApplication.Create(library);
         }
 
@@ -204,13 +202,25 @@ namespace Medja.Demo
                         }));
                     });
             }));
-            tabControl.AddTab(controlFactory.Create<TabItem>(t =>
+            tabControl.AddTab(controlFactory.Create<TabItem>(h =>
             {
-                t.Header = "Touch item list";
-                t.Content = controlFactory.Create<TouchItemList<string>>(p =>
+                h.Header = "Others";
+                h.Content = controlFactory.Create<TabControl>(st =>
                 {
-                    p.AddItem("Item 1");
-                    p.AddItem("Item 2");
+                    st.AddTab(controlFactory.Create<TabItem>(t =>
+                    {
+                        t.Header = "Touch item list";
+                        t.Content = controlFactory.Create<TouchItemList<string>>(p =>
+                        {
+                            p.AddItem("Item 1");
+                            p.AddItem("Item 2");
+                        });
+                    }));
+                    st.AddTab(controlFactory.Create<TabItem>(ti =>
+                    {
+                        ti.Header = "3D";
+                        ti.Content = controlFactory.Create<OpenGlTestControl>();
+                    }));
                 });
             }));
             tabControl.Position.Height = 200;
