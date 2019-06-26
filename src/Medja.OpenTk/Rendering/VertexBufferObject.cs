@@ -5,13 +5,18 @@ using OpenTK.Graphics.OpenGL;
 
 namespace Medja.OpenTk.Rendering
 {
-	public class VertextBufferObject : IDisposable
+    /// <summary>
+    /// Abstracts the creation and drawing of an OpenGL VBO (VertexBufferObject).
+    /// </summary>
+	public class VertexBufferObject : IDisposable
 	{
 		private int _vertexBufferObjectId;
 		private float[] _data;
 		private bool _isDisposed;
 		private int _dataLengthDiv3;
-
+        private Action<PrimitiveType> _draw;
+        private int _stride; // the length of each data package in bytes
+        
 		public int Id
 		{
 			get { return _vertexBufferObjectId; }
@@ -31,16 +36,32 @@ namespace Medja.OpenTk.Rendering
 			get; set;
 		}
 
-		public float[] GetData()
-		{
-			return _data;
-		}
+        private VBODataType _dataType;
+        public VBODataType DataType
+        {
+            get { return _dataType; }
+            set
+            {
+                _dataType = value;
+                UpdateDrawMethod();
+            }
+        }
 
-		public VertextBufferObject()
+        public VertexBufferObject()
 		{
 			_vertexBufferObjectId = -1;
 			VertexDrawLimit = -1;
+            UpdateDrawMethod();
 		}
+
+        /// <summary>
+        /// Gets the internal data array.
+        /// </summary>
+        /// <returns>The float value array.</returns>
+        public float[] GetData()
+        {
+            return _data;
+        }
 
 		/// <summary>
 		/// Creates the data array without filling it.
@@ -61,6 +82,11 @@ namespace Medja.OpenTk.Rendering
 			GL.BufferData(BufferTarget.ArrayBuffer, _data.Length * sizeof(float), _data, bufferUsageHint);
 		}
 
+        /// <summary>
+        /// Updates the data. If the data array wasn't create before it will be.
+        /// </summary>
+        /// <param name="data">The vertices.</param>
+        /// <param name="bufferUsageHint">Hint for OpenGL how often the vertices will change.</param>
 		public void UpdateData(List<Vector3> data, BufferUsageHint bufferUsageHint = BufferUsageHint.StaticDraw)
 		{
 			var newDataLength = data.Count * 3;
@@ -89,7 +115,7 @@ namespace Medja.OpenTk.Rendering
 			GL.EnableClientState(ArrayCap.VertexArray);
 
 			GL.BindBuffer(BufferTarget.ArrayBuffer, _vertexBufferObjectId);
-			GL.VertexPointer(3, VertexPointerType.Float, Vector3.SizeInBytes, 0);
+			GL.VertexPointer(3, VertexPointerType.Float, _stride, 0);
 
 			var verticesPtr = GL.MapBuffer(BufferTarget.ArrayBuffer, bufferAccess);
 
@@ -102,23 +128,47 @@ namespace Medja.OpenTk.Rendering
 
 		public void Draw(PrimitiveType type)
 		{
-			GL.EnableClientState(ArrayCap.VertexArray);
-
-			GL.BindBuffer(BufferTarget.ArrayBuffer, _vertexBufferObjectId);
-			GL.VertexPointer(3, VertexPointerType.Float, Vector3.SizeInBytes, 0);
-
-			GL.DrawArrays(type, 0, GetVerticesCount());
-
-			GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
-			GL.DisableClientState(ArrayCap.VertexArray);
+            _draw(type);
 		}
+
+        private void DrawVertices(PrimitiveType type)
+        {
+            GL.EnableClientState(ArrayCap.VertexArray);
+
+            GL.BindBuffer(BufferTarget.ArrayBuffer, _vertexBufferObjectId);
+            GL.VertexPointer(3, VertexPointerType.Float, _stride, 0);
+
+            GL.DrawArrays(type, 0, GetVerticesCount());
+
+            GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
+            GL.DisableClientState(ArrayCap.VertexArray);
+        }
+
+        private void DrawVerticesAndNormals(PrimitiveType type)
+        {
+            GL.EnableClientState(ArrayCap.VertexArray);
+            GL.EnableClientState(ArrayCap.NormalArray);
+
+            GL.BindBuffer(BufferTarget.ArrayBuffer, _vertexBufferObjectId);
+            
+            GL.VertexPointer(3, VertexPointerType.Float, _stride, 0);
+            GL.NormalPointer(NormalPointerType.Float, _stride, Vector3.SizeInBytes);
+
+            // todo try performance of DrawElements vs DrawArrays
+            GL.DrawArrays(type, 0, GetVerticesCount());
+            
+            GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
+            
+            GL.DisableClientState(ArrayCap.NormalArray);
+            GL.DisableClientState(ArrayCap.VertexArray);
+        }
 
 		public void UpdateAndDraw(PrimitiveType type, Action<IntPtr> update, BufferAccess bufferAccess = BufferAccess.WriteOnly)
 		{
 			GL.EnableClientState(ArrayCap.VertexArray);
 
 			GL.BindBuffer(BufferTarget.ArrayBuffer, _vertexBufferObjectId);
-			GL.VertexPointer(3, VertexPointerType.Float, Vector3.SizeInBytes, 0);
+			GL.VertexPointer(3, VertexPointerType.Float, _stride, 0);
 
 			var verticesPtr = GL.MapBuffer(BufferTarget.ArrayBuffer, bufferAccess);
 
@@ -131,6 +181,23 @@ namespace Medja.OpenTk.Rendering
 			GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
 			GL.DisableClientState(ArrayCap.VertexArray);
 		}
+
+        private void UpdateDrawMethod()
+        {
+            switch (_dataType)
+            {
+                case VBODataType.Vertices:
+                    _draw = DrawVertices;
+                    _stride = Vector3.SizeInBytes;
+                    break;
+                case VBODataType.VerticesAndNormals:
+                    _draw = DrawVerticesAndNormals;
+                    _stride = Vector3.SizeInBytes * 2;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
 
 		private int GetVerticesCount()
 		{

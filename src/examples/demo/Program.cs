@@ -43,7 +43,7 @@ namespace Medja.Demo
         private Control CreateContent()
         {
             var controlFactory = _application.Library.ControlFactory;
-
+            
             //var simpleFactory = new SimpleFactory();
             //simpleFactory.AddAlias("Button", () => controlFactory.Create<Button>());
             
@@ -224,25 +224,14 @@ namespace Medja.Demo
             }));
             tabControl.AddTab(controlFactory.Create<TabItem>(h =>
             {
-                h.Header = "Others";
-                h.Content = controlFactory.Create<TabControl>(st =>
+                h.Header = "Touch item list";
+                h.Content = controlFactory.Create<TouchItemList<string>>(p =>
                 {
-                    st.AddTab(controlFactory.Create<TabItem>(t =>
-                    {
-                        t.Header = "Touch item list";
-                        t.Content = controlFactory.Create<TouchItemList<string>>(p =>
-                        {
-                            p.AddItem("Item 1");
-                            p.AddItem("Item 2");
-                        });
-                    }));
-                    st.AddTab(controlFactory.Create<TabItem>(ti =>
-                    {
-                        ti.Header = "3D";
-                        ti.Content = controlFactory.Create<OpenGlTestControl>();
-                    }));
+                    p.AddItem("Item 1");
+                    p.AddItem("Item 2");
                 });
             }));
+            
             tabControl.Position.Height = 200;
             
             var rootStackPanel = controlFactory.Create<VerticalStackPanel>();
@@ -256,8 +245,12 @@ namespace Medja.Demo
             rootStackPanel.Add(textBlock);
             rootStackPanel.Add(anotherStackPanel);
             rootStackPanel.Add(tabControl);
+            
+            var rootTabControl = controlFactory.Create<TabControl>();
+            rootTabControl.AddTab("Standard", rootStackPanel);
+            rootTabControl.AddTab("OpenGL 3D", controlFactory.Create<OpenGlTestControl>());
 
-            var dialogContainer = DialogService.CreateContainer(controlFactory, rootStackPanel);
+            var dialogContainer = DialogService.CreateContainer(controlFactory, rootTabControl);
             return dialogContainer;
         }
     }
