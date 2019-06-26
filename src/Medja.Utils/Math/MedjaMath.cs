@@ -2,6 +2,8 @@
 {
     public static class MedjaMath
     {
+        public const double PIby180 = System.Math.PI / 180;
+        
         /// <summary>
         /// Compares two double values and returns if they are almost equals.
         /// </summary>
@@ -63,7 +65,16 @@
         {
             return (x % m + m) % m;
         }
+
         
-        
+        /// <summary>
+        /// Calculates the radians from a degree angle.
+        /// </summary>
+        /// <param name="angle">Angle in degrees.</param>
+        /// <returns>The radian equivalent.</returns>
+        public static double Radians(double angle)
+        {
+            return angle * PIby180;
+        }
     }
 }

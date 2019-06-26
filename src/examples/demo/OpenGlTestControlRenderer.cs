@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Drawing2D;
 using Medja.OpenTk.Rendering;
+using Medja.Utils.Math;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
@@ -9,76 +11,53 @@ namespace Medja.Demo
 {
 	public class OpenGlTestControlRenderer : OpenTKControlRendererBase<OpenGlTestControl>
 	{
-		private static readonly Random _rnd = new Random();
-		
-		private static double GetRandomNumber(double minimum, double maximum)
-		{ 
-			return _rnd.NextDouble() * (maximum - minimum) + minimum;
-		}
-		
-		private readonly VertextBufferObject _vbo;
-		private float _rotation;
-		
+        private readonly GLSphere _glSphere;
+        private float _rotation = 0;
+        
 		public OpenGlTestControlRenderer(OpenGlTestControl control)
 		: base(control)
 		{
-			_rotation = (float) GetRandomNumber(1, 100);
-			var vertices = new List<Vector3>();
-
-			var depth = 1000;
-			var width = 1000;
-			
-			for (int i = 0; i <= depth; i++)
-			{
-				for (int j = 0; j < width; j++)
-				{
-					var x = j / 100.0f;
-					var y = (float)Math.Sin(x * Math.PI);
-					var z = -(1 + i / 100.0f);
-
-					var vt = new Vector3(x, y, z);
-
-					vertices.Add(vt);
-				}
-			}
-
-			vertices = ReorderPointsForQuads(vertices, width);
-
-			_vbo = new VertextBufferObject();
-			_vbo.UpdateData(vertices);
-		}
-		
-		private List<Vector3> ReorderPointsForQuads(List<Vector3> vertices, int xyItemCount)
-		{
-			// expect data order x,y on one z line
-			var result = new List<Vector3>();
-
-			for (int i = 0; i + 1 + xyItemCount < vertices.Count; i++)
-			{
-				// last vertex in current row is always ignored
-				if ((i + 1) % xyItemCount != 0)
-				{
-					result.Add(vertices[i]);
-					result.Add(vertices[i + 1]);
-					result.Add(vertices[i + 1 + xyItemCount]);
-					result.Add(vertices[i + xyItemCount]);
-				}
-			}
-
-			return result;
-		}
-		
+            _glSphere = new GLSphere();
+            _glSphere.Create(1, 32, 32);
+        }
 		
 		protected override void InternalRender()
 		{
-			GL.MatrixMode(MatrixMode.Modelview);
-			GL.LoadIdentity();
-			GL.Rotate(_rotation += 1, new Vector3(0, 1, 0));
+            /*GL.Enable(EnableCap.Blend);
+            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
+            GL.Enable(EnableCap.CullFace);*/
+            GL.Enable(EnableCap.CullFace);
+            
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-			GL.Translate(new Vector3(-0.5f, -0.5f, 1.0f));
-			GL.Color4(Color4.White);
+            var fovRadian = (float) MedjaMath.Radians(45);
+            var aspecRatio = 4 / 3;
+            var zNear = 0.1f;
+            var zFar = 100.0f;
+
+            var projectionMatrix = Matrix4.CreatePerspectiveFieldOfView(fovRadian, aspecRatio, zNear, zFar);
+
+            GL.MatrixMode(MatrixMode.Projection);
+            GL.LoadMatrix(ref projectionMatrix);
+            
+            var eye = new Vector3(0, 3, -10);
+            var target = new Vector3();
+            var up = new Vector3(0, 1, 0);
+
+            var viewMatrix = Matrix4.LookAt(eye, target, up);
+            var modelMatrix = Matrix4.Identity; // model position
+            
+            //var mvp = projectionMatrix * viewMatrix * modelMatrix; // get applied from right to left
+            
+			GL.MatrixMode(MatrixMode.Modelview);
+            GL.LoadMatrix(ref viewMatrix);
+            
+            //GL.Translate(new Vector3(0, 0, 10.0f));
+            GL.Rotate(_rotation += 1, new Vector3(0, 1, 0));
+
+			GL.Color3(1.0f, 0.2f, 1.0f);
 			
-			_vbo.Draw(PrimitiveType.Points);
+            _glSphere.Draw();
 		}
 	}
 }
