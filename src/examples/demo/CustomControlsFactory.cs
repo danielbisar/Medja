@@ -1,4 +1,3 @@
-using Medja.OpenTk.Themes;
 using Medja.OpenTk.Themes.DarkBlue;
 
 namespace Medja.Demo

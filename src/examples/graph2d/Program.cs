@@ -3,7 +3,6 @@ using Medja;
 using Medja.Controls;
 using Medja.OpenTk;
 using Medja.OpenTk.Themes;
-using Medja.Utils;
 
 namespace graph2d
 {

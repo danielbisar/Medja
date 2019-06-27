@@ -1,9 +1,3 @@
-using System;
-using System.Linq;
-using Medja.Controls;
-using Medja.Utils;
-using SkiaSharp;
-
 namespace Medja.OpenTk.Themes.BlackRed
 {
 //    public class Graph2DRenderer : SkiaControlRendererBase<Graph2D>

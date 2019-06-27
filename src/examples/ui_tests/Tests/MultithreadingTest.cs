@@ -3,7 +3,6 @@ using Medja;
 using Medja.Controls;
 using Medja.Theming;
 using Medja.Utils.Threading.Tasks;
-using OpenTK.Graphics.OpenGL4;
 
 namespace MedjaOpenGlTestApp.Tests
 {

@@ -1,7 +1,5 @@
-using System;
 using Medja.Controls;
 using Medja.OpenTk.Rendering;
-using Medja.Utils;
 using SkiaSharp;
 
 namespace Medja.OpenTk.Themes.DarkBlue

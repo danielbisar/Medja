@@ -1,13 +1,3 @@
-using System;
-using System.Diagnostics;
-using System.Reflection;
-using Medja;
-using Medja.Controls;
-using Medja.Primitives;
-using Medja.Theming;
-using Medja.Utils;
-using Medja.Utils.Reflection;
-
 namespace MedjaOpenGlTestApp.Tests.Performance
 {
     public class Graph2DTest

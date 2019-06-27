@@ -4,7 +4,6 @@ using Medja.Input;
 using Medja.Primitives;
 using Medja.Properties;
 using Medja.Theming;
-using Medja.Utils;
 
 namespace Medja.Controls
 {

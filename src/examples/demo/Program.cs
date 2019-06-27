@@ -1,7 +1,6 @@
 ﻿using Medja.Controls;
 using Medja.OpenTk;
 using Medja.OpenTk.Rendering;
-using Medja.OpenTk.Themes;
 using Medja.Primitives;
 using Medja.OpenTk.Themes.DarkBlue;
 using Medja.Theming;

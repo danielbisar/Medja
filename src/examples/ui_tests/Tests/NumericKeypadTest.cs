@@ -1,6 +1,4 @@
-using System;
 using Medja.Controls;
-using Medja.Primitives;
 using Medja.Theming;
 
 namespace MedjaOpenGlTestApp.Tests
