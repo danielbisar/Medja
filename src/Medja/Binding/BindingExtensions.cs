@@ -1,12 +1,10 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Reflection;
 using Medja.Binding;
 using Medja.Controls;
 using Medja.Properties;
 using Medja.Utils;
-using Medja.Utils.Reflection;
 
 namespace Medja
 {

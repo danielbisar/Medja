@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
-using OpenTK.Graphics.OpenGL;
+using Medja.OpenTk.Rendering;
 using OpenTK;
+using OpenTK.Graphics.OpenGL;
 
-namespace Medja.OpenTk.Rendering
+namespace Medja.OpenTk.Components3D
 {
-    public class GLSphere
+    public class GLSphere : GLModel
     {
         private readonly VertexBufferObject _vbo;
 
@@ -35,13 +36,9 @@ namespace Medja.OpenTk.Rendering
                     double y = Math.Sin(lng);
 
                     
-                    //GL.Normal3(x * zr0, y * zr0, z0);
-                    //GL.Vertex3(x * zr0, y * zr0, z0);
                     vertices.Add(new Vector3((float)(x*zr0), (float) (y * zr0),(float) z0));
                     vertices.Add(new Vector3((float) (x * zr0), (float) (y * zr0), (float) z0));
                     
-                        //GL.Normal3(x * zr1, y * zr1, z1);
-                    //GL.Vertex3(x * zr1, y * zr1, z1);
                     vertices.Add(new Vector3((float) (x * zr1), (float) (y * zr1), (float) z1));
                     vertices.Add(new Vector3((float) (x * zr1), (float) (y * zr1), (float) z1));
                 }
@@ -51,9 +48,9 @@ namespace Medja.OpenTk.Rendering
             _vbo.UpdateData(vertices);
         }
 
-        public void Draw()
+        protected override void RenderModel()
         {
-            //GL.Translate(Position);
+            base.RenderModel();
             _vbo.Draw(PrimitiveType.QuadStrip);
         }
     }

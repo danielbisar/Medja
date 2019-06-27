@@ -1,5 +1,3 @@
-using Medja.Primitives;
-
 namespace Medja.Controls
 {
     public class DataPointsRenderingSettings

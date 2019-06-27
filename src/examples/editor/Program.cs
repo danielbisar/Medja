@@ -1,10 +1,8 @@
 using System;
 using System.IO;
 using System.Reflection;
-using Medja;
 using Medja.Controls;
 using Medja.OpenTk;
-using Medja.OpenTk.Rendering;
 using Medja.Primitives;
 using Medja.Theming;
 

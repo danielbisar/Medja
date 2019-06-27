@@ -1,4 +1,3 @@
-using System;
 using Medja.Controls;
 using Medja.Theming;
 

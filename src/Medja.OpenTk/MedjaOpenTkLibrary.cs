@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading;
 using Medja.Controls;
 using Medja.Controls.Images;
 using Medja.OpenTk.Rendering;

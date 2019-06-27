@@ -1,7 +1,6 @@
 ﻿using System;
 using Medja.Controls;
 using OpenTK;
-using OpenTK.Graphics;
 
 namespace Medja.OpenTk
 {
