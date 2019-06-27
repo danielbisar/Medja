@@ -7,14 +7,14 @@ namespace Medja.Demo
 {
 	public class OpenGlTestControlRenderer : OpenTKControlRendererBase<OpenGlTestControl>
 	{
-        private readonly GLPerspectiveCamera _camera;
+        private readonly GLOrthographicCamera _camera;
         private readonly GLSphere _glSphere;
         private float _rotation = 0;
         
 		public OpenGlTestControlRenderer(OpenGlTestControl control)
 		: base(control)
 		{
-            _camera = new GLPerspectiveCamera();
+            _camera = new GLOrthographicCamera();
             
             _glSphere = new GLSphere();
             _glSphere.Create(1, 32, 32);
@@ -39,7 +39,8 @@ namespace Medja.Demo
             
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            _camera.AspectRatio = _control.Position.Width / _control.Position.Height;
+            _camera.Width = _control.Position.Width / 80; 
+            _camera.Height = _control.Position.Height / 80;
             _camera.Render();
 
             GL.Color4(1.0f, 0.2f, 1.0f, 0.5f);
