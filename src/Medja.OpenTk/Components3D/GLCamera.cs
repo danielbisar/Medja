@@ -36,6 +36,28 @@ namespace Medja.OpenTk.Components3D
             set { PropertyViewMatrix.Set(value); }
         }
 
+        [NonSerialized] public readonly Property<float> PropertyZNear;
+
+        /// <summary>
+        /// Distance of the near clipping plane. Default: 0.1f
+        /// </summary>
+        public float ZNear
+        {
+            get { return PropertyZNear.Get(); }
+            set { PropertyZNear.Set(value); }
+        }
+
+        [NonSerialized] public readonly Property<float> PropertyZFar;
+
+        /// <summary>
+        /// Distance of the far clipping plane. Default: 100.0f
+        /// </summary>
+        public float ZFar
+        {
+            get { return PropertyZFar.Get(); }
+            set { PropertyZFar.Set(value); }
+        }
+
         protected GLCamera()
         {
             PropertyViewMatrix = new Property<Matrix4>();
@@ -47,8 +69,15 @@ namespace Medja.OpenTk.Components3D
             PropertyUpVector = new Property<Vector3>();
             PropertyUpVector.UnnotifiedSet(new Vector3(0, 1, 0));
             PropertyUpVector.PropertyChanged += OnViewMatrixPropertyChanged;
-            
+
+            PropertyPosition.UnnotifiedSet(new Vector3(0, 3, -10));
             PropertyPosition.PropertyChanged += OnViewMatrixPropertyChanged;
+
+            PropertyZNear = new Property<float>();
+            PropertyZNear.UnnotifiedSet(0.1f);
+
+            PropertyZFar = new Property<float>();
+            PropertyZFar.UnnotifiedSet(100.0f);
             
             UpdateViewMatrix();
         }

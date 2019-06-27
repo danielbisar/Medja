@@ -33,30 +33,6 @@ namespace Medja.OpenTk.Components3D
             set { PropertyAspectRatio.Set(value); }
         }
 
-        [NonSerialized] 
-        public readonly Property<float> PropertyZNear;
-
-        /// <summary>
-        /// Distance of the near clipping plane. Default: 0.1f
-        /// </summary>
-        public float ZNear
-        {
-            get { return PropertyZNear.Get(); }
-            set { PropertyZNear.Set(value); }
-        }
-
-        [NonSerialized] 
-        public readonly Property<float> PropertyZFar;
-
-        /// <summary>
-        /// Distance of the far clipping plane. Default: 100.0f
-        /// </summary>
-        public float ZFar
-        {
-            get { return PropertyZFar.Get(); }
-            set { PropertyZFar.Set(value); }
-        }
-
         public GLPerspectiveCamera()
         {
             PropertyFieldOfViewAngle = new Property<float>();
@@ -67,19 +43,11 @@ namespace Medja.OpenTk.Components3D
             PropertyAspectRatio.UnnotifiedSet(4f / 3);
             PropertyAspectRatio.PropertyChanged += OnProjectionMatrixPropertyChanged;
             
-            PropertyZNear = new Property<float>();
-            PropertyZNear.UnnotifiedSet(0.1f);
             PropertyZNear.PropertyChanged += OnProjectionMatrixPropertyChanged;
-            
-            PropertyZFar = new Property<float>();
-            PropertyZFar.UnnotifiedSet(100.0f);
             PropertyZFar.PropertyChanged += OnProjectionMatrixPropertyChanged;
             
-            Position = new Vector3(0, 3, -10);
-        
             UpdateProjectionMatrix();
         }
-
 
         private void OnProjectionMatrixPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
