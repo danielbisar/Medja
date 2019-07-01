@@ -7,20 +7,22 @@ namespace Medja.Demo
 {
 	public class OpenGlTestControlRenderer : OpenTKControlRendererBase<OpenGlTestControl>
 	{
-        private readonly GLOrthographicCamera _camera;
+        private readonly GLPerspectiveCamera _camera;
         private readonly GLSphere _glSphere;
+        private readonly GLTriangle _glTriangle;
         private float _rotation = 0;
         
 		public OpenGlTestControlRenderer(OpenGlTestControl control)
 		: base(control)
 		{
-            _camera = new GLOrthographicCamera();
+            _camera = new GLPerspectiveCamera();
             
             _glSphere = new GLSphere();
-            _glSphere.Create(1, 32, 32);
             _glSphere.Camera = _camera;
         }
 		
+        float z = 0;
+        
 		protected override void InternalRender()
 		{
             // theoretically this should just be a one time setup
@@ -32,18 +34,19 @@ namespace Medja.Demo
             GL.Enable(EnableCap.Light0);
             GL.ShadeModel(ShadingModel.Smooth);
             
-            GL.Material(MaterialFace.Front, MaterialParameter.Emission, new Vector4(0.2f,1,0.5f,1f));
+            //GL.Material(MaterialFace.Front, MaterialParameter.Emission, new Vector4(0.2f,1,0.5f,1f));
             //GL.Material(MaterialFace.Front, MaterialParameter.Specular, new Vector4(0.2f,1,0.5f,1));
             //GL.Material(MaterialFace.Front, MaterialParameter.Shininess, 10);
-            GL.Light(LightName.Light0, LightParameter.Position, new Vector4(0,2,-2,0));
-            
+           
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            _camera.Width = _control.Position.Width / 80; 
-            _camera.Height = _control.Position.Height / 80;
+           
+            _camera.AspectRatio = _control.Position.Width / _control.Position.Height;
             _camera.Render();
 
-            GL.Color4(1.0f, 0.2f, 1.0f, 0.5f);
+            GL.Light(LightName.Light0, LightParameter.Position, new Vector4(0, 2, -2, 0));
+            
+            GL.Color3(1.0f, 0.2f, 1.0f);
             
             _glSphere.Rotation = new Vector3( 0, _rotation++, 0);
             _glSphere.Render();
