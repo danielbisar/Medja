@@ -30,20 +30,21 @@ namespace Medja.OpenTk.Components3D
 
         protected virtual void BeginRender()
         {
-            var matrix = Matrix4.Identity;
-
             if (Camera != null)
+            {
+                var matrix = Matrix4.Identity;
                 matrix = Camera.ViewMatrix;
 
-            GL.MatrixMode(MatrixMode.Modelview);
-            GL.PushMatrix();
-            GL.LoadMatrix(ref matrix);
+                GL.MatrixMode(MatrixMode.Modelview);
+                GL.PushMatrix();
+                GL.LoadMatrix(ref matrix);
 
-            GL.Rotate(Rotation.X, 1, 0, 0);
-            GL.Rotate(Rotation.Y, 0, 1, 0);
-            GL.Rotate(Rotation.Z, 0, 0, 1);
+                GL.Rotate(Rotation.X, 1, 0, 0);
+                GL.Rotate(Rotation.Y, 0, 1, 0);
+                GL.Rotate(Rotation.Z, 0, 0, 1);
 
-            GL.Translate(Position);
+                GL.Translate(Position);
+            }
         }
 
         protected virtual void RenderModel()

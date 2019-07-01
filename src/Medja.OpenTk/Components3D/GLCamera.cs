@@ -70,7 +70,8 @@ namespace Medja.OpenTk.Components3D
             PropertyUpVector.UnnotifiedSet(new Vector3(0, 1, 0));
             PropertyUpVector.PropertyChanged += OnViewMatrixPropertyChanged;
 
-            PropertyPosition.UnnotifiedSet(new Vector3(0, 3, -10));
+            // +10 z means go back from 0,0,0 10 units
+            PropertyPosition.UnnotifiedSet(new Vector3(0, 3, 10));
             PropertyPosition.PropertyChanged += OnViewMatrixPropertyChanged;
 
             PropertyZNear = new Property<float>();
