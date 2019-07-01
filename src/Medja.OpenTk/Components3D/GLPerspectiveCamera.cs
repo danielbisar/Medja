@@ -14,6 +14,7 @@ namespace Medja.OpenTk.Components3D
         public readonly Property<float> PropertyFieldOfViewAngle;
         /// <summary>
         /// The field of view angle in radians. Default value: 45° => 0.79 radians. Use <see cref="MedjaMath.Radians"/>.
+        /// This is also the "zoom", <see cref="GLComponent.Scale"/> is not applied in this class.
         /// </summary>
         public float FieldOfViewAngle
         {
