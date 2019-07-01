@@ -50,7 +50,7 @@ namespace Medja.OpenTk.Components3D
 
         private void UpdateProjectionMatrix()
         {
-            _projectionMatrix = Matrix4.CreateOrthographic(Width, Height, ZNear, ZFar);
+            _projectionMatrix = Matrix4.CreateOrthographic(Width * Scale, Height * Scale, ZNear, ZFar);
         }
 
         public override void Render()
