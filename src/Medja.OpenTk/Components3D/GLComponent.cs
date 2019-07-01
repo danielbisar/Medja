@@ -24,10 +24,21 @@ namespace Medja.OpenTk.Components3D
             set { PropertyRotation.Set(value); }
         }
 
+        [NonSerialized] 
+        public readonly Property<float> PropertyScale;
+
+        public float Scale
+        {
+            get { return PropertyScale.Get(); }
+            set { PropertyScale.Set(value); }
+        }
+
         protected GLComponent()
         {
             PropertyPosition = new Property<Vector3>();
             PropertyRotation = new Property<Vector3>();
+            PropertyScale = new Property<float>();
+            PropertyScale.UnnotifiedSet(1.0f);
         }
         
         public abstract void Render();

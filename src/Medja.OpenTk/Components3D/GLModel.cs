@@ -44,6 +44,8 @@ namespace Medja.OpenTk.Components3D
                 GL.Rotate(Rotation.Z, 0, 0, 1);
 
                 GL.Translate(Position);
+                
+                GL.Scale(Scale, Scale, Scale);
             }
         }
 
