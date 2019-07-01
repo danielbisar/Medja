@@ -39,7 +39,6 @@ namespace Medja.Demo
             //GL.Material(MaterialFace.Front, MaterialParameter.Shininess, 10);
            
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-
            
             _camera.AspectRatio = _control.Position.Width / _control.Position.Height;
             _camera.Render();
@@ -48,6 +47,7 @@ namespace Medja.Demo
             
             GL.Color3(1.0f, 0.2f, 1.0f);
             
+            _glSphere.Scale = 2.5f - ((_rotation/100.0f) % 5.0f);
             _glSphere.Rotation = new Vector3( 0, _rotation++, 0);
             _glSphere.Render();
 		}
