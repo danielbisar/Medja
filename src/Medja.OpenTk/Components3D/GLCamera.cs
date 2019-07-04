@@ -88,7 +88,7 @@ namespace Medja.OpenTk.Components3D
             UpdateViewMatrix();
         }
 
-        protected virtual void UpdateViewMatrix()
+        private void UpdateViewMatrix()
         {
             ViewMatrix = Matrix4.LookAt(Position, TargetPosition, UpVector);
         }

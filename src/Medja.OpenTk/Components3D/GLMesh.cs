@@ -16,6 +16,7 @@ namespace Medja.OpenTk.Components3D
         private List<int> _indices;
         private List<Vector3> _vertices;
         private int _vboId, _vbaId;
+        private int _vertexCount, _indexCount;
 
         [NonSerialized] 
         public readonly Property<PrimitiveType> PropertyPrimitiveType;
@@ -92,6 +93,10 @@ namespace Medja.OpenTk.Components3D
 
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
             GL.DisableClientState(ArrayCap.VertexArray);
+            
+            _indexCount = _indices.Count;
+            _indices.Clear();
+            _indices.TrimExcess();
         }
 
         private void CreateVBO()
@@ -110,6 +115,10 @@ namespace Medja.OpenTk.Components3D
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
             GL.DisableClientState(ArrayCap.VertexArray);
+            
+            _vertexCount = _vertices.Count;
+            _vertices.Clear();
+            _vertices.TrimExcess();
         }
         
         public void SubdivideFaces(Func<Vector3, Vector3, Vector3> getMiddle)
@@ -170,12 +179,12 @@ namespace Medja.OpenTk.Components3D
             GL.VertexPointer(3, VertexPointerType.Float, 0, 0);
 
             if (_vbaId == -1)
-                GL.DrawArrays(PrimitiveType, 0, _vertices.Count);
+                GL.DrawArrays(PrimitiveType, 0, _vertexCount);
             else
             {
                 GL.BindBuffer(BufferTarget.ElementArrayBuffer, _vbaId);
                 // potential optimization: use small element types like: unsigned byte if it is possible
-                GL.DrawElements(PrimitiveType, _indices.Count, DrawElementsType.UnsignedByte, 0);
+                GL.DrawElements(PrimitiveType, _indexCount, DrawElementsType.UnsignedByte, 0);
                 GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
             }
 
