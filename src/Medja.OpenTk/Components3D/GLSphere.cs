@@ -1,9 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using Medja.OpenTk.Rendering;
-using Medja.OpenTk.Utils;
-using Medja.Utils.Math;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
@@ -81,10 +76,10 @@ namespace Medja.OpenTk.Components3D
             return mid;
         }
 
-        protected override void RenderModel()
+        public override void RenderModel()
         {
             base.RenderModel();
-            _mesh.Render();
+            _mesh.RenderModel();
         }
     }
 }

@@ -1,14 +1,43 @@
 using System;
 using Medja.Properties;
-using Medja.Utils.Math;
-using Medja.Utils.Performance;
-using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
 namespace Medja.OpenTk.Components3D
 {
     public class GLModel : GLComponent
     {
+        /// <summary>
+        /// Applies the model view matrix and calls render.
+        /// </summary>
+        /// <param name="component"></param>
+        /// <param name="camera"></param>
+        /// <param name="render"></param>
+        public static void ApplyModelViewMatrix(GLComponent component, GLCamera camera, Action render)
+        {
+            if(camera == null)
+                return;
+
+            var matrix = camera.ViewMatrix;
+
+            GL.MatrixMode(MatrixMode.Modelview);
+            GL.PushMatrix();
+            GL.LoadMatrix(ref matrix);
+
+            var rotation = component.Rotation;
+            
+            // even if deprecated, this calls are faster than manually creating the matrix
+            GL.Rotate(rotation.X, 1, 0, 0);
+            GL.Rotate(rotation.Y, 0, 1, 0);
+            GL.Rotate(rotation.Z, 0, 0, 1);
+
+            GL.Translate(component.Position);
+            GL.Scale(component.Scale);
+            
+            render();
+            
+            GL.PopMatrix();
+        }
+    
         [NonSerialized] 
         public readonly Property<GLCamera> PropertyCamera;
 
@@ -26,41 +55,19 @@ namespace Medja.OpenTk.Components3D
             PropertyCamera = new Property<GLCamera>();
         }
 
+        /// <summary>
+        /// Calls RenderModel inside <see cref="ApplyModelViewMatrix"/>.
+        /// </summary>
         public override void Render()
         {
-            BeginRender();
-            RenderModel();
-            EndRender();
+            ApplyModelViewMatrix(this, Camera, RenderModel);
         }
-
-        private void BeginRender()
+        
+        /// <summary>
+        /// Renders the model, without applying transformation matrix.
+        /// </summary>
+        public virtual void RenderModel()
         {
-            if (Camera != null)
-            {
-                var matrix = Camera.ViewMatrix;
-                
-                GL.MatrixMode(MatrixMode.Modelview);
-                GL.PushMatrix();
-                GL.LoadMatrix(ref matrix);
-
-                // even if deprecated, this calls are faster than manually creating the matrix
-                GL.Rotate(Rotation.X, 1, 0, 0);
-                GL.Rotate(Rotation.Y, 0, 1, 0);
-                GL.Rotate(Rotation.Z, 0, 0, 1);
-
-                GL.Translate(Position);
-                GL.Scale(Scale);
-            }
-        }
-
-        protected virtual void RenderModel()
-        {
-        }
-
-        private void EndRender()
-        {
-            if(Camera != null)
-                GL.PopMatrix();
         }
     }
 }
