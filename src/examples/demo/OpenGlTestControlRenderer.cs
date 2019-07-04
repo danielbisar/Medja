@@ -31,8 +31,8 @@ namespace Medja.Demo
             GL.Enable(EnableCap.CullFace);
             GL.Enable(EnableCap.DepthTest);
             GL.Enable(EnableCap.Lighting);
-            GL.Enable(EnableCap.Light0);
-            GL.ShadeModel(ShadingModel.Smooth);*/
+            GL.Enable(EnableCap.Light0);*/
+            GL.ShadeModel(ShadingModel.Smooth);
             
             //GL.Material(MaterialFace.Front, MaterialParameter.Emission, new Vector4(0.2f,1,0.5f,1f));
             //GL.Material(MaterialFace.Front, MaterialParameter.Specular, new Vector4(0.2f,1,0.5f,1));

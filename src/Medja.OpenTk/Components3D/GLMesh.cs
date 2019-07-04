@@ -168,7 +168,7 @@ namespace Medja.OpenTk.Components3D
                 _vertices[i] = _vertices[i].Normalized();
         }
 
-        protected override void RenderModel()
+        public override void RenderModel()
         {
             if (_vboId == -1)
                 throw new InvalidOperationException("call " + nameof(CreateBuffers) + " first");

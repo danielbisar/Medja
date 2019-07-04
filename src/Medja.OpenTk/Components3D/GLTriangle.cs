@@ -8,7 +8,7 @@ namespace Medja.OpenTk.Components3D
     /// </summary>
     public class GLTriangle : GLModel
     {
-        protected override void RenderModel()
+        public override void RenderModel()
         {
             GL.Begin(PrimitiveType.Triangles);
             GL.Vertex3(0, 0, 0);
