@@ -1,5 +1,7 @@
 using System;
 using Medja.Properties;
+using Medja.Utils.Math;
+using Medja.Utils.Performance;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
@@ -10,6 +12,9 @@ namespace Medja.OpenTk.Components3D
         [NonSerialized] 
         public readonly Property<GLCamera> PropertyCamera;
 
+        /// <summary>
+        /// Gets or sets the <see cref="GLCamera"/> used to view this object.
+        /// </summary>
         public GLCamera Camera
         {
             get { return PropertyCamera.Get(); }
@@ -25,27 +30,26 @@ namespace Medja.OpenTk.Components3D
         {
             BeginRender();
             RenderModel();
-            EndRender();            
+            EndRender();
         }
 
-        protected virtual void BeginRender()
+        private void BeginRender()
         {
             if (Camera != null)
             {
-                var matrix = Matrix4.Identity;
-                matrix = Camera.ViewMatrix;
-
+                var matrix = Camera.ViewMatrix;
+                
                 GL.MatrixMode(MatrixMode.Modelview);
                 GL.PushMatrix();
                 GL.LoadMatrix(ref matrix);
 
+                // even if deprecated, this calls are faster than manually creating the matrix
                 GL.Rotate(Rotation.X, 1, 0, 0);
                 GL.Rotate(Rotation.Y, 0, 1, 0);
                 GL.Rotate(Rotation.Z, 0, 0, 1);
 
                 GL.Translate(Position);
-                
-                GL.Scale(Scale, Scale, Scale);
+                GL.Scale(Scale);
             }
         }
 
@@ -53,9 +57,10 @@ namespace Medja.OpenTk.Components3D
         {
         }
 
-        protected virtual void EndRender()
+        private void EndRender()
         {
-            GL.PopMatrix();
+            if(Camera != null)
+                GL.PopMatrix();
         }
     }
 }

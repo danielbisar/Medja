@@ -5,6 +5,13 @@ using OpenTK.Graphics.OpenGL;
 
 namespace Medja.OpenTk.Components3D
 {
+    /// <summary>
+    /// Defines an Orthographic camera.
+    /// </summary>
+    /// <remarks>
+    /// - Scale.Z component has no effect
+    /// - 
+    /// </remarks>
     public class GLOrthographicCamera : GLCamera
     {
         private Matrix4 _projectionMatrix;
@@ -50,7 +57,7 @@ namespace Medja.OpenTk.Components3D
 
         private void UpdateProjectionMatrix()
         {
-            _projectionMatrix = Matrix4.CreateOrthographic(Width * Scale, Height * Scale, ZNear, ZFar);
+            _projectionMatrix = Matrix4.CreateOrthographic(Width * Scale.X, Height * Scale.Y, ZNear, ZFar);
         }
 
         public override void Render()
