@@ -1,11 +1,25 @@
 ﻿using System;
 using Medja.Controls;
 using OpenTK;
+using WindowState = OpenTK.WindowState;
 
 namespace Medja.OpenTk
 {
 	public class OpenTkWindow : MedjaWindow
 	{
+        private static WindowState GetOpenTkWindowState(Controls.WindowState windowState)
+        {
+            switch (windowState)
+            {
+                case Controls.WindowState.Normal:
+                    return WindowState.Normal;
+                case Controls.WindowState.Fullscreen:
+                    return WindowState.Fullscreen;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(windowState), windowState, null);
+            }
+        }
+        
 		private bool _calledClose;
 
 		public GameWindow GameWindow { get; }
@@ -18,6 +32,7 @@ namespace Medja.OpenTk
 			GameWindow.Closed += OnGameWindowClosed;
 
 			GameWindow.Title = Title;
+            PropertyState.ForwardTo(v => GameWindow.WindowState = GetOpenTkWindowState(v));
 			
 			PropertyTitle.PropertyChanged += (s,e) => GameWindow.Title = e.NewValue as string;
 			Position.PropertyX.PropertyChanged += (s,e) => GameWindow.X = (int)Position.X;
@@ -26,7 +41,7 @@ namespace Medja.OpenTk
 			Position.PropertyHeight.PropertyChanged += (s,e) => GameWindow.Height = (int)Position.Height;
 		}
 
-		private void OnGameWindowResize(object sender, EventArgs eventArgs)
+        private void OnGameWindowResize(object sender, EventArgs eventArgs)
 		{
 			Position.Width = GameWindow.ClientRectangle.Width;
 			Position.Height = GameWindow.ClientRectangle.Height;
