@@ -7,18 +7,37 @@ namespace Medja.Controls
 	public class MedjaWindow : ContentControl
 	{
 		public readonly Property<string> PropertyTitle;
+        /// <summary>
+        /// The text to display in the window title.
+        /// </summary>
 		public string Title
 		{
 			get { return PropertyTitle.Get(); }
 			set { PropertyTitle.Set(value); }
 		}
 
-		public bool IsClosed { get; set; }
+        [NonSerialized]
+        public readonly Property<WindowState> PropertyState;
+
+        /// <summary>
+        /// Gets or sets the window state.
+        /// </summary>
+        public WindowState State
+        {
+            get { return PropertyState.Get(); }
+            set { PropertyState.Set(value); }
+        }
+        
+        /// <summary>
+        /// Gets if the window is closed or not.
+        /// </summary>
+        public bool IsClosed { get; private set; }
 
 		public event EventHandler Closed;
 
 		public MedjaWindow()
 		{
+            PropertyState = new Property<WindowState>();
 			PropertyTitle = new Property<string>();
 			PropertyTitle.UnnotifiedSet("");
 		}

@@ -164,5 +164,15 @@ namespace Medja
             onChanged(observableCollection);
             observableCollection.CollectionChanged += (s, e) => onChanged(observableCollection);
         }
+
+        /// <summary>
+        /// Forwards changes of a property to
+        /// </summary>
+        /// <param name="source"></param>
+        /// <typeparam name="T"></typeparam>
+        public static void ForwardTo<T>(this Property<T> source, Action<T> updateTarget)
+        {
+            source.PropertyChanged += (s, e) => updateTarget(source.Get());
+        }
     }
 }
