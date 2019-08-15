@@ -32,7 +32,11 @@ namespace Medja.Demo
         private void CreateMainWindow()
         {
             var window = _application.CreateWindow();
-            window.CenterOnScreen(800, 800);
+            //window.CenterOnScreen(800, 800);
+            window.Position.X = 2;
+            window.Position.Y = 2;
+            window.Position.Width = 800;
+            window.Position.Height = 800;
             window.Background = DarkBlueThemeValues.WindowBackground;
             window.Content = CreateContent();
 
