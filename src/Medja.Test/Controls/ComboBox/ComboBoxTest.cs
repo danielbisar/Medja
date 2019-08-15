@@ -257,11 +257,11 @@ namespace Medja.Test.Controls
             comboBox.Add("123");
             comboBox.Add("234");
             
-            Assert.NotEqual(((MenuItem)comboBox.SelectedItem)?.Title, "234");
+            Assert.NotEqual("234", ((MenuItem)comboBox.SelectedItem)?.Title);
             
             comboBox.SelectItem("234");
             
-            Assert.Equal(((MenuItem)comboBox.SelectedItem)?.Title, "234");
+            Assert.Equal("234", ((MenuItem)comboBox.SelectedItem)?.Title);
         }
     }
 }

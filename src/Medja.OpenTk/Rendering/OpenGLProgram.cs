@@ -7,7 +7,15 @@ namespace Medja.OpenTk.Rendering
 	public class OpenGLProgram : IDisposable
 	{
 		private readonly int _programId;
-		private bool _isDisposed;
+        /// <summary>
+        /// Gets the OpenGL program id 
+        /// </summary>
+        public int ProgramId
+        {
+            get { return _programId; }
+        }
+
+        private bool _isDisposed;
 
 		public OpenGLProgram(IEnumerable<OpenGLShader> shaders, Action<int> setupOpenGL)
 		{
