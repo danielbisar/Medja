@@ -9,6 +9,8 @@ namespace Medja.Controls
     /// </summary>
     public class Slider : Control
     {
+        private Action<Point> ApplyMousePos;
+        
         public readonly Property<float> PropertyMinValue;
         public float MinValue
         {
@@ -44,10 +46,19 @@ namespace Medja.Controls
             set { PropertyThumbColor.Set(value); }
         }
 
+        [NonSerialized]
+        public readonly Property<Orientation> PropertyOrientation;
+        public Orientation Orientation
+        {
+            get { return PropertyOrientation.Get(); }
+            set { PropertyOrientation.Set(value); }
+        }
+
         public Slider()
         {
             PropertyMinValue = new Property<float>();
             PropertyMaxValue = new Property<float>();
+            PropertyOrientation = new Property<Orientation>();
             PropertyValue = new Property<float>();
             PropertyThumbColor = new Property<Color>();
             PropertyPercentage = new Property<float>();
@@ -55,11 +66,26 @@ namespace Medja.Controls
             PropertyMinValue.PropertyChanged += OnPercentageRelevantPropertyChanged;
             PropertyMaxValue.PropertyChanged += OnPercentageRelevantPropertyChanged;
             PropertyValue.PropertyChanged += OnPercentageRelevantPropertyChanged;
+            PropertyOrientation.PropertyChanged += OnOrientationChanged;
             
             InputState.Clicked += OnClicked;
             InputState.HandlesDrag = true;
             InputState.OwnsMouseEvents = true;
             InputState.Dragged += OnDragged;
+            
+            UpdateApplyMousePos();
+        }
+
+        private void OnOrientationChanged(object sender, PropertyChangedEventArgs e)
+        {
+            UpdateApplyMousePos();
+        }
+
+        private void UpdateApplyMousePos()
+        {
+            ApplyMousePos = Orientation == Orientation.Horizontal
+                ? ApplyMousePosHorizontal
+                : (Action<Point>) ApplyMousePosVertical;
         }
 
         private void OnPercentageRelevantPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -76,19 +102,35 @@ namespace Medja.Controls
 
         protected virtual void OnDragged(object sender, MouseDraggedEventArgs e)
         {
-            ApplyMousePos(e.Target.X);
+            ApplyMousePos(e.Target);
         }
 
         protected virtual void OnClicked(object sender, EventArgs e)
         {
-            ApplyMousePos(InputState.PointerPosition.X);
+            ApplyMousePos(InputState.PointerPosition);
         }
 
-        protected virtual void ApplyMousePos(float x)
+        protected void ApplyMousePosHorizontal(Point p)
         {
             var width = Position.Width;
-            var mouseWidthPos = x - Position.X;
+            var mouseWidthPos = p.X - Position.X;
             var mousePercentage = mouseWidthPos / width;
+            var distance = MaxValue - MinValue;
+            var newValue = distance * mousePercentage + MinValue;
+
+            if (newValue < MinValue)
+                newValue = MinValue;
+            else if (newValue > MaxValue)
+                newValue = MaxValue;
+
+            Value = newValue;
+        }
+
+        protected void ApplyMousePosVertical(Point p)
+        {
+            var height = Position.Height;
+            var mouseHeightPos = p.Y - Position.Y;
+            var mousePercentage = mouseHeightPos / height;
             var distance = MaxValue - MinValue;
             var newValue = distance * mousePercentage + MinValue;
 
