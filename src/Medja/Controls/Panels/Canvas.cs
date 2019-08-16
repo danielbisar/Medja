@@ -12,6 +12,14 @@ namespace Medja.Controls
 		// the attached X and Y is the initial position provided by the control
 		public static readonly int AttachedXId = AttachedPropertyIdFactory.NewId();
 		public static readonly int AttachedYId = AttachedPropertyIdFactory.NewId();
+        
+        private static bool HasAttachedXY(Control child)
+        {
+            var attachedProperties = child.AttachedProperties; 
+            
+            return attachedProperties.ContainsKey(AttachedXId)
+                   && attachedProperties.ContainsKey(AttachedYId);
+        }
 
 		public override void Arrange(Size availableSize)
 		{
@@ -25,12 +33,6 @@ namespace Medja.Controls
 
 				child.Arrange(new Size(child.Position.Width, child.Position.Height));
 			}
-		}
-
-		public bool HasAttachedXY(Control child)
-		{
-			return child.AttachedProperties.ContainsKey(AttachedXId)
-						&& child.AttachedProperties.ContainsKey(AttachedYId);
 		}
 	}
 }

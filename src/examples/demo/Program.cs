@@ -252,6 +252,32 @@ namespace Medja.Demo
             var rootTabControl = controlFactory.Create<TabControl>();
             rootTabControl.AddTab("Standard", rootStackPanel);
             rootTabControl.AddTab("OpenGL 3D", controlFactory.Create<OpenGlTestControl>());
+            rootTabControl.AddTab("Slider", 
+                controlFactory.Create<Canvas>(canvas =>
+                {
+                    canvas.Add(controlFactory.Create<Slider>(s =>
+                    {
+                        s.Orientation = Orientation.Vertical;
+                        s.MaxValue = 100;
+                        s.Value = 15;
+                        s.SetAttachedProperty(Canvas.AttachedXId, 50f);
+                        s.SetAttachedProperty(Canvas.AttachedYId, 50f);
+                        s.Position.Width = 50;
+                        s.Position.Height = 500;
+                    }));
+
+                    canvas.Add(controlFactory.Create<Slider>(s =>
+                    {
+                        s.Orientation = Orientation.Horizontal;
+                        s.MaxValue = 100;
+                        s.Value = 15;
+                        s.SetAttachedProperty(Canvas.AttachedXId, 120f);
+                        s.SetAttachedProperty(Canvas.AttachedYId, 50f);
+                        s.Position.Width = 200;
+                        s.Position.Height = 50;
+                    }));
+                }
+            ));
 
             var dialogContainer = DialogService.CreateContainer(controlFactory, rootTabControl);
             return dialogContainer;

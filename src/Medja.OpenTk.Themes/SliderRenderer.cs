@@ -1,5 +1,7 @@
+using System;
 using Medja.Controls;
 using Medja.OpenTk.Rendering;
+using Medja.Primitives;
 using SkiaSharp;
 
 namespace Medja.OpenTk.Themes
@@ -8,6 +10,7 @@ namespace Medja.OpenTk.Themes
     {
         private readonly SKPaint _barPaint;
         private readonly SKPaint _thumbPaint;
+        private Action _render;
         
         public SliderRenderer(Slider control) 
             : base(control)
@@ -24,7 +27,19 @@ namespace Medja.OpenTk.Themes
             control.AffectRendering(
                 control.PropertyBackground, 
                 control.PropertyThumbColor,
-                control.PropertyPercentage);
+                control.PropertyPercentage,
+                control.PropertyOrientation);
+            
+            control.PropertyOrientation.ForwardTo(p => UpdateRenderFunction());
+
+            UpdateRenderFunction();
+        }
+
+        private void UpdateRenderFunction()
+        {
+            _render = _control.Orientation == Orientation.Horizontal 
+                ? RenderHorizontal 
+                : (Action)RenderVertical;
         }
 
         protected override void InternalRender()
@@ -32,10 +47,25 @@ namespace Medja.OpenTk.Themes
             _barPaint.Color = _control.Background.ToSKColor();
             _thumbPaint.Color = _control.ThumbColor.ToSKColor();
             
-            var y = _rect.MidY;
-			
-            _canvas.DrawLine(_rect.Left, y, _rect.Right, y, _barPaint);
-            _canvas.DrawCircle(new SKPoint(_rect.Left + _rect.Width * _control.Percentage, _rect.MidY), 10, _thumbPaint);
+            _render();
+        }
+
+        private void RenderHorizontal()
+        {
+            var midY = _rect.MidY;
+
+            _canvas.DrawLine(_rect.Left, midY, _rect.Right, midY, _barPaint);
+            _canvas.DrawCircle(new SKPoint(_rect.Left + _rect.Width * _control.Percentage, midY), 10,
+                _thumbPaint);
+        }
+
+        private void RenderVertical()
+        {
+            var midX = _rect.MidX;
+
+            _canvas.DrawLine(midX, _rect.Top, midX, _rect.Bottom, _barPaint);
+            _canvas.DrawCircle(new SKPoint(midX, _rect.Top + _rect.Height * _control.Percentage), 10,
+                _thumbPaint);
         }
 
         protected override void Dispose(bool disposing)
