@@ -33,6 +33,8 @@ namespace Medja.Controls
 
 				child.Arrange(new Size(child.Position.Width, child.Position.Height));
 			}
+
+            base.Arrange(availableSize);
 		}
 	}
 }

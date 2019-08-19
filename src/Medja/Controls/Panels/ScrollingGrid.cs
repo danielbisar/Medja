@@ -52,32 +52,35 @@ namespace Medja.Controls
         
         public override void Arrange(Size availableSize)
         {
-            if (Children.Count == 0)
-                return;
-            
-            var area = Rect.Subtract(Position, Margin);
-            area.Subtract(Padding);
-
-            var columnWidth = area.Width / _columns - SpacingX / 2.0f;
-            var rowHeight = (RowHeight ?? Children[0].Position.Height);
-            var row = 0;
-            var column = 0;
-            
-            foreach (var child in Children)
+            if (Children.Count != 0)
             {
-                child.Position.X = Position.X + Margin.Left + Padding.Left + column * columnWidth + column*SpacingX;
-                child.Position.Width = columnWidth;
-                child.Position.Y = Position.Y + Margin.Top + Padding.Top + row * rowHeight + row*SpacingY;
-                child.Position.Height = rowHeight;
+                var area = Rect.Subtract(Position, Margin);
+                area.Subtract(Padding);
 
-                column++;
+                var columnWidth = area.Width / _columns - SpacingX / 2.0f;
+                var rowHeight = (RowHeight ?? Children[0].Position.Height);
+                var row = 0;
+                var column = 0;
 
-                if (column >= Columns)
+                foreach (var child in Children)
                 {
-                    column = 0;
-                    row++;
+                    child.Position.X = Position.X + Margin.Left + Padding.Left + column * columnWidth +
+                                       column * SpacingX;
+                    child.Position.Width = columnWidth;
+                    child.Position.Y = Position.Y + Margin.Top + Padding.Top + row * rowHeight + row * SpacingY;
+                    child.Position.Height = rowHeight;
+
+                    column++;
+
+                    if (column >= Columns)
+                    {
+                        column = 0;
+                        row++;
+                    }
                 }
             }
+
+            base.Arrange(availableSize);
         }
     }
 }
