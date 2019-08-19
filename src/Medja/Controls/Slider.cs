@@ -10,7 +10,8 @@ namespace Medja.Controls
     public class Slider : Control
     {
         private Action<Point> ApplyMousePos;
-        
+
+        [NonSerialized]
         public readonly Property<float> PropertyMinValue;
         public float MinValue
         {
@@ -18,6 +19,7 @@ namespace Medja.Controls
             set { PropertyMinValue.Set(value); }
         }
 
+        [NonSerialized]
         public readonly Property<float> PropertyMaxValue;
         public float MaxValue
         {
@@ -25,6 +27,7 @@ namespace Medja.Controls
             set { PropertyMaxValue.Set(value); }
         }
 
+        [NonSerialized]
         public readonly Property<float> PropertyValue;
         public float Value
         {
@@ -32,13 +35,15 @@ namespace Medja.Controls
             set { PropertyValue.Set(value); }
         }
 
+        [NonSerialized]
         public readonly Property<float> PropertyPercentage;
         public float Percentage
         {
             get { return PropertyPercentage.Get(); }
             private set { PropertyPercentage.Set(value); }
         }
-        
+
+        [NonSerialized]
         public readonly Property<Color> PropertyThumbColor;
         public Color ThumbColor
         {
@@ -54,14 +59,23 @@ namespace Medja.Controls
             set { PropertyOrientation.Set(value); }
         }
 
+        [NonSerialized] 
+        public readonly Property<bool> PropertyIsInverted;
+        public bool IsInverted
+        {
+            get { return PropertyIsInverted.Get(); }
+            set { PropertyIsInverted.Set(value); }
+        }
+
         public Slider()
         {
+            PropertyIsInverted = new Property<bool>();
             PropertyMinValue = new Property<float>();
             PropertyMaxValue = new Property<float>();
             PropertyOrientation = new Property<Orientation>();
-            PropertyValue = new Property<float>();
             PropertyThumbColor = new Property<Color>();
             PropertyPercentage = new Property<float>();
+            PropertyValue = new Property<float>();
 
             PropertyMinValue.PropertyChanged += OnPercentageRelevantPropertyChanged;
             PropertyMaxValue.PropertyChanged += OnPercentageRelevantPropertyChanged;
@@ -110,11 +124,15 @@ namespace Medja.Controls
             ApplyMousePos(InputState.PointerPosition);
         }
 
-        protected void ApplyMousePosHorizontal(Point p)
+        protected void ApplyMousePosHorizontal(Point mouse)
         {
             var width = Position.Width;
-            var mouseWidthPos = p.X - Position.X;
-            var mousePercentage = mouseWidthPos / width;
+            var relativeX = mouse.X - Position.X; // relative to the control
+            var mousePercentage = relativeX / width;
+            
+            if(IsInverted)
+                mousePercentage = 1 - mousePercentage;
+            
             var distance = MaxValue - MinValue;
             var newValue = distance * mousePercentage + MinValue;
 
@@ -126,11 +144,15 @@ namespace Medja.Controls
             Value = newValue;
         }
 
-        protected void ApplyMousePosVertical(Point p)
+        protected void ApplyMousePosVertical(Point mouse)
         {
             var height = Position.Height;
-            var mouseHeightPos = p.Y - Position.Y;
+            var mouseHeightPos = mouse.Y - Position.Y;
             var mousePercentage = mouseHeightPos / height;
+
+            if (IsInverted)
+                mousePercentage = 1 - mousePercentage;
+            
             var distance = MaxValue - MinValue;
             var newValue = distance * mousePercentage + MinValue;
 
