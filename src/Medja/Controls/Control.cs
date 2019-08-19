@@ -300,15 +300,31 @@ namespace Medja.Controls
 				property.PropertyChanged += OnRenderingRelevantPropertyChanged;
 		}
 
-		/// <summary>
-		/// <see cref="AffectsRendering"/>.
-		/// </summary>
-		/// <param name="properties">The properties that affect rendering.</param>
-		public void AffectRendering(params IProperty[] properties)
-		{
-			foreach(var property in properties)
-				AffectsRendering(property);
-		}
+        /// <summary>
+        /// <see cref="AffectsRendering"/>.
+        /// </summary>
+        /// <param name="properties">The properties that affect rendering.</param>
+        public void AffectRendering(params IProperty[] properties)
+        {
+            foreach (var property in properties)
+                AffectsRendering(property);
+        }
+
+        /// <summary>
+        /// Removes a property that you previously listened to that affects rendering.
+        /// </summary>
+        /// <param name="property">The property.</param>
+        public void RemoveAffectsRendering(IProperty property)
+        {
+            if(_propertiesAffectingRendering.Remove(property))
+                property.PropertyChanged -= OnRenderingRelevantPropertyChanged;
+        }
+
+        public void RemoveAffectRendering(params IProperty[] properties)
+        {
+            foreach(var property in properties)
+                RemoveAffectsRendering(property);
+        }
 
 		private void OnRenderingRelevantPropertyChanged(object sender, PropertyChangedEventArgs e)
 		{

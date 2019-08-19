@@ -134,6 +134,14 @@ namespace Medja.OpenTk.Themes.DarkBlue
             return result;
         }
 
+        protected override Control CreateControl()
+        {
+            var result = base.CreateControl();
+            result.Renderer = new ControlRenderer(result);
+            
+            return result;
+        }
+
         protected override DockPanel CreateDockPanel()
         {
             var result = base.CreateDockPanel();

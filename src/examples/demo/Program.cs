@@ -278,6 +278,27 @@ namespace Medja.Demo
                     }));
                 }
             ));
+            rootTabControl.AddTab("Popups", 
+                controlFactory.Create<VerticalStackPanel>(p =>
+                {
+                    var showPopupButton = controlFactory.Create<Button>();
+                    showPopupButton.Text = "show popup";
+                    
+                    var popup = controlFactory.Create<Popup>();
+                    popup.Content = controlFactory.Create<Control>(c => c.Background = Colors.Green);
+                    popup.AutoPosRelativeToBottomOf(showPopupButton);
+                    
+                    popup.Position.Width = 100;
+                    popup.Position.Height = 100;
+                    
+                    var popupContainer = controlFactory.Create<PopupContainer>();
+                    popupContainer.Content = showPopupButton;
+                    popupContainer.Popup = popup;
+                    showPopupButton.InputState.Clicked += (s, e) => popup.ToggleVisibility();
+                    
+                    p.Add(popupContainer);
+                    p.ChildrenHeight = showPopupButton.Position.Height;
+                }));
 
             var dialogContainer = DialogService.CreateContainer(controlFactory, rootTabControl);
             return dialogContainer;
