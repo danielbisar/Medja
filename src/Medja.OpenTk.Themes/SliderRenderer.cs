@@ -28,7 +28,8 @@ namespace Medja.OpenTk.Themes
                 control.PropertyBackground, 
                 control.PropertyThumbColor,
                 control.PropertyPercentage,
-                control.PropertyOrientation);
+                control.PropertyOrientation,
+                control.PropertyIsInverted);
             
             control.PropertyOrientation.ForwardTo(p => UpdateRenderFunction());
 
@@ -53,18 +54,26 @@ namespace Medja.OpenTk.Themes
         private void RenderHorizontal()
         {
             var midY = _rect.MidY;
+            var percentage = _control.Percentage;
+            
+            if(_control.IsInverted)
+                percentage = 1f - percentage;
 
             _canvas.DrawLine(_rect.Left, midY, _rect.Right, midY, _barPaint);
-            _canvas.DrawCircle(new SKPoint(_rect.Left + _rect.Width * _control.Percentage, midY), 10,
+            _canvas.DrawCircle(new SKPoint(_rect.Left + _rect.Width * percentage, midY), 10,
                 _thumbPaint);
         }
 
         private void RenderVertical()
         {
             var midX = _rect.MidX;
+            var percentage = _control.Percentage;
+
+            if (_control.IsInverted)
+                percentage = 1f - percentage;
 
             _canvas.DrawLine(midX, _rect.Top, midX, _rect.Bottom, _barPaint);
-            _canvas.DrawCircle(new SKPoint(midX, _rect.Top + _rect.Height * _control.Percentage), 10,
+            _canvas.DrawCircle(new SKPoint(midX, _rect.Top + _rect.Height * percentage), 10,
                 _thumbPaint);
         }
 
