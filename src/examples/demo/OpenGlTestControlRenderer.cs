@@ -9,7 +9,6 @@ namespace Medja.Demo
 	{
         private readonly GLPerspectiveCamera _camera;
         private readonly GLSphere _glSphere;
-        private readonly GLTriangle _glTriangle;
         private float _rotation = 0;
         
 		public OpenGlTestControlRenderer(OpenGlTestControl control)
@@ -20,8 +19,6 @@ namespace Medja.Demo
             _glSphere = new GLSphere();
             _glSphere.Camera = _camera;
         }
-		
-        float z = 0;
         
 		protected override void InternalRender()
 		{

@@ -29,9 +29,9 @@ namespace Medja.Controls
             PropertyChildrenHeight.AffectsLayout(this);
         }
 
-        public override void Arrange(Size targetSize)
+        public override void Arrange(Size availableSize)
         {
-            var width = targetSize.Width - Padding.LeftAndRight;
+            var width = availableSize.Width - Padding.LeftAndRight;
             var curX = Position.X + Padding.Left;
             var curY = Position.Y + Padding.Top;
 
@@ -64,6 +64,8 @@ namespace Medja.Controls
                 
                 child.Arrange(new Size(childPos.Width, childPos.Height));
             }
+
+            base.Arrange(availableSize);
         }
     }
 }

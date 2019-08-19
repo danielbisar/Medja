@@ -1,13 +1,21 @@
 using System;
+using System.IO;
 using Medja.Controls;
 
 namespace Medja.Utils
 {
     public static class MedjaDebug
     {
-        public static void PrintControlTreeAfterArrange(Control control)
+        /// <summary>
+        /// After each arrange call prints out the control tree.
+        /// </summary>
+        /// <param name="control"></param>
+        public static void DebugLayout(this Control control, TextWriter target = null)
         {
-            control.Arranged += (s, e) => Console.WriteLine(new ControlTreeStringBuilder((Control) s).GetTree());
+            if(target == null)
+                target = Console.Out;
+            
+            control.Arranged += (s, e) => target.WriteLine(new ControlTreeStringBuilder((Control) s).GetTree());
         }
     }
 }

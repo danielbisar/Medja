@@ -38,9 +38,9 @@ namespace Medja.Controls
                 Position.Height = Children[0].Position.Height;
         }
 
-        public override void Arrange(Size targetSize)
+        public override void Arrange(Size availableSize)
         {
-            var height = targetSize.Height - Padding.TopAndBottom;
+            var height = availableSize.Height - Padding.TopAndBottom;
             var curX = Position.X + Padding.Left;
             var curY = Position.Y + Padding.Top;
 
@@ -70,6 +70,8 @@ namespace Medja.Controls
                 
                 child.Arrange(new Size(childPos.Width, childPos.Height));
             }
+
+            base.Arrange(availableSize);
         }
     }
 }
