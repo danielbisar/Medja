@@ -16,7 +16,8 @@ namespace Medja.OpenTk.Themes
          textColor)
             : base(control)
         {
-            control.AffectRendering(_control.PropertyBackground);
+            control.AffectRendering(_control.PropertyBackground, 
+                _control.PropertyTitle);
             
             _textPaint = new SKPaint();
             _textPaint.Color = textColor.ToSKColor();
