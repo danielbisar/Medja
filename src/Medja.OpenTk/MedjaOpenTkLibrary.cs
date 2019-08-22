@@ -55,12 +55,12 @@ namespace Medja.OpenTk
         public void Run(MedjaApplication application, int maxFps)
         {
             _medjaWindow = application.MainWindow;
-            _gameWindow = ((OpenTkWindow)_medjaWindow).GameWindow;
             _controlHierarchy = new ControlHierarchy(_medjaWindow);
             _frameLimiter = new FramesPerSecondLimiter(maxFps, UpdateAndRender);
 
-            using (_gameWindow)
+            using (_medjaWindow)
             {
+                _gameWindow = (_medjaWindow as OpenTkWindow).GameWindow;
                 _gameWindow.Resize += OnResize;
                 _gameWindow.UpdateFrame += OnUpdateFrame;
                 _gameWindow.Closed += OnWindowClosed;
@@ -73,7 +73,7 @@ namespace Medja.OpenTk
 
                 _frameLimiter.Run();
                 // do not limit fps via this method, since OpenTK keeps using too much CPU
-                _gameWindow.Run();
+                _medjaWindow.Show();
             }
         }
 

@@ -15,6 +15,8 @@ namespace Medja.OpenTk.Components3D
     {
         private List<int> _indices;
         private List<Vector3> _vertices;
+        private List<Vector2> _textureCoordinates;
+        
         private int _vboId, _vbaId;
         private int _vertexCount, _indexCount;
 
@@ -33,6 +35,8 @@ namespace Medja.OpenTk.Components3D
             
             _indices = new List<int>();
             _vertices = new List<Vector3>();
+            _textureCoordinates = new List<Vector2>();
+            
             _vbaId = _vboId = -1;
         }
         
@@ -65,6 +69,17 @@ namespace Medja.OpenTk.Components3D
             _indices.AddRange(indices);
         }
 
+        public int AddTexCoord(Vector2 v)
+        {
+            _textureCoordinates.Add(v);
+            return _textureCoordinates.Count - 1;
+        }
+
+        public int AddTexCoord(float s, float t)
+        {
+            return AddTexCoord(new Vector2(s, t));
+        }
+
         public void CreateBuffers()
         {
             if(_vboId != -1 || _vbaId != -1)
@@ -74,6 +89,30 @@ namespace Medja.OpenTk.Components3D
 
             if (_indices.Count > 0)
                 CreateVBA();
+        }
+
+        private void CreateVBO()
+        {
+            if (_vboId != -1)
+                throw new InvalidOperationException("VBO was already created");
+
+            var vertexDataArray = _vertices.SelectMany(p => p.Iterate()).ToArray();
+
+            GL.EnableClientState(ArrayCap.VertexArray);
+            _vboId = GL.GenBuffer();
+
+            GL.BindBuffer(BufferTarget.ArrayBuffer, _vboId);
+            GL.BufferData(BufferTarget.ArrayBuffer, 
+                vertexDataArray.Length * sizeof(float), 
+                vertexDataArray,
+                BufferUsageHint.StaticDraw);
+
+            GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
+            GL.DisableClientState(ArrayCap.VertexArray);
+
+            _vertexCount = _vertices.Count;
+            _vertices.Clear();
+            _vertices.TrimExcess();
         }
 
         private void CreateVBA()
@@ -99,75 +138,6 @@ namespace Medja.OpenTk.Components3D
             _indices.TrimExcess();
         }
 
-        private void CreateVBO()
-        {
-            if(_vboId != -1)
-                throw new InvalidOperationException("VBO was already created");
-
-            var vertexDataArray = _vertices.SelectMany(p => p.Iterate()).ToArray();
-
-            GL.EnableClientState(ArrayCap.VertexArray);
-            _vboId = GL.GenBuffer();
-
-            GL.BindBuffer(BufferTarget.ArrayBuffer, _vboId);
-            GL.BufferData(BufferTarget.ArrayBuffer, vertexDataArray.Length * sizeof(float), vertexDataArray,
-                BufferUsageHint.StaticDraw);
-
-            GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
-            GL.DisableClientState(ArrayCap.VertexArray);
-            
-            _vertexCount = _vertices.Count;
-            _vertices.Clear();
-            _vertices.TrimExcess();
-        }
-        
-        public void SubdivideFaces(Func<Vector3, Vector3, Vector3> getMiddle)
-        {
-            var result = new List<int>();
-
-            for (int i = 0; i < _indices.Count; i+=3)
-            {
-                var v1 = _vertices[_indices[i]];
-                var v2 = _vertices[_indices[i + 1]];
-                var v3 = _vertices[_indices[i + 2]];
-
-                var midV1V2 = getMiddle(v1, v2);
-                var midV2V3 = getMiddle(v2, v3);
-                var midV3V1 = getMiddle(v3, v1);
-                
-                // does not add items multiple times but if it is already
-                // present returns the index of the vertex
-                var midV1V2Index = AddVertex(midV1V2);
-                var midV2V3Index = AddVertex(midV2V3);
-                var midV3V1Index = AddVertex(midV3V1);
-                
-                result.Add(_indices[i]);
-                result.Add(midV1V2Index);
-                result.Add(midV3V1Index);
-
-                result.Add(_indices[i+1]);
-                result.Add(midV2V3Index);
-                result.Add(midV1V2Index);
-
-                result.Add(_indices[i+2]);
-                result.Add(midV3V1Index);
-                result.Add(midV2V3Index);
-
-                result.Add(midV1V2Index);
-                result.Add(midV2V3Index);
-                result.Add(midV3V1Index);
-            }
-            
-            _indices.Clear();
-            _indices.AddRange(result);
-        }
-
-        public void NormalizeVectors()
-        {
-            for(int i = 0; i < _vertices.Count; i++)
-                _vertices[i] = _vertices[i].Normalized();
-        }
-
         public override void RenderModel()
         {
             if (_vboId == -1)
@@ -190,6 +160,53 @@ namespace Medja.OpenTk.Components3D
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
             GL.DisableClientState(ArrayCap.VertexArray);
+        }
+
+        public void SubdivideFaces(Func<Vector3, Vector3, Vector3> getMiddle)
+        {
+            var result = new List<int>();
+
+            for (int i = 0; i < _indices.Count; i += 3)
+            {
+                var v1 = _vertices[_indices[i]];
+                var v2 = _vertices[_indices[i + 1]];
+                var v3 = _vertices[_indices[i + 2]];
+
+                var midV1V2 = getMiddle(v1, v2);
+                var midV2V3 = getMiddle(v2, v3);
+                var midV3V1 = getMiddle(v3, v1);
+
+                // does not add items multiple times but if it is already
+                // present returns the index of the vertex
+                var midV1V2Index = AddVertex(midV1V2);
+                var midV2V3Index = AddVertex(midV2V3);
+                var midV3V1Index = AddVertex(midV3V1);
+
+                result.Add(_indices[i]);
+                result.Add(midV1V2Index);
+                result.Add(midV3V1Index);
+
+                result.Add(_indices[i + 1]);
+                result.Add(midV2V3Index);
+                result.Add(midV1V2Index);
+
+                result.Add(_indices[i + 2]);
+                result.Add(midV3V1Index);
+                result.Add(midV2V3Index);
+
+                result.Add(midV1V2Index);
+                result.Add(midV2V3Index);
+                result.Add(midV3V1Index);
+            }
+
+            _indices.Clear();
+            _indices.AddRange(result);
+        }
+
+        public void NormalizeVectors()
+        {
+            for (int i = 0; i < _vertices.Count; i++)
+                _vertices[i] = _vertices[i].Normalized();
         }
     }
 }

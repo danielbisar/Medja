@@ -14,6 +14,7 @@ namespace Medja
         private Property<TTarget> _target;
         private Property<TSource> _source;
         private Func<TSource, TTarget> _sourceConverter;
+        private bool _isDisposed;
 
         /// <summary>
         /// Creates a new instance.
@@ -23,10 +24,11 @@ namespace Medja
         /// <param name="sourceConverter">Function that converts the source value to the target value. Default p => p.</param>
         public Binding(Property<TTarget> target, Property<TSource> source, Func<TSource, TTarget> sourceConverter)
         {
-            _source = source;
+            _isDisposed = false;
+            _source = source ?? throw new ArgumentNullException(nameof(source));
             _source.PropertyChanged += OnSourcePropertyChanged;
             
-            _target = target;
+            _target = target ?? throw new ArgumentNullException(nameof(target));
             _sourceConverter = sourceConverter ?? throw new ArgumentNullException(nameof(sourceConverter));
         }        
 
@@ -40,10 +42,14 @@ namespace Medja
         /// </summary>
         public override void Dispose()
         {
-            _source.PropertyChanged -= OnSourcePropertyChanged;
-            _source = null;
-            _target = null;
-            _sourceConverter = null;
+            if (!_isDisposed)
+            {
+                _isDisposed = true;
+                _source.PropertyChanged -= OnSourcePropertyChanged;
+                _source = null;
+                _target = null;
+                _sourceConverter = null;
+            }
         }
     }
 }
