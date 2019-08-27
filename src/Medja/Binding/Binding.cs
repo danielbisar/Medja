@@ -4,11 +4,11 @@ using Medja.Properties;
 namespace Medja
 {
     /// <summary>
-    /// Represents the connection of one source property to a target property.
+    /// Represents the connection of a source property to a target property.
     /// </summary>
     /// <typeparam name="TTarget">The target value type.</typeparam>
     /// <typeparam name="TSource">The source value type.</typeparam>
-    /// <remarks>Dispose the object to unregister the binding.</remarks>
+    /// <remarks>Dispose the this object to unregister the binding.</remarks>
     public class Binding<TTarget, TSource> : BindingBase<TTarget, TSource>
     {
         private Property<TTarget> _target;
@@ -22,7 +22,9 @@ namespace Medja
         /// <param name="target">The target property (will be updated on change of source)</param>
         /// <param name="source">The source property (updates the target on change)</param>
         /// <param name="sourceConverter">Function that converts the source value to the target value. Default p => p.</param>
-        public Binding(Property<TTarget> target, Property<TSource> source, Func<TSource, TTarget> sourceConverter)
+        public Binding(Property<TTarget> target, 
+                       Property<TSource> source, 
+                       Func<TSource, TTarget> sourceConverter)
         {
             _isDisposed = false;
             _source = source ?? throw new ArgumentNullException(nameof(source));
@@ -41,7 +43,7 @@ namespace Medja
         /// </summary>
         public override void Dispose()
         {
-            if (_isDisposed) 
+            if (_isDisposed)
                 return;
             
             _isDisposed = true;
