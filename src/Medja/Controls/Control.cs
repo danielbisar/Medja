@@ -99,7 +99,6 @@ namespace Medja.Controls
         }
 
         public readonly Property<bool> PropertyNeedsRendering;
-
         /// <summary>
         /// Gets or sets if this control should be rendered again.
         /// </summary>

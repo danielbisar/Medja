@@ -29,8 +29,6 @@ namespace Medja.OpenTk.Input
 
         private void OnKeyDown(object sender, KeyboardKeyEventArgs e)
         {
-            Console.WriteLine("OnKeyDown: Key: " + e.Key + ", ScanCode: " + e.ScanCode); 
-            
             _modifierKeys = _keyMap.GetModifierKeys(e.Keyboard);
             var key = _keyMap.GetKey(e.Key);
             
@@ -54,8 +52,6 @@ namespace Medja.OpenTk.Input
             // which gets translated into a OnKeyDown Delete + additional OnKeyPressed with this code
             if(e.KeyChar == 63272) 
                 return;
-            
-            Console.WriteLine("OnKeyPressed: KeyChar: " + (int)e.KeyChar);
             
             // does not trigger for ctrl+key only for shift+key or alt+key, at least on linux
             NotifyKeyPressed(new KeyboardEventArgs(e.KeyChar, _modifierKeys));

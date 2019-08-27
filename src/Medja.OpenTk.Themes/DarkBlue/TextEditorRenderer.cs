@@ -47,7 +47,6 @@ namespace Medja.OpenTk.Themes.DarkBlue
 
         protected override void InternalRender()
         {
-            Console.WriteLine("TextEditorRenderer.InternalRender");
             var rect = _control.Position.ToSKRect();
 
             _backgroundPaint.Color = _control.Background.ToSKColor();
@@ -60,7 +59,6 @@ namespace Medja.OpenTk.Themes.DarkBlue
             for (int i = 0; i < lines.Count; i++)
             {
                 var line = lines[i];
-                Console.WriteLine("line " + i + ": " + line);
 
                 // todo string marshalling is slow?
                 _canvas.DrawTextSafe(line, x, y, TextPaint);
