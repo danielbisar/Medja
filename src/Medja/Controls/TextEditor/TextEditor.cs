@@ -288,47 +288,15 @@ namespace Medja.Controls
             CaretX = 0;
         }
 
-        private void HandleDelete()
-        {
-            if (HasSelection)
-            {
-                RemoveSelectedText();
-                return;
-            }
-            
-            var line = Lines[CaretY];
-
-            if (CaretX < line.Length)
-            {
-                Lines[CaretY] = line.Substring(0, CaretX) + line.Substring(CaretX + 1);
-            }
-            else if(CaretY + 1 < Lines.Count)
-                JoinLineAndNext(CaretY);
-        }
-
-        /// <summary>
-        /// Joins the line at <see cref="index"/> and the following one.
-        /// </summary>
-        /// <param name="index">The index of the line you want to join with the following line.</param>
-        /// <exception cref="ArgumentOutOfRangeException">If <see cref="index"/> is >= the last lines index.</exception>
-        public void JoinLineAndNext(int index)
-        {
-            // we need one extra line
-            if(index + 1 >= Lines.Count)
-                throw new ArgumentOutOfRangeException(nameof(index));
-
-            Lines[index] += Lines[index + 1];
-            Lines.RemoveAt(index + 1);
-        }
-
         private void HandleBackspace()
         {
+            // CaretX change sets NeedsRendering
             if (HasSelection)
             {
                 RemoveSelectedText();
                 return;
             }
-            
+
             var line = Lines[CaretY];
 
             if (CaretX > 0)
@@ -346,6 +314,41 @@ namespace Medja.Controls
                     Lines.RemoveAt(CaretY + 1);
                 }
             }
+        }
+
+        private void HandleDelete()
+        {
+            if (HasSelection)
+            {
+                RemoveSelectedText();
+                return;
+            }
+            
+            var line = Lines[CaretY];
+
+            if (CaretX < line.Length)
+            {
+                Lines[CaretY] = line.Substring(0, CaretX) + line.Substring(CaretX + 1);
+            }
+            else if(CaretY + 1 < Lines.Count)
+                JoinLineAndNext(CaretY);
+            
+            NeedsRendering = true;
+        }
+
+        /// <summary>
+        /// Joins the line at <see cref="index"/> and the following one.
+        /// </summary>
+        /// <param name="index">The index of the line you want to join with the following line.</param>
+        /// <exception cref="ArgumentOutOfRangeException">If <see cref="index"/> is >= the last lines index.</exception>
+        public void JoinLineAndNext(int index)
+        {
+            // we need one extra line
+            if(index + 1 >= Lines.Count)
+                throw new ArgumentOutOfRangeException(nameof(index));
+
+            Lines[index] += Lines[index + 1];
+            Lines.RemoveAt(index + 1);
         }
 
         /// <summary>
