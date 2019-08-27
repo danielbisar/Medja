@@ -101,43 +101,42 @@ namespace Medja.Controls
 
         private void OnKeyPressed(object sender, KeyboardEventArgs e)
         {
-            if (e.KeyChar == 0 || e.KeyChar == 63272)
-                return;
-
-            switch (e.Key)
+            if (e.Key != null)
             {
-                case Keys.Left:
-                    MoveCaretBackward(e.ModifierKeys.HasShift());
-                    break;
-                case Keys.Right:
-                    MoveCaretForward(e.ModifierKeys.HasShift());
-                    break;
-                case Keys.Up:
-                    MoveCaretUp(e.ModifierKeys.HasShift());
-                    break;
-                case Keys.Down:
-                    MoveCaretDown(e.ModifierKeys.HasShift());
-                    break;
-                case Keys.Backspace:
-                    HandleBackspace();
-                    break;
-                case Keys.Delete:
-                    HandleDelete();
-                    break;
-                case Keys.Return:
-                    HandleReturn();
-                    break;
-                case Keys.Tab:
-                    InsertText("    ");
-                    break;
-                // todo ctrl+v
-                // todo shift + left
-                // todo shift + right
-                // todo ctrl+c, ctrl+x
-                default:
-                    InsertChar(e.KeyChar);
-                    break;
+                switch (e.Key)
+                {
+                    case Keys.Left:
+                        MoveCaretBackward(e.ModifierKeys.HasShift());
+                        break;
+                    case Keys.Right:
+                        MoveCaretForward(e.ModifierKeys.HasShift());
+                        break;
+                    case Keys.Up:
+                        MoveCaretUp(e.ModifierKeys.HasShift());
+                        break;
+                    case Keys.Down:
+                        MoveCaretDown(e.ModifierKeys.HasShift());
+                        break;
+                    case Keys.Backspace:
+                        HandleBackspace();
+                        break;
+                    case Keys.Delete:
+                        HandleDelete();
+                        break;
+                    case Keys.Return:
+                        HandleReturn();
+                        break;
+                    case Keys.Tab:
+                        InsertText("    ");
+                        break;
+                    // todo ctrl+v
+                    // todo shift + left
+                    // todo shift + right
+                    // todo ctrl+c, ctrl+x
+                }
             }
+            else
+                InsertChar(e.KeyChar);
         }
         
         /// <summary>
