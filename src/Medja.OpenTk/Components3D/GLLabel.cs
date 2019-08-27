@@ -1,5 +1,4 @@
 using System;
-using System.Runtime.InteropServices;
 using Medja.OpenTk.Utils;
 using Medja.Primitives;
 using OpenTK.Graphics.OpenGL;
@@ -53,8 +52,6 @@ namespace Medja.OpenTk.Components3D
 
                     TextureId = GL.GenTexture();
                     
-                    Console.WriteLine("Texture id: " + TextureId);
-                    
                     GL.BindTexture(TextureTarget.Texture2D, TextureId);
                     GL.TexImage2D(TextureTarget.Texture2D, 0,
                         PixelInternalFormat.Rgb, width, height, 0,
@@ -79,7 +76,7 @@ namespace Medja.OpenTk.Components3D
 
         public GLLabel()
         {
-            _fontTexture = new FontTexture(new Font { Name = "SourceCode Pro" });
+            _fontTexture = new FontTexture(new Font { Name = "Source Code Pro" });
             
             /*_mesh = new GLMesh();
             _mesh.PrimitiveType = PrimitiveType.Quads;
