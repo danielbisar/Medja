@@ -4,13 +4,15 @@ using Medja.Controls;
 namespace Medja
 {
     /// <summary>
-    /// Represents an application instance (handling windows and other library stuff) 
+    /// Represents an application instance (handling windows and other library stuff)
     /// Currently we just allow one actual window per application.
     /// </summary>
     public class MedjaApplication
     {
         private static MedjaApplication _application;
-
+        /// <summary>
+        /// Gets the default instance. This is initialized via <see cref="Create"/>.
+        /// </summary>
         public static MedjaApplication Instance
         {
             get { return _application; }

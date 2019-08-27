@@ -35,7 +35,7 @@ namespace Medja.Controls
             
             Content = CreateContent();
         }
-
+        
         protected virtual Control CreateContent()
         {
             var buttons = _controlFactory.Create<DialogButtonsControl>();

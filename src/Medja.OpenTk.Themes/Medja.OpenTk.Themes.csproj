@@ -4,6 +4,10 @@
     <TargetFramework>net472</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DocumentationFile>bin\Release\Medja.OpenTk.Themes.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
       <ProjectReference Include="..\Medja.OpenTk\Medja.OpenTk.csproj" />
       <ProjectReference Include="..\Medja\Medja.csproj" />
