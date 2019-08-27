@@ -5,7 +5,7 @@ using Medja.Utils.Threading.Tasks;
 namespace Medja
 {
     /// <summary>
-    /// Represents the connection point between Medja and the actual used rendering layer.
+    /// Represents the connection point between Medja and the used rendering layer.
     /// </summary>
     public interface IMedjaLibrary
     {
@@ -26,10 +26,11 @@ namespace Medja
         TaskQueue<object> TaskQueue { get; }
 
         /// <summary>
-        /// Enters the Main-Loop of the program. Do not call this method directly but call <see cref="MedjaApplication.Run"/> instead.
+        /// Starts the main loop of the program.
+        /// Do not call this method directly but call <see cref="MedjaApplication.Run"/> instead.
         /// </summary>
         /// <param name="application">The current <see cref="MedjaApplication"/> instance.</param>
-        /// <param name="maxFps">The maximum number of allow frames per second.</param>
+        /// <param name="maxFps">The maximum frames per second.</param>
         void Run(MedjaApplication application, int maxFps);
     }
 }

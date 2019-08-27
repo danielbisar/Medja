@@ -30,7 +30,6 @@ namespace Medja.OpenTk
         {
             GameWindow = new GameWindow();
 
-            GameWindow.Load += OnGameWindowLoad;
             GameWindow.Move += OnGameWindowMove;
             GameWindow.Resize += OnGameWindowResize;
             GameWindow.Closed += OnGameWindowClosed;
@@ -49,13 +48,8 @@ namespace Medja.OpenTk
             Position.PropertyWidth.PropertyChanged += OnPositionPropertyChanged;
             Position.PropertyHeight.PropertyChanged += OnPositionPropertyChanged;
         }
-
-        private void OnGameWindowLoad(object sender, EventArgs e)
-        {
-            Console.WriteLine("Load");
-        }
-
-        private void OnPositionPropertyChanged(object sender, PropertyChangedEventArgs eventargs)
+        
+        private void OnPositionPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if(_selfUpdatePosition)
                 return;
