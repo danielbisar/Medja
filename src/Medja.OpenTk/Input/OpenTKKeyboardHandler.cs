@@ -50,6 +50,11 @@ namespace Medja.OpenTk.Input
 
         private void OnKeyPressed(object sender, KeyPressEventArgs e)
         {
+            // ignores the key press that is send from mac os x on pressing fn+backspace
+            // which gets translated into a OnKeyDown Delete + additional OnKeyPressed with this code
+            if(e.KeyChar == 63272) 
+                return;
+            
             Console.WriteLine("OnKeyPressed: KeyChar: " + (int)e.KeyChar);
             
             // does not trigger for ctrl+key only for shift+key or alt+key, at least on linux
