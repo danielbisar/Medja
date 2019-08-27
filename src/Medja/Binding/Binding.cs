@@ -27,7 +27,6 @@ namespace Medja
             _isDisposed = false;
             _source = source ?? throw new ArgumentNullException(nameof(source));
             _source.PropertyChanged += OnSourcePropertyChanged;
-            
             _target = target ?? throw new ArgumentNullException(nameof(target));
             _sourceConverter = sourceConverter ?? throw new ArgumentNullException(nameof(sourceConverter));
         }        
@@ -38,18 +37,18 @@ namespace Medja
         }
 
         /// <summary>
-        /// Clears the connection between source and target property.
+        /// Clears all references and event handlers hold.
         /// </summary>
         public override void Dispose()
         {
-            if (!_isDisposed)
-            {
-                _isDisposed = true;
-                _source.PropertyChanged -= OnSourcePropertyChanged;
-                _source = null;
-                _target = null;
-                _sourceConverter = null;
-            }
+            if (_isDisposed) 
+                return;
+            
+            _isDisposed = true;
+            _source.PropertyChanged -= OnSourcePropertyChanged;
+            _source = null;
+            _target = null;
+            _sourceConverter = null;
         }
     }
 }
