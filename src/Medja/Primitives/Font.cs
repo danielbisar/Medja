@@ -55,10 +55,10 @@ namespace Medja.Primitives
 		public Font()
 		{
 			PropertyColor = new Property<Color>();
-			PropertyColor.UnnotifiedSet(Colors.Black);
+			PropertyColor.SetSilent(Colors.Black);
 			PropertyName = new Property<string>();
 			PropertySize = new Property<float>();
-			PropertySize.UnnotifiedSet(16);
+			PropertySize.SetSilent(16);
 			PropertyStyle = new Property<FontStyle>();
 		}
 

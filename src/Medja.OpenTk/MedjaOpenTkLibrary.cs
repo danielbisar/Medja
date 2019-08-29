@@ -24,7 +24,7 @@ namespace Medja.OpenTk
         private GameWindow _gameWindow;
         private IRenderer _renderer;
         private OpenTkMouseHandler _mouseHandler;
-        private OpenTKKeyboardHandler _keyboardHandler;
+        private OpenTkKeyboardHandler _keyboardHandler;
         private ControlHierarchy _controlHierarchy;
         private FramesPerSecondLimiter _frameLimiter;
 
@@ -69,7 +69,7 @@ namespace Medja.OpenTk
                 _mouseHandler = new OpenTkMouseHandler(_medjaWindow, _gameWindow, _focusManager);
                 _mouseHandler.Controls = _controls;
 
-                _keyboardHandler = new OpenTKKeyboardHandler(_gameWindow, _focusManager);
+                _keyboardHandler = new OpenTkKeyboardHandler(_gameWindow, _focusManager);
 
                 _frameLimiter.Run();
                 // do not limit fps via this method, since OpenTK keeps using too much CPU

@@ -81,7 +81,7 @@ namespace Medja.Controls
 			Tabs = _tabs.AsReadOnly();
 
 			PropertyTabHeaderHeight = new Property<float>();
-			PropertyTabHeaderHeight.UnnotifiedSet(30);
+			PropertyTabHeaderHeight.SetSilent(30);
 			PropertyTabHeaderWidth = new Property<float>();
 			PropertyTabHeaderWidth.Set(200);
 			PropertyTabHeaderSpacing = new Property<float>();

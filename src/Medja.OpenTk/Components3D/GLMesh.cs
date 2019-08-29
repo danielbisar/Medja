@@ -31,7 +31,7 @@ namespace Medja.OpenTk.Components3D
         public GLMesh()
         {
             PropertyPrimitiveType = new Property<PrimitiveType>();
-            PropertyPrimitiveType.UnnotifiedSet(PrimitiveType.Triangles);
+            PropertyPrimitiveType.SetSilent(PrimitiveType.Triangles);
             
             _indices = new List<int>();
             _vertices = new List<Vector3>();

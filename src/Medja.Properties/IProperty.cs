@@ -8,7 +8,7 @@
         event PropertyChangedEventHandler PropertyChanged;
        
         /// <summary>
-        /// Calls the event PropertyChanged.
+        /// Triggers the <see cref="PropertyChanged"/> event.
         /// </summary>
         void NotifyPropertyChanged();
     }

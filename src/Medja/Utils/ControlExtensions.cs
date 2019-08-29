@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Medja.Binding;
 using Medja.Primitives;
 
 namespace Medja.Controls
@@ -43,9 +42,5 @@ namespace Medja.Controls
             
             return control.IsVisible;
         }
-        
-        
-
-        
     }
 }

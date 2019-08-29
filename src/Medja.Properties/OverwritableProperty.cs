@@ -22,7 +22,7 @@ namespace Medja.Properties
         {
             if (_isValueOverwritten)
             {
-                if (!Comparer.Equals(_overwrittenValue, value))
+                if (!_comparer.Equals(_overwrittenValue, value))
                 {
                     var oldValue = _overwrittenValue;
                     _overwrittenValue = value;
@@ -30,7 +30,7 @@ namespace Medja.Properties
                     NotifyPropertyChanged(oldValue, _overwrittenValue);
                 }
             }
-            else if (!Comparer.Equals(_value, value))
+            else if (!_comparer.Equals(_value, value))
             {
                 _overwrittenValue = value;
                 _isValueOverwritten = true;
@@ -48,7 +48,7 @@ namespace Medja.Properties
                 _isValueOverwritten = false;
                 _overwrittenValue = default;
                 
-                if(!Comparer.Equals(oldValue, _value))
+                if(!_comparer.Equals(oldValue, _value))
                     NotifyPropertyChanged(oldValue, _value);
             }
         }

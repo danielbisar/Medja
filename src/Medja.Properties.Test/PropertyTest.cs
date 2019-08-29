@@ -19,7 +19,7 @@ namespace Medja.Properties.Test
             var wasNotified = false;
 
             property.PropertyChanged += (s, e) => wasNotified = true;
-            property.UnnotifiedSet(10);
+            property.SetSilent(10);
             
             Assert.False(wasNotified);
         }
@@ -30,7 +30,7 @@ namespace Medja.Properties.Test
             var wasNotified = false;
             var property = new Property<int>();
             property.PropertyChanged += (s, e) => wasNotified = true;
-            property.UnnotifiedSet(10);
+            property.SetSilent(10);
             Assert.Equal(10, property.Get());
             Assert.False(wasNotified);
         }

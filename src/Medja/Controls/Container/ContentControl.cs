@@ -44,7 +44,7 @@ namespace Medja.Controls
 			PropertyContent.AffectsLayout(this);
 			
 			PropertyAutoSetContentAlignment = new Property<bool>();
-			PropertyAutoSetContentAlignment.UnnotifiedSet(true);
+			PropertyAutoSetContentAlignment.SetSilent(true);
 			
 			Padding = new Thickness();
 			PropertyIsEnabled.PropertyChanged += OnIsEnabledChanged;

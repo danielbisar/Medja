@@ -150,13 +150,13 @@ namespace Medja.Controls
             
             PropertyBackground = new Property<Color>();
             PropertyIsEnabled = new OverwritableProperty<bool>();
-            PropertyIsEnabled.UnnotifiedSet(true);
+            PropertyIsEnabled.SetSilent(true);
             PropertyIsFocused = new Property<bool>();
             PropertyIsDisposed = new Property<bool>();
             
             PropertyVisibility = new Property<Visibility>();
             PropertyIsVisible = new Property<bool>();
-            PropertyIsVisible.UnnotifiedSet(true);
+            PropertyIsVisible.SetSilent(true);
             PropertyVisibility.PropertyChanged += OnVisibilityChanged;
 
             PropertyParent = new Property<Control>();

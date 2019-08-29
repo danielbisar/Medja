@@ -38,7 +38,7 @@ namespace Medja.OpenTk.Components3D
             PropertyPosition = new Property<Vector3>();
             PropertyRotation = new Property<Vector3>();
             PropertyScale = new Property<Vector3>();
-            PropertyScale.UnnotifiedSet(new Vector3(1));
+            PropertyScale.SetSilent(new Vector3(1));
         }
         
         public abstract void Render();

@@ -63,22 +63,22 @@ namespace Medja.OpenTk.Components3D
             PropertyViewMatrix = new Property<Matrix4>();
 
             PropertyTargetPosition = new Property<Vector3>();
-            PropertyTargetPosition.UnnotifiedSet(Vector3.Zero);
+            PropertyTargetPosition.SetSilent(Vector3.Zero);
             PropertyTargetPosition.PropertyChanged += OnViewMatrixPropertyChanged;
 
             PropertyUpVector = new Property<Vector3>();
-            PropertyUpVector.UnnotifiedSet(new Vector3(0, 1, 0));
+            PropertyUpVector.SetSilent(new Vector3(0, 1, 0));
             PropertyUpVector.PropertyChanged += OnViewMatrixPropertyChanged;
 
             // +10 z means go back from 0,0,0 10 units
-            PropertyPosition.UnnotifiedSet(new Vector3(0, 3, 10));
+            PropertyPosition.SetSilent(new Vector3(0, 3, 10));
             PropertyPosition.PropertyChanged += OnViewMatrixPropertyChanged;
 
             PropertyZNear = new Property<float>();
-            PropertyZNear.UnnotifiedSet(0.1f);
+            PropertyZNear.SetSilent(0.1f);
 
             PropertyZFar = new Property<float>();
-            PropertyZFar.UnnotifiedSet(100.0f);
+            PropertyZFar.SetSilent(100.0f);
             
             UpdateViewMatrix();
         }

@@ -37,11 +37,11 @@ namespace Medja.OpenTk.Components3D
         public GLPerspectiveCamera()
         {
             PropertyFieldOfViewAngle = new Property<float>();
-            PropertyFieldOfViewAngle.UnnotifiedSet(0.79f);
+            PropertyFieldOfViewAngle.SetSilent(0.79f);
             PropertyFieldOfViewAngle.PropertyChanged += OnProjectionMatrixPropertyChanged;
             
             PropertyAspectRatio = new Property<float>();
-            PropertyAspectRatio.UnnotifiedSet(4f / 3);
+            PropertyAspectRatio.SetSilent(4f / 3);
             PropertyAspectRatio.PropertyChanged += OnProjectionMatrixPropertyChanged;
             
             PropertyZNear.PropertyChanged += OnProjectionMatrixPropertyChanged;

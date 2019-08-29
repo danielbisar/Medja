@@ -1,12 +1,11 @@
-﻿using System;
-using Medja.Controls;
+﻿using Medja.Controls;
 using Medja.Input;
 using OpenTK;
 using OpenTK.Input;
 
 namespace Medja.OpenTk.Input
 {
-    public class OpenTKKeyboardHandler
+    public class OpenTkKeyboardHandler
     {
         // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
         // to make clear we have reference via the event registration in the ctor
@@ -16,7 +15,7 @@ namespace Medja.OpenTk.Input
         private readonly KeyMap _keyMap;
         private ModifierKeys _modifierKeys;
 
-        public OpenTKKeyboardHandler(GameWindow window, FocusManager focusManager)
+        public OpenTkKeyboardHandler(GameWindow window, FocusManager focusManager)
         {
             _window = window;
             _focusManager = focusManager;
