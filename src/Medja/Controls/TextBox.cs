@@ -29,9 +29,9 @@ namespace Medja.Controls
         public TextBox()
         {
             PropertyCaretPos = new Property<int>();
-            PropertyText.UnnotifiedSet(string.Empty);
+            PropertyText.SetSilent(string.Empty);
             PropertyText.PropertyChanged += OnTextChanged;
-            PropertyTextWrapping.UnnotifiedSet(TextWrapping.None);
+            PropertyTextWrapping.SetSilent(TextWrapping.None);
             PropertyIsCaretVisible = new Property<bool>();
             
             _timer = new Timer(OnTimerTick, null, TimeSpan.FromMilliseconds(1000), TimeSpan.FromMilliseconds(1000));

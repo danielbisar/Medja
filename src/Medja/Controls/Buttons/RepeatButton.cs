@@ -20,7 +20,7 @@ namespace Medja.Controls
         public RepeatButton()
         {
             PropertyClickRepeatMilliseconds = new Property<int>();
-            PropertyClickRepeatMilliseconds.UnnotifiedSet(200);
+            PropertyClickRepeatMilliseconds.SetSilent(200);
             PropertyClickRepeatMilliseconds.PropertyChanged += OnClickRepeatMillisecondsChanged;
             
             InputState.PropertyIsLeftMouseDown.PropertyChanged += OnIsLeftMouseDownChanged;

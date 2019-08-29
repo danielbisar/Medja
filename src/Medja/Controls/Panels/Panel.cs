@@ -34,7 +34,7 @@ namespace Medja.Controls
 			
 			Padding = new Thickness();
 			PropertyDisposeChildren = new Property<bool>();
-			PropertyDisposeChildren.UnnotifiedSet(true);
+			PropertyDisposeChildren.SetSilent(true);
 			
 			PropertyIsEnabled.PropertyChanged += OnIsEnabledChanged;
 			PropertyIsLayoutUpdated.PropertyChanged += OnIsLayoutUpdatedChanged;

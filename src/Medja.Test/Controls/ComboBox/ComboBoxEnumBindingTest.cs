@@ -1,5 +1,4 @@
 using System;
-using Medja.Binding;
 using Medja.Controls;
 using Medja.Properties;
 using Medja.Theming;
@@ -51,7 +50,7 @@ namespace Medja.Test.Controls
             binding.CreateItems();
             binding.Bind();
 
-            var title = binding.GetTitle(MyEnum.Half);
+            var title = binding.GetString(MyEnum.Half);
             
             binding.Dispose();
             comboBox.SelectItem(title);

@@ -35,7 +35,7 @@ namespace Medja.Controls
 		public ProgressBar()
 		{
 			PropertyMaxValue = new Property<float>();
-			PropertyMaxValue.UnnotifiedSet(100);
+			PropertyMaxValue.SetSilent(100);
 
 			PropertyValue = new Property<float>();
 			PropertyValue.PropertyChanged += OnValueChanged;

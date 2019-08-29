@@ -8,8 +8,8 @@ namespace Medja
     /// </summary>
     /// <typeparam name="TTarget">The target value type.</typeparam>
     /// <typeparam name="TSource">The source value type.</typeparam>
-    /// <remarks>Dispose the this object to unregister the binding.</remarks>
-    public class Binding<TTarget, TSource> : BindingBase<TTarget, TSource>
+    /// <remarks>Dispose this object to unregister the binding.</remarks>
+    public class Binding<TTarget, TSource> : IBinding
     {
         private Property<TTarget> _target;
         private Property<TSource> _source;
@@ -22,6 +22,11 @@ namespace Medja
         /// <param name="target">The target property (will be updated on change of source)</param>
         /// <param name="source">The source property (updates the target on change)</param>
         /// <param name="sourceConverter">Function that converts the source value to the target value. Default p => p.</param>
+        /// <remarks>
+        /// The binding does not initialize the target property. Means the target property gets updated only on the
+        /// first change of the source property. If you need a different behavior use
+        /// <see cref="BindingExtensions.BindTo{TTarget,TSource}"/>.
+        /// </remarks>
         public Binding(Property<TTarget> target, 
                        Property<TSource> source, 
                        Func<TSource, TTarget> sourceConverter)
@@ -39,9 +44,9 @@ namespace Medja
         }
 
         /// <summary>
-        /// Clears all references and event handlers hold.
+        /// Clears all references and event handlers.
         /// </summary>
-        public override void Dispose()
+        public void Dispose()
         {
             if (_isDisposed)
                 return;

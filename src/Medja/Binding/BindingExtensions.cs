@@ -1,13 +1,15 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Medja.Binding;
 using Medja.Controls;
 using Medja.Properties;
 using Medja.Utils;
 
 namespace Medja
 {
+    /// <summary>
+    /// Extension methods to create bindings.
+    /// </summary>
     public static class BindingExtensions
     {
         /// <summary>
@@ -19,8 +21,10 @@ namespace Medja
         /// <typeparam name="TTarget">The targets value type.</typeparam>
         /// <typeparam name="TSource">The sources value type.</typeparam>
         /// <returns>The binding object (can be ignored).</returns>
-        public static Binding<TTarget, TSource> BindTo<TTarget, TSource>(this Property<TTarget> target, Property<TSource> source,
-                                                    Func<TSource, TTarget> converter)
+        public static Binding<TTarget, TSource> BindTo<TTarget, TSource>(
+            this Property<TTarget> target, 
+            Property<TSource> source,
+            Func<TSource, TTarget> converter)
         {
             target.Set(converter(source.Get()));
             return BindToWithoutInit(target, source, converter);
@@ -73,9 +77,9 @@ namespace Medja
         /// <param name="control">The control that is affected by the layout. This should be the control
         /// containing the property.</param>
         /// <typeparam name="T">The properties value type.</typeparam>
-        public static MarkLayoutDirtyHelper<T> AffectsLayout<T>(this Property<T> property, Control control)
+        public static MarkLayoutDirtyOnPropertyChanged<T> AffectsLayout<T>(this Property<T> property, Control control)
         {
-            return new MarkLayoutDirtyHelper<T>(control, property);
+            return new MarkLayoutDirtyOnPropertyChanged<T>(control, property);
         }
 
         /// <summary>
@@ -91,14 +95,17 @@ namespace Medja
         }
 
         public static TwoWayBinding<TTarget, TSource> BindTwoWay<TTarget, TSourceObject, TSource>(
-                this Property<TTarget> targetProperty, TSourceObject obj, Action<TSourceObject, TSource> setSourceValue,
-                Func<TSourceObject, TSource> getSourceValue, Func<TSource, TTarget> sourceConverter,
+                this Property<TTarget> targetProperty, 
+                TSourceObject obj, 
+                Action<TSourceObject, TSource> setSourceValue,
+                Func<TSourceObject, TSource> getSourceValue, 
+                Func<TSource, TTarget> sourceConverter,
                 Func<TTarget, TSource> targetConverter)
         {
-            var wrapper = new PropertyWrapper<TSourceObject, TSource>(obj, setSourceValue, getSourceValue);
+            var wrapper = new PropertyWrapper<TSourceObject, TSource>(obj, getSourceValue, setSourceValue);
             targetProperty.Set(sourceConverter(getSourceValue(obj)));
             
-            return new TwoWayBinding<TTarget, TSource>(targetProperty, wrapper.PropertyValue, sourceConverter, targetConverter);
+            return new TwoWayBinding<TTarget, TSource>(targetProperty, wrapper, sourceConverter, targetConverter);
         }
 
         public static TwoWayBinding<T, T> BindTwoWay<T>(this Property<T> targetProperty, Property<T> sourceProperty)

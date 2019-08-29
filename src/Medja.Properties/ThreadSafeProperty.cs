@@ -20,10 +20,10 @@ namespace Medja.Properties
                 base.InternalSet(value);
         }
 
-        public override void UnnotifiedSet(T value)
+        public override void SetSilent(T value)
         {
             lock(_lock)
-                base.UnnotifiedSet(value);
+                base.SetSilent(value);
         }
     }
 }

@@ -39,7 +39,7 @@ namespace Medja.Properties.Test
             PropertyRegistry.Add(nameof(Text), PropertyText = new Property<string>());
 
             PropertyChildren = new Property<MedjaObservableCollection<IUndoableTestObj>>();
-            PropertyChildren.UnnotifiedSet(new MedjaObservableCollection<IUndoableTestObj>());
+            PropertyChildren.SetSilent(new MedjaObservableCollection<IUndoableTestObj>());
             PropertyRegistry.Add(nameof(Children), PropertyChildren);
         }
     }

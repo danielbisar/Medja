@@ -23,7 +23,7 @@ namespace Medja.Controls
         {
             PropertySpaceBetweenChildren = new Property<float>();
             PropertySpaceBetweenChildren.AffectsLayout(this);
-            PropertySpaceBetweenChildren.UnnotifiedSet(10);
+            PropertySpaceBetweenChildren.SetSilent(10);
             
             PropertyChildrenWidth = new Property<float?>();
             PropertyChildrenWidth.AffectsLayout(this);

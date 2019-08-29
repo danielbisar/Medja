@@ -37,10 +37,10 @@ namespace Medja.OpenTk.Components3D
         public GLOrthographicCamera()
         {
             PropertyWidth = new Property<float>();
-            PropertyWidth.UnnotifiedSet(12);
+            PropertyWidth.SetSilent(12);
             
             PropertyHeight = new Property<float>();
-            PropertyHeight.UnnotifiedSet(9);
+            PropertyHeight.SetSilent(9);
             
             PropertyWidth.PropertyChanged += OnProjectionMatrixPropertyChanged;
             PropertyHeight.PropertyChanged += OnProjectionMatrixPropertyChanged;
