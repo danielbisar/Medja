@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Linq;
 using Medja.Controls;
 using Medja.OpenTk.Utils;
-using Medja.Utils.Math;
+using Medja.Utils;
 using OpenTK;
 using OpenTK.Input;
 

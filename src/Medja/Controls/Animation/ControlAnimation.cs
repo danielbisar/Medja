@@ -1,5 +1,5 @@
 ﻿using System;
-using Medja.Utils.Math;
+using Medja.Utils;
 
 namespace Medja.Controls.Animation
 {

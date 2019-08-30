@@ -1,4 +1,4 @@
-﻿namespace Medja.Utils.Math
+﻿namespace Medja.Utils
 {
     public static class MedjaMath
     {
@@ -72,9 +72,39 @@
         /// </summary>
         /// <param name="angle">Angle in degrees.</param>
         /// <returns>The radian equivalent.</returns>
-        public static double Radians(double angle)
+        public static double Radians(this double angle)
         {
             return angle * PIby180;
+        }
+
+        /// <summary>
+        /// Gets if the value is a power of two.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns>True if the value is power of two. False if not.</returns>
+        public static bool IsPowerOfTwo(this uint value)
+        {
+            return value != 0 && (value & ~value + 1) == value;
+        }
+
+        /// <summary>
+        /// Gets the next higher power of two value.
+        /// </summary>
+        /// <param name="value">Any value > 0.</param>
+        /// <returns></returns>
+        /// <remarks>Source is from https://graphics.stanford.edu/~seander/bithacks.html#RoundUpPowerOf2Float released
+        /// unto the public domain.</remarks>
+        public static uint GetNextPowerOfTwo(this uint value)
+        {
+            value--;
+            value |= value >> 1;
+            value |= value >> 2;
+            value |= value >> 4;
+            value |= value >> 8;
+            value |= value >> 16;
+            value++;
+            
+            return value;
         }
     }
 }

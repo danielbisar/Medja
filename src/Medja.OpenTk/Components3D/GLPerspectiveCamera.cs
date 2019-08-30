@@ -1,6 +1,6 @@
 using System;
 using Medja.Properties;
-using Medja.Utils.Math;
+using Medja.Utils;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 

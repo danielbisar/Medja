@@ -1,7 +1,7 @@
 namespace Medja.Properties
 {
     /// <summary>
-    /// Allows temporal overwriting of the actual value.
+    /// Allows temporary overwriting of the actual value.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class OverwritableProperty<T> : Property<T>
@@ -18,6 +18,10 @@ namespace Medja.Properties
                 NotifyPropertyChanged(oldValue, value);
         }
 
+        /// <summary>
+        /// Sets the temporary value.
+        /// </summary>
+        /// <param name="value">The temporary value.</param>
         public void OverwriteSet(T value)
         {
             if (_isValueOverwritten)
@@ -39,6 +43,9 @@ namespace Medja.Properties
             }
         }
 
+        /// <summary>
+        /// Clears the temporary value (resets to the original value).
+        /// </summary>
         public void ClearOverwrittenValue()
         {
             if (_isValueOverwritten)

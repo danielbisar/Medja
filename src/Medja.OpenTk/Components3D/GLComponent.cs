@@ -4,7 +4,7 @@ using OpenTK;
 
 namespace Medja.OpenTk.Components3D
 {
-    public abstract class GLComponent
+    public abstract class GLComponent : IDisposable
     {
         [NonSerialized] 
         public readonly Property<Vector3> PropertyPosition;
@@ -42,5 +42,15 @@ namespace Medja.OpenTk.Components3D
         }
         
         public abstract void Render();
+
+        protected virtual void Dispose(bool disposing)
+        {
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
     }
 }
