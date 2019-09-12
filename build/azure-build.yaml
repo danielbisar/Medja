@@ -11,7 +11,7 @@ pool:
 #  vmImage: 'ubuntu-latest'
 
 variables:
-  solution: '**/*.sln'
+  solution: '**/Medja.sln'
   buildPlatform: 'Any CPU'
   buildConfigurtion: 'Release'
 
@@ -23,9 +23,16 @@ steps:
     restoreSolution: '$(solution)'
     vstsFeed: '49e07518-6419-486d-9ec2-aea3f61f1ded'
 
+#- task: DotNetCoreInstaller@0
+#  inputs:
+#    packageType: 'sdk'
+#    version: '3.0.100-preview9-014004'
+#  displayName: Install .NET Core 3
+
 - task: VSBuild@1
   displayName: 'Build solution **\*.sln'
   inputs:
+    vsVersion: latest
     solution: '$(solution)'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
