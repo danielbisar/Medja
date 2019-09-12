@@ -112,7 +112,7 @@ namespace Medja.Input
             _dragThreshold = 5;
         }
 
-        public void NotifyKeyPressed(KeyboardEventArgs keyboardEventArgs)
+        public void SendKeyPress(KeyboardEventArgs keyboardEventArgs)
         {
             KeyPressed?.Invoke(this, keyboardEventArgs);
         }

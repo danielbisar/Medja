@@ -1,6 +1,6 @@
 # HowTo: Add a new control to Medja
 
-Medja separates the rendering layer from the logic layer. This allows the usage of Themes and testing of controls without the need to render them. For this to work well you need keep a few things in mind. This guide shows you how to author a new controls.
+Medja separates the rendering layer from the logic layer. This allows the usage of Themes and testing of controls without the need to render them. For this to work well you need keep a few things in mind. This guide shows you how to author a new control.
 
 _MyControl:_ Replace this by the real controls name.
 
@@ -11,10 +11,10 @@ For details see further down this document.
 ```
 [ ] add new class: Medja/Controls/MyControl.cs
 [ ] inherit from Control or any other sub-class
-[ ] add corresponding tests to: Medja.Test/Controls/MyControlTest.cs 
 [ ] add the control to: Medja/Theming/ControlFactory.cs
+[ ] add corresponding tests to: Medja.Test/Controls/MyControlTest.cs
 [ ] use Property<T> for new properties
-[ ] implement renderer (optional) in: Medja.OpenTK/Rendering/Renderer
+[ ] implement renderer (optional) in: Medja.OpenTk.Themes
 ```
 
 ## Naming
@@ -49,8 +49,29 @@ This controls are responsible for positioning (layouting) one or more sub contro
 
 ## ControlFactory
 
-In order to support theming and different render targets the control must be registered within the class ControlFactory. See also the documentation for ControlFactory.
+In order to support theming and different render targets the control must be registered within the class ControlFactory. See the code documentation for Medja/Theming/ControlFactory.cs
+
+Add virtual factory.
+Override factory method at least for Medja.OpenTk - if it is a layout control you should use ControlRenderer class as renderer so that background colors get rendered if set; otherwise create your custom renderer.
+
+If you need to create child controls from within your control use IControlFactory as parameter for the class constructor. In the ControlFactory class just pass `this` as parameter. This assures that you will be able to easily test the control even without a renderer.
 
 ## Properties
 
 In order to support change notification and data binding implement properties using the Property&lt;T&gt; class. Guideline see class documentation.
+
+Example:
+```
+public readonly Property<bool> PropertyIsChecked;
+public bool IsChecked
+{
+    get { return PropertyIsChecked.Get(); }
+    set { PropertyIsChecked.Set(value); }
+}
+
+public ConstructorOfClass()
+{
+    PropertyIsChecked = new Property<bool>();
+    // optional: PropertyIsChecked.SetSilent(true);
+}
+```

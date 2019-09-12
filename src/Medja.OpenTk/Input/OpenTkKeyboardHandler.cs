@@ -62,7 +62,7 @@ namespace Medja.OpenTk.Input
 
             if (focusedControl != null)
             {
-                focusedControl.InputState.NotifyKeyPressed(keyboardEventArgs);
+                focusedControl.InputState.SendKeyPress(keyboardEventArgs);
             }
         }
     }
