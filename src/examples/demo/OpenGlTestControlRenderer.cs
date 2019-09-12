@@ -1,7 +1,5 @@
 ﻿using Medja.OpenTk.Rendering;
-using Medja.OpenTk.Themes;
-using OpenTK.Graphics.OpenGL;
-using SkiaSharp;
+using OpenTK.Graphics.OpenGL4;
 
 namespace Medja.Demo
 {
@@ -9,17 +7,21 @@ namespace Medja.Demo
         OpenTKControlRendererBase<OpenGlTestControl>
     //SkiaControlRendererBase<OpenGlTestControl>
     {
-        private readonly SKPaint _paint;
-        
         public OpenGlTestControlRenderer(OpenGlTestControl control)
         : base(control)
         {
-            _paint = new SKPaint();
-            
         }
 
         protected override void InternalRender()
         {
+            GL.ClearColor(1,1,1,1);
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+            
+            GL.Flush();
+            
+            /*_control.Camera.Render();
+            _control.Label.Render();*/
+            
             /*_paint.TextSize = _control._font.Size;
             _paint.Typeface = SKTypeface.FromFamilyName(_control._font.Name);
 
@@ -86,11 +88,6 @@ namespace Medja.Demo
             _paint.LcdRenderText = false;
 
             _paint.Typeface.Dispose();*/
-            
-            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-         
-            _control.Camera.Render();
-            _control.Label.Render();
         }        
     }
 }

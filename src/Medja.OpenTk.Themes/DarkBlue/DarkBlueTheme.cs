@@ -6,8 +6,11 @@ namespace Medja.OpenTk.Themes.DarkBlue
 {
     public class DarkBlueTheme : ControlFactory
     {
-        public DarkBlueTheme()
+        private readonly MedjaOpenTKWindowSettings _windowSettings;
+
+        public DarkBlueTheme(MedjaOpenTKWindowSettings windowSettings)
         {
+            _windowSettings = windowSettings;
             DefaultFont = new Font();
             DefaultFont.Name = "Roboto";
             DefaultFont.Color = DarkBlueThemeValues.PrimaryTextColor;
@@ -162,15 +165,6 @@ namespace Medja.OpenTk.Themes.DarkBlue
         {
             var result = base.CreateImage();
             result.Renderer = new ImageRenderer(result);
-
-            return result;
-        }
-
-        protected override MedjaWindow CreateMedjaWindow()
-        {
-            var result = new OpenTkWindow();
-            result.Background = DarkBlueThemeValues.WindowBackground;
-            result.Renderer = new WindowRenderer(result);
 
             return result;
         }
@@ -461,6 +455,14 @@ namespace Medja.OpenTk.Themes.DarkBlue
 
             return result;
         }
-        
+
+        protected override Window CreateWindow()
+        {
+            var result = new OpenTkWindow(_windowSettings);
+            result.Background = DarkBlueThemeValues.WindowBackground;
+            result.Renderer = new WindowRenderer(result);
+
+            return result;
+        }
     }
 }

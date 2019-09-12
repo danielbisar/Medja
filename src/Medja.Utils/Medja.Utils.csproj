@@ -3,14 +3,16 @@
     <PropertyGroup>
         <OutputType>Library</OutputType>
         <TargetFramework>net472</TargetFramework>
-        <LangVersion>latest</LangVersion>
-        <Authors>Daniel Klafft</Authors>
+        <LangVersion>8</LangVersion>
+        <Authors>Daniel Bişar</Authors>
         <Company>SprintWORX GmbH</Company>
         <Copyright>Copyright © 2018-2019 SprintWORX GmbH</Copyright>
         <Description>Cross platform .NET utilities library.</Description>
         <Product>Medja</Product>
         <NeutralLanguage>en</NeutralLanguage>
         <Version>0.9.0.0</Version>
+        <PackageVersion>0.9.1.0</PackageVersion>
+        <PackageProjectUrl>https://www.sprintworx.de/</PackageProjectUrl>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">

@@ -1,11 +1,11 @@
 ﻿using System;
 using Medja.Controls;
+using Medja.Properties;
 
 namespace Medja
 {
     /// <summary>
     /// Represents an application instance (handling windows and other library stuff)
-    /// Currently we just allow one actual window per application.
     /// </summary>
     public class MedjaApplication
     {
@@ -30,51 +30,55 @@ namespace Medja
 
             return _application = new MedjaApplication(library);
         }
+        
 
-        private readonly IMedjaLibrary _library;
-        public IMedjaLibrary Library
+        public readonly Property<Window> PropertyMainWindow;
+        public Window MainWindow
         {
-            get { return _library; }
+            get { return PropertyMainWindow.Get(); }
+            set { PropertyMainWindow.Set(value); }
         }
 
-        private MedjaWindow _mainWindow;
-        public MedjaWindow MainWindow
-        {
-            get { return _mainWindow; }
-            set
-            {
-                UnregisterMainWindow();
-                _mainWindow = value;
-                RegisterMainWindow();
-            }
-        }
+        public IMedjaLibrary Library { get; }
 
         public event EventHandler<ShutdownEventArgs> ShutdownEvent;
 
         private MedjaApplication(IMedjaLibrary library)
         {
-            _library = library;
+            Library = library;
+            
+            PropertyMainWindow = new Property<Window>();
+            PropertyMainWindow.PropertyChanged += OnMainWindowChanged;
         }
 
-        private void UnregisterMainWindow()
+        private void OnMainWindowChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (_mainWindow == null)
+            var oldWindow = e.OldValue as Window;
+            var newWindow = e.NewValue as Window;
+            
+            UnregisterMainWindow(oldWindow);
+            RegisterMainWindow(newWindow);
+        }
+
+        private void UnregisterMainWindow(Window window)
+        {
+            if (window == null)
                 return;
 
-            _mainWindow.Closed -= OnMainWindowClosed;
+            window.Closed -= OnMainWindowClosed;
         }
 
-        private void RegisterMainWindow()
+        private void RegisterMainWindow(Window window)
         {
-            if (_mainWindow == null)
+            if (window == null)
                 throw new InvalidOperationException(nameof(MainWindow) + " cannot be null!");
 
-            _mainWindow.Closed += OnMainWindowClosed;
+            window.Closed += OnMainWindowClosed;
         }
 
         private void OnMainWindowClosed(object sender, EventArgs e)
         {
-            UnregisterMainWindow();
+            UnregisterMainWindow(MainWindow);
             Shutdown();
         }
 
@@ -83,7 +87,7 @@ namespace Medja
         /// </summary>
         public void Shutdown()
         {
-            var hasMainWindow = _mainWindow != null && !_mainWindow.IsClosed;
+            var hasMainWindow = MainWindow != null && !MainWindow.IsClosed;
 
             if (hasMainWindow)
             {
@@ -92,54 +96,25 @@ namespace Medja
                 if (cancelShutdown)
                     return;
 
-                _mainWindow.Close();
-                return; // function will be called by _mainWindow.Closed again
+                MainWindow.Close();
+                // this function will be called by _mainWindow.Closed again
             }
-
-            //_isRunning = false;
         }
 
         private bool NotifyShutdown()
         {
-            var result = false;
+            var eventArgs = new ShutdownEventArgs();
+            ShutdownEvent?.Invoke(this, eventArgs);
 
-            if (ShutdownEvent != null)
-            {
-                var eventArgs = new ShutdownEventArgs();
-                ShutdownEvent(this, eventArgs);
-                result = eventArgs.Cancel;
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// Creates a new window. This method exists so you don't need to worry about the acutal used library instance.
-        /// </summary>
-        /// <returns>The new window instance provided by the library.</returns>
-        public MedjaWindow CreateWindow()
-        {
-            return _library.ControlFactory.Create<MedjaWindow>();
-        }
-        
-        /// <summary>
-        /// Same as <see cref="CreateWindow"/> but makes the window the application main window.
-        /// </summary>
-        /// <returns>The new window.</returns>
-        public MedjaWindow CreateMainWindow()
-        {
-            var result = CreateWindow();
-            MainWindow = result;
-
-            return result;
+            return eventArgs.Cancel;
         }
 
         /// <summary>
         /// Starts the application (shows the main window, starts message queue, ...)
         /// </summary>
-        public void Run(int maxFps = 60)
+        public void Run()
         {
-            _library.Run(this, maxFps);
+            Library.Run(this);
         }
     }
 }

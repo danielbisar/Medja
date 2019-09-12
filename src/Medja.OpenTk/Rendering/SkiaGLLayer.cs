@@ -1,6 +1,6 @@
 ﻿using System;
 using SkiaSharp;
-using OpenTK.Graphics.OpenGL;
+using OpenTK.Graphics.OpenGL4;
 
 namespace Medja.OpenTk.Rendering
 {
@@ -38,12 +38,12 @@ namespace Medja.OpenTk.Rendering
             Canvas?.Dispose();
             _surface?.Dispose();
 
-            OpenGLState.KeepState(() => 
-            {
+            //OpenGLState.KeepState(() => 
+            //{
                 _surface = SKSurface.Create(_grContext, _renderTarget, GRSurfaceOrigin.BottomLeft, GetColorType());
                 Canvas = _surface.Canvas;
                 ResetContext();
-            });
+            //});
         }
 
         public void Dispose()
@@ -64,10 +64,10 @@ namespace Medja.OpenTk.Rendering
         {
             GL.GetInteger(GetPName.FramebufferBinding, out var fboId);
             GL.GetInteger(GetPName.Samples, out var sampleCount);
-            GL.GetInteger(GetPName.StencilBits, out var stencilBits);
+            //GL.GetInteger(GetPName.StencilBits, out var stencilBits);
             
             var glInfo = new GRGlFramebufferInfo((uint)fboId, GetColorType().ToGlSizedFormat());
-            var renderTarget = new GRBackendRenderTarget(width, height, sampleCount, stencilBits, glInfo);
+            var renderTarget = new GRBackendRenderTarget(width, height, sampleCount, 0, glInfo);
 
             return renderTarget;
         }

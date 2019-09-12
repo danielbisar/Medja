@@ -1,7 +1,6 @@
 using System;
 using Medja.Properties;
 using OpenTK;
-using OpenTK.Graphics.OpenGL;
 
 namespace Medja.OpenTk.Components3D
 {
@@ -62,8 +61,8 @@ namespace Medja.OpenTk.Components3D
 
         public override void Render()
         {
-            GL.MatrixMode(MatrixMode.Projection);
-            GL.LoadMatrix(ref _projectionMatrix);
+            /*GL.MatrixMode(MatrixMode.Projection);
+            GL.LoadMatrix(ref _projectionMatrix);*/
         }
     }
 }

@@ -1,6 +1,5 @@
 using System;
 using Medja.Properties;
-using OpenTK.Graphics.OpenGL;
 
 namespace Medja.OpenTk.Components3D
 {
@@ -19,7 +18,7 @@ namespace Medja.OpenTk.Components3D
 
             var matrix = camera.ViewMatrix;
 
-            GL.MatrixMode(MatrixMode.Modelview);
+            /*GL.MatrixMode(MatrixMode.Modelview);
             GL.PushMatrix();
             GL.LoadMatrix(ref matrix);
 
@@ -35,7 +34,7 @@ namespace Medja.OpenTk.Components3D
             
             render();
             
-            GL.PopMatrix();
+            GL.PopMatrix();*/
         }
     
         [NonSerialized] 

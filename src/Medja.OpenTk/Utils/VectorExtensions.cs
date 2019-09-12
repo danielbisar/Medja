@@ -11,5 +11,11 @@ namespace Medja.OpenTk.Utils
             yield return v.Y;
             yield return v.Z;
         }
+
+        public static IEnumerable<float> Iterate(this Vector2 v)
+        {
+            yield return v.X;
+            yield return v.Y;
+        }
     }
 }

@@ -62,5 +62,28 @@ namespace Medja.Utils.Linq
             foreach (var item in items)
                 collection.Remove(item);
         }
+
+        // do not use IList or IEnumerable, this would impact performance to much
+        // create own overload for this kind of versions
+        // tested with for instead of foreach: result: slower
+        public static void ForEachSplitSeq<T>(this List<T> items, Func<T, bool> condition, Action<T> matches, Action afterMatches, Action<T> doesNotMatch)
+        {
+            var nonMatching = new List<T>();
+            
+            foreach(var item in items)
+            {
+                if(condition(item))
+                    matches(item);
+                else
+                    nonMatching.Add(item);
+            }
+
+            afterMatches?.Invoke();
+
+            foreach(var item in nonMatching)
+            {
+                doesNotMatch(item);
+            }
+        }
     }
 }

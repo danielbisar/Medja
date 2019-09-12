@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using Medja.Input;
 using Medja.Properties;
+using Medja.Utils;
 
 namespace Medja.Controls
 {
@@ -12,6 +13,7 @@ namespace Medja.Controls
     public class TextEditor : Control
     {
         private readonly Timer _timer;
+        private readonly TaskQueueFinder _taskQueueFinder;
         
         // maybe we will use another class instead of string later on
         // on every typing a line must be updated, since strings in c#
@@ -73,13 +75,13 @@ namespace Medja.Controls
             PropertySelectionStart = new Property<Caret>();
             PropertySelectionEnd = new Property<Caret>();
             PropertyIsCaretVisible = new Property<bool>();
-            
-            _timer = new Timer(OnTimerTick, null, TimeSpan.FromMilliseconds(1000), TimeSpan.FromMilliseconds(1000));
-            
             PropertyIsFocused.PropertyChanged += OnFocusChanged;
 
             InputState.KeyPressed += OnKeyPressed;
             InputState.OwnsMouseEvents = true;
+
+            _taskQueueFinder = new TaskQueueFinder(this);
+            _timer = new Timer(OnTimerTick, null, TimeSpan.FromMilliseconds(1000), TimeSpan.FromMilliseconds(1000));
         }
         
         private void OnFocusChanged(object sender, PropertyChangedEventArgs e)
@@ -90,7 +92,7 @@ namespace Medja.Controls
 
         private void OnTimerTick(object state)
         {
-            MedjaApplication.Instance.Library.TaskQueue.TryEnqueue(p =>
+            _taskQueueFinder.TaskQueue?.TryEnqueue(p =>
             {
                 if(IsFocused)
                     IsCaretVisible = !IsCaretVisible;

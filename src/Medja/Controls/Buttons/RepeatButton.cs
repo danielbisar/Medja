@@ -1,5 +1,6 @@
 using System.Timers;
 using Medja.Properties;
+using Medja.Utils;
 
 namespace Medja.Controls
 {
@@ -9,6 +10,7 @@ namespace Medja.Controls
     public class RepeatButton : Button
     {
         private readonly Timer _timer;
+        private readonly TaskQueueFinder _taskQueueFinder;
         
         public readonly Property<int> PropertyClickRepeatMilliseconds;
         public int ClickRepeatMilliseconds
@@ -24,6 +26,8 @@ namespace Medja.Controls
             PropertyClickRepeatMilliseconds.PropertyChanged += OnClickRepeatMillisecondsChanged;
             
             InputState.PropertyIsLeftMouseDown.PropertyChanged += OnIsLeftMouseDownChanged;
+            
+            _taskQueueFinder = new TaskQueueFinder(this);
             _timer = new Timer();
             _timer.AutoReset = true;
             _timer.Elapsed += OnTimerElapsed;
@@ -36,8 +40,7 @@ namespace Medja.Controls
 
         private void OnTimerElapsed(object sender, ElapsedEventArgs e)
         {
-            MedjaApplication.Instance.Library.TaskQueue
-                .Enqueue(control =>
+            _taskQueueFinder.TaskQueue?.Enqueue(control =>
                 {
                     var button = (RepeatButton)control;
                     var position = button.InputState.PointerPosition;

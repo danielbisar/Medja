@@ -46,12 +46,6 @@ namespace Medja.Controls
                 yield return Popup;
         }
 
-        public override void UpdateAnimations()
-        {
-            base.UpdateAnimations();
-            Popup?.UpdateAnimations();
-        }
-
         protected override void Dispose(bool disposing)
         {
             Popup?.Dispose();

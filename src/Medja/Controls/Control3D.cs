@@ -5,5 +5,9 @@
     /// </summary>
     public abstract class Control3D : Control
     {
+        public Control3D()
+        {
+            Is3D = true;
+        }
     }
 }

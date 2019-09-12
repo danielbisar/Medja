@@ -15,8 +15,11 @@ namespace Medja.OpenTk.Themes
 {
     public class BlackRedTheme : ControlFactory
     {
-        public BlackRedTheme()
+        private readonly MedjaOpenTKWindowSettings _windowSettings;
+
+        public BlackRedTheme(MedjaOpenTKWindowSettings windowSettings)
         {
+            _windowSettings = windowSettings;
             DefaultFont = new Font();
             DefaultFont.Name = "Monospace";
             DefaultFont.Color = BlackRedThemeValues.PrimaryTextColor;
@@ -224,15 +227,6 @@ namespace Medja.OpenTk.Themes
             result.Renderer = new ControlRenderer(result);
             result.Background = BlackRedThemeValues.PrimaryColor;
 
-            return result;
-        }
-
-        protected override MedjaWindow CreateMedjaWindow()
-        {
-            // do not use base.CreateMedjaWindow because
-            // OpenTkWindow implements some additional features needed
-            // by OpenTk
-            var result = new OpenTkWindow();
             return result;
         }
 
@@ -481,6 +475,12 @@ namespace Medja.OpenTk.Themes
             var result = base.CreateScrollableContainer();
             result.Renderer = new ControlRenderer(result);
 
+            return result;
+        }
+
+        protected override Window CreateWindow()
+        {
+            var result = new OpenTkWindow(_windowSettings);
             return result;
         }
     }

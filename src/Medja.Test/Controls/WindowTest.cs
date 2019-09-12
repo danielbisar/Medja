@@ -4,13 +4,13 @@ using Xunit;
 
 namespace Medja.Test.Controls
 {
-    public class MedjaWindowTest
+    public class WindowTest
     {
         [Fact]
         public void SetsParentOfContent()
         {
             var factory = new ControlFactory();
-            var window = factory.Create<MedjaWindow>();
+            var window = factory.Create<Window>();
             window.Content = factory.Create<Control>();
 
             Assert.Equal(window, window.Content.Parent);
@@ -22,7 +22,7 @@ namespace Medja.Test.Controls
             var factory = new ControlFactory();
             var control = factory.Create<Control>();
             
-            var window = factory.Create<MedjaWindow>();
+            var window = factory.Create<Window>();
             window.Content = control;
             
             Assert.NotNull(control.Parent);

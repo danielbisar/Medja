@@ -1,10 +1,12 @@
+using Medja.OpenTk;
 using Medja.OpenTk.Themes.DarkBlue;
 
 namespace Medja.Demo
 {
     public class CustomControlsFactory : DarkBlueTheme
     {
-        public CustomControlsFactory()
+        public CustomControlsFactory(MedjaOpenTKWindowSettings settings)
+        : base(settings)
         {
             AddFactoryMethod(CreateOpenGlTestControl);
         }

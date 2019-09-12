@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Medja.Controls.Animation;
 using Medja.Input;
 using Medja.Primitives;
 using Medja.Properties;
@@ -16,10 +15,14 @@ namespace Medja.Controls
         private readonly HashSet<IProperty> _propertiesAffectingRendering;
         private readonly HashSet<IDisposable> _disposables;
         
-        public AnimationManager AnimationManager { get; }
         public Dictionary<int, object> AttachedProperties { get; }
         public InputState InputState { get; }
-
+        
+        /// <summary>
+        /// Gets if this control is a 3D or 2D control. Should not change over the lifetime of a control.
+        /// </summary>
+        public bool Is3D { get; protected set; }
+        
         /// <summary>
         /// Gets the position this item should be drawn at.
         /// </summary>
@@ -138,7 +141,6 @@ namespace Medja.Controls
             _disposables = new HashSet<IDisposable>();
             _propertiesAffectingRendering = new HashSet<IProperty>();
             
-            AnimationManager = new AnimationManager();
             AttachedProperties = new Dictionary<int, object>();
             InputState = new InputState(this);
             Position = new MRect();
@@ -199,7 +201,6 @@ namespace Medja.Controls
 
         public virtual void UpdateLayout()
         {
-            UpdateAnimations();
             Arrange(new Size(Position.Width, Position.Height));
             
             IsLayoutUpdated = true;
@@ -238,14 +239,6 @@ namespace Medja.Controls
         public virtual IEnumerable<Control> GetChildren()
         {
             return new Control[0];
-        }
-
-        /// <summary>
-        /// Updates the state of the animations. Should not be called manually.
-        /// </summary>
-        public virtual void UpdateAnimations()
-        {
-            AnimationManager.ApplyAnimations();
         }
 
         /// <summary>

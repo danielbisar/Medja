@@ -1,33 +1,26 @@
 ﻿namespace Medja.Controls
 {
-	public class FocusManager
-	{
-		public static FocusManager Default { get; }
+    public class FocusManager
+    {
+        private Control _currentlyFocusedControl;
 
-		static FocusManager()
-		{
-			Default = new FocusManager();
-		}
-		
-		private Control _currentlyFocusedControl;
+        public void SetFocus(Control control)
+        {
+            if (control == _currentlyFocusedControl) 
+                return;
+            
+            if (_currentlyFocusedControl != null)
+                _currentlyFocusedControl.IsFocused = false;
 
-		public void SetFocus(Control control)
-		{
-			if (control != _currentlyFocusedControl)
-			{
-				if (_currentlyFocusedControl != null)
-					_currentlyFocusedControl.IsFocused = false;
+            if (control != null)
+                control.IsFocused = true;
 
-				if (control != null)
-					control.IsFocused = true;
+            _currentlyFocusedControl = control;
+        }
 
-				_currentlyFocusedControl = control;
-			}
-		}
-
-		public Control GetFocused()
-		{
-			return _currentlyFocusedControl;
-		}
-	}
+        public Control GetFocused()
+        {
+            return _currentlyFocusedControl;
+        }
+    }
 }

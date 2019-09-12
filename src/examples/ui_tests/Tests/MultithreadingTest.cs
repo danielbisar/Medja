@@ -1,7 +1,7 @@
 using System.Threading;
-using Medja;
 using Medja.Controls;
 using Medja.Theming;
+using Medja.Utils;
 using Medja.Utils.Threading.Tasks;
 
 namespace MedjaOpenGlTestApp.Tests
@@ -10,6 +10,7 @@ namespace MedjaOpenGlTestApp.Tests
     {
         private readonly IControlFactory _controlFactory;
         private TextBlock _control;
+        private TaskQueueFinder _finder;
 
         public MultithreadingTest(IControlFactory controlFactory)
         {
@@ -20,6 +21,8 @@ namespace MedjaOpenGlTestApp.Tests
         {
             _control = _controlFactory.Create<TextBlock>();
             _control.Text = "Another thread will update this text.";
+
+            _finder = new TaskQueueFinder(_control);
             
             var thread = new Thread(UpdateControl);
             thread.Start();
@@ -41,7 +44,7 @@ namespace MedjaOpenGlTestApp.Tests
 
                 // prevent modified closure
                 var x1 = x;
-                MedjaApplication.Instance.Library.TaskQueue.Enqueue(() =>
+                _finder.TaskQueue?.Enqueue(() =>
                                                                     {
                                                                         _control.Text =
                                                                                 "Cool update from another thread. X = " +

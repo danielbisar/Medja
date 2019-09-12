@@ -4,11 +4,11 @@ using SkiaSharp;
 
 namespace Medja.OpenTk.Themes
 {
-    public class WindowRenderer : SkiaControlRendererBase<MedjaWindow>
+    public class WindowRenderer : SkiaControlRendererBase<Window>
     {
         private readonly SKPaint _backgroundPaint;
         
-        public WindowRenderer(MedjaWindow control) 
+        public WindowRenderer(Window control) 
             : base(control)
         {
             _backgroundPaint = new SKPaint();

@@ -3,8 +3,8 @@ using System.IO;
 using System.Reflection;
 using Medja.Controls;
 using Medja.OpenTk;
+using Medja.OpenTk.Themes.DarkBlue;
 using Medja.Primitives;
-using Medja.Theming;
 
 namespace Medja.examples.Editor
 {
@@ -14,34 +14,37 @@ namespace Medja.examples.Editor
         {
             get
             {
-                string codeBase = Assembly.GetExecutingAssembly().CodeBase;
-                UriBuilder uri = new UriBuilder(codeBase);
-                string path = Uri.UnescapeDataString(uri.Path);
+                var codeBase = Assembly.GetExecutingAssembly().CodeBase;
+                var uri = new UriBuilder(codeBase);
+                var path = Uri.UnescapeDataString(uri.Path);
+                
                 return Path.GetDirectoryName(path);
             }
         }
 
         static void Main(string[] args)
         {
-            var library = new MedjaOpenTkLibrary(new Medja.OpenTk.Themes.DarkBlue.DarkBlueTheme());
-
-            var controlFactory = library.ControlFactory;
+            var settings = new MedjaOpenTKWindowSettings();
+            var controlFactory = new DarkBlueTheme(settings);
+            settings.ControlFactory = controlFactory;
+            
+            var library = new MedjaOpenTkLibrary();
             var application = MedjaApplication.Create(library);
 
-            var window = application.CreateWindow();
+            var window = controlFactory.Create<Window>();
             window.CenterOnScreen(800, 600);
             window.Background = Colors.Black;
-            window.Content = CreateWindowContent(controlFactory);
+            window.Content = CreateWindowContent(window);
             window.Title = "Editor";
 
             application.MainWindow = window;
             application.Run();
         }
 
-        private static Control CreateWindowContent(IControlFactory controlFactory)
+        private static Control CreateWindowContent(Window window)
         {
             //TODO menu
-
+            var controlFactory = window.ControlFactory;
             var editor = controlFactory.Create<TextEditor>();
 
             var path = Path.Combine(AssemblyDirectory, "dummy.txt");
@@ -62,7 +65,7 @@ namespace Medja.examples.Editor
             dockPanel.Add(Dock.Bottom, buttonStackPanel);
             dockPanel.Add(Dock.Fill, editor);
 
-            FocusManager.Default.SetFocus(editor);
+            window.FocusManager.SetFocus(editor);
 
             return dockPanel;
         }

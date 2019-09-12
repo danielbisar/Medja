@@ -1,7 +1,9 @@
 using Medja.Controls;
 using Medja.Primitives;
 using Medja.Theming;
-using OpenTK.Graphics.OpenGL;
+using OpenTK.Graphics;
+using OpenTK.Graphics.OpenGL4;
+using OpenTK.Platform;
 using SkiaSharp;
 
 namespace Medja.OpenTk.Rendering
@@ -9,83 +11,78 @@ namespace Medja.OpenTk.Rendering
     /// <summary>
     /// Base class for rendering 3D inside a control
     /// </summary>
-    public abstract class OpenTKControlRendererBase<TControl> : ControlRendererBase<SKCanvas, TControl> 
-            where TControl : Control
+    public abstract class OpenTKControlRendererBase<TControl> 
+        : ControlRendererBase<SKCanvas, TControl>,
+          IOpenTkControlRenderer 
+          where TControl : Control3D
     {
-        /// <summary>
-        /// Set the clear buffer mask, is used in <see cref="Clear"/>.
-        /// </summary>
-        protected ClearBufferMask _clearBufferMask;
-        protected int[] _originalViewport;
+        private GraphicsContext _gc;
+        private IWindowInfo _windowInfo;
 
         public OpenTKControlRendererBase(TControl control)
             : base(control)
         {
-            _clearBufferMask = ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit |
-                    ClearBufferMask.StencilBufferBit;
-            _originalViewport = new int[4];
         }
 
-        /// <summary>
-        /// Basic implementation what happens if you render a control with OpenTK.
-        /// </summary>
-        /// <param name="context">Is ignored.</param>
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            var mainWindow = _control.GetRootControl() as OpenTkWindow;
+            var gameWindow = mainWindow.GameWindow;
+            _windowInfo = gameWindow.WindowInfo;
+            
+            _gc = new GraphicsContext(GraphicsMode.Default, _windowInfo, 4, 2,
+                GraphicsContextFlags.ForwardCompatible);
+            _gc.MakeCurrent(_windowInfo);
+            
+            GL.Enable(EnableCap.ScissorTest);
+            Resize(_control.Position);
+        }
+
+        public override void Resize(MRect position)
+        {
+            if(!IsInitialized)
+                return;
+            
+            _gc.MakeCurrent(_windowInfo);
+            
+            base.Resize(position);
+
+            var x = (int) position.X;
+            var width = (int) position.Width;
+            var height = (int) position.Height;
+
+            var windowPosition = _control.GetRootControl().Position;
+
+            // OpenGL expects the viewport to be defined with y as the lower point of the control
+            // and it's coordinates are turned upside down; this makes it fit to the axis of Skia
+            var yb = position.Y + position.Height;
+            var y = (int)windowPosition.Height - (int)yb;
+            
+            GL.Viewport(0, 0, (int)windowPosition.Width, (int)windowPosition.Height);
+            GL.Scissor(x, y, width, height);
+        }
+
         protected override void Render(SKCanvas context)
         {
-            Setup3D();
+            MakeContextCurrent();
             InternalRender();
-            Reset3D();
+            GL.Flush();
         }
 
         protected abstract void InternalRender();
 
-        /// <summary>
-        /// Setup OpenTK/OpenGL. If you need a different setup override this method. Important: you should enable
-        /// ScissorTest and call GL.Viewport and GL.Scissor to limit the drawing area to the controls position. 
-        /// </summary>
-        protected virtual void Setup3D()
+        public void SwapBuffers()
         {
-            GL.Enable(EnableCap.DepthTest);
-            GL.Enable(EnableCap.ScissorTest);
-
-            var position = _control.Position;
-
-            // precondtion: viewport was setup for full screen height before using this method
-            GL.GetInteger(GetPName.Viewport, _originalViewport);
-
-            // OpenGL expects the viewport to be defined with y as the lower point of the control
-            // and its coordinates are turned upside down
-            var translatedY = _originalViewport[3] - (position.Y + position.Height);
-            
-            GL.Viewport((int)position.X, (int)translatedY, (int)position.Width, (int)position.Height);
-            GL.Scissor((int)position.X, (int)translatedY, (int)position.Width, (int)position.Height);
-			
-            Clear();
-        }
-        
-        /// <summary>
-        /// Override if you want to do something different than set the clear color to the controls background
-        /// (or black) and use the <see cref="_clearBufferMask"/> when calling <see cref="GL.Clear"/>. 
-        /// </summary>
-        protected virtual void Clear()
-        {
-            var background = _control.Background ?? Colors.Black;
-            
-            //GL.ClearStencil(0);
-            GL.ClearColor(background.Red, background.Green, background.Blue, 0);
-            GL.Clear(_clearBufferMask);
+            if(IsInitialized)
+                _gc.SwapBuffers();
         }
 
-        /// <summary>
-        /// Is called at the end of <see cref="Render"/> and disables
-        /// <see cref="EnableCap.ScissorTest"/> and <see cref="EnableCap.DepthTest"/>.
-        /// </summary>
-        protected virtual void Reset3D()
+        public void MakeContextCurrent()
         {
-            GL.Disable(EnableCap.ScissorTest);
-            GL.Disable(EnableCap.DepthTest);
-            
-            GL.Viewport(_originalViewport[0], _originalViewport[1], _originalViewport[2], _originalViewport[3]);
+            if(IsInitialized)
+                _gc.MakeCurrent(_windowInfo);
         }
     }
 }

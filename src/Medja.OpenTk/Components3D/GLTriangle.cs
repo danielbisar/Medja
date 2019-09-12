@@ -1,5 +1,3 @@
-using OpenTK.Graphics.OpenGL;
-
 namespace Medja.OpenTk.Components3D
 {
     /// <summary>
@@ -10,11 +8,11 @@ namespace Medja.OpenTk.Components3D
     {
         public override void RenderModel()
         {
-            GL.Begin(PrimitiveType.Triangles);
+            /*GL.Begin(PrimitiveType.Triangles);
             GL.Vertex3(0, 0, 0);
             GL.Vertex3(1, 0, 0);
             GL.Vertex3(0, 1, 0);
-            GL.End();
+            GL.End();*/
         }
     }
 }

@@ -3,13 +3,15 @@ using System.Threading;
 using Medja.Input;
 using Medja.Primitives;
 using Medja.Properties;
+using Medja.Utils;
 
 namespace Medja.Controls
 {
     public class TextBox : TextControl
     {
-        private bool _selfChangedText;
         private readonly Timer _timer;
+        private readonly TaskQueueFinder _taskQueueFinder;
+        private bool _selfChangedText;
         
         public readonly Property<int> PropertyCaretPos;
         public int CaretPos
@@ -33,12 +35,13 @@ namespace Medja.Controls
             PropertyText.PropertyChanged += OnTextChanged;
             PropertyTextWrapping.SetSilent(TextWrapping.None);
             PropertyIsCaretVisible = new Property<bool>();
-            
-            _timer = new Timer(OnTimerTick, null, TimeSpan.FromMilliseconds(1000), TimeSpan.FromMilliseconds(1000));
             PropertyIsFocused.PropertyChanged += OnFocusChanged;
             
             InputState.KeyPressed += OnKeyPressed;
             InputState.OwnsMouseEvents = true;
+
+            _taskQueueFinder = new TaskQueueFinder(this);
+            _timer = new Timer(OnTimerTick, null, TimeSpan.FromMilliseconds(1000), TimeSpan.FromMilliseconds(1000));
         }
 
         private void OnFocusChanged(object sender, PropertyChangedEventArgs e)
@@ -49,7 +52,7 @@ namespace Medja.Controls
 
         private void OnTimerTick(object state)
         {
-            MedjaApplication.Instance.Library.TaskQueue.TryEnqueue(p =>
+            _taskQueueFinder.TaskQueue?.TryEnqueue(p =>
             {
                 if(IsFocused)
                     IsCaretVisible = !IsCaretVisible;
