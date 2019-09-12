@@ -46,7 +46,8 @@ steps:
   displayName: Build Medja.sln
   inputs:
     command: build
-    argument: $(solution) --configuration $(buildConfiguration)
+    projects: '$(solution)'
+    argument: '--configuration $(buildConfiguration)'
 
 - task: VSTest@2
   displayName: Run UnitTests
