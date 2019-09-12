@@ -64,19 +64,15 @@ steps:
     TreatNotIndexedAsWarning: true
   continueOnError: true
 
-- task: NuGetCommand@2
-  displayName: 'NuGet pack'
-  inputs:
-    command: pack
-    packagesToPack: '**\Medja.OpenTk\*.csproj'
-    versioningScheme: byBuildNumber
-
 - task: DotNetCoreCLI@2
   displayName: 'dotnet pack'
   inputs:
     command: pack
-    packagesToPack: '**/Medja.Utils/*.csproj; **/Medja/*.csproj; **/Medja.ZeroMQ/*.csproj; **/Medja.ProtoBuf/*.csproj; **/Medja.NativeInterfaces/*.csproj; **/Medja.OpenTk.Themes/*.csproj; **/Medja.Properties/*.csproj'
-    versioningScheme: byBuildNumber
+    packagesToPack: '**/Medja.Utils/*.csproj; **/Medja/*.csproj; **/Medja.ZeroMQ/*.csproj; **/Medja.ProtoBuf/*.csproj; **/Medja.OpenTk/*.csproj; **/Medja.OpenTk.Themes/*.csproj; **/Medja.Properties/*.csproj'
+    versioningScheme: byPrereleaseNumber # uses date and time + following fields
+    majorVersion: 0
+    minorVersion: 9
+    patchVersion: 1
 
 - task: NuGetCommand@2
   displayName: 'NuGet push'
