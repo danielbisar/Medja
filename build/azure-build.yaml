@@ -25,20 +25,24 @@ steps:
     restoreSolution: '$(solution)'
     vstsFeed: '49e07518-6419-486d-9ec2-aea3f61f1ded'
 
-#- task: DotNetCoreInstaller@0
-#  inputs:
-#    packageType: 'sdk'
-#    version: '3.0.100-preview9-014004'
-#  displayName: Install .NET Core 3
-
-- task: VSBuild@1
-  displayName: 'Build solution **\*.sln'
+- task: DotNetCoreInstaller@0
   inputs:
-    vsVersion: latest
-    solution: '$(solution)'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
-    logProjectEvents: false
+    packageType: 'sdk'
+    version: '3.0.100-preview9-014004'
+  displayName: Install .NET Core 3
+
+#- task: VSBuild@1
+#  displayName: 'Build Medja.sln'
+#  inputs:
+#    vsVersion: latest
+#    solution: '$(solution)'
+#    platform: '$(buildPlatform)'
+#    configuration: '$(buildConfiguration)'
+#    logProjectEvents: false
+- task: DotNetCoreCLI@2
+  inputs:
+    command: build
+    argument: --configuration $(buildConfiguration)
 
 - task: VSTest@2
   displayName: 'VsTest - testAssemblies'
