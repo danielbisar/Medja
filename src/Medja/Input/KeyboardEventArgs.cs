@@ -21,13 +21,13 @@ namespace Medja.Input
         /// </summary>
         public ModifierKeys ModifierKeys { get; }
 
-        public KeyboardEventArgs(char keyChar, ModifierKeys modifierKeys)
+        public KeyboardEventArgs(char keyChar, ModifierKeys modifierKeys = ModifierKeys.None)
         {
             KeyChar = keyChar;
             ModifierKeys = modifierKeys;
         }
 
-        public KeyboardEventArgs(Keys key, ModifierKeys modifierKeys)
+        public KeyboardEventArgs(Keys key, ModifierKeys modifierKeys = ModifierKeys.None)
             : this((char)key, modifierKeys)
         {
             Key = key;

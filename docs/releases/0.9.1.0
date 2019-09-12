@@ -1,0 +1,71 @@
+Release Notes
+
+- Projects use C# 8.0
+- Refactored part of the UI core library
+- NuGet Packages
+    - contain auto complete xml
+    - fixed version number for Medja.OpenTk.Themes 
+      => update might require deinstallation, since the previous Version number was 1.0.0 and now is 0.9.1.0
+    - added metadata: Copyright: SprintWORX GmbH, correct author name, added company URL
+- updated depending libraries:
+    - Google.Protobuf: from 3.6.1 -> 3.9.1
+    - ZeroMQ: from 4.1.0.26 -> 4.1.0.31
+    - OpenTK: from 3.0.1 -> 3.1.0
+    - Microsoft.NET.Test.Sdk: removed completly
+    - xunit; xunit.runner.visualstudio: updated to version 2.4.1
+    - xunit.runner.console: removed
+    
+API changes:
+- OpenGL support: default version is now OpenGL 4.2
+
+  Note (for Mac OS): you might need to set this to another value, since MacOS since version 10.14 does only support
+  OpenGL 2.2 OR 3.3 (even though this might be wrong, since this states something else: https://support.apple.com/en-us/HT202823) 
+  OpenGL for Mac is marked as deprecated (if this is still true is not clear). 
+  For 3D Rendering under Mac Metal should be adopted.
+  The 2D Rendering should still work just fine, with the correct settings.
+  Since I can't test this, i haven't hardcoded OS detection and version setting yet.
+  
+  - support multiple OpenGL controls in one window (via Control3D and an OpenGL context per 3D control)
+  this makes the background code for rendering controls much easier, so we do not require two different "OpenTKRenderer" for 2D and 3D.
+  The manual state tracking for OpenGL that was required before is also not necessary anymore. Might give also some performance
+  improvement.
+  - allow to sepearte the control and the OpenGL handling now completly (like with 2D controls). 
+  Base class OpenTKControlRendererBase. Just override InternalRender and put your OpenGL render code there; done
+  - added several OpenGL components
+    - GLCuboid (a cube, using VBOs)
+    - GLLabel (still in progress: for Text rendering in 3d, creates a texture from true type font and renders it on planes, depending on letters)
+    
+- initialization changed:
+
+  var settings = new MedjaOpenTKWindowSettings();
+  // optional: settings.OpenGLVersion = ...
+  var controlFactory = new CustomControlsFactory(settings);
+  settings.ControlFactory = controlFactory;
+            
+  var library = new MedjaOpenTkLibrary();
+  MedjaApplication.Create(library);
+
+  var window = controlFactory.Create<Window>();  
+
+- MedjaWindow -> Window
+  - should be created only via IControlFactory
+  - multiple windows should theoretically be possible since some of the theming and organizational features were merged into the window class
+  - TaskQueue available as Property
+  - ControlFactory available as Property
+
+- new helper class: TaskQueueFinder that can be used inside a control or from outside of a control to find the TaskQueue for the current control (TaskQueue is the dispatcher used for medja)
+- IMedjaLibrary reduced, most of the properties moved to Window or MedjaOpenTKWindow
+
+- Code
+   - converted indention in a lot of files from tabs to spaces
+  
+Last version
+
+- PropertyWrapper: class to wrap .NET properties and support binding and update notification (as long as the wrapper is used)
+- IBinding: interface for all binding classes
+- ForEachSplitSeq: see related Town Square post
+
+BugFixes:
+- #441, #237, #467: KeyboardHandling fixed: Delete key on MacOS, arrow keys in text box, shift key does not print dummy char anymore
+- #441: Delay in rendering for TextBox, TextEditor and possibly other text controls: added TextProperty as Property that requires rerendering
+- #409: Resize of Window does not display content (fixed on Linux, Mac not clear)

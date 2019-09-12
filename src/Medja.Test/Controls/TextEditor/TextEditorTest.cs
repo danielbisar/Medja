@@ -47,20 +47,20 @@ namespace Medja.Test.Controls
             Assert.Equal(1, (int) editor.Lines.Count);
 
             editor.SetCaretPosition(3, 0);
-            editor.InputState.NotifyKeyPressed(new KeyboardEventArgs(Keys.Return, ModifierKeys.None));
+            editor.InputState.SendKeyPress(new KeyboardEventArgs(Keys.Return, ModifierKeys.None));
 
             MedjaAssert.Equal(editor.Lines, "abc", "defghijklm");
             Assert.Equal(0, editor.CaretX);
             Assert.Equal(1, editor.CaretY);
 
             editor.SetCaretPosition(0, 0);
-            editor.InputState.NotifyKeyPressed(new KeyboardEventArgs(Keys.Return, ModifierKeys.None));
+            editor.InputState.SendKeyPress(new KeyboardEventArgs(Keys.Return, ModifierKeys.None));
             MedjaAssert.Equal(editor.Lines, "", "abc", "defghijklm");
             Assert.Equal(0, editor.CaretX);
             Assert.Equal(1, editor.CaretY);
 
             editor.SetCaretPosition(10, 2);
-            editor.InputState.NotifyKeyPressed(new KeyboardEventArgs(Keys.Return, ModifierKeys.None));
+            editor.InputState.SendKeyPress(new KeyboardEventArgs(Keys.Return, ModifierKeys.None));
             MedjaAssert.Equal(editor.Lines, "", "abc", "defghijklm", "");
             Assert.Equal(0, editor.CaretX);
             Assert.Equal(3, editor.CaretY);
@@ -99,7 +99,7 @@ namespace Medja.Test.Controls
             var editor = CreateEditor();
             editor.SetText("abcdef");
             editor.SetCaretPosition(3, 0);
-            editor.InputState.NotifyKeyPressed(new KeyboardEventArgs(Keys.Tab, ModifierKeys.None));
+            editor.InputState.SendKeyPress(new KeyboardEventArgs(Keys.Tab, ModifierKeys.None));
 
             MedjaAssert.Equal(editor.Lines, "abc    def");
         }
@@ -159,7 +159,7 @@ namespace Medja.Test.Controls
             var editor = CreateEditor();
             editor.SetText("abcde\nfghij");
             editor.SetCaretPosition(5, 0);
-            editor.InputState.NotifyKeyPressed(new KeyboardEventArgs(Keys.Delete, ModifierKeys.None));
+            editor.InputState.SendKeyPress(new KeyboardEventArgs(Keys.Delete, ModifierKeys.None));
 
             Assert.Equal(5, editor.CaretX);
             Assert.Equal(0, editor.CaretY);
@@ -173,9 +173,9 @@ namespace Medja.Test.Controls
             var editor = CreateEditor();
             editor.SetText("abcde\nfghij");
             editor.SetCaretPosition(3, 0);
-            editor.InputState.NotifyKeyPressed(new KeyboardEventArgs(Keys.Delete, ModifierKeys.None));
-            editor.InputState.NotifyKeyPressed(new KeyboardEventArgs(Keys.Delete, ModifierKeys.None));
-            editor.InputState.NotifyKeyPressed(new KeyboardEventArgs(Keys.Delete, ModifierKeys.None));
+            editor.InputState.SendKeyPress(new KeyboardEventArgs(Keys.Delete, ModifierKeys.None));
+            editor.InputState.SendKeyPress(new KeyboardEventArgs(Keys.Delete, ModifierKeys.None));
+            editor.InputState.SendKeyPress(new KeyboardEventArgs(Keys.Delete, ModifierKeys.None));
 
             Assert.Equal(3, editor.CaretX);
             Assert.Equal(0, editor.CaretY);
@@ -189,7 +189,7 @@ namespace Medja.Test.Controls
             var editor = CreateEditor();
             editor.SetText("abcde");
             editor.SetCaretPosition(5, 0);
-            editor.InputState.NotifyKeyPressed(new KeyboardEventArgs(Keys.Delete, ModifierKeys.None));
+            editor.InputState.SendKeyPress(new KeyboardEventArgs(Keys.Delete, ModifierKeys.None));
 
             Assert.Equal(5, editor.CaretX);
             Assert.Equal(0, editor.CaretY);
@@ -202,7 +202,7 @@ namespace Medja.Test.Controls
             var editor = CreateEditor();
             editor.SetText("abcde\nfghij");
             editor.SetCaretPosition(0, 1);
-            editor.InputState.NotifyKeyPressed(new KeyboardEventArgs(Keys.Backspace, ModifierKeys.None));
+            editor.InputState.SendKeyPress(new KeyboardEventArgs(Keys.Backspace, ModifierKeys.None));
 
             Assert.Equal(5, editor.CaretX);
             Assert.Equal(0, editor.CaretY);
@@ -212,8 +212,8 @@ namespace Medja.Test.Controls
 
             editor.SetText("abcde\nfghij\nklmno");
             editor.SetCaretPosition(1, 2);
-            editor.InputState.NotifyKeyPressed(new KeyboardEventArgs(Keys.Backspace, ModifierKeys.None));
-            editor.InputState.NotifyKeyPressed(new KeyboardEventArgs(Keys.Backspace, ModifierKeys.None));
+            editor.InputState.SendKeyPress(new KeyboardEventArgs(Keys.Backspace, ModifierKeys.None));
+            editor.InputState.SendKeyPress(new KeyboardEventArgs(Keys.Backspace, ModifierKeys.None));
 
             Assert.Equal(5, editor.CaretX);
             Assert.Equal(1, editor.CaretY);
@@ -227,7 +227,7 @@ namespace Medja.Test.Controls
             var editor = CreateEditor();
             editor.SetText("abcde\nfghij");
             editor.SetCaretPosition(0, 0);
-            editor.InputState.NotifyKeyPressed(new KeyboardEventArgs(Keys.Backspace, ModifierKeys.None));
+            editor.InputState.SendKeyPress(new KeyboardEventArgs(Keys.Backspace, ModifierKeys.None));
 
             Assert.Equal(0, editor.CaretX);
             Assert.Equal(0, editor.CaretY);
@@ -358,7 +358,7 @@ namespace Medja.Test.Controls
             editor.MoveCaretForward(true); // c
             editor.MoveCaretForward(true); // t
 
-            editor.InputState.NotifyKeyPressed(new KeyboardEventArgs('c', ModifierKeys.None));
+            editor.InputState.SendKeyPress(new KeyboardEventArgs('c', ModifierKeys.None));
 
             Assert.Equal("012 c 456", editor.GetText());
         }
@@ -669,7 +669,7 @@ namespace Medja.Test.Controls
             editor.MoveCaretForward(true); // 4
             editor.MoveCaretForward(true); // 5
 
-            editor.InputState.NotifyKeyPressed(new KeyboardEventArgs(Keys.Backspace, ModifierKeys.None));
+            editor.InputState.SendKeyPress(new KeyboardEventArgs(Keys.Backspace, ModifierKeys.None));
 
             Assert.Equal("0126789", editor.GetText());
             Assert.Equal(3, editor.CaretX);
@@ -687,7 +687,7 @@ namespace Medja.Test.Controls
             editor.MoveCaretForward(true); // 4
             editor.MoveCaretForward(true); // 5
 
-            editor.InputState.NotifyKeyPressed(new KeyboardEventArgs(Keys.Delete, ModifierKeys.None));
+            editor.InputState.SendKeyPress(new KeyboardEventArgs(Keys.Delete, ModifierKeys.None));
 
             Assert.Equal("0126789", editor.GetText());
             Assert.Equal(3, editor.CaretX);
