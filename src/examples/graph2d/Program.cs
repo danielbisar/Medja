@@ -16,20 +16,21 @@ namespace graph2d
 
         public Program()
         {
-            var theme = new BlackRedTheme();
-            var library = new MedjaOpenTkLibrary(theme);
-            var application = MedjaApplication.Create(library);
+            var settings = new MedjaOpenTKWindowSettings();
+            var controlFactory = new BlackRedTheme(settings);
+            settings.ControlFactory = controlFactory;
             
-            var mainWindow = application.CreateMainWindow();
+            MedjaApplication.Create(new MedjaOpenTkLibrary());
+            
+            var mainWindow = controlFactory.Create<Window>();
             mainWindow.Title = "Graph 2D Demo";
-            mainWindow.Content = CreateContent();
+            mainWindow.Content = CreateContent(mainWindow);
             mainWindow.CenterOnScreen(800, 600);
         }
 
-        private Control CreateContent()
+        private Control CreateContent(Window window)
         {
-            var controlFactory = MedjaApplication.Instance.Library.ControlFactory;
-
+            var controlFactory = window.ControlFactory;
             var graph = controlFactory.Create<Graph2D>();
             
             // just so that we have any container

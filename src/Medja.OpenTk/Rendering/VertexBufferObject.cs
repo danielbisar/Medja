@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using OpenTK;
-using OpenTK.Graphics.OpenGL;
+using OpenTK.Graphics.OpenGL4;
 
 namespace Medja.OpenTk.Rendering
 {
@@ -112,7 +112,7 @@ namespace Medja.OpenTk.Rendering
 
 		private void UpdateData(Action<IntPtr> update, BufferAccess bufferAccess = BufferAccess.WriteOnly)
 		{
-			GL.EnableClientState(ArrayCap.VertexArray);
+			/*GL.EnableClientState(ArrayCap.VertexArray);
 
 			GL.BindBuffer(BufferTarget.ArrayBuffer, _vertexBufferObjectId);
 			GL.VertexPointer(3, VertexPointerType.Float, _stride, 0);
@@ -123,7 +123,7 @@ namespace Medja.OpenTk.Rendering
 
 			GL.UnmapBuffer(BufferTarget.ArrayBuffer);
 			GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
-			GL.DisableClientState(ArrayCap.VertexArray);
+			GL.DisableClientState(ArrayCap.VertexArray);*/
 		}
 
 		public void Draw(PrimitiveType type)
@@ -133,7 +133,7 @@ namespace Medja.OpenTk.Rendering
 
         private void DrawVertices(PrimitiveType type)
         {
-            GL.EnableClientState(ArrayCap.VertexArray);
+            /*GL.EnableClientState(ArrayCap.VertexArray);
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, _vertexBufferObjectId);
             GL.VertexPointer(3, VertexPointerType.Float, _stride, 0);
@@ -141,12 +141,12 @@ namespace Medja.OpenTk.Rendering
             GL.DrawArrays(type, 0, GetVerticesCount());
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
-            GL.DisableClientState(ArrayCap.VertexArray);
+            GL.DisableClientState(ArrayCap.VertexArray);*/
         }
 
         private void DrawVerticesAndNormals(PrimitiveType type)
         {
-            GL.EnableClientState(ArrayCap.VertexArray);
+            /*GL.EnableClientState(ArrayCap.VertexArray);
             GL.EnableClientState(ArrayCap.NormalArray);
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, _vertexBufferObjectId);
@@ -160,12 +160,12 @@ namespace Medja.OpenTk.Rendering
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
             
             GL.DisableClientState(ArrayCap.NormalArray);
-            GL.DisableClientState(ArrayCap.VertexArray);
+            GL.DisableClientState(ArrayCap.VertexArray);*/
         }
 
 		public void UpdateAndDraw(PrimitiveType type, Action<IntPtr> update, BufferAccess bufferAccess = BufferAccess.WriteOnly)
 		{
-			GL.EnableClientState(ArrayCap.VertexArray);
+			/*GL.EnableClientState(ArrayCap.VertexArray);
 
 			GL.BindBuffer(BufferTarget.ArrayBuffer, _vertexBufferObjectId);
 			GL.VertexPointer(3, VertexPointerType.Float, _stride, 0);
@@ -179,7 +179,7 @@ namespace Medja.OpenTk.Rendering
 			GL.DrawArrays(type, 0, GetVerticesCount());
 
 			GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
-			GL.DisableClientState(ArrayCap.VertexArray);
+			GL.DisableClientState(ArrayCap.VertexArray);*/
 		}
 
         private void UpdateDrawMethod()

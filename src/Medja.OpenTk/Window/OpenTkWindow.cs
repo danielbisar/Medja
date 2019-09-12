@@ -1,54 +1,98 @@
 ﻿using System;
+using System.Collections.Generic;
 using Medja.Controls;
+using Medja.OpenTk.Input;
+using Medja.OpenTk.Rendering;
+using Medja.OpenTk.Utils;
 using Medja.Properties;
+using Medja.Utils;
 using OpenTK;
-using WindowState = OpenTK.WindowState;
+using OpenTK.Graphics;
+using OpenTK.Graphics.OpenGL4;
 
 namespace Medja.OpenTk
 {
-    public class OpenTkWindow : MedjaWindow
+    public class OpenTkWindow : Window
     {
-        private static WindowState GetOpenTkWindowState(Controls.WindowState windowState)
-        {
-            switch (windowState)
-            {
-                case Controls.WindowState.Normal:
-                    return WindowState.Normal;
-                case Controls.WindowState.Fullscreen:
-                    return WindowState.Fullscreen;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(windowState), windowState, null);
-            }
-        }
+        private readonly List<Control> _controls;
+
+        private OpenTkRenderer _renderer;
+        private OpenTkMouseHandler _mouseHandler;
+        private OpenTkKeyboardHandler _keyboardHandler;
+        private ControlHierarchy _controlHierarchy;
+        private FramesPerSecondLimiter _frameLimiter;
         
         private bool _calledClose;
         private bool _selfUpdatePosition;
 
         public GameWindow GameWindow { get; }
-
-        public OpenTkWindow()
+        
+        public OpenTkWindow(MedjaOpenTKWindowSettings windowSettings)
+        : base(windowSettings.ControlFactory)
         {
-            GameWindow = new GameWindow();
-
+            _controls = new List<Control>();
+            
+            var openGLVersion = windowSettings.OpenGLVersion;
+            
+            GameWindow = new GameWindow(800, 600, 
+                GraphicsMode.Default, 
+                "", 
+                GameWindowFlags.Default, 
+                DisplayDevice.Default, 
+                openGLVersion.Major, openGLVersion.Minor, 
+                GraphicsContextFlags.ForwardCompatible);
+            
+            _controlHierarchy = new ControlHierarchy(this);
+            _frameLimiter = new FramesPerSecondLimiter(windowSettings.MaxFramesPerSecond, UpdateAndRender);
+            
+            GameWindow.Load += OnGameWindowLoad;
             GameWindow.Move += OnGameWindowMove;
             GameWindow.Resize += OnGameWindowResize;
             GameWindow.Closed += OnGameWindowClosed;
+            GameWindow.RenderFrame += OnRender;
 
             GameWindow.Title = Title;
             Position.X = GameWindow.X;
             Position.Y = GameWindow.Y;
             Position.Height = GameWindow.Height;
             Position.Width = GameWindow.Width;
-            
-            PropertyState.ForwardTo(v => GameWindow.WindowState = GetOpenTkWindowState(v));
-            
-            PropertyTitle.PropertyChanged += (s,e) => GameWindow.Title = e.NewValue as string;
+
+            PropertyState.PropertyChanged += OnStateChanged;
+            PropertyTitle.PropertyChanged += OnTitleChanged;
             Position.PropertyX.PropertyChanged += OnPositionPropertyChanged;
             Position.PropertyY.PropertyChanged += OnPositionPropertyChanged;
             Position.PropertyWidth.PropertyChanged += OnPositionPropertyChanged;
             Position.PropertyHeight.PropertyChanged += OnPositionPropertyChanged;
+
+            _mouseHandler = new OpenTkMouseHandler(this, GameWindow, FocusManager);
+            _mouseHandler.Controls = _controls;
+
+            _keyboardHandler = new OpenTkKeyboardHandler(GameWindow, FocusManager);
         }
-        
+
+        private void OnRender(object sender, FrameEventArgs e)
+        {
+            // calls render via the limiter, waits if the we are too fast
+            // but continues always if we are too slow
+            // uses much less CPU than the OpenTK implementation
+            _frameLimiter.Render(); // will call UpdateAndRender()
+        }
+
+        private void OnGameWindowLoad(object sender, EventArgs e)
+        {
+            _renderer = new OpenTkRenderer(sender as GameWindow);
+        }
+
+        private void OnTitleChanged(object sender, PropertyChangedEventArgs e)
+        {
+            GameWindow.Title = Title;
+        }
+
+        private void OnStateChanged(object sender, PropertyChangedEventArgs e)
+        {
+            GameWindow.WindowState = State.ToOpenTKWindowState();
+        }
+
         private void OnPositionPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if(_selfUpdatePosition)
@@ -70,7 +114,29 @@ namespace Medja.OpenTk
 
         public override void Show()
         {
+            _frameLimiter.Run();
+            
+            // do not limit fps via this method, since OpenTK keeps using too much CPU
             GameWindow.Run();
+        }
+
+        private void UpdateAndRender()
+        {
+            GameWindow.MakeCurrent();
+
+            // todo could be optimized, when checking for _control.Parent changes
+            // and only render if NeedsRender, IsLayoutUpdate or Parent changes
+
+            // update controls every frame (f.e. a control was hidden and is now visible)
+            _controls.Clear();
+            _controls.AddRange(_controlHierarchy.GetInRenderingOrder());
+
+            _controlHierarchy.UpdateLayout();
+
+            // executes all task requested by anyone in the requested order
+            TaskQueue.ExecuteAll();
+
+            _renderer.Render(_controls);
         }
 
         private void OnGameWindowResize(object sender, EventArgs eventArgs)
@@ -79,6 +145,14 @@ namespace Medja.OpenTk
             Position.Width = GameWindow.Width;
             Position.Height = GameWindow.Height;
             _selfUpdatePosition = false;
+
+            GameWindow.MakeCurrent();
+            
+            // TODO extract OpenGL calls into strategy, so we can handle multiple versions?
+            var clientRect = GameWindow.ClientRectangle;
+            GL.Viewport(0, 0, clientRect.Width, clientRect.Height);
+
+            _renderer.SetSize(clientRect);
         }
 
         private void OnGameWindowClosed(object sender, EventArgs e)
@@ -97,6 +171,16 @@ namespace Medja.OpenTk
 
                 TryCloseGameWindow();
                 base.Close();
+
+                _renderer?.Dispose();
+
+//            _mouseHandler.Dispose();
+//            _keyboardHandler.Dispose();
+//            _focusManager.Dispose();
+                // todo ? BitmapFactory.Dispose();
+                TaskQueue.Dispose();
+                Dispose();
+                _frameLimiter.Dispose();
             }
         }
 

@@ -55,7 +55,7 @@ namespace Medja.Test.Controls
             comboBox.Add("234");
             comboBox.Add("345");
 
-            var window = factory.Create<MedjaWindow>();
+            var window = factory.Create<Window>();
             window.Position.Width = 100;
             window.Position.Height = 200;
 

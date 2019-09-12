@@ -4,8 +4,9 @@ using System.Diagnostics.Contracts;
 using System.Linq;
 using Medja.OpenTk.Utils;
 using Medja.Primitives;
+using Medja.Properties;
 using Medja.Utils;
-using OpenTK.Graphics.OpenGL;
+using OpenTK.Graphics.OpenGL4;
 using SkiaSharp;
 using Font = Medja.Primitives.Font;
 
@@ -64,7 +65,9 @@ namespace Medja.OpenTk.Components3D
         /// <summary>
         /// Is the height of a letter in UV coordinates.
         /// </summary>
-        public double LetterHeight {get; private set;}
+        public double LetterHeightUV { get; private set;}
+        
+        public double LetterHeight3D { get; private set; }
 
         public FontTexture(Font font)
         {
@@ -129,7 +132,7 @@ namespace Medja.OpenTk.Components3D
             // spacing is the actual height we need, get the difference, translate it to uv coordinates (uv are
             // percentages of the texture) inverse this value (basically reduce the 100% height by the height we don't
             // need)
-            LetterHeight = 1 - (textureHeight - paint.FontSpacing) / (double) textureHeight;
+            LetterHeightUV = 1 - (textureHeight - paint.FontSpacing) / (double) textureHeight;
 
             return new SizeInt(textureWidth, textureHeight);
             /*
@@ -159,8 +162,6 @@ namespace Medja.OpenTk.Components3D
                 x *= 2;
             }*/
         }
-
-        
 
         private List<CharCoordinates> CalculateCoordinates(SKPaint paint, SizeInt size)
         {
@@ -227,6 +228,37 @@ namespace Medja.OpenTk.Components3D
             return textureId;
         }
 
+        /// <summary>
+        /// Measures the width of a text in 3D units (using Width3D).
+        /// </summary>
+        /// <param name="str">The string to measure.</param>
+        /// <returns>The width in 3D units.</returns>
+        public double MeasureWidth(string str)
+        {
+            return str.Sum(c => _charCoordinates[Index[c]].Width3D);
+        }
+
+        /// <summary>
+        /// Measures the width of a text in 3D units (using Width3D). Stops if maxWidth is reached.
+        /// </summary>
+        /// <param name="str">The string to measure.</param>
+        /// <param name="maxWidth">The maximum width allowed.</param>
+        /// <returns>The width in 3D units.</returns>
+        public double MeasureWidth(string str, int maxWidth)
+        {
+            var width = 0d;
+            
+            foreach (var newWidth in str.Select(c => width + _charCoordinates[Index[c]].Width3D))
+            {
+                if(newWidth >= maxWidth)
+                    return width;
+                
+                width = newWidth;
+            }
+            
+            return width;
+        }
+
         public void Dispose()
         {
             _typeface?.Dispose();
@@ -236,7 +268,16 @@ namespace Medja.OpenTk.Components3D
     
     public class GLLabel : GLModel
     {
-        private readonly FontTexture _fontTexture;
+        //private readonly FontTexture _fontTexture;
+        //private GLMesh _mesh;
+
+        [NonSerialized,] 
+        public readonly Property<string> PropertyText;
+        public string Text
+        {
+            get { return PropertyText.Get(); }
+            set { PropertyText.Set(value); }
+        }
 
         public GLLabel()
         : this(new Font {Name = "Source Code Pro"})
@@ -244,22 +285,146 @@ namespace Medja.OpenTk.Components3D
         }
 
         public GLLabel(Font font)
-        : this(new FontTexture(font))
+        : this((FontTexture)null /*new FontTexture(font)*/)
         {
             
         }
 
         public GLLabel(FontTexture fontTexture)
         {
-            _fontTexture = fontTexture;
+            //_fontTexture = fontTexture;
+            //_mesh = new GLMesh();
+            
+            PropertyText = new Property<string>();
+            PropertyText.SetSilent("#PQR_{}!#iftÖ");
+            PropertyText.SetSilent("0");
+            
+            UpdateVertices();
+        }
+        
+        int vboId = -1;
+
+        private void UpdateVertices()
+        {
+            vboId = GL.GenBuffer();
+            
+            var buffer = new float[]
+            {
+                0, 1, 0, // top    left
+                0, 0, 0, // bottom left
+                1, 0, 0, // bottom right
+                1, 1, 0, // top    right
+
+                0, 1,
+                0, 0,
+                1, 0,
+                1, 1
+            };
+            var bufferSize = buffer.Length;
+            GL.BufferData(BufferTarget.ArrayBuffer, bufferSize, buffer, BufferUsageHint.StaticDraw);
+            
+            /*var shader = new OpenGLShader();
+            shader.Source = @"#version 420
+
+";
+            
+            var program = new OpenGLProgram();*/
+            
+            /*_mesh?.Dispose();
+
+            if (vboId != -1)
+            {
+                GL.DeleteBuffer(vboId);
+            }
+
+            GL.EnableClientState(ArrayCap.VertexArray);
+            //GL.EnableClientState(ArrayCap.TextureCoordArray);
+            
+            
+            
+            GL.BindBuffer(BufferTarget.ArrayBuffer, vboId);
+            GL.BufferData(BufferTarget.ArrayBuffer,
+                bufferSize,
+                buffer,
+                BufferUsageHint.StaticDraw);
+            
+            GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
+            GL.DisableClientState(ArrayCap.VertexArray);
+            //GL.DisableClientState(ArrayCap.TextureCoordArray);
+            
+            /*_mesh = new GLMesh();
+            // we cannot use quad strip, because we need multiple 
+            // texture coordinates for same vertices
+            _mesh.PrimitiveType = PrimitiveType.Quads;
+            
+            if(Text.Length == 0)
+                return;
+
+            var x = 0d;
+            
+            foreach (var c in Text)
+            {
+                var coord = _fontTexture._charCoordinates[FontTexture.Index[Text[0]]];
+
+                // texture coordinates
+                // start with 0, 0 at the lower left corner
+                // end with 1, 1 at top right corner
+                // similar we define the names: u0, v0 is the lower left corner start of the letter
+                var u0 = coord.U;
+                var v0 = coord.V;
+                var u1 = coord.U + coord.Width;
+                var v1 = coord.V + _fontTexture.LetterHeightUV;
+                var letterHeight = (float)coord.Height3D;
+                
+                _mesh.AddTexCoord((float)u0, (float) v0);
+                _mesh.AddVertex((float)x, letterHeight, 0, false); // left top corner
+
+                _mesh.AddTexCoord((float) u0, (float) v1);
+                _mesh.AddVertex((float)x, 0, 0, false); // left bottom corner
+                
+                x += coord.Width3D;
+
+                _mesh.AddTexCoord((float) u1, (float) v1);
+                _mesh.AddVertex((float)x, 0, 0, false); // right bottom corner
+
+                _mesh.AddTexCoord((float) u1, (float) v0);
+                _mesh.AddVertex((float)x, letterHeight, 0, false); // right top corner
+            }
+            
+            _mesh.CreateBuffers();*/
+            
+            
         }
 
         public override void RenderModel()
         {
-            GL.Enable(EnableCap.Texture2D);
-            GL.BindTexture(TextureTarget.Texture2D, _fontTexture.TextureId);
+            GL.EnableVertexAttribArray(0);
+            GL.BindBuffer(BufferTarget.ArrayBuffer, vboId);
+            GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 0, 0);
+            GL.DrawArrays(PrimitiveType.Triangles, 0, 3);
+            GL.DisableVertexAttribArray(0);
+
+            if (GL.GetError() != ErrorCode.NoError)
+            {
+                Console.WriteLine("Found OpenGL error: " + GL.GetError());
+            }
             
-            var text = "#PQR_{}!#iftÖ";
+            //GL.Enable(EnableCap.Texture2D);
+            //GL.BindTexture(TextureTarget.Texture2D, _fontTexture.TextureId);
+            /*GL.EnableClientState(ArrayCap.VertexArray);
+            //GL.EnableClientState(ArrayCap.TextureCoordArray);
+            
+            GL.BindBuffer(BufferTarget.ArrayBuffer, vboId);
+            GL.VertexPointer(3, VertexPointerType.Float, 0, 0);
+            //GL.TexCoordPointer(2, TexCoordPointerType.Float, 0, 12);
+            GL.DrawArrays(PrimitiveType.Quads, 0, 4);
+            
+            GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
+            GL.DisableClientState(ArrayCap.VertexArray);
+            GL.DisableClientState(ArrayCap.TextureCoordArray);
+            GL.Disable(EnableCap.Texture2D);*/
+            
+            /*var text = "#PQR_{}!#iftÖ";
 
             for (int i = 0; i < text.Length; i++)
             {
@@ -268,11 +433,9 @@ namespace Medja.OpenTk.Components3D
                 
                 var halfWidth = coord.Width3D / 2.0d;
                 var halfHeight = coord.Height3D / 2.0d;
-                
-                GL.Translate(coord.Width3D,0,0);
 
 
-                // yea, texture coordinates
+                // texture coordinates
                 // start with 0, 0 at the lower left corner
                 // end with 1, 1 at top right corner
                 // similar we define the names: u0, v0 is the lower left corner start of the letter
@@ -280,9 +443,13 @@ namespace Medja.OpenTk.Components3D
                 var v0 = coord.V;
                 var u1 = coord.U + coord.Width;
                 var v1 = coord.V + _fontTexture.LetterHeight;
-                
 
-                GL.Begin(PrimitiveType.Quads);
+                void addLetter(char ch)
+                {
+                    GL.Vertex3(
+                }
+                
+                /*GL.Begin(PrimitiveType.Quads);
                 GL.TexCoord2(u0, v0);
                 GL.Vertex3(-halfWidth, halfHeight, 0); // left top corner
 
@@ -294,13 +461,13 @@ namespace Medja.OpenTk.Components3D
 
                 GL.TexCoord2(u1, v0);
                 GL.Vertex3(halfWidth, halfHeight, 0); // right top corner
-                GL.End();
-            }
+                GL.End();*/
+            //}
         }
 
         protected override void Dispose(bool disposing)
         {
-            _fontTexture.Dispose();
+            //_fontTexture.Dispose();
             base.Dispose(disposing);
         }
     }

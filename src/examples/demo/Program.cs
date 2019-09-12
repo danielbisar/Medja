@@ -1,10 +1,10 @@
 ﻿using System;
 using Medja.Controls;
 using Medja.OpenTk;
-using Medja.OpenTk.Rendering;
 using Medja.Primitives;
 using Medja.OpenTk.Themes.DarkBlue;
 using Medja.Theming;
+using OpenTK.Graphics.OpenGL4;
 
 namespace Medja.Demo
 {
@@ -19,34 +19,38 @@ namespace Medja.Demo
 
         public Program()
         {
-            var library = new MedjaOpenTkLibrary(new CustomControlsFactory());
-            library.RendererFactory = () => new OpenTk2DAnd3DRenderer();
+            var settings = new MedjaOpenTKWindowSettings();
+            var controlFactory = new CustomControlsFactory(settings);
+            settings.ControlFactory = controlFactory;
+            
+            var library = new MedjaOpenTkLibrary();
             _application = MedjaApplication.Create(library);
+            
+            CreateMainWindow(controlFactory);
         }
 
         public void Run()
         {
-            CreateMainWindow();
             _application.Run();
         }
 
-        private void CreateMainWindow()
+        private void CreateMainWindow(IControlFactory controlFactory)
         {
-            var window = _application.CreateWindow();
+            var window = controlFactory.Create<Window>();
             window.CenterOnScreen(800, 800);
 //            window.Position.X = 2;
 //            window.Position.Y = 2;
 //            window.Position.Width = 800;
 //            window.Position.Height = 800;
             window.Background = DarkBlueThemeValues.WindowBackground;
-            window.Content = CreateContent();
+            window.Content = CreateContent(window);
 
             _application.MainWindow = window;
         }
 
-        private Control CreateContent()
+        private Control CreateContent(Window window)
         {
-            var controlFactory = _application.Library.ControlFactory;
+            var controlFactory = window.ControlFactory;
             
             //var simpleFactory = new SimpleFactory();
             //simpleFactory.AddAlias("Button", () => controlFactory.Create<Button>());
@@ -121,7 +125,7 @@ namespace Medja.Demo
 
             var textBoxFocused = controlFactory.Create<TextBox>();
             textBoxFocused.Text = "focused";
-            FocusManager.Default.SetFocus(textBoxFocused);
+            window.FocusManager.SetFocus(textBoxFocused);
 
             var textBoxStackPanel = controlFactory.Create<HorizontalStackPanel>();
             textBoxStackPanel.ChildrenWidth = 150;
@@ -252,7 +256,7 @@ namespace Medja.Demo
             
             var rootTabControl = controlFactory.Create<TabControl>();
             rootTabControl.AddTab("Standard", rootStackPanel);
-            rootTabControl.AddTab("OpenGL 3D", controlFactory.Create<OpenGlTestControl>());
+            rootTabControl.AddTab("OpenGL 3D", CreateOpenGLView(controlFactory));
             rootTabControl.AddTab("Slider", 
                 controlFactory.Create<Canvas>(canvas =>
                 {
@@ -331,6 +335,17 @@ namespace Medja.Demo
 
             var dialogContainer = DialogService.CreateContainer(controlFactory, rootTabControl);
             return dialogContainer;
+        }
+
+        private Control CreateOpenGLView(IControlFactory cf)
+        {
+            var textBlock = cf.Create<TextBlock>();
+            textBlock.Text = "OpenGL Version: " + GL.GetString(StringName.Version) + ", GLSL Version: " + GL.GetString(StringName.ShadingLanguageVersion);
+            
+            var result = cf.Create<DockPanel>();
+            result.Add(Dock.Top, textBlock);
+            result.Add(Dock.Fill, cf.Create<OpenGlTestControl>());
+            return result;
         }
     }
 }

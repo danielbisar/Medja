@@ -1,9 +1,14 @@
 ﻿using System;
+using Medja.Primitives;
 
 namespace Medja.Theming
 {
-	public interface IControlRenderer : IDisposable
+    public interface IControlRenderer : IDisposable
     {
-		void Render(object context);
+        bool IsInitialized { get; }
+        void Initialize();
+        void Resize(MRect position);
+        
+        void Render(object context);
     }
 }

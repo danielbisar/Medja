@@ -217,7 +217,7 @@ namespace Medja.Controls
         /// Positions this control and the popup (even when it is not visible).
         /// </summary>
         /// <param name="availableSize">The available size.</param>
-        /// <remarks>The <see cref="Popup"/> placement depends on the position inside the <see cref="MedjaWindow"/>
+        /// <remarks>The <see cref="Popup"/> placement depends on the position inside the <see cref="Window"/>
         /// If the control is to far at the bottom (the popup would not fit inside the window) it is placed above.
         /// </remarks>
         public override void Arrange(Size availableSize)
@@ -232,7 +232,7 @@ namespace Medja.Controls
 
             var root = GetRootControl();
             
-            if (root is MedjaWindow)
+            if (root is Window)
                 isDropDownAboveControl = Position.Y + Position.Height + _popup.Position.Height > root.Position.Height;
             
             if (!isDropDownAboveControl)

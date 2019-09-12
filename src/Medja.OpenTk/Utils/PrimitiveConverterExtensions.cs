@@ -1,5 +1,6 @@
 using System;
 using Medja.Primitives;
+using OpenTK;
 using SkiaSharp;
 
 namespace Medja.OpenTk.Utils
@@ -37,6 +38,22 @@ namespace Medja.OpenTk.Utils
         public static Point ToMedjaPoint(this System.Drawing.Point point)
         {
             return new Point(point.X, point.Y);
+        }
+
+        /// <summary>
+        /// Converts a <see cref="Controls.WindowState"/> to <see cref="WindowState"/>.
+        /// </summary>
+        /// <param name="windowState">The <see cref="Controls.WindowState"/>.</param>
+        /// <returns>The <see cref="WindowState"/>.</returns>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
+        public static WindowState ToOpenTKWindowState(this Controls.WindowState windowState)
+        {
+            return windowState switch
+            {
+                Controls.WindowState.Normal => WindowState.Normal,
+                Controls.WindowState.Fullscreen => WindowState.Fullscreen,
+                _ => throw new ArgumentOutOfRangeException(nameof(windowState))
+            };
         }
     }
 }

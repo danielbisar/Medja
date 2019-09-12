@@ -1,14 +1,12 @@
 using Medja.Input;
+using Xunit;
 using Medja.OpenTk.Input;
 using OpenTK.Input;
-using Xunit;
 
 namespace Medja.OpenTk.Test.Input
 {
     public class KeyMapTest
     {
-        // OpenTKs keyboard state cannot be created except via reflection so we leaf this for now, since i guess this
-        // will change with version 4
         // TODO write test for GetModifierKeys
 
         [Fact]

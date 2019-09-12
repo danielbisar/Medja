@@ -2,14 +2,16 @@
 
     <PropertyGroup>
         <TargetFramework>net472</TargetFramework>
-        <LangVersion>latest</LangVersion>
-        <Authors>Daniel Klafft</Authors>
+        <LangVersion>8</LangVersion>
+        <Authors>Daniel Bişar</Authors>
         <Company>SprintWORX GmbH</Company>
         <Copyright>Copyright © 2018-2019 SprintWORX GmbH</Copyright>
         <Description>Cross platform UI library.</Description>
         <Product>Medja.OpenTk</Product>
         <NeutralLanguage>en</NeutralLanguage>
         <Version>0.9.0.0</Version>
+        <PackageVersion>0.9.1.0</PackageVersion>
+        <PackageProjectUrl>https://www.sprintworx.de/</PackageProjectUrl>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -22,18 +24,24 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="OpenTK" Version="3.0.1" />
+      <PackageReference Include="OpenTK" Version="3.1.0" />
       <PackageReference Include="SkiaSharp" Version="1.68.0" />
     </ItemGroup>
 
     <ItemGroup>
-      <None Update="libSkiaSharp.so">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
+      <ProjectReference Include="..\Medja.Utils\Medja.Utils.csproj" />
+      <ProjectReference Include="..\Medja\Medja.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Medja\Medja.csproj" />
+      <None Remove="libSkiaSharp.so" />
+      <Content Include="libSkiaSharp.so">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="Rendering\OpenTk2DAnd3DRenderer.cs" />
     </ItemGroup>
 
 </Project>

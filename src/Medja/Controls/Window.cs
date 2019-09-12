@@ -1,13 +1,15 @@
 ﻿using System;
 using Medja.Primitives;
 using Medja.Properties;
+using Medja.Theming;
+using Medja.Utils.Threading.Tasks;
 
 namespace Medja.Controls
 {
     /// <summary>
     /// Base class for all windows.
     /// </summary>
-    public class MedjaWindow : ContentControl
+    public class Window : ContentControl
     {
         public readonly Property<string> PropertyTitle;
         /// <summary>
@@ -36,10 +38,19 @@ namespace Medja.Controls
         /// </summary>
         public bool IsClosed { get; private set; }
 
+        public IControlFactory ControlFactory { get; }
+        
+        public FocusManager FocusManager { get; }
+
+        public TaskQueue<object> TaskQueue { get; }
+        
         public event EventHandler Closed;
 
-        public MedjaWindow()
+        public Window(IControlFactory controlFactory)
         {
+            ControlFactory = controlFactory ?? throw new ArgumentNullException(nameof(controlFactory));
+            TaskQueue = new TaskQueue<object>();
+            FocusManager = new FocusManager();
             PropertyState = new Property<WindowState>();
             PropertyTitle = new Property<string>();
             PropertyTitle.SetSilent("");

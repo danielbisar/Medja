@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Medja.OpenTk.Utils;
 using Medja.Properties;
 using OpenTK;
-using OpenTK.Graphics.OpenGL;
+using OpenTK.Graphics.OpenGL4;
 
 namespace Medja.OpenTk.Components3D
 {
@@ -18,7 +16,7 @@ namespace Medja.OpenTk.Components3D
         private List<Vector2> _textureCoordinates;
         
         private int _vboId, _vbaId;
-        private int _vertexCount, _indexCount;
+        private int _vertexCount, _indexCount, _texCoordCount;
 
         [NonSerialized] 
         public readonly Property<PrimitiveType> PropertyPrimitiveType;
@@ -40,21 +38,24 @@ namespace Medja.OpenTk.Components3D
             _vbaId = _vboId = -1;
         }
         
-        public int AddVertex(Vector3 vertex)
+        public int AddVertex(Vector3 vertex, bool ignoreDuplicates = true)
         {
-            var index = _vertices.IndexOf(vertex);
-            
-            if(index != -1)
-                return index;
-            
+            if (ignoreDuplicates)
+            {
+                var index = _vertices.IndexOf(vertex);
+
+                if (index != -1)
+                    return index;
+            }
+
             _vertices.Add(vertex);
             
             return _vertices.Count - 1;
         }
 
-        public int AddVertex(float x, float y, float z)
+        public int AddVertex(float x, float y, float z, bool ignoreDuplicates = true)
         {
-            return AddVertex(new Vector3(x, y, z));
+            return AddVertex(new Vector3(x, y, z), ignoreDuplicates);
         }
 
         public void AddIndices(int i1, int i2, int i3)
@@ -96,23 +97,38 @@ namespace Medja.OpenTk.Components3D
             if (_vboId != -1)
                 throw new InvalidOperationException("VBO was already created");
 
-            var vertexDataArray = _vertices.SelectMany(p => p.Iterate()).ToArray();
-
+            /*var vertexDataSelector = _vertices.SelectMany(p => p.Iterate());
+            
             GL.EnableClientState(ArrayCap.VertexArray);
+
+            if (_textureCoordinates.Count > 0)
+            {
+                GL.EnableClientState(ArrayCap.TextureCoordArray);
+                vertexDataSelector = vertexDataSelector.Concat(_textureCoordinates.SelectMany(p => p.Iterate()));
+            }
+            
             _vboId = GL.GenBuffer();
+
+            var vertexDataArray = vertexDataSelector.ToArray();
+            var bufferSize = vertexDataArray.Length * sizeof(float);
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, _vboId);
             GL.BufferData(BufferTarget.ArrayBuffer, 
-                vertexDataArray.Length * sizeof(float), 
+                bufferSize, 
                 vertexDataArray,
                 BufferUsageHint.StaticDraw);
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
             GL.DisableClientState(ArrayCap.VertexArray);
+            GL.DisableClientState(ArrayCap.TextureCoordArray);
 
             _vertexCount = _vertices.Count;
+            _texCoordCount = _textureCoordinates.Count;
+            
             _vertices.Clear();
             _vertices.TrimExcess();
+            _textureCoordinates.Clear();
+            _textureCoordinates.TrimExcess();*/
         }
 
         private void CreateVBA()
@@ -120,7 +136,7 @@ namespace Medja.OpenTk.Components3D
             if (_vbaId != -1)
                 throw new InvalidOperationException("VBA was already created");
 
-            var indexDataArray = _indices.Select(p => (byte) p).ToArray();
+            /*var indexDataArray = _indices.Select(p => (byte) p).ToArray();
 
             GL.EnableClientState(ArrayCap.VertexArray);
 
@@ -135,7 +151,7 @@ namespace Medja.OpenTk.Components3D
             
             _indexCount = _indices.Count;
             _indices.Clear();
-            _indices.TrimExcess();
+            _indices.TrimExcess();*/
         }
 
         public override void RenderModel()
@@ -143,13 +159,21 @@ namespace Medja.OpenTk.Components3D
             if (_vboId == -1)
                 throw new InvalidOperationException("call " + nameof(CreateBuffers) + " first");
 
-            GL.EnableClientState(ArrayCap.VertexArray);
+            /*GL.EnableClientState(ArrayCap.VertexArray);
             GL.BindBuffer(BufferTarget.ArrayBuffer, _vboId);
 
             GL.VertexPointer(3, VertexPointerType.Float, 0, 0);
 
+            if (_texCoordCount > 0)
+            {
+                GL.EnableClientState(ArrayCap.TextureCoordArray);
+                GL.TexCoordPointer(2, TexCoordPointerType.Float, 0, _vertexCount * 3);
+            }
+
             if (_vbaId == -1)
+            {
                 GL.DrawArrays(PrimitiveType, 0, _vertexCount);
+            }
             else
             {
                 GL.BindBuffer(BufferTarget.ElementArrayBuffer, _vbaId);
@@ -160,6 +184,7 @@ namespace Medja.OpenTk.Components3D
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
             GL.DisableClientState(ArrayCap.VertexArray);
+            GL.DisableClientState(ArrayCap.TextureCoordArray);*/
         }
 
         public void SubdivideFaces(Func<Vector3, Vector3, Vector3> getMiddle)
@@ -207,6 +232,11 @@ namespace Medja.OpenTk.Components3D
         {
             for (int i = 0; i < _vertices.Count; i++)
                 _vertices[i] = _vertices[i].Normalized();
+        }
+
+        public IEnumerable<Vector3> GetVertices()
+        {
+            return _vertices;
         }
     }
 }

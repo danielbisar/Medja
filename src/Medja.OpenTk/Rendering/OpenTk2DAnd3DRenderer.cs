@@ -42,7 +42,7 @@ namespace Medja.OpenTk.Rendering
                 }
                 
                 if(is3DControl)
-                    OpenGLState.KeepState(() => Render(control));
+                    Render(control);
                 else
                     Render(control);
 

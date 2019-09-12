@@ -11,7 +11,7 @@ namespace Medja.OpenTk
         /// </summary>
         /// <param name="window">The Window.</param>
         /// <param name="size">The target size of the window.</param>
-        public static void CenterOnScreen(this MedjaWindow window, Size size)
+        public static void CenterOnScreen(this Window window, Size size)
         {
             var primaryDisplay = DisplayDevice.GetDisplay(DisplayIndex.Primary);
             var screenWidth = primaryDisplay.Width;
@@ -31,7 +31,7 @@ namespace Medja.OpenTk
         /// <param name="window">The Window.</param>
         /// <param name="width">The target width of the window.</param>
         /// /// <param name="height">The target height of the window.</param>
-        public static void CenterOnScreen(this MedjaWindow window, float width, float height)
+        public static void CenterOnScreen(this Window window, float width, float height)
         {
             CenterOnScreen(window, new Size(width, height));
         }

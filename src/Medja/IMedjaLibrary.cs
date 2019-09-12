@@ -1,6 +1,4 @@
 ﻿using Medja.Controls.Images;
-using Medja.Theming;
-using Medja.Utils.Threading.Tasks;
 
 namespace Medja
 {
@@ -15,22 +13,10 @@ namespace Medja
         BitmapFactory BitmapFactory { get; }
         
         /// <summary>
-        /// Gets the current <see cref="ControlFactory"/>. This allows theming of the UI.
-        /// </summary>
-        IControlFactory ControlFactory { get; }
-
-        /// <summary>
-        /// Gets the task queue - you can use this the same way you would use a Dispatcher. If you want to execute a
-        /// task/method on the UI thread.
-        /// </summary>
-        TaskQueue<object> TaskQueue { get; }
-
-        /// <summary>
         /// Starts the main loop of the program.
         /// Do not call this method directly but call <see cref="MedjaApplication.Run"/> instead.
         /// </summary>
         /// <param name="application">The current <see cref="MedjaApplication"/> instance.</param>
-        /// <param name="maxFps">The maximum frames per second.</param>
-        void Run(MedjaApplication application, int maxFps);
+        void Run(MedjaApplication application);
     }
 }
