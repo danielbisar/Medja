@@ -19,17 +19,19 @@ variables:
 
 steps:
 - task: NuGetToolInstaller@1
-
-- task: NuGetCommand@2
-  inputs:
-    restoreSolution: '$(solution)'
-    vstsFeed: '49e07518-6419-486d-9ec2-aea3f61f1ded'
+  displayName: Install NuGet latest
 
 - task: DotNetCoreInstaller@0
+  displayName: Install dotnet core sdk 3 preview9
   inputs:
     packageType: 'sdk'
     version: '3.0.100-preview9-014004'
-  displayName: Install .NET Core 3
+
+- task: NuGetCommand@2
+  displayName: Restore NuGet packages
+  inputs:
+    restoreSolution: '$(solution)'
+    vstsFeed: '49e07518-6419-486d-9ec2-aea3f61f1ded'
 
 #- task: VSBuild@1
 #  displayName: 'Build Medja.sln'
@@ -39,16 +41,18 @@ steps:
 #    platform: '$(buildPlatform)'
 #    configuration: '$(buildConfiguration)'
 #    logProjectEvents: false
+
 - task: DotNetCoreCLI@2
+  displayName: Build Medja.sln
   inputs:
     command: build
-    argument: --configuration $(buildConfiguration)
+    argument: $(solution) --configuration $(buildConfiguration)
 
 - task: VSTest@2
-  displayName: 'VsTest - testAssemblies'
-  inputs:
-    codeCoverageEnabled: true
-    diagnosticsEnabled: True
+  displayName: Run UnitTests
+#  inputs:
+#    codeCoverageEnabled: true
+#    diagnosticsEnabled: True
 
 - task: PublishSymbols@2
   displayName: 'Publish symbols path'
