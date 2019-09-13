@@ -4,6 +4,7 @@
         <OutputType>Exe</OutputType>
         <TargetFramework>net472</TargetFramework>
         <RootNamespace>Medja.Demo</RootNamespace>
+        <LangVersion>8</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>

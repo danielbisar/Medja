@@ -1,76 +1,109 @@
 ﻿using System;
 using System.Collections.Generic;
+using Medja.OpenTk.Components3D;
+using OpenTK;
 using OpenTK.Graphics.OpenGL4;
 
 namespace Medja.OpenTk.Rendering
 {
-	public class OpenGLProgram : IDisposable
-	{
-		private readonly int _programId;
+    public class OpenGLProgram : IDisposable
+    {
+        public static OpenGLProgram CreateAndCompile(params OpenGLShader[] shaders)
+        {
+            var program = new OpenGLProgram();
+
+            foreach (var shader in shaders)
+            {
+                if (!shader.IsCompiled)
+                    shader.Compile();
+
+                program.Attach(shader);
+            }
+            
+            program.Link();
+            
+            return program;
+        }
+
+        private List<OpenGLShader> _attachedShaders;
+        private bool _isDisposed;
+        private bool _isLinked;
+       
+        private readonly int _id;
         /// <summary>
         /// Gets the OpenGL program id 
         /// </summary>
-        public int ProgramId
+        public int Id
         {
-            get { return _programId; }
+            get { return _id; }
+        }
+        
+        public OpenGLProgram()
+        {
+            _id = GL.CreateProgram();
+            _attachedShaders = new List<OpenGLShader>();
         }
 
-        private bool _isDisposed;
+        public void Attach(OpenGLShader shader)
+        {
+            if(!shader.IsCompiled)
+                throw new InvalidOperationException("compile the shader first");
+            
+            _attachedShaders.Add(shader);
+            GL.AttachShader(_id, shader.Id);
+        }
 
-		public OpenGLProgram(IEnumerable<OpenGLShader> shaders, Action<int> setupOpenGL)
-		{
-			_programId = GL.CreateProgram();
+        public void Link()
+        {
+            if(_isLinked)
+                throw new InvalidOperationException("Program was linked already");
+            
+            GL.LinkProgram(_id);
+            GL.GetProgram(_id, GetProgramParameterName.LinkStatus, out var linkStatus);
 
-			var shaderIds = new List<int>();
+            if (linkStatus != 1) // 1 for true
+                throw new Exception("Shader program compilation error: " + GL.GetProgramInfoLog(_id));
 
-			foreach (var shader in shaders)
-			{
-				// TODO move into shader
-				var id = GL.CreateShader(shader.Type);
-				shaderIds.Add(id);
+            DisposeAttachedShaders();
+            _isLinked = true;
+        }
 
-				GL.ShaderSource(id, shader.Source);
-				GL.CompileShader(id);
+        public void Use()
+        {
+            GL.UseProgram(_id);
+        }
 
-				int result;
-				GL.GetShader(id, ShaderParameter.CompileStatus, out result);
+        public void Unuse()
+        {
+            GL.UseProgram(0);
+        }
 
-				if (result != 1)
-					throw new Exception(shader.Type + " compilation error: " + GL.GetShaderInfoLog(id));
+        private void DisposeAttachedShaders()
+        {
+            if(_attachedShaders == null)
+                return;
+            
+            foreach (var shader in _attachedShaders)
+                shader.Dispose();
 
-				GL.AttachShader(_programId, id);
-			}
+            _attachedShaders = null;
+        }
 
-			setupOpenGL?.Invoke(_programId);
+        public void Dispose()
+        {
+            if (!_isDisposed)
+            {
+                Unuse();
+                DisposeAttachedShaders();
+                GL.DeleteProgram(_id);
+                _isDisposed = true;
+            }
+        }
 
-			GL.LinkProgram(_programId);
-			GL.GetProgram(_programId, GetProgramParameterName.LinkStatus, out var linkStatus);
-
-			if (linkStatus != 1)
-				throw new Exception("Shader program compilation error: " + GL.GetProgramInfoLog(_programId));
-
-			foreach (var id in shaderIds)
-				GL.DeleteShader(id);
-		}
-
-		public void Use()
-		{
-			GL.UseProgram(_programId);
-		}
-
-		public void Unuse()
-		{
-			GL.UseProgram(0);
-		}
-
-		public void Dispose()
-		{
-			if (!_isDisposed)
-			{
-				Unuse();
-				GL.DeleteProgram(_programId);
-				_isDisposed = true;
-			}
-		}
-	}
+        public GLUniform GetUniform(string name)
+        {
+            Use();
+            return new GLUniform(Id, name);
+        }
+    }
 }

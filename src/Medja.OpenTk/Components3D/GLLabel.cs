@@ -396,7 +396,7 @@ namespace Medja.OpenTk.Components3D
             
         }
 
-        public override void RenderModel()
+        public override void Render()
         {
             GL.EnableVertexAttribArray(0);
             GL.BindBuffer(BufferTarget.ArrayBuffer, vboId);

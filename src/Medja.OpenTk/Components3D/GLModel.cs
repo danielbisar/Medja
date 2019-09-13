@@ -1,72 +1,83 @@
 using System;
 using Medja.Properties;
+using OpenTK;
 
 namespace Medja.OpenTk.Components3D
 {
     public class GLModel : GLComponent
     {
-        /// <summary>
-        /// Applies the model view matrix and calls render.
-        /// </summary>
-        /// <param name="component"></param>
-        /// <param name="camera"></param>
-        /// <param name="render"></param>
-        public static void ApplyModelViewMatrix(GLComponent component, GLCamera camera, Action render)
-        {
-            if(camera == null)
-                return;
-
-            var matrix = camera.ViewMatrix;
-
-            /*GL.MatrixMode(MatrixMode.Modelview);
-            GL.PushMatrix();
-            GL.LoadMatrix(ref matrix);
-
-            var rotation = component.Rotation;
-            
-            // even if deprecated, this calls are faster than manually creating the matrix
-            GL.Rotate(rotation.X, 1, 0, 0);
-            GL.Rotate(rotation.Y, 0, 1, 0);
-            GL.Rotate(rotation.Z, 0, 0, 1);
-
-            GL.Translate(component.Position);
-            GL.Scale(component.Scale);
-            
-            render();
-            
-            GL.PopMatrix();*/
-        }
-    
-        [NonSerialized] 
-        public readonly Property<GLCamera> PropertyCamera;
+        private Vector3 _rotation;
+        private Vector3 _translation;
 
         /// <summary>
-        /// Gets or sets the <see cref="GLCamera"/> used to view this object.
+        /// Gets the model matrix (contains position, rotation, ... of the model)
         /// </summary>
-        public GLCamera Camera
+        public Matrix4 Matrix { get; set; }
+
+        private Matrix4 _rotationMatrix;
+        private bool _isRotationChanged;
+        public Vector3 Rotation
         {
-            get { return PropertyCamera.Get(); }
-            set { PropertyCamera.Set(value); }
+            get { return _rotation; }
+            set
+            {
+                _rotation = value;
+                _isRotationChanged = true;
+            }
         }
-        
+
+        private bool _isTranslationChanged;
+        private Matrix4 _translationMatrix;
+        public Vector3 Translation
+        {
+            get { return _translation; }
+            set
+            {
+                _translation = value;
+                _isTranslationChanged = true;
+            }
+        }
+
         public GLModel()
         {
-            PropertyCamera = new Property<GLCamera>();
+            Matrix = Matrix4.Identity;
+            _rotationMatrix = Matrix4.Identity;
+            _translationMatrix = Matrix4.Identity;
+        }
+        
+        public override void Render()
+        {
+            if (_isRotationChanged || _isTranslationChanged)
+            {
+                if (_isRotationChanged)
+                {
+                    _rotationMatrix = CreateRotation(Rotation);
+                    _isRotationChanged = false;
+                }
+
+                if (_isTranslationChanged)
+                {
+                    _translationMatrix = Matrix4.CreateTranslation(Translation);
+                    _isTranslationChanged = false;
+                }
+
+                Matrix = Matrix4.CreateTranslation(Translation) * CreateRotation(Rotation);
+            }
         }
 
         /// <summary>
-        /// Calls RenderModel inside <see cref="ApplyModelViewMatrix"/>.
+        /// Creates the rotation matrix.
         /// </summary>
-        public override void Render()
+        /// <returns>The rotation matrix.</returns>
+        private Matrix4 CreateRotation(Vector3 rotation)
         {
-            ApplyModelViewMatrix(this, Camera, RenderModel);
-        }
-        
-        /// <summary>
-        /// Renders the model, without applying transformation matrix.
-        /// </summary>
-        public virtual void RenderModel()
-        {
+            var result = Matrix4.Identity;
+
+            result *= Matrix4.CreateRotationX(rotation.X);
+            result *= Matrix4.CreateRotationY(rotation.Y);
+            result *= Matrix4.CreateRotationZ(rotation.Z);
+
+            return result;
         }
     }
 }

@@ -1,93 +1,101 @@
-﻿using Medja.OpenTk.Rendering;
+﻿using Medja.OpenTk.Components3D;
+using Medja.OpenTk.Rendering;
+using Medja.Utils;
+using OpenTK;
 using OpenTK.Graphics.OpenGL4;
 
 namespace Medja.Demo
 {
-    public class OpenGlTestControlRenderer : 
-        OpenTKControlRendererBase<OpenGlTestControl>
-    //SkiaControlRendererBase<OpenGlTestControl>
+    public class OpenGlTestControlRenderer : OpenTKControlRendererBase<OpenGlTestControl>
     {
         public OpenGlTestControlRenderer(OpenGlTestControl control)
         : base(control)
         {
         }
+        
+        GLTriangle _triangle;
+        VertexArrayObject _vao;
+        OpenGLProgram _program;
+        
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            //_triangle = new GLTriangle();
+
+            var data = new float[]
+            {
+                0, 0,
+                1, 0,
+                0, 1
+            };
+
+            var vbo = new VertexBufferObject();
+            vbo.ComponentsPerVertex = 2;
+            vbo.SetData(data);
+
+            _vao = new VertexArrayObject();
+            _vao.AddVertexAttribute(VertexAttributeType.Positions, vbo);
+
+            var vertexShader = new OpenGLShader(ShaderType.VertexShader);
+            vertexShader.Source = @"#version 420
+
+" + _vao.GetAttributeLayoutCode() + @"
+
+out vec3 outColor;
+
+uniform mat4 combined;
+
+void main()
+{
+    gl_Position = combined * vec4(position, 0, 1);
+    outColor = vec3(1,1,1);
+}";
+
+            var fragmentShader = ShaderFactory.CreatePassthroughFragmentShader(3, "outColor");
+
+            var projection = Matrix4.CreatePerspectiveFieldOfView(0.79f, 4 / 3f, 0.1f, 100.0f);
+            var view = Matrix4.Identity;
+            var model = Matrix4.Identity;
+            
+            var trans = Matrix4.CreateTranslation(0, -0.5f, 0);
+            var rotation = CreateRotation(0, (float)MedjaMath.Radians(35), 0);
+
+            combined = /*projection * */ trans * rotation * view * model;
+            
+            
+
+            _program = OpenGLProgram.CreateAndCompile(vertexShader, fragmentShader);
+            var combinedUniform = _program.GetUniform("combined");
+            
+            combinedUniform.Set(ref combined);
+        }
+
+        
+
+        Matrix4 combined;
+        
 
         protected override void InternalRender()
         {
-            GL.ClearColor(1,1,1,1);
+            //GL.ClearColor(1,1,1,1);
+            //GL.ClearColor(0.0f, 0.0f, 0.0f, 1.0f);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             
-            GL.Flush();
+            _program.Use();
+            _vao.Render();
             
-            /*_control.Camera.Render();
-            _control.Label.Render();*/
+            //_triangle.Render();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _vao?.Dispose();
+            _program?.Dispose();
+
+            _triangle?.Dispose();
             
-            /*_paint.TextSize = _control._font.Size;
-            _paint.Typeface = SKTypeface.FromFamilyName(_control._font.Name);
-
-            _paint.Color = SKColors.Green;
-            _canvas.DrawLine(_rect.Left, _rect.Top, _rect.Right, _rect.Top, _paint);
-            _paint.Color = SKColors.Black;
-            
-            // y = baseline
-            var y = _rect.Top - _paint.FontMetrics.Ascent;
-            var step = _paint.FontSpacing;
-            var text = "PQR_{}!_ÖÄÜ";
-
-            _paint.IsAntialias = true;
-            _paint.IsAutohinted = true;
-            _paint.SubpixelText = false;
-            _canvas.DrawText(text, 10, y, _paint);
-            _canvas.DrawLine(_rect.Left, y, _rect.Right, y, _paint);
-            //_canvas.DrawLine(_rect.Left, y + _paint.FontMetrics.Bottom, _rect.Right, y + _paint.FontMetrics.Bottom, _paint);
-            _canvas.DrawLine(_rect.Left, y + _paint.FontMetrics.Ascent, _rect.Right, y + _paint.FontMetrics.Ascent, _paint);
-            //_canvas.DrawLine(_rect.Left, y + _paint.FontMetrics.Top, _rect.Right, y + _paint.FontMetrics.Top, _paint);
-            _canvas.DrawLine(_rect.Left, y + _paint.FontMetrics.Descent, _rect.Right, y + _paint.FontMetrics.Descent, _paint);
-
-            y += step;
-            _paint.IsAntialias = true;
-            _paint.IsAutohinted = true;
-            _paint.SubpixelText = true;
-            _canvas.DrawText(text, 10, y, _paint);
-
-            y += step;
-            _paint.IsAntialias = true;
-            _paint.IsAutohinted = false;
-            _paint.SubpixelText = true;
-            _canvas.DrawText(text, 10, y, _paint);
-
-            y += step;
-            _paint.IsAntialias = false;
-            _paint.IsAutohinted = false;
-            _paint.SubpixelText = true;
-            _canvas.DrawText(text, 10, y, _paint);
-
-            y += step;
-            _paint.IsAntialias = false;
-            _paint.IsAutohinted = true;
-            _paint.SubpixelText = true;
-            _canvas.DrawText(text, 10, y, _paint);
-
-            y += step;
-            _paint.IsAntialias = false;
-            _paint.IsAutohinted = true;
-            _paint.SubpixelText = false;
-            _canvas.DrawText(text, 10, y, _paint);
-
-            y += step;
-            _paint.IsAntialias = true;
-            _paint.IsAutohinted = true;
-            _paint.SubpixelText = true;
-            _paint.LcdRenderText = true;
-            _canvas.DrawText(text, 10, y, _paint);
-
-            y += step;
-            _paint.SubpixelText = false;
-            _canvas.DrawText(text, 10, y, _paint);
-
-            _paint.LcdRenderText = false;
-
-            _paint.Typeface.Dispose();*/
-        }        
+            base.Dispose(disposing);
+        }
     }
 }

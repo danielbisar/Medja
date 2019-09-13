@@ -6,7 +6,8 @@ namespace Medja.OpenTk.Components3D
 {
     public abstract class GLCamera : GLComponent
     {
-        [NonSerialized] public readonly Property<Vector3> PropertyTargetPosition;
+        [NonSerialized] 
+        public readonly Property<Vector3> PropertyTargetPosition;
 
         /// <summary>
         /// The position the viewer looks at.
@@ -17,7 +18,8 @@ namespace Medja.OpenTk.Components3D
             set { PropertyTargetPosition.Set(value); }
         }
 
-        [NonSerialized] public readonly Property<Vector3> PropertyUpVector;
+        [NonSerialized] 
+        public readonly Property<Vector3> PropertyUpVector;
 
         /// <summary>
         /// Defines where is up of the viewers eyes. Default: x=0, y=1, z=0
