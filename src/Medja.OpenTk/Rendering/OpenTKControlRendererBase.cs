@@ -84,5 +84,12 @@ namespace Medja.OpenTk.Rendering
             if(IsInitialized)
                 _gc.MakeCurrent(_windowInfo);
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+            _gc.Dispose();
+            _windowInfo = null;
+        }
     }
 }

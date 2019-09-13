@@ -1,3 +1,6 @@
+using Medja.OpenTk.Rendering;
+using OpenTK.Graphics.OpenGL4;
+
 namespace Medja.OpenTk.Components3D
 {
     /// <summary>
@@ -6,13 +9,48 @@ namespace Medja.OpenTk.Components3D
     /// </summary>
     public class GLTriangle : GLModel
     {
-        public override void RenderModel()
+        private readonly VertexArrayObject _vao;
+        private readonly OpenGLProgram _program;
+
+        public GLTriangle()
         {
-            /*GL.Begin(PrimitiveType.Triangles);
-            GL.Vertex3(0, 0, 0);
-            GL.Vertex3(1, 0, 0);
-            GL.Vertex3(0, 1, 0);
-            GL.End();*/
+            var data = new float[]
+            {
+                0,0,
+                1,0,
+                0,1
+            };
+            
+            var vbo = new VertexBufferObject();
+            vbo.ComponentsPerVertex = 2;
+            vbo.SetData(data);
+            
+            _vao = new VertexArrayObject();
+            _vao.AddVertexAttribute(VertexAttributeType.Positions, vbo);
+
+            var vertexShader = new OpenGLShader(ShaderType.VertexShader);
+            vertexShader.Source = @"#version 420
+
+" + _vao.GetAttributeLayoutCode() + @"
+
+out vec3 outColor;
+
+void main()
+{
+    gl_Position = vec4(position, 0, 1);
+    outColor = vec3(1,1,1);
+}";
+            
+            var fragmentShader = ShaderFactory.CreatePassthroughFragmentShader(3, "outColor");
+            
+            _program = OpenGLProgram.CreateAndCompile(vertexShader, fragmentShader);
+        }
+        
+        
+        public override void Render()
+        {
+            _program.Use();
+            _vao.Render();
         }
     }
 }

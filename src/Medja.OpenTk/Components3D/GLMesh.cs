@@ -154,7 +154,7 @@ namespace Medja.OpenTk.Components3D
             _indices.TrimExcess();*/
         }
 
-        public override void RenderModel()
+        public override void Render()
         {
             if (_vboId == -1)
                 throw new InvalidOperationException("call " + nameof(CreateBuffers) + " first");

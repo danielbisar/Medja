@@ -32,10 +32,9 @@ namespace Medja.OpenTk.Components3D
             _mesh.CreateBuffers();
         }
 
-        public override void RenderModel()
+        public override void Render()
         {
-            base.RenderModel();
-            _mesh.RenderModel();
+            _mesh.Render();
         }
     }
 }

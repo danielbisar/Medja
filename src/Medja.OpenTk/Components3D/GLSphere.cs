@@ -76,10 +76,9 @@ namespace Medja.OpenTk.Components3D
             return mid;
         }
 
-        public override void RenderModel()
+        public override void Render()
         {
-            base.RenderModel();
-            _mesh.RenderModel();
+            _mesh.Render();
         }
     }
 }
