@@ -1,6 +1,5 @@
 ﻿using Medja.OpenTk.Components3D;
 using Medja.OpenTk.Rendering;
-using Medja.Primitives;
 using Medja.Utils;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
@@ -10,6 +9,7 @@ namespace Medja.Demo
     public class OpenGlTestControlRenderer : OpenTKControlRendererBase<OpenGlTestControl>
     {
         private GLScene _scene;
+        private GLCuboid _cuboid;
         private float _ry = 0;
         
         public OpenGlTestControlRenderer(OpenGlTestControl control)
@@ -22,7 +22,6 @@ namespace Medja.Demo
             base.Initialize();
             
             GL.Enable(EnableCap.DepthTest);
-            GL.Disable(EnableCap.CullFace);
             
             _scene = new GLScene();
             /*_scene.Camera = new GLOrthographicCamera
@@ -37,7 +36,7 @@ namespace Medja.Demo
                 Position = new Vector3(0, 2, 10),
                 TargetPosition = new Vector3(0, 0.5f, 0)
             };
-            _scene.AddRenderWrapper(new GLTriangle(), triangle =>
+            /*_scene.AddRenderWrapper(new GLTriangle(), triangle =>
             {
                 _ry += 0.01f;
                 triangle.ModelMatrix.Rotation = new Vector3(0, _ry, 0);
@@ -48,14 +47,17 @@ namespace Medja.Demo
                     triangle.ModelMatrix.AddRotationY((float) MedjaMath.Radians(60));
                     triangle.Render();
                 }
-            });
+            });*/
+            _scene.Add(_cuboid = new GLCuboid());
         }
         
         protected override void InternalRender()
         {
             GL.ClearColor(0.8f, 0.8f, 0.8f, 1); 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-            
+
+            _cuboid.ModelMatrix.AddRotationX((float)MedjaMath.Radians(1));
+            _cuboid.ModelMatrix.AddRotationY((float) MedjaMath.Radians(1));
             _scene.Render();
         }
 

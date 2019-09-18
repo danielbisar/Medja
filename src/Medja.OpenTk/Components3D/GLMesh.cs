@@ -9,6 +9,7 @@ namespace Medja.OpenTk.Components3D
     /// <summary>
     /// A mesh, defines the vertices and indexes that make up the mesh.
     /// </summary>
+    [Obsolete]
     public class GLMesh : GLModel
     {
         private List<int> _indices;
@@ -187,6 +188,7 @@ namespace Medja.OpenTk.Components3D
             GL.DisableClientState(ArrayCap.TextureCoordArray);*/
         }
 
+        // TODO extract to custom method
         public void SubdivideFaces(Func<Vector3, Vector3, Vector3> getMiddle)
         {
             var result = new List<int>();
