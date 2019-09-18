@@ -7,17 +7,10 @@ namespace Medja.OpenTk.Components3D
     /// <summary>
     /// Defines an Orthographic camera.
     /// </summary>
-    /// <remarks>
-    /// - Scale.Z component has no effect
-    /// - 
-    /// </remarks>
     public class GLOrthographicCamera : GLCamera
     {
-        private Matrix4 _projectionMatrix;
-        
         [NonSerialized] 
         public readonly Property<float> PropertyWidth;
-
         public float Width
         {
             get { return PropertyWidth.Get(); }
@@ -26,7 +19,6 @@ namespace Medja.OpenTk.Components3D
 
         [NonSerialized] 
         public readonly Property<float> PropertyHeight;
-
         public float Height
         {
             get { return PropertyHeight.Get(); }
@@ -46,23 +38,18 @@ namespace Medja.OpenTk.Components3D
             PropertyZFar.PropertyChanged += OnProjectionMatrixPropertyChanged;
             PropertyZNear.PropertyChanged += OnProjectionMatrixPropertyChanged;
             
-            UpdateProjectionMatrix();
+            _projectionMatrixNeedsUpdate = true;
         }
 
         private void OnProjectionMatrixPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            UpdateProjectionMatrix();
+            _projectionMatrixNeedsUpdate = true;
         }
 
-        private void UpdateProjectionMatrix()
+        public override void UpdateProjectionMatrix()
         {
-            _projectionMatrix = Matrix4.CreateOrthographic(Width * Scale.X, Height * Scale.Y, ZNear, ZFar);
-        }
-
-        public override void Render()
-        {
-            /*GL.MatrixMode(MatrixMode.Projection);
-            GL.LoadMatrix(ref _projectionMatrix);*/
+            base.UpdateProjectionMatrix();
+            ProjectionMatrix = Matrix4.CreateOrthographic(Width, Height, ZNear, ZFar);
         }
     }
 }

@@ -26,8 +26,7 @@ namespace Medja.OpenTk.Components3D
             if (inColorName == "fragmentColor")
                 throw new ArgumentException("cannot contain the value 'fragmentColor'", nameof(inColorName));
 
-            var shader = new OpenGLShader(ShaderType.FragmentShader);
-            shader.Source = string.Format(@"#version 420
+            var source = string.Format(@"#version 420
 
 in vec{0} {1};
 out vec4 fragmentColor;
@@ -36,6 +35,9 @@ void main()
 {{
     fragmentColor = {2};
 }}", inColorComponentCount, inColorName, GetVec4Expression(inColorName, inColorComponentCount));
+            
+            var shader = new OpenGLShader(ShaderType.FragmentShader);
+            shader.Source = source;
             
             return shader;
         }

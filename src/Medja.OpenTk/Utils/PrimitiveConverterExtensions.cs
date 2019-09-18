@@ -55,5 +55,10 @@ namespace Medja.OpenTk.Utils
                 _ => throw new ArgumentOutOfRangeException(nameof(windowState))
             };
         }
+
+        public static Vector3 ToVector3(this Color color)
+        {
+            return new Vector3(color.Red, color.Green, color.Blue);
+        }
     }
 }

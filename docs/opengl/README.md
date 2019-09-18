@@ -1,5 +1,12 @@
 # Modern OpenGL
 
+## OpenTK
+
+- Matrix multiplication order is inverse from GLSL order.
+  https://github.com/opentk/opentk/issues/687
+
+  So the multiplication goes from left to right and not from right to left!
+
 ## Render triangle
 
 ```

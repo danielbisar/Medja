@@ -1,5 +1,6 @@
 ﻿using Medja.OpenTk.Components3D;
 using Medja.OpenTk.Rendering;
+using Medja.Primitives;
 using Medja.Utils;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
@@ -8,93 +9,59 @@ namespace Medja.Demo
 {
     public class OpenGlTestControlRenderer : OpenTKControlRendererBase<OpenGlTestControl>
     {
+        private GLScene _scene;
+        private float _ry = 0;
+        
         public OpenGlTestControlRenderer(OpenGlTestControl control)
         : base(control)
         {
         }
         
-        GLTriangle _triangle;
-        VertexArrayObject _vao;
-        OpenGLProgram _program;
-        
         public override void Initialize()
         {
             base.Initialize();
-
-            //_triangle = new GLTriangle();
-
-            var data = new float[]
+            
+            GL.Enable(EnableCap.DepthTest);
+            GL.Disable(EnableCap.CullFace);
+            
+            _scene = new GLScene();
+            /*_scene.Camera = new GLOrthographicCamera
             {
-                0, 0,
-                1, 0,
-                0, 1
+                Width = 3,
+                Height = 3,
+                Position = new Vector3(0, 2, 10),
+                TargetPosition = new Vector3(0, 0.5f, 0)
+            };*/
+            _scene.Camera = new GLPerspectiveCamera
+            {
+                Position = new Vector3(0, 2, 10),
+                TargetPosition = new Vector3(0, 0.5f, 0)
             };
-
-            var vbo = new VertexBufferObject();
-            vbo.ComponentsPerVertex = 2;
-            vbo.SetData(data);
-
-            _vao = new VertexArrayObject();
-            _vao.AddVertexAttribute(VertexAttributeType.Positions, vbo);
-
-            var vertexShader = new OpenGLShader(ShaderType.VertexShader);
-            vertexShader.Source = @"#version 420
-
-" + _vao.GetAttributeLayoutCode() + @"
-
-out vec3 outColor;
-
-uniform mat4 combined;
-
-void main()
-{
-    gl_Position = combined * vec4(position, 0, 1);
-    outColor = vec3(1,1,1);
-}";
-
-            var fragmentShader = ShaderFactory.CreatePassthroughFragmentShader(3, "outColor");
-
-            var projection = Matrix4.CreatePerspectiveFieldOfView(0.79f, 4 / 3f, 0.1f, 100.0f);
-            var view = Matrix4.Identity;
-            var model = Matrix4.Identity;
-            
-            var trans = Matrix4.CreateTranslation(0, -0.5f, 0);
-            var rotation = CreateRotation(0, (float)MedjaMath.Radians(35), 0);
-
-            combined = /*projection * */ trans * rotation * view * model;
-            
-            
-
-            _program = OpenGLProgram.CreateAndCompile(vertexShader, fragmentShader);
-            var combinedUniform = _program.GetUniform("combined");
-            
-            combinedUniform.Set(ref combined);
+            _scene.AddRenderWrapper(new GLTriangle(), triangle =>
+            {
+                _ry += 0.01f;
+                triangle.ModelMatrix.Rotation = new Vector3(0, _ry, 0);
+                
+                for (int r = 0; r < 360; r += 60)
+                {
+                    triangle.SetColor(Colors.ColorsArray[r / 60]);
+                    triangle.ModelMatrix.AddRotationY((float) MedjaMath.Radians(60));
+                    triangle.Render();
+                }
+            });
         }
-
         
-
-        Matrix4 combined;
-        
-
         protected override void InternalRender()
         {
-            //GL.ClearColor(1,1,1,1);
-            //GL.ClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+            GL.ClearColor(0.8f, 0.8f, 0.8f, 1); 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             
-            _program.Use();
-            _vao.Render();
-            
-            //_triangle.Render();
+            _scene.Render();
         }
 
         protected override void Dispose(bool disposing)
         {
-            _vao?.Dispose();
-            _program?.Dispose();
-
-            _triangle?.Dispose();
-            
+            _scene?.Dispose();
             base.Dispose(disposing);
         }
     }
