@@ -4,6 +4,9 @@ using OpenTK.Graphics.OpenGL4;
 
 namespace Medja.OpenTk.Components3D
 {
+    /// <summary>
+    /// Represents a uniform (a settable parameter/variable of an OpenGL program).
+    /// </summary>
     public class GLUniform
     {
         public int Id { get; }

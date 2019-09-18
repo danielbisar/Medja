@@ -1,7 +1,7 @@
 ﻿using System;
 using OpenTK.Graphics.OpenGL4;
 
-namespace Medja.OpenTk.Rendering
+namespace Medja.OpenTk.Components3D
 {
     public class OpenGLShader : IDisposable
     {

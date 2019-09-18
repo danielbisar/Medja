@@ -1,13 +1,11 @@
-using Medja.OpenTk.Rendering;
 using Medja.OpenTk.Utils;
 using Medja.Primitives;
 using OpenTK;
-using OpenTK.Graphics.OpenGL4;
 
 namespace Medja.OpenTk.Components3D
 {
     /// <summary>
-    /// Base class for simple colored models
+    /// Base class for simple models with of one solid color.
     /// </summary>
     public class GLColoredModel : GLModel
     {
@@ -33,23 +31,11 @@ namespace Medja.OpenTk.Components3D
                 ebo.SetData(indices);
             }
             
-            var vertexShader = new OpenGLShader(ShaderType.VertexShader);
-            vertexShader.Source = @"#version 420
-
-" + _vao.GetAttributeLayoutCode() + @"
-
-uniform mat4 viewProjection;
-uniform mat4 model;
-uniform vec3 color;
-
-out vec3 outColor;
-
-void main()
-{
-    gl_Position = viewProjection * model * vec4(position, 1);
-    outColor = color; //vec3(1,1,1);
-}";
-
+            var vertexShader = ShaderFactory.CreateDefaultVertexShader(new VertexShaderGenConfig
+            {
+                HasColorParam = true, 
+                VertexArrayObject = _vao
+            });
             var fragmentShader = ShaderFactory.CreatePassthroughFragmentShader(3, "outColor");
 
             _program = OpenGLProgram.CreateAndCompile(vertexShader, fragmentShader);
