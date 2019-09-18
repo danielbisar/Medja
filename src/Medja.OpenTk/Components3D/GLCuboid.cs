@@ -1,40 +1,46 @@
-using OpenTK.Graphics.OpenGL4;
-
 namespace Medja.OpenTk.Components3D
 {
-    public class GLCuboid : GLModel
+    public class GLCuboid : GLColoredModel
     {
-        private readonly GLMesh _mesh;
+        public static uint[] Indices =
+        {
+            0, 1, 3, 3, 1, 2, // front
+            1, 7, 2, 2, 7, 6, // right
+            4, 5, 6, 6, 7, 4, // back
+            5, 4, 0, 0, 3, 5, // left
+            3, 2, 5, 5, 2, 6, // top
+            0, 4, 7, 7, 1, 0  // bottom
+        };
+        
+        private static float[] CreateVertices(float xLength, float yLength, float zLength)
+        {
+            return new []
+            {
+                0,0,0,
+                xLength, 0, 0,
+                xLength, yLength, 0,
+                0, yLength, 0,
+                
+                0, 0, zLength,
+                0, yLength, zLength,
+                xLength, yLength, zLength,
+                xLength, 0, zLength,
+            };
+        }
         
         public GLCuboid(float xLength, float yLength, float zLength)
+        : base(CreateVertices(xLength, yLength, zLength), Indices)
         {
-            _mesh = new GLMesh();
-            _mesh.PrimitiveType = PrimitiveType.Quads;
-
-            _mesh.AddVertex(0, 0, 0);
-            _mesh.AddVertex(xLength, 0, 0);
-            _mesh.AddVertex(xLength, yLength, 0);
-            _mesh.AddVertex(0, yLength, 0);
-
-            _mesh.AddVertex(0, 0, zLength);
-            _mesh.AddVertex(xLength, 0, zLength);
-            _mesh.AddVertex(xLength, yLength, zLength);
-            _mesh.AddVertex(0, yLength, zLength);
-
-            _mesh.AddIndices(
-                0, 1, 2, 3, // front
-                1, 5, 6, 2, // right
-                5, 4, 7, 6, // back
-                0, 4, 7, 3, // left
-                3, 2, 6, 7, // top
-                0, 4, 5, 1); // bottom
-
-            _mesh.CreateBuffers();
         }
 
-        public override void Render()
+        public GLCuboid(float length)
+            : this(length, length, length)
         {
-            _mesh.Render();
+        }
+
+        public GLCuboid()
+            : this(1)
+        {
         }
     }
 }

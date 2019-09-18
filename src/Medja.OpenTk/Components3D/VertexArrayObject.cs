@@ -5,17 +5,37 @@ using OpenTK.Graphics.OpenGL4;
 
 namespace Medja.OpenTk.Components3D
 {
+    /// <summary>
+    /// A vertex array object.
+    /// </summary>
     public class VertexArrayObject : IDisposable
     {
         private int _nextVertexAttributeIndex;
         private int _elementCount;
         private List<VertexAttribute> _attributes;
-        
+        private ElementBufferObject _elementBufferObject;
+
         public int Id { get; }
-        
+
+        private PrimitiveType _primitiveType;
+        public PrimitiveType PrimitiveType
+        {
+            get { return _primitiveType; }
+            set
+            {
+                // quads are no longer supported by OpenGL so let the user know at some point
+                // for old OpenGL it might work, but this API is mainly for modern OpenGL
+                if(value == PrimitiveType.Quads)
+                    throw new NotSupportedException("GL_QUADS is deprecated since version ~3"); 
+                   
+                _primitiveType = value;
+            }
+        }
+
         public VertexArrayObject()
         {
             Id = GL.GenVertexArray();
+            PrimitiveType = PrimitiveType.Triangles;
             
             _nextVertexAttributeIndex = 0;
             _attributes = new List<VertexAttribute>();
@@ -27,7 +47,7 @@ namespace Medja.OpenTk.Components3D
         }
 
         /// <summary>
-        /// 
+        /// Adds a vertex attribute to the vertex array object.
         /// </summary>
         /// <returns>The id of the attribute.</returns>
         public VertexAttribute AddVertexAttribute(VertexAttributeType type, VertexBufferObject vertexBufferObject)
@@ -45,10 +65,21 @@ namespace Medja.OpenTk.Components3D
             return attribute;
         }
 
+        public ElementBufferObject CreateElementBufferObject()
+        {
+            // without the bind the EBO will not be part of the VAO
+            Bind();
+            return _elementBufferObject = new ElementBufferObject();
+        }
+
         public void Render()
         {
             Bind();
-            GL.DrawArrays(PrimitiveType.Triangles, 0, _elementCount);
+            
+            if(_elementBufferObject == null)
+                GL.DrawArrays(PrimitiveType, 0, _elementCount);
+            else
+                GL.DrawElements(PrimitiveType, _elementBufferObject.IndexCount, DrawElementsType.UnsignedInt, 0);
         }
 
         /// <summary>
@@ -82,8 +113,8 @@ namespace Medja.OpenTk.Components3D
         {
             foreach(var attribute in _attributes)
                 attribute.Dispose();
-            
-            _attributes.Clear();
+
+            _elementBufferObject?.Dispose();
             GL.DeleteVertexArray(Id);
         }
     }
