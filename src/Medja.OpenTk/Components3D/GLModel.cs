@@ -4,80 +4,39 @@ using OpenTK;
 
 namespace Medja.OpenTk.Components3D
 {
-    public class GLModel : GLComponent
+    public class GLModel : GLComponent, IViewProjectionMatrix
     {
-        private Vector3 _rotation;
-        private Vector3 _translation;
+        public ModelMatrix ModelMatrix { get; }
 
         /// <summary>
-        /// Gets the model matrix (contains position, rotation, ... of the model)
+        /// this field is necessary to allow passing the matrix as ref to a GL.Uniform
+        /// do not set this field directly from outside this class.
         /// </summary>
-        public Matrix4 Matrix { get; set; }
-
-        private Matrix4 _rotationMatrix;
-        private bool _isRotationChanged;
-        public Vector3 Rotation
+        protected Matrix4 _viewProjectionMatrix;
+        
+        [NonSerialized]
+        public readonly Property<Matrix4> PropertyViewProjectionMatrix;
+        public Matrix4 ViewProjectionMatrix
         {
-            get { return _rotation; }
-            set
-            {
-                _rotation = value;
-                _isRotationChanged = true;
-            }
-        }
-
-        private bool _isTranslationChanged;
-        private Matrix4 _translationMatrix;
-        public Vector3 Translation
-        {
-            get { return _translation; }
-            set
-            {
-                _translation = value;
-                _isTranslationChanged = true;
-            }
+            get { return PropertyViewProjectionMatrix.Get(); }
+            set { PropertyViewProjectionMatrix.Set(value); }
         }
 
         public GLModel()
         {
-            Matrix = Matrix4.Identity;
-            _rotationMatrix = Matrix4.Identity;
-            _translationMatrix = Matrix4.Identity;
+            ModelMatrix = new ModelMatrix();
+            PropertyViewProjectionMatrix = new Property<Matrix4>();
+            PropertyViewProjectionMatrix.PropertyChanged += OnViewProjectionMatrixChanged;
         }
-        
+
+        private void OnViewProjectionMatrixChanged(object sender, PropertyChangedEventArgs e)
+        {
+            _viewProjectionMatrix = ViewProjectionMatrix;
+        }
+
         public override void Render()
         {
-            if (_isRotationChanged || _isTranslationChanged)
-            {
-                if (_isRotationChanged)
-                {
-                    _rotationMatrix = CreateRotation(Rotation);
-                    _isRotationChanged = false;
-                }
-
-                if (_isTranslationChanged)
-                {
-                    _translationMatrix = Matrix4.CreateTranslation(Translation);
-                    _isTranslationChanged = false;
-                }
-
-                Matrix = Matrix4.CreateTranslation(Translation) * CreateRotation(Rotation);
-            }
-        }
-
-        /// <summary>
-        /// Creates the rotation matrix.
-        /// </summary>
-        /// <returns>The rotation matrix.</returns>
-        private Matrix4 CreateRotation(Vector3 rotation)
-        {
-            var result = Matrix4.Identity;
-
-            result *= Matrix4.CreateRotationX(rotation.X);
-            result *= Matrix4.CreateRotationY(rotation.Y);
-            result *= Matrix4.CreateRotationZ(rotation.Z);
-
-            return result;
+            ModelMatrix.UpdateModelMatrix();
         }
     }
 }

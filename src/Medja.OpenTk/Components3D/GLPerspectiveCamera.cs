@@ -7,13 +7,10 @@ namespace Medja.OpenTk.Components3D
 {
     public class GLPerspectiveCamera : GLCamera
     {
-        private Matrix4 _projectionMatrix;
-        
         [NonSerialized] 
         public readonly Property<float> PropertyFieldOfViewAngle;
         /// <summary>
         /// The field of view angle in radians. Default value: 45° => 0.79 radians. Use <see cref="MedjaMath.Radians"/>.
-        /// This is also the "zoom", <see cref="GLComponent.Scale"/> is not applied in this class.
         /// </summary>
         public float FieldOfViewAngle
         {
@@ -23,7 +20,6 @@ namespace Medja.OpenTk.Components3D
 
         [NonSerialized] 
         public readonly Property<float> PropertyAspectRatio;
-
         /// <summary>
         /// The x to y aspect ratio. Default value: 4/3
         /// </summary>
@@ -45,24 +41,17 @@ namespace Medja.OpenTk.Components3D
             
             PropertyZNear.PropertyChanged += OnProjectionMatrixPropertyChanged;
             PropertyZFar.PropertyChanged += OnProjectionMatrixPropertyChanged;
-            
-            UpdateProjectionMatrix();
         }
 
         private void OnProjectionMatrixPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            UpdateProjectionMatrix();
+            _projectionMatrixNeedsUpdate = true;
         }
 
-        private void UpdateProjectionMatrix()
+        public override void UpdateProjectionMatrix()
         {
-            _projectionMatrix = Matrix4.CreatePerspectiveFieldOfView(FieldOfViewAngle, AspectRatio, ZNear, ZFar);
-        }
-
-        public override void Render()
-        {
-            /*GL.MatrixMode(MatrixMode.Projection);
-            GL.LoadMatrix(ref _projectionMatrix);*/
+            base.UpdateProjectionMatrix();
+            ProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView(FieldOfViewAngle, AspectRatio, ZNear, ZFar);
         }
     }
 }

@@ -6,9 +6,20 @@ namespace Medja.OpenTk.Components3D
 {
     public abstract class GLCamera : GLComponent
     {
+        private bool _viewMatrixNeedsUpdate;
+        protected bool _projectionMatrixNeedsUpdate;
+        private bool _viewProjectionMatrixNeedsUpdate;
+            
+        [NonSerialized]
+        public readonly Property<Vector3> PropertyPosition;
+        public Vector3 Position
+        {
+            get { return PropertyPosition.Get(); }
+            set { PropertyPosition.Set(value); }
+        }
+        
         [NonSerialized] 
         public readonly Property<Vector3> PropertyTargetPosition;
-
         /// <summary>
         /// The position the viewer looks at.
         /// </summary>
@@ -20,7 +31,6 @@ namespace Medja.OpenTk.Components3D
 
         [NonSerialized] 
         public readonly Property<Vector3> PropertyUpVector;
-
         /// <summary>
         /// Defines where is up of the viewers eyes. Default: x=0, y=1, z=0
         /// </summary>
@@ -30,16 +40,22 @@ namespace Medja.OpenTk.Components3D
             set { PropertyUpVector.Set(value); }
         }
         
-        [NonSerialized] public readonly Property<Matrix4> PropertyViewMatrix;
-
+        [NonSerialized] 
+        public readonly Property<Matrix4> PropertyViewMatrix;
         public Matrix4 ViewMatrix
         {
-            get { return PropertyViewMatrix.Get(); }
+            get
+            {
+                if(_viewMatrixNeedsUpdate)
+                    UpdateViewMatrix();
+                
+                return PropertyViewMatrix.Get();
+            }
             set { PropertyViewMatrix.Set(value); }
         }
 
-        [NonSerialized] public readonly Property<float> PropertyZNear;
-
+        [NonSerialized] 
+        public readonly Property<float> PropertyZNear;
         /// <summary>
         /// Distance of the near clipping plane. Default: 0.1f
         /// </summary>
@@ -49,8 +65,8 @@ namespace Medja.OpenTk.Components3D
             set { PropertyZNear.Set(value); }
         }
 
-        [NonSerialized] public readonly Property<float> PropertyZFar;
-
+        [NonSerialized] 
+        public readonly Property<float> PropertyZFar;
         /// <summary>
         /// Distance of the far clipping plane. Default: 100.0f
         /// </summary>
@@ -60,9 +76,41 @@ namespace Medja.OpenTk.Components3D
             set { PropertyZFar.Set(value); }
         }
 
+        [NonSerialized]
+        public readonly Property<Matrix4> PropertyProjectionMatrix;
+        public Matrix4 ProjectionMatrix
+        {
+            get
+            {
+                if(_projectionMatrixNeedsUpdate)
+                    UpdateProjectionMatrix();
+                
+                return PropertyProjectionMatrix.Get();
+            }
+            set { PropertyProjectionMatrix.Set(value); }
+        }
+
+        [NonSerialized]
+        public readonly Property<Matrix4> PropertyViewProjectionMatrix;
+        public Matrix4 ViewProjectionMatrix
+        {
+            get
+            {
+                if (_viewProjectionMatrixNeedsUpdate)
+                    UpdateViewProjectionMatrix();
+
+                return PropertyViewProjectionMatrix.Get();
+            }
+            set { PropertyViewProjectionMatrix.Set(value); }
+        }
+
         protected GLCamera()
         {
             PropertyViewMatrix = new Property<Matrix4>();
+            PropertyViewMatrix.PropertyChanged += OnViewMatrixChanged;
+            PropertyProjectionMatrix = new Property<Matrix4>();
+            PropertyProjectionMatrix.PropertyChanged += OnProjectionMatrixChanged;
+            PropertyViewProjectionMatrix = new Property<Matrix4>();
 
             PropertyTargetPosition = new Property<Vector3>();
             PropertyTargetPosition.SetSilent(Vector3.Zero);
@@ -72,6 +120,7 @@ namespace Medja.OpenTk.Components3D
             PropertyUpVector.SetSilent(new Vector3(0, 1, 0));
             PropertyUpVector.PropertyChanged += OnViewMatrixPropertyChanged;
 
+            PropertyPosition = new Property<Vector3>();
             // +10 z means go back from 0,0,0 10 units
             PropertyPosition.SetSilent(new Vector3(0, 3, 10));
             PropertyPosition.PropertyChanged += OnViewMatrixPropertyChanged;
@@ -82,17 +131,54 @@ namespace Medja.OpenTk.Components3D
             PropertyZFar = new Property<float>();
             PropertyZFar.SetSilent(100.0f);
             
-            UpdateViewMatrix();
+            _viewMatrixNeedsUpdate = true;
+            _projectionMatrixNeedsUpdate = true;
+            _viewProjectionMatrixNeedsUpdate = true;
+        }
+
+        private void OnProjectionMatrixChanged(object sender, PropertyChangedEventArgs e)
+        {
+            _viewProjectionMatrixNeedsUpdate = true;
+        }
+
+        private void OnViewMatrixChanged(object sender, PropertyChangedEventArgs e)
+        {
+            _viewProjectionMatrixNeedsUpdate = true;
         }
 
         private void OnViewMatrixPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            UpdateViewMatrix();
+            _viewMatrixNeedsUpdate = true;
         }
 
-        private void UpdateViewMatrix()
+        /// <summary>
+        /// Updates the view matrix; is called automatically if needed before you get the value of <see cref="ViewMatrix"/>
+        /// through the .NET property (not via PropertyViewMatrix.Get).
+        /// </summary>
+        public virtual void UpdateViewMatrix()
         {
             ViewMatrix = Matrix4.LookAt(Position, TargetPosition, UpVector);
+            _viewMatrixNeedsUpdate = false;
+        }
+
+        /// <summary>
+        /// Updates the projection matrix; is called automatically if needed before you get the value of <see cref="ProjectionMatrix"/>
+        /// through the .NET property (not via PropertyProjectionMatrix.Get).
+        /// </summary>
+        public virtual void UpdateProjectionMatrix()
+        {
+            _projectionMatrixNeedsUpdate = false;
+        }
+
+        /// <summary>
+        /// Updates the view projection matrix; is called automatically before you get the value of <see cref="ViewProjectionMatrix"/>
+        /// through the .NET property (not via PropertyViewProjectionMatrix.Get).
+        /// </summary>
+        public virtual void UpdateViewProjectionMatrix()
+        {
+            // OpenTK matrix multiplication order is from left to right
+            ViewProjectionMatrix = ViewMatrix * ProjectionMatrix;
+            _viewProjectionMatrixNeedsUpdate = false;
         }
     }
 }
