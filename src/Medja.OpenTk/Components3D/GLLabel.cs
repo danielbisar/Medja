@@ -1,22 +1,16 @@
 using System;
 using System.Collections.Generic;
+using Medja.Primitives;
 using Medja.Properties;
 
 namespace Medja.OpenTk.Components3D
 {
-    
-    // original code is in VSCode
-    // thoughts:
-    // use draw_dynamic or static (stream doesn't make sense)
-    // use one or more vbos for labels (fixed size and could be transformed; what about the texture)
-    // how fast is recreating the vbo? (measure)
-    
     public class GLLabel : GLModel
     {
         private VertexArrayObject _vao;
-        private readonly OpenGLProgram _program;
-        private readonly GLUniform _modelMatrixUniform;
-        private readonly GLUniform _viewProjectionMatrixUniform;
+        private OpenGLProgram _program;
+        private GLUniform _modelMatrixUniform;
+        private GLUniform _viewProjectionMatrixUniform;
         private bool _vaoNeedsUpdate;
 
         [NonSerialized]
@@ -33,9 +27,6 @@ namespace Medja.OpenTk.Components3D
             PropertyText = new Property<string>();
             PropertyText.PropertyChanged += OnPropertyTextChanged;
             
-            _program = CreateProgram();
-            _modelMatrixUniform = _program.GetUniform("model");
-            _viewProjectionMatrixUniform = _program.GetUniform("viewProjection");
             _vaoNeedsUpdate = true;
         }
 
@@ -44,43 +35,46 @@ namespace Medja.OpenTk.Components3D
             _vaoNeedsUpdate = true;
         }
 
-        private OpenGLProgram CreateProgram()
+        private void CreateProgram()
         {
             var vertexShader = ShaderFactory.CreateDefaultVertexShader(new VertexShaderGenConfig
             {
-                HasColorParam = true,
+                FixedColor = Colors.White,
                 VertexArrayObject = _vao
             });
             var fragmentShader = ShaderFactory.CreatePassthroughFragmentShader(3, "outColor");
 
-            return OpenGLProgram.CreateAndCompile(vertexShader, fragmentShader);
+            _program = OpenGLProgram.CreateAndCompile(vertexShader, fragmentShader);
+
+            _modelMatrixUniform = _program.GetUniform("model");
+            _viewProjectionMatrixUniform = _program.GetUniform("viewProjection");
         }
 
         private void UpdateVao()
         {
             _vao?.Dispose();
-
-            /*var vertices = CreateVertices();
+            
+            var factory = new GLLabelVertexFactory(Text, 1);
+            var vertices = factory.CreateVertices();
+            var indices = factory.CreateIndices();
             
             var vbo = new VertexBufferObject();
             vbo.ComponentsPerVertex = 3;
-            vbo.SetData(data);
+            vbo.SetData(vertices);
 
             _vao = new VertexArrayObject();
             _vao.AddVertexAttribute(VertexAttributeType.Positions, vbo);
-
-            if (indices != null)
-            {
-                var ebo = _vao.CreateElementBufferObject();
-                ebo.UsageHint =
-                    ebo.SetData(indices);
-            }
-
-            _vao = new VertexArrayObject();
-            _vao.AddVertexAttribute(VertexAttributeType.Positions, vbo);*/
+            
+            var ebo = _vao.CreateElementBufferObject();
+            ebo.SetData(indices);
+            
+            // this must be done just once; the _vao is just needed for the 
+            // attribute params
+            // todo better would be to be able to describe the vao without 
+            // creating it
+            if(_program == null)
+                CreateProgram();
         }
-
-        
 
         public override void Render()
         {
@@ -88,6 +82,10 @@ namespace Medja.OpenTk.Components3D
                 UpdateVao();
             
             base.Render();
+
+            // TODO update only when changed?
+            _modelMatrixUniform.Set(ref ModelMatrix._matrix);
+            _viewProjectionMatrixUniform.Set(ref _viewProjectionMatrix);
             
             _program.Use();
             _vao.Render();

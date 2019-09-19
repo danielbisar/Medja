@@ -1,6 +1,5 @@
 ﻿using Medja.OpenTk.Components3D;
 using Medja.OpenTk.Rendering;
-using Medja.Primitives;
 using Medja.Utils;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
@@ -10,6 +9,7 @@ namespace Medja.Demo
     public class OpenGlTestControlRenderer : OpenTKControlRendererBase<OpenGlTestControl>
     {
         private GLScene _scene;
+        private GLLabel _label;
         private float _ry = 0;
         
         public OpenGlTestControlRenderer(OpenGlTestControl control)
@@ -48,13 +48,21 @@ namespace Medja.Demo
                     triangle.Render();
                 }
             });*/
-            _scene.AddRenderWrapper(new GLCuboid(), cuboid =>
+            /*_scene.AddRenderWrapper(new GLCuboid(), cuboid =>
             {
                 cuboid.ModelMatrix.AddRotationX((float) MedjaMath.Radians(1));
                 cuboid.ModelMatrix.AddRotationY((float) MedjaMath.Radians(1));
 
                 cuboid.Render();
+            });*/
+            _scene.AddRenderWrapper(_label = new GLLabel(), label =>
+            {
+                label.ModelMatrix.AddRotationX((float) MedjaMath.Radians(1));
+                label.ModelMatrix.AddRotationY((float) MedjaMath.Radians(1));
+
+                label.Render();
             });
+            _label.Text = "Test";
         }
         
         protected override void InternalRender()
