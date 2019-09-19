@@ -42,6 +42,27 @@ void main()
             return shader;
         }
 
+        public static OpenGLShader CreatePassthroughTextureFragmentShader()
+        {
+            var source = @"#version 420
+
+uniform sampler2D theTexture;
+
+in vec2 outTextureCoord;
+
+out vec4 fragmentColor;
+
+void main()
+{
+    fragmentColor = texture(theTexture, outTextureCoord);
+}
+";
+            var shader = new OpenGLShader(ShaderType.FragmentShader);
+            shader.Source = source;
+
+            return shader;
+        }
+
         private static string GetVec4Expression(string inVarName, int inComponentCount)
         {
             if (string.IsNullOrEmpty(inVarName))
@@ -64,21 +85,30 @@ void main()
         /// <returns>The generated OpenGLShader</returns>
         public static OpenGLShader CreateDefaultVertexShader(VertexShaderGenConfig config)
         {
-            var sb = new StringBuilder();
+            var mainBody = new StringBuilder();
+            mainBody.AppendLine("gl_Position = viewProjection * model * vec4(position, 1);");
             
-            sb.AppendLine("gl_Position = viewProjection * model * vec4(position, 1);");
+            var hasColorInput = config.VertexArrayObject.HasAttributeOfType(VertexAttributeType.Colors);
             
             if(config.HasColorParam)
-                sb.Append("outColor = color;");
-            else
-                sb.AppendFormat("outColor = vec3({0}, {1}, {2});", 
+                mainBody.Append("outColor = color;");
+            else if(hasColorInput)
+                mainBody.AppendFormat("outColor = vec3({0}, {1}, {2});", 
                     config.FixedColor.Red, 
                     config.FixedColor.Green,
                     config.FixedColor.Blue, 
                     config.FixedColor.Alpha); // todo support alpha channel
-            sb.AppendLine();
+            mainBody.AppendLine();
 
-            var source = CreateDefaultVertexShaderCode(config, sb.ToString());
+
+            var hasTextureCoordinates =
+                config.VertexArrayObject.HasAttributeOfType(VertexAttributeType.TextureCoordinates);
+            
+            if(hasTextureCoordinates)
+                mainBody.AppendLine("outTextureCoord = textureCoord;"); 
+            
+
+            var source = CreateDefaultVertexShaderCode(config, mainBody.ToString());
             
             var shader = new OpenGLShader(ShaderType.VertexShader);
             shader.Source = source;
@@ -106,19 +136,33 @@ void main()
             if(config.VertexArrayObject == null)
                 throw new NullReferenceException("config: no VertexArrayObject set");
             
-            return @"#version 420
-
-" + config.VertexArrayObject.GetAttributeLayoutCode() + @"
-
-uniform mat4 viewProjection;
-uniform mat4 model;
-uniform vec3 color;
-
-out vec3 outColor;
-
-void main()
-{"+ mainBody +
-            "\n}";
+            var hasTextureCoordinates =
+                config.VertexArrayObject.HasAttributeOfType(VertexAttributeType.TextureCoordinates);
+            
+            var sb = new StringBuilder();
+            
+            sb.AppendLine("#version 420");
+            sb.AppendLine();
+            sb.AppendLine(config.VertexArrayObject.GetAttributeLayoutCode());
+            sb.AppendLine();
+            sb.AppendLine("uniform mat4 viewProjection;");
+            sb.AppendLine("uniform mat4 model;");
+            
+            if(config.HasColorParam)
+                sb.AppendLine("uniform vec3 color");
+                    
+            if(hasTextureCoordinates)
+                sb.AppendLine("out vec2 outTextureCoord;");
+            else 
+                sb.AppendLine("out vec3 outColor;");
+            
+            sb.AppendLine();
+            sb.AppendLine("void main()");
+            sb.AppendLine("{");
+            sb.AppendLine(mainBody);
+            sb.AppendLine("}");
+            
+            return sb.ToString();
         }
     }
 }

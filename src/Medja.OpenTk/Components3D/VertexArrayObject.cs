@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using OpenTK.Graphics.OpenGL4;
 
@@ -96,6 +97,7 @@ namespace Medja.OpenTk.Components3D
                 { 
                     VertexAttributeType.Positions => "position",
                     VertexAttributeType.Colors => "color",
+                    VertexAttributeType.TextureCoordinates => "textureCoord",
                     _ => throw new ArgumentOutOfRangeException()
                 };
 
@@ -116,6 +118,11 @@ namespace Medja.OpenTk.Components3D
 
             _elementBufferObject?.Dispose();
             GL.DeleteVertexArray(Id);
+        }
+
+        public bool HasAttributeOfType(VertexAttributeType vertexAttributeType)
+        {
+            return _attributes.Any(p => p.Type == vertexAttributeType);
         }
     }
 }

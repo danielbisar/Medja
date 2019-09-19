@@ -4,5 +4,6 @@ namespace Medja.OpenTk.Components3D
     {
         Positions,
         Colors,
+        TextureCoordinates
     }
 }
