@@ -9,10 +9,12 @@ namespace Medja.OpenTk.Components3D
 
         public bool IsCompiled { get; private set;}
         
+        private string _source; // makes debugging easier
         public string Source
         {
             set
             {
+                _source = value;
                 GL.ShaderSource(Id, value);
             }
         }
@@ -36,6 +38,7 @@ namespace Medja.OpenTk.Components3D
             if (result != 1)
                 throw new Exception(Type + " compilation error: " + GL.GetShaderInfoLog(Id));
 
+            _source = null;
             IsCompiled = true;
         }
 

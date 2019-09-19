@@ -71,11 +71,11 @@ void main()
             if(config.HasColorParam)
                 sb.Append("outColor = color;");
             else
-                sb.AppendFormat("outColor = vec4({0}, {1}, {2}, {3});", 
+                sb.AppendFormat("outColor = vec3({0}, {1}, {2});", 
                     config.FixedColor.Red, 
                     config.FixedColor.Green,
                     config.FixedColor.Blue, 
-                    config.FixedColor.Alpha);
+                    config.FixedColor.Alpha); // todo support alpha channel
             sb.AppendLine();
 
             var source = CreateDefaultVertexShaderCode(config, sb.ToString());
@@ -103,6 +103,9 @@ void main()
         /// </remarks>
         public static string CreateDefaultVertexShaderCode(VertexShaderGenConfig config, string mainBody)
         {
+            if(config.VertexArrayObject == null)
+                throw new NullReferenceException("config: no VertexArrayObject set");
+            
             return @"#version 420
 
 " + config.VertexArrayObject.GetAttributeLayoutCode() + @"
