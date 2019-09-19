@@ -55,7 +55,7 @@ namespace Medja.OpenTk.Components3D
         {
             _vao?.Dispose();
             
-            var factory = new GLLabelVertexFactory(new CharTexture(), Text, 1);
+            var factory = new GLLabelVertexFactory(new GLFontTexture(new Font()), Text, 1);
             var vertices = factory.CreateVertices();
             var indices = factory.CreateIndices();
             var textureCoordinates = factory.CreateTextureCoordinates();

@@ -23,7 +23,7 @@ namespace Medja.OpenTk.Components3D
     /// </remarks>
     public class GLLabelVertexFactory
     {
-        private readonly CharTexture _texture;
+        private readonly GLFontTexture _texture;
         private readonly string _text;
         private readonly int _letterHeight;
         private readonly float[] _vertices;
@@ -38,7 +38,7 @@ namespace Medja.OpenTk.Components3D
         /// <param name="text">The text to create planes for.</param>
         /// <param name="letterHeight">The height of a letter. Note: the value is negated; the upper vertex is at y = 0,
         /// the lower at y = -letterHeight.</param>
-        public GLLabelVertexFactory(CharTexture texture, string text, int letterHeight)
+        public GLLabelVertexFactory(GLFontTexture texture, string text, int letterHeight)
         {
             _texture = texture;
             _text = text;
