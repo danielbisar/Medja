@@ -62,7 +62,7 @@ namespace Medja.Demo
 
                 label.Render();
             });
-            _label.Text = "T";
+            _label.Text = "Text";
         }
         
         protected override void InternalRender()
