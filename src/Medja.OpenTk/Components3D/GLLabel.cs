@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using Medja.Primitives;
 using Medja.Properties;
 
@@ -11,11 +10,11 @@ namespace Medja.OpenTk.Components3D
         private OpenGLProgram _program;
         private GLUniform _modelMatrixUniform;
         private GLUniform _viewProjectionMatrixUniform;
+        private GLUniform _textureUniform;
         private bool _vaoNeedsUpdate;
 
         [NonSerialized]
         public readonly Property<string> PropertyText;
-
         public string Text
         {
             get { return PropertyText.Get(); }
@@ -42,28 +41,36 @@ namespace Medja.OpenTk.Components3D
                 FixedColor = Colors.White,
                 VertexArrayObject = _vao
             });
-            var fragmentShader = ShaderFactory.CreatePassthroughFragmentShader(3, "outColor");
+            //var fragmentShader = ShaderFactory.CreatePassthroughFragmentShader(3, "outColor");
+            var fragmentShader = ShaderFactory.CreatePassthroughTextureFragmentShader();
 
             _program = OpenGLProgram.CreateAndCompile(vertexShader, fragmentShader);
 
             _modelMatrixUniform = _program.GetUniform("model");
             _viewProjectionMatrixUniform = _program.GetUniform("viewProjection");
+            _textureUniform = _program.GetUniform("theTexture");
         }
 
         private void UpdateVao()
         {
             _vao?.Dispose();
             
-            var factory = new GLLabelVertexFactory(Text, 1);
+            var factory = new GLLabelVertexFactory(new CharTexture(), Text, 1);
             var vertices = factory.CreateVertices();
             var indices = factory.CreateIndices();
+            var textureCoordinates = factory.CreateTextureCoordinates();
             
             var vbo = new VertexBufferObject();
             vbo.ComponentsPerVertex = 3;
             vbo.SetData(vertices);
+            
+            var vboTextureCoordinates = new VertexBufferObject();
+            vboTextureCoordinates.ComponentsPerVertex = 2;
+            vboTextureCoordinates.SetData(textureCoordinates);
 
             _vao = new VertexArrayObject();
             _vao.AddVertexAttribute(VertexAttributeType.Positions, vbo);
+            _vao.AddVertexAttribute(VertexAttributeType.TextureCoordinates, vboTextureCoordinates); 
             
             var ebo = _vao.CreateElementBufferObject();
             ebo.SetData(indices);
