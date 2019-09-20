@@ -149,7 +149,7 @@ void main()
             sb.AppendLine("uniform mat4 model;");
             
             if(config.HasColorParam)
-                sb.AppendLine("uniform vec3 color");
+                sb.AppendLine("uniform vec3 color;");
                     
             if(hasTextureCoordinates)
                 sb.AppendLine("out vec2 outTextureCoord;");

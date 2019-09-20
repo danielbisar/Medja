@@ -21,11 +21,36 @@ namespace Medja.OpenTk.Components3D
             set { PropertyText.Set(value); }
         }
 
+        public Font Font { get; }
+
+        [NonSerialized]
+        public readonly Property<float> PropertyScale;
+        /// <summary>
+        /// Gets or sets the scaling factor that is used from 2D text size to 3D.
+        /// </summary>
+        public float Scale
+        {
+            get { return PropertyScale.Get(); }
+            set { PropertyScale.Set(value); }
+        }
+
         public GLLabel()
         {
+            Font = new Font();
+
+            PropertyScale = new Property<float>();
+            PropertyScale.SetSilent(100);
             PropertyText = new Property<string>();
             PropertyText.PropertyChanged += OnPropertyTextChanged;
             
+            Font.PropertySize.PropertyChanged += OnFontPropertyChanged;
+            
+            _vaoNeedsUpdate = true;
+        }
+
+        private void OnFontPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            // TODO could also just update the texture?
             _vaoNeedsUpdate = true;
         }
 
@@ -55,7 +80,15 @@ namespace Medja.OpenTk.Components3D
         {
             _vao?.Dispose();
             
-            var factory = new GLLabelVertexFactory(new GLFontTexture(new Font()), Text, 1);
+            if(Text == null)
+                return;
+            
+            var factory = new GLLabelVertexFactory();
+            factory.FontTexture = new GLFontTexture(Font); // TODO cache?
+            factory.Text = Text;
+            factory.Scale = Scale;
+            factory.Init();
+            
             var vertices = factory.CreateVertices();
             var indices = factory.CreateIndices();
             var textureCoordinates = factory.CreateTextureCoordinates();
@@ -87,15 +120,18 @@ namespace Medja.OpenTk.Components3D
         {
             if(_vaoNeedsUpdate)
                 UpdateVao();
-            
-            base.Render();
 
-            // TODO update only when changed?
-            _modelMatrixUniform.Set(ref ModelMatrix._matrix);
-            _viewProjectionMatrixUniform.Set(ref _viewProjectionMatrix);
-            
-            _program.Use();
-            _vao.Render();
+            if (_vao != null)
+            {
+                base.Render();
+
+                // TODO update only when changed?
+                _modelMatrixUniform.Set(ref ModelMatrix._matrix);
+                _viewProjectionMatrixUniform.Set(ref _viewProjectionMatrix);
+
+                _program.Use();
+                _vao.Render();
+            }
         }
     }
 }
