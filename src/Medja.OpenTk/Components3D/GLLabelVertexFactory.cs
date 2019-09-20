@@ -23,47 +23,80 @@ namespace Medja.OpenTk.Components3D
     /// </remarks>
     public class GLLabelVertexFactory
     {
-        private readonly GLFontTexture _texture;
-        private readonly string _text;
-        private readonly int _letterHeight;
-        private readonly float[] _vertices;
-        private readonly uint[] _indices;
-        private readonly float[] _textureCoordinates;
+        private float[] _vertices;
+        private uint[] _indices;
+        private float[] _textureCoordinates;
         private int _currentVertexArrayPos;
         private int _vertexCount;
-        
+
+        private GLFontTexture _fontTexture;
+        public GLFontTexture FontTexture
+        {
+            get { return _fontTexture; }
+            set
+            {
+                _fontTexture = value;
+                UpdateLetterHeight();
+            }
+        }
+
+        public string Text { get; set; }
+
+        public float LetterHeight {get;private set;}
+
+        private float _scale;
+        /// <summary>
+        /// 2D to 3D scaling factor
+        /// </summary>
+        public float Scale
+        {
+            get { return _scale; }
+            set
+            {
+                _scale = value;
+                UpdateLetterHeight();
+            }
+        }
+
         /// <summary>
         /// Creates a new instance.
         /// </summary>
         /// <param name="text">The text to create planes for.</param>
         /// <param name="letterHeight">The height of a letter. Note: the value is negated; the upper vertex is at y = 0,
         /// the lower at y = -letterHeight.</param>
-        public GLLabelVertexFactory(GLFontTexture texture, string text, int letterHeight)
+        public GLLabelVertexFactory()
         {
-            _texture = texture;
-            _text = text;
-            _letterHeight = -letterHeight;
-            
+            _currentVertexArrayPos = 0;
+        }
+
+        public void Init()
+        {
             const int valuesPerVertex = 3;
             const int verticesPerTriangle = 3;
             const int trianglesPerPlane = 2;
             const int textureCoordsPerVertex = 2;
 
-            _vertexCount = _text.Length * 4;
+            _vertexCount = Text.Length * 4;
             _vertices = new float[valuesPerVertex * _vertexCount];
-            _indices = new uint[verticesPerTriangle * trianglesPerPlane * _text.Length];
+            _indices = new uint[verticesPerTriangle * trianglesPerPlane * Text.Length];
             _textureCoordinates = new float[textureCoordsPerVertex * _vertexCount];
-            
-            _currentVertexArrayPos = 0;
+        }
+
+        private void UpdateLetterHeight()
+        {
+            if(_fontTexture != null)
+                LetterHeight = Scale * _fontTexture.LetterHeight;
         }
         
         public float[] CreateVertices()
         {
             float x = 0;
-            float letterWidth = 1;
 
-            for (int i = 0; i < _text.Length; i++)
+            for (int i = 0; i < Text.Length; i++)
             {
+                var coord = _fontTexture.GetCoordinates(Text[i]);
+                var letterWidth = Scale * coord.WidthPercentage;
+                
                 AddLetterVertices(x, letterWidth);
                 
                 // TODO for now we assume monospace
@@ -87,12 +120,12 @@ namespace Medja.OpenTk.Components3D
 
             // vertex 1
             _vertices[_currentVertexArrayPos++] = x;
-            _vertices[_currentVertexArrayPos++] = _letterHeight;
+            _vertices[_currentVertexArrayPos++] = LetterHeight;
             _vertices[_currentVertexArrayPos++] = 0;
 
             // vertex 3
             _vertices[_currentVertexArrayPos++] = x + letterWidth;
-            _vertices[_currentVertexArrayPos++] = _letterHeight;
+            _vertices[_currentVertexArrayPos++] = LetterHeight;
             _vertices[_currentVertexArrayPos++] = 0;
 
             // vertex 4
@@ -105,7 +138,7 @@ namespace Medja.OpenTk.Components3D
         {
             int indexPos = 0;
             
-            for (uint i = 0; i < _text.Length; i++)
+            for (uint i = 0; i < Text.Length; i++)
             {
                 // see class remarks section for why the indices are like this
                 _indices[indexPos++] = 0 + (i * 4);
@@ -124,9 +157,9 @@ namespace Medja.OpenTk.Components3D
         {
             int texCoordPos = 0;
 
-            for (int i = 0; i < _text.Length; i++)
+            for (int i = 0; i < Text.Length; i++)
             {
-                var coord = _texture.GetCoordinates(_text[i]);
+                var coord = _fontTexture.GetCoordinates(Text[i]);
                 
                 _textureCoordinates[texCoordPos++] = coord.TopLeft.U;
                 _textureCoordinates[texCoordPos++] = coord.TopLeft.V;

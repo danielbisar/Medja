@@ -1,5 +1,6 @@
 ﻿using Medja.OpenTk.Components3D;
 using Medja.OpenTk.Rendering;
+using Medja.Primitives;
 using Medja.Utils;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
@@ -62,7 +63,8 @@ namespace Medja.Demo
 
                 label.Render();
             });
-            _label.Text = "Text";
+            _label.Text = "!#iftÖg";
+            _label.Font.Size = 24;
         }
         
         protected override void InternalRender()
