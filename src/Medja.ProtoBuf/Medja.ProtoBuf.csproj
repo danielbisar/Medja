@@ -21,6 +21,7 @@
 
     <ItemGroup>
       <PackageReference Include="Google.Protobuf" Version="3.9.1" />
+      <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0-preview.2" />
     </ItemGroup>
 
 </Project>
