@@ -15,11 +15,11 @@ steps:
 - task: NuGetToolInstaller@1
   displayName: Install NuGet latest
 
-- task: DotNetCoreInstaller@0
-  displayName: Install dotnet core sdk 3.0.100
+- task: DotNetCoreInstaller@1
+  displayName: Install dotnet core sdk 3.0.x
   inputs:
     packageType: 'sdk'
-    version: '3.0.100'
+    version: '3.0.x'
 
 - task: NuGetCommand@2
   displayName: Restore NuGet packages
