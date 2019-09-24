@@ -27,36 +27,20 @@ steps:
     restoreSolution: '$(solution)'
     vstsFeed: '49e07518-6419-486d-9ec2-aea3f61f1ded'
 
-#- task: VSBuild@1
-#  displayName: 'Build Medja.sln'
-#  inputs:
-#    vsVersion: latest
-#    solution: '$(solution)'
-#    platform: '$(buildPlatform)'
-#    configuration: '$(buildConfiguration)'
-#    logProjectEvents: false
-
 - task: DotNetCoreCLI@2
   displayName: Build Medja.sln
   inputs:
     command: build
     projects: '$(solution)'
-    argument: '--configuration $(buildConfiguration)'
+    arguments: '--configuration $(buildConfiguration)'
 
-- task: VSTest@2
-  displayName: Run UnitTests
-#  inputs:
-#    codeCoverageEnabled: true
-#    diagnosticsEnabled: True
-
-- task: PublishSymbols@2
-  displayName: 'Publish symbols path'
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet test'
   inputs:
-    SearchPattern: '**\bin\**\*.pdb'
-    SymbolServerType: TeamServices
-    DetailedLog: false
-    TreatNotIndexedAsWarning: true
-  continueOnError: true
+    command: test
+    projects: '$(solution)'
+    arguments: '--configuration $(buildConfiguration)'
+    publishTestResults: true
 
 - task: DotNetCoreCLI@2
   displayName: 'dotnet pack'
@@ -86,3 +70,11 @@ steps:
   inputs:
     PathtoPublish: '$(build.artifactstagingdirectory)'
 
+- task: PublishSymbols@2
+  displayName: 'Publish symbols path'
+  inputs:
+    SearchPattern: '**\bin\**\*.pdb'
+    SymbolServerType: TeamServices
+    DetailedLog: false
+    TreatNotIndexedAsWarning: true
+  continueOnError: true
