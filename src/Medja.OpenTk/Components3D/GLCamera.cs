@@ -4,7 +4,7 @@ using OpenTK;
 
 namespace Medja.OpenTk.Components3D
 {
-    public abstract class GLCamera : GLComponent
+    public class GLCamera : GLComponent
     {
         private bool _viewMatrixNeedsUpdate;
         protected bool _projectionMatrixNeedsUpdate;
@@ -104,7 +104,7 @@ namespace Medja.OpenTk.Components3D
             set { PropertyViewProjectionMatrix.Set(value); }
         }
 
-        protected GLCamera()
+        public GLCamera()
         {
             PropertyViewMatrix = new Property<Matrix4>();
             PropertyViewMatrix.PropertyChanged += OnViewMatrixChanged;
@@ -159,6 +159,7 @@ namespace Medja.OpenTk.Components3D
         {
             ViewMatrix = Matrix4.LookAt(Position, TargetPosition, UpVector);
             _viewMatrixNeedsUpdate = false;
+            _viewProjectionMatrixNeedsUpdate = true;
         }
 
         /// <summary>
@@ -168,6 +169,7 @@ namespace Medja.OpenTk.Components3D
         public virtual void UpdateProjectionMatrix()
         {
             _projectionMatrixNeedsUpdate = false;
+            _viewProjectionMatrixNeedsUpdate = true;
         }
 
         /// <summary>
