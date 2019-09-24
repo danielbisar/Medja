@@ -22,10 +22,10 @@ steps:
   displayName: Install NuGet latest
 
 - task: DotNetCoreInstaller@0
-  displayName: Install dotnet core sdk 3 preview9
+  displayName: Install dotnet core sdk 3.0.100
   inputs:
     packageType: 'sdk'
-    version: '3.0.100-preview9-014004'
+    version: '3.0.100'
 
 - task: NuGetCommand@2
   displayName: Restore NuGet packages
