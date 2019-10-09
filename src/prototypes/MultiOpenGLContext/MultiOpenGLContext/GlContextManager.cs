@@ -12,22 +12,32 @@ namespace MultiOpenGLContext
     public class GlContextManager : IDisposable
     {
         private readonly IWindowInfo _windowInfo;
+        
+        private readonly Context _windowContext;
+
+        public Context WindowContext
+        {
+            get { return _windowContext; }
+        }
+        
         private readonly List<Context> _contexts;
         private int _width;
         private int _height;
 
-        public GlContextManager(IWindowInfo windowInfo)
+        public GlContextManager(IWindowInfo windowInfo, IGraphicsContext windowContext)
         {
-            _windowInfo = windowInfo;
+            _windowInfo = windowInfo ?? throw new ArgumentNullException(nameof(windowInfo));
             _contexts = new List<Context>();
+
+            _windowContext = Add(windowContext);
         }
 
-        public Context Create()
+        public Context CreateWindowContext()
         {
             return Add(new GraphicsContext(GraphicsMode.Default, _windowInfo, 4, 2, GraphicsContextFlags.ForwardCompatible));
         }
 
-        public Context Add(IGraphicsContext context)
+        private Context Add(IGraphicsContext context)
         {
             var result = new Context(context);
             _contexts.Add(result);
@@ -67,8 +77,11 @@ namespace MultiOpenGLContext
             {
                 context.MakeCurrent(_windowInfo);
                 context.Actions.OnRender?.Invoke();
-                GL.Flush();
+                //GL.Flush();
             }
+            
+            /*foreach(var context in _contexts)
+                context.SwapBuffers();*/
             
             _contexts[_contexts.Count - 1].SwapBuffers();
         }
@@ -98,7 +111,7 @@ namespace MultiOpenGLContext
         public Context(IGraphicsContext context)
         {
             Actions = new ContextActions();
-            _context = context;
+            _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
         public void MakeCurrent(IWindowInfo windowInfo)

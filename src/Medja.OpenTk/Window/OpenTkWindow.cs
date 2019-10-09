@@ -45,6 +45,8 @@ namespace Medja.OpenTk
             _controlHierarchy = new ControlHierarchy(this);
             _frameLimiter = new FramesPerSecondLimiter(windowSettings.MaxFramesPerSecond, UpdateAndRender);
             
+            // order of events
+            // load, resize, move, render, closed
             GameWindow.Load += OnGameWindowLoad;
             GameWindow.Move += OnGameWindowMove;
             GameWindow.Resize += OnGameWindowResize;

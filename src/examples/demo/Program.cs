@@ -339,11 +339,24 @@ namespace Medja.Demo
 
         private Control CreateOpenGLView(IControlFactory cf)
         {
+            // test overlay over 3d control
+            var comboBox = cf.Create<ComboBox>();
+            comboBox.Add("123");
+            comboBox.Add("456");
+            comboBox.Add("789");
+            comboBox.Position.Width = 50;
+            
             var textBlock = cf.Create<TextBlock>();
             textBlock.Text = "OpenGL Version: " + GL.GetString(StringName.Version) + ", GLSL Version: " + GL.GetString(StringName.ShadingLanguageVersion);
+            textBlock.Position.Width = 300;
+            
+            var stackPanel = cf.Create<HorizontalStackPanel>();
+            stackPanel.Position.Height = 30;
+            stackPanel.Add(comboBox);
+            stackPanel.Add(textBlock);
             
             var result = cf.Create<DockPanel>();
-            result.Add(Dock.Top, textBlock);
+            result.Add(Dock.Top, stackPanel);
             result.Add(Dock.Fill, cf.Create<OpenGlTestControl>());
             return result;
         }
