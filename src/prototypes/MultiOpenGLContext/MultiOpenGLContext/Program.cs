@@ -2,6 +2,7 @@
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL4;
+using SkiaSharp;
 
 namespace MultiOpenGLContext
 {
@@ -30,35 +31,60 @@ namespace MultiOpenGLContext
                 GraphicsMode.Default, "", GameWindowFlags.Default, 
                 DisplayDevice.Default, 
                 4, 2, GraphicsContextFlags.ForwardCompatible);
-
-            _contextManager = new GlContextManager(_gameWindow.WindowInfo);
             
-            var context1 = _contextManager.Add(_gameWindow.Context);
-            context1.Actions.OnResize = (w,h) =>
+            _contextManager = new GlContextManager(_gameWindow.WindowInfo, _gameWindow.Context);
+            
+            GRContext skiaGrContext = null;
+            SKSurface surface = null;
+            GRBackendRenderTarget renderTarget = null;
+            SKCanvas canvas = null;
+            
+            var skiaContext = _contextManager.WindowContext;
+            
+            skiaContext.Actions.OnInit = () =>
             {
-                GL.Viewport(0, 0, w, h);
-            };
-            context1.Actions.OnInit = () =>
-            {
-                _programId = ShaderFactory.CreateShaderProgram();
-                _glObject = new GlObject(new[]
-                {
-                    new Vertex(new Vector4(-0.25f, 0.25f, 0.5f, 1f), Color4.Black),
-                    new Vertex(new Vector4(0.0f, -0.25f, 0.5f, 1f), Color4.Black),
-                    new Vertex(new Vector4(0.25f, 0.25f, 0.5f, 1f), Color4.Black),
-                });
-
+                skiaGrContext = GRContext.CreateGl();
                 GL.ClearColor(0.3f, 0.1f, 0.1f, 1);
             };
-            context1.Actions.OnRender = () =>
+            skiaContext.Actions.OnResize = (w,h) =>
+            {
+                GL.Viewport(0, 0, w, h);
+
+                if (skiaGrContext != null)
+                {
+                    renderTarget?.Dispose();
+                    renderTarget = CreateRenderTarget(w, h);
+
+                    canvas?.Dispose();
+                    surface?.Dispose();
+
+                    surface = SKSurface.Create(skiaGrContext, renderTarget, GRSurfaceOrigin.BottomLeft, SKColorType.Rgba8888);
+
+                    if(surface != null)
+                        canvas = surface.Canvas;
+                    
+                    skiaGrContext.ResetContext();
+                }
+            };
+            skiaContext.Actions.OnRender = () =>
             {
                 GL.Clear(ClearBufferMask.ColorBufferBit);
 
-                GL.UseProgram(_programId);
-                _glObject.Render();
+                if (canvas != null)
+                {
+                    using (var paint = new SKPaint())
+                    {
+                        paint.StrokeWidth = 2;
+                        paint.IsStroke = true;
+                        paint.IsAntialias = true;
+                        
+                        canvas.DrawLine(0, 0, 100, 600, paint);
+                        canvas.Flush();
+                    }
+                }
             };
 
-            var context2 = _contextManager.Create();
+            var context2 = _contextManager.CreateWindowContext();
             context2.Actions.OnResize = (w, h) =>
             {
                 GL.Enable(EnableCap.ScissorTest);
@@ -75,7 +101,10 @@ namespace MultiOpenGLContext
                     new Vertex(new Vector4(0.25f, 0.25f, 0.5f, 1f), Color4.Black),
                 });
 
-                GL.ClearColor(0f, 0.8f, 0.1f, 1);
+                GL.ColorMask(true, true, true, true);
+
+//                GL.ClearColor(0f, 0.8f, 0.1f, 1);
+                GL.ClearColor(0f, 0.0f, 0.0f, 0);
                 GL.Enable(EnableCap.ScissorTest);
             };
             context2.Actions.OnRender = () =>
@@ -86,7 +115,7 @@ namespace MultiOpenGLContext
                 _glObject2.Render();
             };
 
-            var context3 = _contextManager.Create();
+            var context3 = _contextManager.CreateWindowContext();
             context3.Actions.OnResize = (w, h) =>
             {
                 GL.Scissor(w-210, 10, 200, 200);
@@ -117,6 +146,24 @@ namespace MultiOpenGLContext
             _gameWindow.RenderFrame += OnRender;
             _gameWindow.Load += OnLoad;
             _gameWindow.Closed += OnClosed;
+        }
+
+        /// <summary>
+        /// Creates the <see cref="GRBackendRenderTarget"/> based on the current OpenGL values.
+        /// </summary>
+        /// <param name="width">The width the target should have.</param>
+        /// <param name="height">The height the target should have.</param>
+        /// <returns>The <see cref="GRBackendRenderTarget"/>.</returns>
+        private GRBackendRenderTarget CreateRenderTarget(int width, int height)
+        {
+            GL.GetInteger(GetPName.FramebufferBinding, out var fboId);
+            GL.GetInteger(GetPName.Samples, out var sampleCount);
+            //GL.GetInteger(GetPName.StencilBits, out var stencilBits);
+
+            var glInfo = new GRGlFramebufferInfo((uint) fboId, SKColorType.Rgba8888.ToGlSizedFormat());
+            var renderTarget = new GRBackendRenderTarget(width, height, sampleCount, 0, glInfo);
+
+            return renderTarget;
         }
 
         private void OnClosed(object sender, EventArgs e)
