@@ -5,38 +5,16 @@ using Medja.Properties;
 namespace Menu
 {
     public class MenuItem
-    { 
+    {
         private readonly List<MenuItem> _children;
-        public IReadOnlyList<MenuItem> Children
-        {
-            get { return _children; }
-        }
+
+        public readonly Property<Command> CommandProperty;
 
         public readonly Property<bool> HasChildrenProperty;
 
-        public bool HasChildren
-        {
-            get => HasChildrenProperty.Get();
-            set => HasChildrenProperty.Set(value);
-        }
-
-        public readonly Property<Command> CommandProperty;
-        public Command Command
-        {
-            get => CommandProperty.Get();
-            private set => CommandProperty.Set(value);
-        }
-
         public readonly Property<string> TitleProperty;
-        public string Title
-        {
-            get => TitleProperty.Get();
-            set => TitleProperty.Set(value);
-        }
-        
-        public MenuItem Parent { get; }
 
-        public MenuItem() 
+        public MenuItem()
             : this(string.Empty)
         {
         }
@@ -51,6 +29,31 @@ namespace Menu
             TitleProperty.SetSilent(title);
         }
 
+        public IReadOnlyList<MenuItem> Children
+        {
+            get { return _children; }
+        }
+
+        public bool HasChildren
+        {
+            get => HasChildrenProperty.Get();
+            set => HasChildrenProperty.Set(value);
+        }
+
+        public Command Command
+        {
+            get => CommandProperty.Get();
+            set => CommandProperty.Set(value);
+        }
+
+        public string Title
+        {
+            get => TitleProperty.Get();
+            set => TitleProperty.Set(value);
+        }
+
+        public MenuItem Parent { get; }
+
         /// <summary>
         /// Adds a child item.
         /// </summary>
@@ -59,19 +62,19 @@ namespace Menu
         public MenuItem Add(string title)
         {
             var result = new MenuItem(title, this);
-            
+
             _children.Add(result);
             HasChildren = true;
-            
+
             return result;
         }
 
         public MenuItem Add(Command command)
         {
             var result = Add(command.Title);
-            
+
             result.Command = command;
-            
+
             return result;
         }
 
@@ -95,11 +98,11 @@ namespace Menu
             while (items.Count > 0)
             {
                 sb.Append(items.Pop().Title);
-                
-                if(items.Count > 0)
+
+                if (items.Count > 0)
                     sb.Append(separator);
             }
-            
+
             return sb.ToString();
         }
 
