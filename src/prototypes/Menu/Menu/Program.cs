@@ -28,6 +28,32 @@ namespace Menu
             PrintMenuItems("", menu.Items);
         }
 
+        private static void PrintMenuItems(string indention, IEnumerable<MenuItem> items)
+        {
+            foreach (var item in items)
+            {
+                Print(indention + "{ ");
+                PrintSur("\"", item.Title, "\"");
+
+                if (item.Command != null)
+                {
+                    if (!PrintSurINN(item.Command.KeyboardShortcut, ", "))
+                        PrintSur("none", ", ");
+
+                    PrintSurINN("\"", item.Command.Description, "\"");
+                }
+
+                if (item.HasChildren)
+                {
+                    PrintLn();
+                    PrintMenuItems(indention + "    ", item.Children);
+                    PrintLn(indention + "}");
+                }
+                else
+                    PrintLn(" }");
+            }
+        }
+
         private static void Print(string v)
         {
             Console.Write(v);
@@ -71,32 +97,6 @@ namespace Menu
         private static void PrintLn(string value)
         {
             Console.WriteLine(value);
-        }
-
-        private static void PrintMenuItems(string indention, IEnumerable<MenuItem> items)
-        {
-            foreach (var item in items)
-            {
-                Print(indention + "{ ");
-                PrintSur("\"", item.Title, "\"");
-
-                if (item.Command != null)
-                {
-                    if (!PrintSurINN(item.Command.KeyboardShortcut, ", "))
-                        PrintSur("none", ", ");
-
-                    PrintSurINN("\"", item.Command.Description, "\"");
-                }
-
-                if (item.HasChildren)
-                {
-                    PrintLn();
-                    PrintMenuItems(indention + "    ", item.Children);
-                    PrintLn(indention + "}");
-                }
-                else
-                    PrintLn(" }");
-            }
         }
     }
 }
