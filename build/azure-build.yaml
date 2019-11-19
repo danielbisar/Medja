@@ -70,11 +70,12 @@ steps:
   inputs:
     PathtoPublish: '$(build.artifactstagingdirectory)'
 
-- task: PublishSymbols@2
-  displayName: 'Publish symbols path'
-  inputs:
-    SearchPattern: '**\bin\**\*.pdb'
-    SymbolServerType: TeamServices
-    DetailedLog: false
-    TreatNotIndexedAsWarning: true
-  continueOnError: true
+# not working on linux machines - seems to be windows only
+#- task: PublishSymbols@2
+#  displayName: 'Publish symbols path'
+#  inputs:
+#    SearchPattern: '**\bin\**\*.pdb'
+#    SymbolServerType: TeamServices
+#    DetailedLog: false
+#    TreatNotIndexedAsWarning: true
+#  continueOnError: true
