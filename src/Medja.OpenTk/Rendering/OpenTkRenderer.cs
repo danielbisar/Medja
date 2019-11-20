@@ -54,11 +54,15 @@ namespace Medja.OpenTk.Rendering
         private void RenderControls(List<Control> controls)
         {
             var controls3d = new List<Control>();
+            var topMostControls = new List<Control>();
+            
             Control last3DControl = null;
 
             foreach (var control in controls)
             {
-                if(!control.Is3D)
+                if (control.IsTopMost)
+                    topMostControls.Add(control);
+                else if(!control.Is3D)
                     Render(control);
                 else
                     controls3d.Add(control);
@@ -72,6 +76,13 @@ namespace Medja.OpenTk.Rendering
                 last3DControl = control;
             }
 
+            _gameWindow.Context.MakeCurrent(_gameWindow.WindowInfo);
+
+            foreach (var control in topMostControls)
+                Render(control);
+            
+            _canvas.Flush();
+            
             SwapBuffers(last3DControl);
         }
 
