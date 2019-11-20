@@ -63,7 +63,7 @@ namespace Medja.Utils.Linq
                 collection.Remove(item);
         }
 
-        // do not use IList or IEnumerable, this would impact performance to much
+        // do not use IList or IEnumerable, this would impact performance too much
         // create own overload for this kind of versions
         // tested with for instead of foreach: result: slower
         public static void ForEachSplitSeq<T>(this List<T> items, Func<T, bool> condition, Action<T> matches, Action afterMatches, Action<T> doesNotMatch)

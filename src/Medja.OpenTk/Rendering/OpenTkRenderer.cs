@@ -48,17 +48,30 @@ namespace Medja.OpenTk.Rendering
             _canvas = _skia.Canvas;
             _canvas.Clear();
             
+            RenderControls(controls);
+        }
+
+        private void RenderControls(List<Control> controls)
+        {
+            var controls3d = new List<Control>();
             Control last3DControl = null;
+
+            foreach (var control in controls)
+            {
+                if(!control.Is3D)
+                    Render(control);
+                else
+                    controls3d.Add(control);
+            }
             
-            controls.ForEachSplitSeq(p => !p.Is3D, 
-                Render, 
-                () => _canvas.Flush(), 
-                p =>
-                {
-                    Render(p);
-                    last3DControl = p;
-                });
-            
+            _canvas.Flush();
+
+            foreach (var control in controls3d)
+            {
+                Render(control);
+                last3DControl = control;
+            }
+
             SwapBuffers(last3DControl);
         }
 
