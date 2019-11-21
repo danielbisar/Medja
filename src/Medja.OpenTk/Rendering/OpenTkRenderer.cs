@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 using Medja.Controls;
-using Medja.Utils.Linq;
 using OpenTK;
 using SkiaSharp;
 
