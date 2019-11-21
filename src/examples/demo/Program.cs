@@ -344,7 +344,7 @@ namespace Medja.Demo
             comboBox.Add("123");
             comboBox.Add("456");
             comboBox.Add("789");
-            comboBox.Position.Width = 50;
+            comboBox.Position.Width = 100;
             
             var textBlock = cf.Create<TextBlock>();
             textBlock.Text = "OpenGL Version: " + GL.GetString(StringName.Version) + ", GLSL Version: " + GL.GetString(StringName.ShadingLanguageVersion);

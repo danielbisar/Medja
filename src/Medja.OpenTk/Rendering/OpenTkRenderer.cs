@@ -36,13 +36,12 @@ namespace Medja.OpenTk.Rendering
         /// <param name="controls"></param>
         /// <returns></returns>
         /// <remarks>IList would make it slower.</remarks>
-        public virtual void Render(List<Control> controls)
+        public virtual void Render(ControlLists controls)
         {
-            if (!NeedsRendering(controls)) 
+            if (!controls.NeedsRendering && !_needsRendering) 
                 return;
 
             _needsRendering = false;
-
             _gameWindow.MakeCurrent();
             
             _canvas = _skia.Canvas;
@@ -51,27 +50,28 @@ namespace Medja.OpenTk.Rendering
             RenderControls(controls);
         }
 
-        private void RenderControls(List<Control> controls)
+        private void RenderControls(ControlLists controls)
         {
-            var controls3d = new List<Control>();
-            Control last3DControl = null;
-
-            foreach (var control in controls)
-            {
-                if(!control.Is3D)
-                    Render(control);
-                else
-                    controls3d.Add(control);
-            }
+            foreach (var control in controls.Controls2D)
+                Render(control);
             
             _canvas.Flush();
 
-            foreach (var control in controls3d)
+            Control last3DControl = null;
+
+            foreach (var control in controls.Controls3D)
             {
                 Render(control);
                 last3DControl = control;
             }
 
+            _gameWindow.Context.MakeCurrent(_gameWindow.WindowInfo);
+
+            foreach (var control in controls.TopMost)
+                Render(control);
+            
+            _canvas.Flush();
+            
             SwapBuffers(last3DControl);
         }
 
@@ -88,17 +88,6 @@ namespace Medja.OpenTk.Rendering
                 _gameWindow.Context.MakeCurrent(_gameWindow.WindowInfo);
                 _gameWindow.Context.SwapBuffers();
             }
-        }
-
-        protected bool NeedsRendering(List<Control> controls)
-        {
-            for (int i = 0; i < controls.Count && !_needsRendering; i++)
-            {
-                if (controls[i].NeedsRendering)
-                    _needsRendering = true;
-            }
-            
-            return _needsRendering;
         }
 
         protected void Render(Control control)

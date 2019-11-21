@@ -14,8 +14,6 @@ namespace Medja.OpenTk
 {
     public class OpenTkWindow : Window
     {
-        private readonly List<Control> _controls;
-
         private OpenTkRenderer _renderer;
         private OpenTkMouseHandler _mouseHandler;
         private OpenTkKeyboardHandler _keyboardHandler;
@@ -30,8 +28,6 @@ namespace Medja.OpenTk
         public OpenTkWindow(MedjaOpenTKWindowSettings windowSettings)
         : base(windowSettings.ControlFactory)
         {
-            _controls = new List<Control>();
-            
             var openGLVersion = windowSettings.OpenGLVersion;
             
             GameWindow = new GameWindow(800, 600, 
@@ -67,8 +63,6 @@ namespace Medja.OpenTk
             Position.PropertyHeight.PropertyChanged += OnPositionPropertyChanged;
 
             _mouseHandler = new OpenTkMouseHandler(this, GameWindow, FocusManager);
-            _mouseHandler.Controls = _controls;
-
             _keyboardHandler = new OpenTkKeyboardHandler(GameWindow, FocusManager);
         }
 
@@ -126,19 +120,16 @@ namespace Medja.OpenTk
         {
             GameWindow.MakeCurrent();
 
-            // todo could be optimized, when checking for _control.Parent changes
-            // and only render if NeedsRender, IsLayoutUpdate or Parent changes
-
             // update controls every frame (f.e. a control was hidden and is now visible)
-            _controls.Clear();
-            _controls.AddRange(_controlHierarchy.GetInRenderingOrder());
-
+            _controlHierarchy.UpdateLists();
             _controlHierarchy.UpdateLayout();
+
+            _mouseHandler.Controls = _controlHierarchy.Lists.All();
 
             // executes all task requested by anyone in the requested order
             TaskQueue.ExecuteAll();
 
-            _renderer.Render(_controls);
+            _renderer.Render(_controlHierarchy.Lists);
         }
 
         private void OnGameWindowResize(object sender, EventArgs eventArgs)
