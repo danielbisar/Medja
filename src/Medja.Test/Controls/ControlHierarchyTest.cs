@@ -18,7 +18,8 @@ namespace Medja.Test.Controls
             contentControl.Content = button; 
             
             var hierarchy = new ControlHierarchy(contentControl);
-            var controls = hierarchy.GetInRenderingOrder().ToList();
+            hierarchy.UpdateLists();
+            var controls = hierarchy.Lists.All();
             
             Assert.Collection(controls, 
                 p => Assert.Same(contentControl, p), 
@@ -26,20 +27,24 @@ namespace Medja.Test.Controls
 
             
             button.Visibility = Visibility.Hidden;
-            controls = hierarchy.GetInRenderingOrder().ToList();
+            hierarchy.UpdateLists();
+            controls = hierarchy.Lists.All();
             
             Assert.Collection(controls, 
                 p => Assert.Same(contentControl, p));
 
             
             button.Visibility = Visibility.Collapsed;
-            controls = hierarchy.GetInRenderingOrder().ToList();
+            hierarchy.UpdateLists();
+            controls = hierarchy.Lists.All();
             
             Assert.Collection(controls, 
                 p => Assert.Same(contentControl, p));
 
             button.Visibility = Visibility.Visible;
-            controls = hierarchy.GetInRenderingOrder().ToList();
+            hierarchy.UpdateLists();
+            controls = hierarchy.Lists.All();
+
             Assert.Collection(controls, 
                 p => Assert.Same(contentControl, p), 
                 p => Assert.Same(button, p));
