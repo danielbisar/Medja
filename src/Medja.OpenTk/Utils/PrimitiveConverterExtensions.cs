@@ -60,5 +60,10 @@ namespace Medja.OpenTk.Utils
         {
             return new Vector3(color.Red, color.Green, color.Blue);
         }
+
+        public static Vector4 ToVector4(this Color color)
+        {
+            return new Vector4(color.Red, color.Green, color.Blue, color.Alpha);
+        }
     }
 }

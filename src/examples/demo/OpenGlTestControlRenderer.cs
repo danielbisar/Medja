@@ -23,6 +23,8 @@ namespace Medja.Demo
             base.Initialize();
             
             GL.Enable(EnableCap.DepthTest);
+            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
+            GL.Enable(EnableCap.Blend);
             
             _scene = new GLScene();
             /*_scene.Camera = new GLOrthographicCamera
@@ -49,13 +51,17 @@ namespace Medja.Demo
                     triangle.Render();
                 }
             });*/
-            /*_scene.AddRenderWrapper(new GLCuboid(), cuboid =>
+            
+            var cube = new GLCuboid();
+            cube.SetColor(new Color(0.5f, 0.5f, 1, 0.25f));
+            
+            _scene.AddRenderWrapper(cube, cuboid =>
             {
                 cuboid.ModelMatrix.AddRotationX((float) MedjaMath.Radians(1));
                 cuboid.ModelMatrix.AddRotationY((float) MedjaMath.Radians(1));
 
                 cuboid.Render();
-            });*/
+            });
             _scene.AddRenderWrapper(_label = new GLLabel(), label =>
             {
                 label.ModelMatrix.AddRotationX((float) MedjaMath.Radians(1));

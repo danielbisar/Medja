@@ -17,10 +17,13 @@ namespace Medja.OpenTk.Components3D
         /// </summary>
         public Color FixedColor { get; set; }
         
+        public int ColorComponentCount { get; set; }
+        
         public VertexArrayObject VertexArrayObject { get; set; }
 
         public VertexShaderGenConfig()
         {
+            ColorComponentCount = 3;
         }
     }
 }

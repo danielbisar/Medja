@@ -30,5 +30,10 @@ namespace Medja.OpenTk.Components3D
         {
             GL.Uniform3(Id, vec3);
         }
+
+        public void Set(ref Vector4 vec4)
+        {
+            GL.Uniform4(Id, vec4);
+        }
     }
 }
