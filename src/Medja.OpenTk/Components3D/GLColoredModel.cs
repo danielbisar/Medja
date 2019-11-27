@@ -14,7 +14,7 @@ namespace Medja.OpenTk.Components3D
         private readonly GLUniform _modelMatrixUniform;
         private readonly GLUniform _viewProjectionMatrixUniform;
         private readonly GLUniform _colorUniform;
-        private Vector3 _color;
+        private Vector4 _color;
 
         public GLColoredModel(float[] data, uint[] indices = null)
         {
@@ -30,13 +30,15 @@ namespace Medja.OpenTk.Components3D
                 var ebo = _vao.CreateElementBufferObject();
                 ebo.SetData(indices);
             }
-            
-            var vertexShader = ShaderFactory.CreateDefaultVertexShader(new VertexShaderGenConfig
+
+            var config = new VertexShaderGenConfig
             {
-                HasColorParam = true, 
-                VertexArrayObject = _vao
-            });
-            var fragmentShader = ShaderFactory.CreatePassthroughFragmentShader(3, "outColor");
+                HasColorParam = true,
+                VertexArrayObject = _vao,
+                ColorComponentCount = 4
+            };
+            var vertexShader = ShaderFactory.CreateDefaultVertexShader(config);
+            var fragmentShader = ShaderFactory.CreatePassthroughFragmentShader(config.ColorComponentCount, "outColor");
 
             _program = OpenGLProgram.CreateAndCompile(vertexShader, fragmentShader);
             _modelMatrixUniform = _program.GetUniform("model");
@@ -48,7 +50,7 @@ namespace Medja.OpenTk.Components3D
 
         public void SetColor(Color color)
         {
-            _color = color.ToVector3();
+            _color = color.ToVector4();
             _colorUniform.Set(ref _color);
         }
 

@@ -92,12 +92,27 @@ void main()
             
             if(config.HasColorParam)
                 mainBody.Append("outColor = color;");
-            else if(hasColorInput)
-                mainBody.AppendFormat("outColor = vec3({0}, {1}, {2});", 
-                    config.FixedColor.Red, 
-                    config.FixedColor.Green,
-                    config.FixedColor.Blue, 
-                    config.FixedColor.Alpha); // todo support alpha channel
+            else if (hasColorInput)
+            {
+                if (config.ColorComponentCount == 3)
+                {
+                    mainBody.AppendFormat("outColor = vec3({0}, {1}, {2});",
+                        config.FixedColor.Red,
+                        config.FixedColor.Green,
+                        config.FixedColor.Blue);
+                }
+                else if (config.ColorComponentCount == 4)
+                {
+                    mainBody.AppendFormat("outColor = vec4({0}, {1}, {2}, {3});",
+                        config.FixedColor.Red,
+                        config.FixedColor.Green,
+                        config.FixedColor.Blue,
+                        config.FixedColor.Alpha);
+                }
+                else
+                    throw new NotSupportedException($"invalid value for {nameof(config.ColorComponentCount)}");
+            }
+
             mainBody.AppendLine();
 
 
@@ -147,14 +162,20 @@ void main()
             sb.AppendLine();
             sb.AppendLine("uniform mat4 viewProjection;");
             sb.AppendLine("uniform mat4 model;");
-            
-            if(config.HasColorParam)
-                sb.AppendLine("uniform vec3 color;");
-                    
+
+            if (config.HasColorParam)
+            {
+                sb.AppendFormat("uniform vec{0} color;", config.ColorComponentCount);
+                sb.AppendLine();
+            }
+
             if(hasTextureCoordinates)
                 sb.AppendLine("out vec2 outTextureCoord;");
-            else 
-                sb.AppendLine("out vec3 outColor;");
+            else
+            {
+                sb.AppendFormat("out vec{0} outColor;", config.ColorComponentCount);
+                sb.AppendLine();
+            }
             
             sb.AppendLine();
             sb.AppendLine("void main()");
