@@ -1,5 +1,6 @@
 using System;
 using System.Text;
+using Medja.OpenTk.Components3D.Vertices;
 using OpenTK.Graphics.OpenGL4;
 
 namespace Medja.OpenTk.Components3D

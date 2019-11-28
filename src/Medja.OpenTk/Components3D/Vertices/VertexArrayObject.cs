@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using OpenTK.Graphics.OpenGL4;
 
-namespace Medja.OpenTk.Components3D
+namespace Medja.OpenTk.Components3D.Vertices
 {
     /// <summary>
     /// A vertex array object.
