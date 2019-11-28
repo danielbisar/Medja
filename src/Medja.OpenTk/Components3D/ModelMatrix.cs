@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using Medja.Properties;
 using OpenTK;
 
@@ -112,7 +113,6 @@ namespace Medja.OpenTk.Components3D
         public void AddRotationX(float angle)
         {
             Rotation = new Vector3(Rotation.X + angle, Rotation.Y, Rotation.Z);
-            _rotationMatrixNeedsUpdate = true;
         }
 
         /// <summary>
@@ -122,7 +122,6 @@ namespace Medja.OpenTk.Components3D
         public void AddRotationY(float angle)
         {
             Rotation = new Vector3(Rotation.X, Rotation.Y + angle, Rotation.Z);
-            _rotationMatrixNeedsUpdate = true;
         }
 
         /// <summary>
@@ -132,25 +131,21 @@ namespace Medja.OpenTk.Components3D
         public void AddRotationZ(float angle)
         {
             Rotation = new Vector3(Rotation.X, Rotation.Y, Rotation.Z + angle);
-            _rotationMatrixNeedsUpdate = true;
         }
 
         public void SetRotationX(float angle)
         {
             Rotation = new Vector3(angle, Rotation.Y, Rotation.Z);
-            _rotationMatrixNeedsUpdate = true;
         }
 
         public void SetRotationY(float angle)
         {
             Rotation = new Vector3(Rotation.X, angle, Rotation.Z);
-            _rotationMatrixNeedsUpdate = true;
         }
 
         public void SetRotationZ(float angle)
         {
             Rotation = new Vector3(Rotation.X, Rotation.Y, angle);
-            _rotationMatrixNeedsUpdate = true;
         }
 
         /// <summary>
@@ -178,8 +173,7 @@ namespace Medja.OpenTk.Components3D
                     _translationMatrixNeedsUpdate = false;
                 }
 
-                // first apply rotation, then translation (matrix multiplication => from right to left)
-                _matrix = _translationMatrix * _rotationMatrix * _scalingMatrix;
+                _matrix = _scalingMatrix * _rotationMatrix * _translationMatrix;
             }
         }
     }

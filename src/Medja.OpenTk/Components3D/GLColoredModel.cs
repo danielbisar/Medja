@@ -55,11 +55,13 @@ namespace Medja.OpenTk.Components3D
         {
             base.Render();
 
+            _program.Use();
+            
             _modelMatrixUniform.Set(ref ModelMatrix._matrix);
             _viewProjectionMatrixUniform.Set(ref _viewProjectionMatrix);
-
-            _program.Use();
+           
             _vao.Render();
+            _program.Unuse();
         }
     }
 }
