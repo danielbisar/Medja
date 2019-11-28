@@ -1,4 +1,5 @@
 using System;
+using Medja.OpenTk.Components3D.Vertices;
 using Medja.Primitives;
 using Medja.Properties;
 

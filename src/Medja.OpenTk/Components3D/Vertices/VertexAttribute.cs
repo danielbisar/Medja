@@ -1,10 +1,12 @@
 using System;
 using OpenTK.Graphics.OpenGL4;
 
-namespace Medja.OpenTk.Components3D
+namespace Medja.OpenTk.Components3D.Vertices
 {
-    public // A vertex attribute is anything from position (vertex), color, indices, normals, ...
-        class VertexAttribute : IDisposable
+    /// <summary>
+    /// A vertex attribute is anything from position (vertex), color, indices, normals, ...
+    /// </summary>
+    public class VertexAttribute : IDisposable
     {
         public VertexBufferObject VertexBufferObject { get; set; }
 

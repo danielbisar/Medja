@@ -1,5 +1,6 @@
 using System;
 using Medja.OpenTk.Components3D;
+using Medja.OpenTk.Components3D.Vertices;
 using Xunit;
 
 namespace Medja.OpenTk.Test.Components3D

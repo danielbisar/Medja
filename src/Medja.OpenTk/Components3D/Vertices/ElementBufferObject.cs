@@ -1,7 +1,7 @@
 using System;
 using OpenTK.Graphics.OpenGL4;
 
-namespace Medja.OpenTk.Components3D
+namespace Medja.OpenTk.Components3D.Vertices
 {
     /// <summary>
     /// Is an OpenGL buffer containing indices for rendering objects with VertexBuffers.

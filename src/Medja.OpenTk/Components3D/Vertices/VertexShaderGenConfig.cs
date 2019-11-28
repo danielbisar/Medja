@@ -1,6 +1,6 @@
 using Medja.Primitives;
 
-namespace Medja.OpenTk.Components3D
+namespace Medja.OpenTk.Components3D.Vertices
 {
     /// <summary>
     /// Configuration for generating a vertex shader.

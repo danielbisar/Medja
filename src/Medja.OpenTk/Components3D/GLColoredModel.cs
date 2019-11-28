@@ -1,3 +1,4 @@
+using Medja.OpenTk.Components3D.Vertices;
 using Medja.OpenTk.Utils;
 using Medja.Primitives;
 using OpenTK;
@@ -11,25 +12,21 @@ namespace Medja.OpenTk.Components3D
     {
         private readonly VertexArrayObject _vao;
         private readonly OpenGLProgram _program;
+        
         private readonly GLUniform _modelMatrixUniform;
         private readonly GLUniform _viewProjectionMatrixUniform;
         private readonly GLUniform _colorUniform;
+        
         private Vector4 _color;
 
-        public GLColoredModel(float[] data, uint[] indices = null)
+        public GLColoredModel(IVertexArrayObjectFactory factory)
+        : this(factory.Create())
         {
-            var vbo = new VertexBufferObject();
-            vbo.ComponentsPerVertex = 3;
-            vbo.SetData(data);
+        }
 
-            _vao = new VertexArrayObject();
-            _vao.AddVertexAttribute(VertexAttributeType.Positions, vbo);
-
-            if (indices != null)
-            {
-                var ebo = _vao.CreateElementBufferObject();
-                ebo.SetData(indices);
-            }
+        public GLColoredModel(VertexArrayObject vao)
+        {
+            _vao = vao;
 
             var config = new VertexShaderGenConfig
             {
