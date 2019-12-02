@@ -31,10 +31,20 @@ namespace Medja.Controls
 
         protected virtual void OnPopupChanged(object sender, PropertyChangedEventArgs e)
         {
-            var popup = (Popup)e.NewValue;
-            
-            if(popup.IsVisible)
-                popup.Visibility = Visibility.Collapsed;
+            var oldPopup = (Popup) e.OldValue;
+
+            if (oldPopup != null)
+                oldPopup.Parent = null;
+
+            var newPopup = (Popup) e.NewValue;
+
+            if (newPopup != null)
+            {
+                newPopup.Parent = this;
+                
+                if (newPopup.IsVisible)
+                    newPopup.Visibility = Visibility.Collapsed;
+            }
         }
 
         public override IEnumerable<Control> GetChildren()
