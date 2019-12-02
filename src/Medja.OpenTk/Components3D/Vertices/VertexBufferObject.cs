@@ -31,6 +31,11 @@ namespace Medja.OpenTk.Components3D.Vertices
             GL.BindBuffer(BufferTarget.ArrayBuffer, Id);
         }
 
+        public void Unbind()
+        {
+            GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
+        }
+
         public void SetData(float[] data)
         {
             // sanity check
@@ -42,7 +47,8 @@ namespace Medja.OpenTk.Components3D.Vertices
             // copy data to GPU memory
             Bind();
             GL.BufferData(BufferTarget.ArrayBuffer, data.Length * sizeof(float), data, UsageHint);
-
+            Unbind();
+            
             ElementCount = data.Length / ComponentsPerVertex;
         }
 
