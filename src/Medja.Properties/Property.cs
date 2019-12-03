@@ -8,7 +8,10 @@ namespace Medja.Properties
     /// <typeparam name="T"></typeparam>
     /// <remarks>A fundamental class in Medja. Using this class adds data binding features support. This class is
     /// performance optimized and is almost as fast as using .NET properties. WPF Properties for instance are &gt;
-    /// factor 100 slower.</remarks>
+    /// factor 100 slower.
+    /// &lt;br&gt;
+    /// If you need some kind of validation implement this in the <see cref="SetSilent"/> method.
+    /// </remarks>
     public class Property<T> : IProperty
     {
         // creating a static variable inside this class makes creation 3X as slow as currently
@@ -49,7 +52,11 @@ namespace Medja.Properties
         protected virtual void InternalSet(T value)
         {
             var oldValue = _value;
-            _value = value;
+            
+            // use SetSilent to make it easier to have a common place to implement 
+            // value checks
+            SetSilent(value); 
+            
             NotifyPropertyChanged(oldValue, value);
         }
 
@@ -57,7 +64,7 @@ namespace Medja.Properties
         /// Sets the value of the property. Does not fire the <see cref="PropertyChanged"/> event.
         /// </summary>
         /// <param name="value">The value.</param>
-        /// <remarks>This method is mainly used for initialization.</remarks>
+        /// <remarks>Use this method to implement validation or other value constraints.</remarks>
         public virtual void SetSilent(T value)
         {
             _value = value;
