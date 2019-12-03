@@ -6,16 +6,13 @@ using OpenTK;
 namespace Medja.OpenTk.Components3D
 {
     /// <summary>
-    /// Base class for simple models with of one solid color.
+    /// Renders solid color models with VAO and a shader program.
     /// </summary>
-    public class GLColoredModel : GLModel
+    public class GLColoredModel : GLVertexArrayModel
     {
-        private readonly VertexArrayObject _vao;
-        private readonly OpenGLProgram _program;
-        
-        private readonly GLUniform _modelMatrixUniform;
-        private readonly GLUniform _viewProjectionMatrixUniform;
-        private readonly GLUniform _colorUniform;
+        private GLUniform _modelMatrixUniform;
+        private GLUniform _viewProjectionMatrixUniform;
+        private GLUniform _colorUniform;
         
         private Vector4 _color;
 
@@ -26,23 +23,26 @@ namespace Medja.OpenTk.Components3D
 
         public GLColoredModel(VertexArrayObject vao)
         {
-            _vao = vao;
+            VertexArrayObject = vao;
+            CreateShader();
+            SetColor(Colors.White);
+        }
 
+        private void CreateShader()
+        {
             var config = new VertexShaderGenConfig
             {
                 HasColorParam = true,
-                VertexArrayObject = _vao,
+                VertexArrayObject = VertexArrayObject,
                 ColorComponentCount = 4
             };
             var vertexShader = ShaderFactory.CreateDefaultVertexShader(config);
             var fragmentShader = ShaderFactory.CreatePassthroughFragmentShader(config.ColorComponentCount, "outColor");
-
-            _program = OpenGLProgram.CreateAndCompile(vertexShader, fragmentShader);
-            _modelMatrixUniform = _program.GetUniform("model");
-            _viewProjectionMatrixUniform = _program.GetUniform("viewProjection");
-            _colorUniform = _program.GetUniform("color");
-
-            SetColor(Colors.White);
+            
+            ShaderProgram = OpenGLProgram.CreateAndCompile(vertexShader, fragmentShader);
+            _modelMatrixUniform = ShaderProgram.GetUniform("model");
+            _viewProjectionMatrixUniform = ShaderProgram.GetUniform("viewProjection");
+            _colorUniform = ShaderProgram.GetUniform("color");
         }
 
         public void SetColor(Color color)
@@ -51,17 +51,10 @@ namespace Medja.OpenTk.Components3D
             _colorUniform.Set(ref _color);
         }
 
-        public override void Render()
+        protected override void SetupProgram()
         {
-            base.Render();
-
-            _program.Use();
-            
             _modelMatrixUniform.Set(ref ModelMatrix._matrix);
             _viewProjectionMatrixUniform.Set(ref _viewProjectionMatrix);
-           
-            _vao.Render();
-            _program.Unuse();
         }
     }
 }
