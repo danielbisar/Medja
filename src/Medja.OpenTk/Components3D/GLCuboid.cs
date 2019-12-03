@@ -4,9 +4,9 @@ namespace Medja.OpenTk.Components3D
 {
     public class GLCuboid : GLColoredModel
     {
-        public GLCuboid(CubeFactory factory = null)
-            : base(factory ?? new CubeFactory())
+        public GLCuboid()
         {
+            VertexArrayObject = new CubeFactory().Create();
         }
     }
 }

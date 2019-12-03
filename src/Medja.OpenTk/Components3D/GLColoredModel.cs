@@ -1,6 +1,7 @@
 using Medja.OpenTk.Components3D.Vertices;
 using Medja.OpenTk.Utils;
 using Medja.Primitives;
+using Medja.Properties;
 using OpenTK;
 
 namespace Medja.OpenTk.Components3D
@@ -22,14 +23,29 @@ namespace Medja.OpenTk.Components3D
         }
 
         public GLColoredModel(VertexArrayObject vao)
+        : this()
         {
             VertexArrayObject = vao;
-            CreateShader();
+        }
+
+        public GLColoredModel()
+        {
+            PropertyVertexArrayObject.PropertyChanged += OnVertexArrayObjectChanged;
             SetColor(Colors.White);
+        }
+
+        private void OnVertexArrayObjectChanged(object sender, PropertyChangedEventArgs eventargs)
+        {
+            CreateShader();
         }
 
         private void CreateShader()
         {
+            ShaderProgram?.Dispose();
+
+            if (VertexArrayObject == null)
+                return;
+            
             var config = new VertexShaderGenConfig
             {
                 HasColorParam = true,
@@ -43,12 +59,13 @@ namespace Medja.OpenTk.Components3D
             _modelMatrixUniform = ShaderProgram.GetUniform("model");
             _viewProjectionMatrixUniform = ShaderProgram.GetUniform("viewProjection");
             _colorUniform = ShaderProgram.GetUniform("color");
+            _colorUniform.Set(ref _color);
         }
 
         public void SetColor(Color color)
         {
             _color = color.ToVector4();
-            _colorUniform.Set(ref _color);
+            _colorUniform?.Set(ref _color);
         }
 
         protected override void SetupProgram()
