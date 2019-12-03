@@ -13,4 +13,8 @@
       <ProjectReference Include="..\..\Medja\Medja.csproj" />
     </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0" />
+  </ItemGroup>
+
 </Project>
