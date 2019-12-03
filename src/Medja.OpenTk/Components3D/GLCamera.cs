@@ -96,6 +96,9 @@ namespace Medja.OpenTk.Components3D
         {
             get
             {
+                if(_projectionMatrixNeedsUpdate)
+                    UpdateProjectionMatrix();
+                
                 if (_viewProjectionMatrixNeedsUpdate)
                     UpdateViewProjectionMatrix();
 
