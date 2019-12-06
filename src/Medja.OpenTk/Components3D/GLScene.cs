@@ -40,5 +40,11 @@ namespace Medja.OpenTk.Components3D
             foreach(var component in Components)
                 component.Dispose();
         }
+
+        public void ApplyToAllModels(Action<GLModel> action)
+        {
+            foreach (var model in Components.OfType<GLModel>())
+                action(model);
+        }
     }
 }
