@@ -26,11 +26,6 @@ namespace Medja.OpenTk.Components3D
 
             return result;
         }
-
-        public static Matrix4 CreateRotation(float x, float y, float z)
-        {
-            return CreateRotation(new Vector3(x, y, z));
-        }
         
         private bool _rotationMatrixNeedsUpdate;
         private bool _scalingMatrixNeedsUpdate;
@@ -41,7 +36,6 @@ namespace Medja.OpenTk.Components3D
         private Matrix4 _translationMatrix;
 
         public Matrix4 _matrix;
-
         /// <summary>
         /// Gets the model matrix (contains position, rotation, ... of the model)
         /// </summary>
@@ -74,12 +68,25 @@ namespace Medja.OpenTk.Components3D
             set { PropertyRotation.Set(value); }
         }
 
+        [NonSerialized]
+        public readonly Property<bool> PropertyRotateBeforeTranslate;
+        /// <summary>
+        /// If true (default value) the rotation matrix is applied before the translation matrix, else the other way around.
+        /// </summary>
+        public bool RotateBeforeTranslate
+        {
+            get { return PropertyRotateBeforeTranslate.Get(); }
+            set { PropertyRotateBeforeTranslate.Set(value); }
+        }
+
         public ModelMatrix()
         {
             PropertyPosition = new Property<Vector3>();
             PropertyScaling = new Property<Vector3>();
             PropertyRotation = new Property<Vector3>();
-
+            PropertyRotateBeforeTranslate = new Property<bool>();
+            PropertyRotateBeforeTranslate.SetSilent(true);
+            
             _matrix = Matrix4.Identity;
             _rotationMatrix = Matrix4.Identity;
             _translationMatrix = Matrix4.Identity;
@@ -89,6 +96,7 @@ namespace Medja.OpenTk.Components3D
             PropertyPosition.PropertyChanged += OnPositionChanged;
             PropertyScaling.PropertyChanged += OnScalingChanged;
             PropertyRotation.PropertyChanged += OnRotationChanged;
+            PropertyRotateBeforeTranslate.PropertyChanged += OnRotateBeforeTranslateChanged;
         }
 
         private void OnPositionChanged(object sender, PropertyChangedEventArgs e)
@@ -102,6 +110,11 @@ namespace Medja.OpenTk.Components3D
         }
 
         private void OnRotationChanged(object sender, PropertyChangedEventArgs e)
+        {
+            _rotationMatrixNeedsUpdate = true;
+        }
+
+        private void OnRotateBeforeTranslateChanged(object sender, PropertyChangedEventArgs e)
         {
             _rotationMatrixNeedsUpdate = true;
         }
@@ -173,8 +186,16 @@ namespace Medja.OpenTk.Components3D
                     _translationMatrixNeedsUpdate = false;
                 }
 
-                _matrix = _scalingMatrix * _rotationMatrix * _translationMatrix;
+                CalculateMatrix();
             }
+        }
+
+        private void CalculateMatrix()
+        {
+            if(RotateBeforeTranslate)
+                _matrix = _scalingMatrix * _rotationMatrix * _translationMatrix;
+            else
+                _matrix = _scalingMatrix * _translationMatrix * _rotationMatrix;
         }
     }
 }
