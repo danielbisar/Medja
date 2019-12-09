@@ -64,9 +64,15 @@ namespace Medja.Controls
             if (InputState.IsMouseOver)
             {
                 if (InputState.IsLeftMouseDown)
-                    Content = MouseDownImage;
+                {
+                    if(MouseDownImage.Bitmap != null)
+                        Content = MouseDownImage;
+                }
                 else
-                    Content = MouseOverImage;
+                {
+                    if(MouseOverImage.Bitmap != null)
+                        Content = MouseOverImage;
+                }
             }
             else
                 Content = Image;
