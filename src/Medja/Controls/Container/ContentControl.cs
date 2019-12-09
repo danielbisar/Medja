@@ -104,7 +104,6 @@ namespace Medja.Controls
             base.Arrange(availableSize);
 
             var area = new Rect(Position.X, Position.Y, availableSize.Width, availableSize.Height);
-            area.Subtract(Margin);
             area.Subtract(Padding);
             
             ContentArranger.Position(area);
