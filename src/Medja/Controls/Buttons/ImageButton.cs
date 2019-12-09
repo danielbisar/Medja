@@ -59,7 +59,7 @@ namespace Medja.Controls
             Content = Image;
         }
 
-        private void UpdateContent()
+        protected virtual void UpdateContent()
         {
             if (InputState.IsMouseOver)
             {
