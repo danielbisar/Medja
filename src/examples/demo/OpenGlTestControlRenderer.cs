@@ -30,7 +30,7 @@ namespace Medja.Demo
             _scene.Camera = new GLPerspectiveCamera
             {
                 Position = new Vector3(0, 2, 10),
-                TargetPosition = new Vector3(0, 0.5f, 0)
+                TargetPosition = new Vector3(0, 0.5f, 0),
             };
             
             _cube = new GLCuboid();
@@ -44,7 +44,7 @@ namespace Medja.Demo
             _scene.Add(_cube);
             _scene.Add(_cube2);
         }
-        
+
         protected override void InternalRender()
         {
             _cube.ModelMatrix.AddRotationX((float) MedjaMath.Radians(1));
