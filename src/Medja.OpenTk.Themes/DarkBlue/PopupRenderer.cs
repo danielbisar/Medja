@@ -19,6 +19,11 @@ namespace Medja.OpenTk.Themes.DarkBlue
         
         protected override void InternalRender()
         {
+            // do not render anything when background is null, else
+            // transparency will not work always
+            if (_control.Background == null)
+                return;
+            
             _backgroundPaint.Color = _control.Background.ToSKColor();
             _canvas.DrawRoundRect(_rect, 3, 3, _backgroundPaint);
         }
