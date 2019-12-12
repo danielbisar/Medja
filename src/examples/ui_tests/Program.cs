@@ -20,7 +20,7 @@ namespace MedjaOpenGlTestApp
             var library = new MedjaOpenTkLibrary();
             var application = MedjaApplication.Create(library);
 
-            var test = new ButtonTest(theme);
+            //var test = new ButtonTest(theme);
             //var test = new ButtonRendererPerformance(theme);
             //var test = new ComboBoxTest(theme);
             //var test = new ContentControlTest(theme);
@@ -28,7 +28,7 @@ namespace MedjaOpenGlTestApp
             //var test = new DialogTest(theme);
             //var test = new DockPanelTest(theme);
             //var test = new Graph2DTest(theme);
-            //var test = new ImageButtonTest(theme);
+            var test = new ImageButtonTest(theme);
             //var test = new MultithreadingTest(theme);
             //var test = new NumericKeypadTest(theme);
             //var test = new ScrollableContainerTest(theme);

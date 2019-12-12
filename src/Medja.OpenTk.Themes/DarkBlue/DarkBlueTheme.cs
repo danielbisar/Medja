@@ -6,6 +6,18 @@ namespace Medja.OpenTk.Themes.DarkBlue
 {
     public class DarkBlueTheme : ControlFactory
     {
+        public static void SetButtonBackground(Control control)
+        {
+            control.Bind(p => p.PropertyBackground,
+                GetButtonBackground,
+                p => p.PropertyIsEnabled);
+        }
+
+        private static Color GetButtonBackground(Control control)
+        {
+            return control.IsEnabled ? DarkBlueThemeValues.PrimaryColor : DarkBlueThemeValues.PrimaryColor.GetDisabled();
+        }
+        
         private readonly MedjaOpenTKWindowSettings _windowSettings;
 
         public DarkBlueTheme(MedjaOpenTKWindowSettings windowSettings)
@@ -26,9 +38,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
 
         private void SetupButton(Button button)
         {
-            button.Bind(p => p.PropertyBackground,
-                GetButtonBackground,
-                p => p.PropertyIsEnabled);
+            SetButtonBackground(button);
 
             button.Font.Color = DarkBlueThemeValues.PrimaryTextColor;
             button.Position.Height = 40;
@@ -36,11 +46,6 @@ namespace Medja.OpenTk.Themes.DarkBlue
             button.Padding.Top = 9;
 
             button.Renderer = new ButtonRenderer(button);
-        }
-
-        private static Color GetButtonBackground(Button button)
-        {
-            return button.IsEnabled ? DarkBlueThemeValues.PrimaryColor : DarkBlueThemeValues.PrimaryColor.GetDisabled();
         }
 
         protected override Canvas CreateCanvas()
