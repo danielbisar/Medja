@@ -90,14 +90,23 @@ namespace Medja.Controls
             get { return PropertyDisplayText.Get(); }
             private set { PropertyDisplayText.Set(value); }
         }
-        
-        // todo: title font, displaytext font
 
+        public readonly Property<int> PropertyItemsCount;
+        /// <summary>
+        /// Bindable count of items.
+        /// </summary>
+        public int ItemsCount
+        {
+            get => PropertyItemsCount.Get();
+            private set => PropertyItemsCount.Set(value);
+        }
+        
         public ComboBox(IControlFactory controlFactory)
         {
             _controlFactory = controlFactory;
             
             PropertyDisplayText = new Property<string>();
+            PropertyItemsCount = new Property<int>();
             PropertyIsDropDownOpen = new Property<bool>();
             PropertyMaxDropDownHeight = new Property<float>();
             PropertySelectedItem = new Property<Control>();
@@ -146,7 +155,8 @@ namespace Medja.Controls
                 foreach (var item in e.NewItems.Cast<Control>())
                     RegisterOnClicked(item);
             }
-            
+
+            ItemsCount = _itemsPanel.Children.Count;
             IsLayoutUpdated = false;
         }
 
@@ -272,6 +282,22 @@ namespace Medja.Controls
         {
             var item = _itemsPanel.Children.OfType<MenuItem>().FirstOrDefault(p => p.Title == title);
             SelectedItem = item;
+        }
+
+        /// <summary>
+        /// Removes the currently selected item.
+        /// </summary>
+        /// <param name="getNewSelectedItem">Gets the new selected item.</param>
+        /// <returns>true if any item was selected, else false.</returns>
+        public bool RemoveSelected(Func<ComboBox, Control> getNewSelectedItem = null)
+        {
+            if (SelectedItem == null)
+                return false;
+
+            _itemsPanel.Remove(SelectedItem);
+            SelectedItem = getNewSelectedItem?.Invoke(this);
+            
+            return true;
         }
     }
 }

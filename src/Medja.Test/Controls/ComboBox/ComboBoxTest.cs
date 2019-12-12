@@ -263,5 +263,59 @@ namespace Medja.Test.Controls
             
             Assert.Equal("234", ((MenuItem)comboBox.SelectedItem)?.Title);
         }
+
+        [Fact]
+        public void ItemsCountUpdates()
+        {
+            var controlFactory = new ControlFactory();
+            var comboBox = controlFactory.Create<ComboBox>();
+
+            Assert.Equal(0, comboBox.ItemsCount);
+
+            comboBox.Add("123");
+
+            Assert.Equal(1, comboBox.ItemsCount);
+
+            comboBox.SelectedItem = comboBox.Add("234");
+
+            comboBox.RemoveSelected();
+
+            Assert.Equal(1, comboBox.ItemsCount);
+        }
+
+        [Fact]
+        public void RemoveSelectedItem()
+        {
+            var controlFactory = new ControlFactory();
+            var comboBox = controlFactory.Create<ComboBox>();
+
+            comboBox.Add("123");
+            comboBox.SelectedItem = comboBox.Add("234");
+
+            comboBox.RemoveSelected();
+
+            Assert.Null(comboBox.SelectedItem);
+            Assert.Equal(1, comboBox.ItemsCount);
+        }
+
+        [Fact]
+        public void RemoveSelectedItemUsesCustomSelectionLogic()
+        {
+            var controlFactory = new ControlFactory();
+            var comboBox = controlFactory.Create<ComboBox>();
+
+            comboBox.Add("123");
+            comboBox.SelectedItem = comboBox.Add("234");
+            comboBox.Add("567");
+            comboBox.Add("890");
+
+            comboBox.RemoveSelected(cb => cb.ItemsPanel.Children.FirstOrDefault());
+
+            Assert.Equal(comboBox.ItemsPanel.Children[0],comboBox.SelectedItem);
+
+            comboBox.RemoveSelected(cb => cb.ItemsPanel.Children.LastOrDefault());
+
+            Assert.Equal(comboBox.ItemsPanel.Children.Last(), comboBox.SelectedItem);
+        }
     }
 }
