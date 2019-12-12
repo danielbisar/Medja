@@ -1,48 +1,28 @@
 using Medja.Controls;
-using Medja.OpenTk.Rendering;
-using SkiaSharp;
 
 namespace Medja.OpenTk.Themes.DarkBlue
 {
+    /// <summary>
+    /// Renders a normal button with text.
+    /// </summary>
     public class ButtonRenderer : TextControlRendererBase<Button>
     {
-        private readonly SKPaint _backgroundPaint;
+        private readonly ButtonBackgroundRenderer _backgroundRenderer;
         
         public ButtonRenderer(Button control)
             : base(control)
-        {  
-            _backgroundPaint = new SKPaint();
-            _backgroundPaint.IsAntialias = true;
-            
-            control.AffectRendering(control.PropertyBackground, 
-                control.PropertyIsEnabled,
-                control.InputState.PropertyIsLeftMouseDown);
+        {
+            _backgroundRenderer = new ButtonBackgroundRenderer(control);
         }
 
         protected override void DrawTextControlBackground()
         {
-            var rect = _control.Position.ToSKRect();
-
-            _backgroundPaint.Color = _control.Background.ToSKColor();
-            
-            if (_control.IsEnabled)
-            {
-                if (_control.InputState.IsLeftMouseDown)
-                    _backgroundPaint.ImageFilter = DarkBlueThemeValues.DropShadowElevated;
-                else
-                    _backgroundPaint.ImageFilter = DarkBlueThemeValues.DropShadow;
-            }
-            else
-            {
-                _backgroundPaint.ImageFilter = DarkBlueThemeValues.DropShadowDisabled;
-            }
-            
-            _canvas.DrawRoundRect(rect, 3, 3, _backgroundPaint);
+            _backgroundRenderer.Render(_canvas);
         }
 
         protected override void Dispose(bool disposing)
         {
-            _backgroundPaint.Dispose();
+            _backgroundRenderer.Dispose();
             base.Dispose(disposing);
         }
     }
