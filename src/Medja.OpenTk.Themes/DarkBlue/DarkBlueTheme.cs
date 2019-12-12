@@ -109,19 +109,15 @@ namespace Medja.OpenTk.Themes.DarkBlue
                 : Colors.White.GetDisabled();
         }
 
-        protected override ComboBoxMenuItem CreateComboBoxMenuItem()
+        protected override void ApplyComboBoxMenuItemStyle(ComboBoxMenuItem menuItem)
         {
-            var result = base.CreateComboBoxMenuItem();
-
-            result.Bind(p => p.PropertyBackground, 
-                GetComboBoxMenuItemBackground, 
+            menuItem.Bind(p => p.PropertyBackground,
+                GetComboBoxMenuItemBackground,
                 p => p.PropertyIsSelected,
                 p => p.PropertyIsEnabled);
-            
-            result.Position.Height = 25;
-            result.Renderer = new MenuItemRenderer(result, DefaultFont.Name, DefaultFont.Color);
 
-            return result;
+            menuItem.Position.Height = 25;
+            menuItem.Renderer = new MenuItemRenderer(menuItem, DefaultFont.Name, DefaultFont.Color);
         }
 
         private static Color GetComboBoxMenuItemBackground(ComboBoxMenuItem menuItem)
@@ -205,8 +201,8 @@ namespace Medja.OpenTk.Themes.DarkBlue
             result.Bind(p => p.PropertyBackground, GetPopupBackground, p => p.PropertyIsEnabled);
 
             result.Renderer = new PopupRenderer(result);
-			return result;
-		}
+            return result;
+        }
 
         private Color GetPopupBackground(Popup popup)
         {

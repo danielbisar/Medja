@@ -183,7 +183,14 @@ namespace Medja.Theming
 
         protected virtual ComboBoxMenuItem CreateComboBoxMenuItem()
         {
-            return new ComboBoxMenuItem();
+            var result = new ComboBoxMenuItem();
+            ApplyComboBoxMenuItemStyle(result);
+
+            return result;
+        }
+
+        protected virtual void ApplyComboBoxMenuItemStyle(ComboBoxMenuItem menuItem)
+        {
         }
 
         protected virtual ConfirmableDialog CreateConfirmableDialog()
