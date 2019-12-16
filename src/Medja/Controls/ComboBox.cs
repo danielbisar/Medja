@@ -26,6 +26,7 @@ namespace Medja.Controls
     {
         private readonly Popup _popup;
         private readonly IControlFactory _controlFactory;
+        private readonly Binding<string, Control> _displayTextBinding;
 
         private readonly VerticalStackPanel _itemsPanel;
         /// <summary>
@@ -110,11 +111,12 @@ namespace Medja.Controls
             PropertyIsDropDownOpen = new Property<bool>();
             PropertyMaxDropDownHeight = new Property<float>();
             PropertySelectedItem = new Property<Control>();
+            PropertySelectedItem.PropertyChanged += OnSelectedItemChanged;
             PropertyTitle = new Property<string>();
 
             PropertyIsFocused.PropertyChanged += OnIsFocusedChanged;
             PropertyMaxDropDownHeight.AffectsLayout(this);
-            PropertyDisplayText.BindTo(PropertySelectedItem, ApplyGetDisplayTextFromItem);
+            _displayTextBinding = PropertyDisplayText.BindTo(PropertySelectedItem, ApplyGetDisplayTextFromItem);
             DisplayText = "";
             
             MaxDropDownHeight = 400;
@@ -127,6 +129,23 @@ namespace Medja.Controls
             
             _popup = CreatePopup(controlFactory);
             _popup.PropertyBackground.BindTo(PropertyBackground);
+        }
+
+        private void OnSelectedItemChanged(object sender, PropertyChangedEventArgs e)
+        {
+            var oldValue = e.OldValue as ComboBoxMenuItem;
+            var newValue = e.NewValue as ComboBoxMenuItem;
+
+            if (oldValue != null)
+                oldValue.PropertyTitle.PropertyChanged -= OnSelectedItemTitleChanged;
+
+            if (newValue != null)
+                newValue.PropertyTitle.PropertyChanged += OnSelectedItemTitleChanged;
+        }
+
+        private void OnSelectedItemTitleChanged(object sender, PropertyChangedEventArgs e)
+        {
+            _displayTextBinding.Update();
         }
 
         private string ApplyGetDisplayTextFromItem(Control item)

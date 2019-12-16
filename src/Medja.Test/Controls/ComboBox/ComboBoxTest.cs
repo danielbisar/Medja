@@ -193,6 +193,27 @@ namespace Medja.Test.Controls
             
             Assert.Equal("", comboBox.DisplayText);
         }
+
+        [Fact]
+        public void SetDisplayTextWhenSelectedItemsTitleChanged()
+        {
+            var comboBox = new ControlFactory().Create<ComboBox>();
+            var menuItem = comboBox.Add("123");
+            var menuItem2 = comboBox.Add("789");
+            
+            comboBox.SelectedItem = menuItem;
+            menuItem.Title = "456";
+
+            Assert.Equal("456", comboBox.DisplayText);
+
+            comboBox.SelectedItem = menuItem2;
+            menuItem.Title = "555";
+
+            Assert.Equal("789", comboBox.DisplayText);
+            menuItem2.Title = "444";
+
+            Assert.Equal("444", comboBox.DisplayText);
+        }
         
         [Fact]
         public void DisplayTextIsEmptyStringByDefault()
