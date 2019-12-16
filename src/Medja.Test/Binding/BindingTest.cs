@@ -91,5 +91,24 @@ namespace Medja.Test.Binding
             
             Assert.True(changed);
         }
+
+        [Fact]
+        public void UpdateReevaluatesValue()
+        {
+            var property1 = new Property<string>();
+            var property2 = new Property<string>();
+
+            using (var binding = new Binding<string, string>(property1, property2, p => p))
+            {
+                property2.SetSilent("target");
+
+                Assert.NotEqual(property2.Get(), property1.Get());
+                
+                binding.Update();
+
+                Assert.Equal(property2.Get(), property1.Get());
+                Assert.Equal("target", property1.Get());
+            }
+        }
     }
 }

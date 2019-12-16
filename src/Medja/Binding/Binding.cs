@@ -40,6 +40,14 @@ namespace Medja
 
         private void OnSourcePropertyChanged(object sender, PropertyChangedEventArgs eventArgs)
         {
+            Update();
+        }
+
+        /// <summary>
+        /// Reevaluates the target value.
+        /// </summary>
+        public void Update()
+        {
             _target.Set(_sourceConverter(_source.Get()));
         }
 
