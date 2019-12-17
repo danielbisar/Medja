@@ -254,7 +254,14 @@ namespace Medja.Theming
 
         protected virtual ImageButton CreateImageButton()
         {
-            return new ImageButton(this);
+            var result = new ImageButton(this);
+            SetupImageButton(result);
+
+            return result;
+        }
+
+        protected virtual void SetupImageButton(ImageButton imageButton)
+        {
         }
         
         protected virtual InputBoxDialog CreateInputBoxDialog()
