@@ -14,7 +14,11 @@ namespace Medja.Theming
     /// <remarks>There are some controls that use generics. The naming of the method is the same as for other controls.
     /// If you have a class MyControl&lt;T&gt; the method would be named 'CreateMyControl&lt;T&gt;'. You cannot register
     /// generic methods via AddFactoryMethod but the <see cref="Create{TControl}()"/> method will search via
-    /// reflection.</remarks>
+    /// reflection.
+    ///
+    /// Create methods => create a control instance
+    /// Setup methods => initialize the control; this allows to base custom inherited controls to be based on the current look etc of the base class
+    /// </remarks>
     public class ControlFactory : IControlFactory
     {
         private readonly Dictionary<Type, Func<object>> _factoryMethods;
@@ -183,7 +187,14 @@ namespace Medja.Theming
 
         protected virtual ComboBoxMenuItem CreateComboBoxMenuItem()
         {
-            return new ComboBoxMenuItem();
+            var result = new ComboBoxMenuItem();
+            SetupComboBoxMenuItem(result);
+
+            return result;
+        }
+
+        protected virtual void SetupComboBoxMenuItem(ComboBoxMenuItem item)
+        {
         }
 
         protected virtual ConfirmableDialog CreateConfirmableDialog()

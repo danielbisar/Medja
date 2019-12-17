@@ -114,18 +114,17 @@ namespace Medja.OpenTk.Themes
                 : BlackRedThemeValues.PrimaryColor.GetDisabled();
         }
 
-        protected override ComboBoxMenuItem CreateComboBoxMenuItem()
+        protected override void SetupComboBoxMenuItem(ComboBoxMenuItem item)
         {
-            var result = base.CreateComboBoxMenuItem();
-            result.Position.Height = 30;
-            result.Renderer = new MenuItemRenderer(result, DefaultFont.Name, DefaultFont.Color);
+            base.SetupComboBoxMenuItem(item);
 
-            result.PropertyBackground.UpdateFrom(
-                result.PropertyIsSelected,
-                result.PropertyIsEnabled,
+            item.Position.Height = 30;
+            item.Renderer = new MenuItemRenderer(item, DefaultFont.Name, DefaultFont.Color);
+
+            item.PropertyBackground.UpdateFrom(
+                item.PropertyIsSelected,
+                item.PropertyIsEnabled,
                 GetComboBoxMenuItemBackground);
-            
-            return result;
         }
 
         private Color GetComboBoxMenuItemBackground(bool isSelected, bool isEnabled)
