@@ -1,7 +1,6 @@
 using System;
-using Medja.Properties;
 
-namespace Medja
+namespace Medja.Properties.Binding
 {
     /// <summary>
     /// Represents a binding that forwards changes in both directions (source -> target, target -> source)
@@ -21,6 +20,16 @@ namespace Medja
         {
             _sourceToTargetBinding = new Binding<TTarget, TSource>(target, source, sourceConverter);
             _targetToSourceBinding = new Binding<TSource, TTarget>(source, target, targetConverter);
+        }
+
+        public void Update()
+        {
+            _sourceToTargetBinding.Update();
+        }
+
+        public void UpdateFromTarget()
+        {
+            _targetToSourceBinding.Update();
         }
         
         public void Dispose()

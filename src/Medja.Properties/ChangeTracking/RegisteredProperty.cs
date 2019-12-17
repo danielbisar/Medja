@@ -1,5 +1,4 @@
 using System;
-using Medja.Utils.Reflection;
 
 namespace Medja.Properties.ChangeTracking
 {
@@ -26,7 +25,7 @@ namespace Medja.Properties.ChangeTracking
             
             var valueType = Property.GetValueType();
             
-            if (!valueType.Implements<IMedjaObservableCollection>())
+            if (!typeof(IMedjaObservableCollection).IsAssignableFrom(valueType))
                 return;
 
             _collectionChangedHandler = new PropertyCollectionChangedHandler(Name, addCollectionChange);

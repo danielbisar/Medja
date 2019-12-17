@@ -1,9 +1,8 @@
 using System;
-using Medja.Primitives;
-using Medja.Properties;
+using Medja.Properties.Binding;
 using Xunit;
 
-namespace Medja.Test.Binding
+namespace Medja.Properties.Test.Binding
 {
     public class BindingTest
     {
@@ -63,33 +62,6 @@ namespace Medja.Test.Binding
                 
                 Assert.Null(property2.Get());
             }
-        }
-
-        [Fact]
-        public void OnAnyPropertyChangedTest()
-        {
-            var rect = new MRect();
-            var changed = false;
-            BindingExtensions.OnAnyPropertyChanged(rect, () => changed = true);
-
-            rect.X = 1;
-            
-            Assert.True(changed);
-            changed = false;
-
-            rect.Y = 2;
-            
-            Assert.True(changed);
-            changed = false;
-
-            rect.Width = 10;
-            
-            Assert.True(changed);
-            changed = false;
-
-            rect.Height = 10;
-            
-            Assert.True(changed);
         }
 
         [Fact]

@@ -1,6 +1,4 @@
 using System.Collections.Specialized;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 using Medja.Properties.ChangeTracking;
 using Xunit;
 

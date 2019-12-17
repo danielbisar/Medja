@@ -1,7 +1,6 @@
-﻿using System;
-using Medja.Properties;
+using System;
 
-namespace Medja
+namespace Medja.Properties.Binding
 {
     /// <summary>
     /// Represents the connection of a source property to a target property.
@@ -25,7 +24,7 @@ namespace Medja
         /// <remarks>
         /// The binding does not initialize the target property. Means the target property gets updated only on the
         /// first change of the source property. If you need a different behavior use
-        /// <see cref="BindingExtensions.BindTo{TTarget,TSource}"/>.
+        /// <see cref="Medja.BindingExtensions.BindTo{TTarget,TSource}(Medja.Properties.Property{TTarget},Medja.Properties.Property{TSource},System.Func{TSource,TTarget})"/>.
         /// </remarks>
         public Binding(Property<TTarget> target, 
                        Property<TSource> source, 
