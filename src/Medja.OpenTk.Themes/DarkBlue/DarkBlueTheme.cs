@@ -186,19 +186,17 @@ namespace Medja.OpenTk.Themes.DarkBlue
             return result;
         }
 
-        protected override ComboBoxMenuItem CreateComboBoxMenuItem()
+        protected override void SetupComboBoxMenuItem(ComboBoxMenuItem item)
         {
-            var result = base.CreateComboBoxMenuItem();
+            base.SetupComboBoxMenuItem(item);
 
-            result.Position.Height = 25;
-            result.Renderer = new MenuItemRenderer(result, DefaultFont.Name, DefaultFont.Color);
+            item.Position.Height = 25;
+            item.Renderer = new MenuItemRenderer(item, DefaultFont.Name, DefaultFont.Color);
 
-            result.PropertyBackground.UpdateFrom(
-                result.PropertyIsSelected,
-                result.PropertyIsEnabled,
+            item.PropertyBackground.UpdateFrom(
+                item.PropertyIsSelected,
+                item.PropertyIsEnabled,
                 GetComboBoxMenuItemBackground);
-
-            return result;
         }
 
         protected override ContentControl CreateContentControl()
