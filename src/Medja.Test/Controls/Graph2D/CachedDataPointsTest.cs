@@ -1,4 +1,3 @@
-using Medja.Controls;
 using Xunit;
 
 namespace Medja.Test.Controls

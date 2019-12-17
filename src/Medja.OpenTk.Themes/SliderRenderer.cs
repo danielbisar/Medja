@@ -2,6 +2,8 @@ using System;
 using Medja.Controls;
 using Medja.OpenTk.Rendering;
 using Medja.Primitives;
+using Medja.Properties;
+using Medja.Properties.Binding;
 using SkiaSharp;
 
 namespace Medja.OpenTk.Themes
@@ -30,9 +32,14 @@ namespace Medja.OpenTk.Themes
                 control.PropertyPercentage,
                 control.PropertyOrientation,
                 control.PropertyIsInverted);
-            
-            control.PropertyOrientation.ForwardTo(p => UpdateRenderFunction());
 
+            control.PropertyOrientation.PropertyChanged += OnOrientationChanged;
+
+            UpdateRenderFunction();
+        }
+
+        private void OnOrientationChanged(object sender, PropertyChangedEventArgs e)
+        {
             UpdateRenderFunction();
         }
 

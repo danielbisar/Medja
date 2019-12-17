@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Medja.Controls;
 using Medja.OpenTk.Input;
 using Medja.OpenTk.Rendering;

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Medja.Primitives;
+using Medja.Properties.Binding;
 
 namespace Medja.Controls
 {
@@ -17,12 +18,11 @@ namespace Medja.Controls
             var position = control.Position;
             var orientationPosition = orientationControl.Position;
             
-            var xBinding = position.PropertyX.BindTo(orientationPosition.PropertyX);
-            
-            var multiBinding = new MultiSourcesToTargetBinding<MRect, float>(position, position.PropertyY, 
-                pos => orientationPosition.Y + orientationPosition.Height);
-            multiBinding.AddSource(orientationPosition.PropertyY);
-            multiBinding.AddSource(orientationPosition.PropertyHeight);
+            var xBinding = position.PropertyX.UpdateFrom(orientationPosition.PropertyX);
+            var multiBinding = position.PropertyY.UpdateFrom(
+                orientationPosition.PropertyY, 
+                orientationPosition.PropertyHeight,
+                (y, height) => y + height);
             
             yield return xBinding;
             yield return multiBinding;

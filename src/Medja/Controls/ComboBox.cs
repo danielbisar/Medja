@@ -5,6 +5,7 @@ using System.Linq;
 using Medja.Input;
 using Medja.Primitives;
 using Medja.Properties;
+using Medja.Properties.Binding;
 using Medja.Theming;
 
 namespace Medja.Controls
@@ -116,7 +117,7 @@ namespace Medja.Controls
 
             PropertyIsFocused.PropertyChanged += OnIsFocusedChanged;
             PropertyMaxDropDownHeight.AffectsLayout(this);
-            _displayTextBinding = PropertyDisplayText.BindTo(PropertySelectedItem, ApplyGetDisplayTextFromItem);
+            _displayTextBinding = PropertyDisplayText.UpdateFrom(PropertySelectedItem, ApplyGetDisplayTextFromItem);
             DisplayText = "";
             
             MaxDropDownHeight = 400;
@@ -128,7 +129,7 @@ namespace Medja.Controls
             _itemsPanel.Children.CollectionChanged += OnItemsPanelCollectionChanged;
             
             _popup = CreatePopup(controlFactory);
-            _popup.PropertyBackground.BindTo(PropertyBackground);
+            _popup.PropertyBackground.UpdateFrom(PropertyBackground);
         }
 
         private void OnSelectedItemChanged(object sender, PropertyChangedEventArgs e)

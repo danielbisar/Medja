@@ -1,6 +1,7 @@
 using System;
 using Medja.Controls;
 using Medja.Properties;
+using Medja.Properties.Binding;
 using Medja.Utils.Collections.Generic;
 
 namespace Medja
@@ -91,11 +92,16 @@ namespace Medja
                 return;
             
             var value = (TEnum) e.NewValue;
+            UpdateComboBox(value);
+        }
+
+        private void UpdateComboBox(TEnum value)
+        {
             var text = _map.GetKey(value);
-            
+
             _comboBox.SelectItem(text);
         }
-        
+
         /// <summary>
         /// Create the <see cref="ComboBox"> items. Call <see cref="Translate"/>
         /// first if you want to localize the items.
@@ -153,6 +159,12 @@ namespace Medja
         public string GetString(TEnum value)
         {
             return _map.GetKey(value);
+        }
+
+        public void Update()
+        {
+            var value = _property.Get();
+            UpdateComboBox(value);
         }
 
         /// <summary>

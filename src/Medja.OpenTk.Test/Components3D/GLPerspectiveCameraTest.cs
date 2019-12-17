@@ -1,4 +1,3 @@
-using Xunit;
 using Xunit.Abstractions;
 
 namespace Medja.OpenTk.Test.Components3D

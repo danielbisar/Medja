@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Medja.Properties;
+using Medja.Properties.Binding;
 using Medja.Theming;
 
 namespace Medja.Controls
@@ -82,9 +83,9 @@ namespace Medja.Controls
 			PropertySelectedItem = new Property<TItem>();
 			
 			_itemsManager = new ItemsManager<TItem>(controlFactory);
-			_itemsManager.PropertyIsSelectable.BindTo(PropertyIsSelectable);
-			_itemsManager.PropertySelectedItem.BindTo(PropertySelectedItem);
-			PropertySelectedItem.BindTo(_itemsManager.PropertySelectedItem);
+			_itemsManager.PropertyIsSelectable.UpdateFrom(PropertyIsSelectable);
+			_itemsManager.PropertySelectedItem.UpdateFrom(PropertySelectedItem);
+			PropertySelectedItem.UpdateFrom(_itemsManager.PropertySelectedItem);
 			
 			_controlFactory = controlFactory ?? throw new ArgumentNullException(nameof(controlFactory));
 			_itemsStackPanel = _controlFactory.Create<VerticalStackPanel>();

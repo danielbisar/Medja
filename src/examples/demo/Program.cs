@@ -3,6 +3,7 @@ using Medja.Controls;
 using Medja.OpenTk;
 using Medja.Primitives;
 using Medja.OpenTk.Themes.DarkBlue;
+using Medja.Properties.Binding;
 using Medja.Theming;
 using OpenTK.Graphics.OpenGL4;
 
@@ -113,8 +114,7 @@ namespace Medja.Demo
             sliderPanel.Add(Dock.Fill, slider);
             sliderPanel.Position.Height = sliderPanel.Children[0].Position.Height;
 
-            
-            progressBar.PropertyValue.BindTo(slider.PropertyValue);
+            progressBar.PropertyValue.UpdateFrom(slider.PropertyValue);
 
             var textBox = controlFactory.Create<TextBox>();
             textBox.Text = "TextBox";

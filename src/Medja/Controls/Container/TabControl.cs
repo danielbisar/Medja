@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Medja.Input;
 using Medja.Primitives;
 using Medja.Properties;
+using Medja.Properties.Binding;
 using Medja.Theming;
 
 namespace Medja.Controls
@@ -145,9 +146,9 @@ namespace Medja.Controls
 		{
 			var stackPanel = _controlFactory.Create<HorizontalStackPanel>();
 			_tabHeaderPanel = stackPanel;
-			_headerHeightBinding = _tabHeaderPanel.Position.PropertyHeight.BindTo(PropertyTabHeaderHeight);
-			_headerWidthBinding = stackPanel.PropertyChildrenWidth.BindTo(PropertyTabHeaderWidth, f => f);
-			_headerSpacingBinding = stackPanel.PropertySpaceBetweenChildren.BindTo(PropertyTabHeaderSpacing);
+			_headerHeightBinding = _tabHeaderPanel.Position.PropertyHeight.UpdateFrom(PropertyTabHeaderHeight);
+			_headerWidthBinding = stackPanel.PropertyChildrenWidth.UpdateFrom(PropertyTabHeaderWidth, f => f);
+			_headerSpacingBinding = stackPanel.PropertySpaceBetweenChildren.UpdateFrom(PropertyTabHeaderSpacing);
 			
 			var dockPanel = _controlFactory.Create<DockPanel>();
 			dockPanel.Add(Dock.Top, _tabHeaderPanel);
@@ -160,9 +161,9 @@ namespace Medja.Controls
 		{
 			var stackPanel = _controlFactory.Create<VerticalStackPanel>();
 			_tabHeaderPanel = stackPanel;
-			_headerWidthBinding = _tabHeaderPanel.Position.PropertyWidth.BindTo(PropertyTabHeaderWidth);
-			_headerHeightBinding = stackPanel.PropertyChildrenHeight.BindTo(PropertyTabHeaderHeight, f => f);
-			_headerSpacingBinding = stackPanel.PropertySpaceBetweenChildren.BindTo(PropertyTabHeaderSpacing);
+			_headerWidthBinding = _tabHeaderPanel.Position.PropertyWidth.UpdateFrom(PropertyTabHeaderWidth);
+			_headerHeightBinding = stackPanel.PropertyChildrenHeight.UpdateFrom(PropertyTabHeaderHeight, f => f);
+			_headerSpacingBinding = stackPanel.PropertySpaceBetweenChildren.UpdateFrom(PropertyTabHeaderSpacing);
 			
 			var dockPanel = _controlFactory.Create<DockPanel>();
 			dockPanel.Add(Dock.Left, _tabHeaderPanel);

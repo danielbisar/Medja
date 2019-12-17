@@ -1,5 +1,3 @@
-using Medja.OpenTk.Utils;
-using SkiaSharp;
 using Xunit;
 
 namespace Medja.OpenTk.Test.Utils

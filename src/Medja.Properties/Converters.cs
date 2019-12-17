@@ -1,4 +1,4 @@
-namespace Medja
+namespace Medja.Properties
 {
     /// <summary>
     /// Provides some default converters for bindings.

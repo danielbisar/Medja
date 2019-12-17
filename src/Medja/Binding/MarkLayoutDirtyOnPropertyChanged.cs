@@ -1,5 +1,6 @@
 using Medja.Controls;
 using Medja.Properties;
+using Medja.Properties.Binding;
 
 namespace Medja
 {
@@ -28,6 +29,10 @@ namespace Medja
         private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             _control.IsLayoutUpdated = false;
+        }
+
+        public void Update()
+        {
         }
 
         /// <summary>
