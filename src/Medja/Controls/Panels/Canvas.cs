@@ -21,6 +21,16 @@ namespace Medja.Controls
                    && attachedProperties.ContainsKey(AttachedYId);
         }
 
+        public static void SetX(Control child, float value)
+        {
+            child.SetAttachedProperty(AttachedXId, value);
+        }
+
+        public static void SetY(Control child, float value)
+        {
+            child.SetAttachedProperty(AttachedYId, value);
+        }
+
         public override void Arrange(Size availableSize)
         {
             var x = Position.X;
