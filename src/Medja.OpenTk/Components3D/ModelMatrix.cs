@@ -35,36 +35,38 @@ namespace Medja.OpenTk.Components3D
         private Matrix4 _translationMatrix;
 
         public Matrix4 _matrix;
+        public Property<Matrix4> PropertyMatrix;
         /// <summary>
         /// Gets the model matrix (contains position, rotation, ... of the model)
         /// </summary>
         public Matrix4 Matrix
         {
-            get { return _matrix; }
+            get => PropertyMatrix.Get();
+            protected set => PropertyMatrix.Set(value);
         }
 
         [NonSerialized]
         public readonly Property<Vector3> PropertyPosition;
         public Vector3 Position
         {
-            get { return PropertyPosition.Get(); }
-            set { PropertyPosition.Set(value); }
+            get => PropertyPosition.Get();
+            set => PropertyPosition.Set(value);
         }
 
         [NonSerialized]
         public readonly Property<Vector3> PropertyScaling;
         public Vector3 Scaling
         {
-            get { return PropertyScaling.Get(); }
-            set { PropertyScaling.Set(value); }
+            get => PropertyScaling.Get();
+            set => PropertyScaling.Set(value);
         }
 
         [NonSerialized]
         public readonly Property<Vector3> PropertyRotation;
         public Vector3 Rotation
         {
-            get { return PropertyRotation.Get(); }
-            set { PropertyRotation.Set(value); }
+            get => PropertyRotation.Get();
+            set => PropertyRotation.Set(value);
         }
 
         [NonSerialized]
@@ -74,12 +76,14 @@ namespace Medja.OpenTk.Components3D
         /// </summary>
         public bool RotateBeforeTranslate
         {
-            get { return PropertyRotateBeforeTranslate.Get(); }
-            set { PropertyRotateBeforeTranslate.Set(value); }
+            get => PropertyRotateBeforeTranslate.Get();
+            set => PropertyRotateBeforeTranslate.Set(value);
         }
 
         public ModelMatrix()
         {
+            PropertyMatrix = new Property<Matrix4>();
+            PropertyMatrix.SetSilent(Matrix4.Identity);
             PropertyPosition = new Property<Vector3>();
             PropertyScaling = new Property<Vector3>();
             PropertyRotation = new Property<Vector3>();
@@ -92,10 +96,16 @@ namespace Medja.OpenTk.Components3D
             _scalingMatrix = Matrix4.Identity;
 
             // property changed handlers
+            PropertyMatrix.PropertyChanged += OnMatrixChanged;
             PropertyPosition.PropertyChanged += OnPositionChanged;
             PropertyScaling.PropertyChanged += OnScalingChanged;
             PropertyRotation.PropertyChanged += OnRotationChanged;
             PropertyRotateBeforeTranslate.PropertyChanged += OnRotateBeforeTranslateChanged;
+        }
+
+        private void OnMatrixChanged(object sender, PropertyChangedEventArgs e)
+        {
+            _matrix = (Matrix4) e.NewValue;
         }
 
         private void OnPositionChanged(object sender, PropertyChangedEventArgs e)
@@ -192,9 +202,9 @@ namespace Medja.OpenTk.Components3D
         private void CalculateMatrix()
         {
             if(RotateBeforeTranslate)
-                _matrix = _scalingMatrix * _rotationMatrix * _translationMatrix;
+                Matrix = _scalingMatrix * _rotationMatrix * _translationMatrix;
             else
-                _matrix = _scalingMatrix * _translationMatrix * _rotationMatrix;
+                Matrix = _scalingMatrix * _translationMatrix * _rotationMatrix;
         }
     }
 }

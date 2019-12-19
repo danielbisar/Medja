@@ -265,33 +265,35 @@ namespace Medja.Demo
                         s.Orientation = Orientation.Vertical;
                         s.MaxValue = 100;
                         s.Value = 15;
-                        s.SetAttachedProperty(Canvas.AttachedXId, 50f);
-                        s.SetAttachedProperty(Canvas.AttachedYId, 50f);
+                        s.AttachedProperties.Set(Canvas.AttachedXId, 50f);
+                        s.AttachedProperties.Set(Canvas.AttachedYId, 50f);
                         s.Position.Width = 50;
                         s.Position.Height = 500;
                         s.PropertyValue.PropertyChanged += (o, e) => Console.WriteLine(e.NewValue);
                     }));
 
-                    canvas.Add(controlFactory.Create<Slider>(s =>
+                    var slider2 = controlFactory.Create<Slider>(s =>
                     {
                         s.Orientation = Orientation.Vertical;
                         s.MaxValue = 100;
                         s.Value = 15;
-                        s.SetAttachedProperty(Canvas.AttachedXId, 120f);
-                        s.SetAttachedProperty(Canvas.AttachedYId, 50f);
+                        s.AttachedProperties.Set(Canvas.AttachedXId, 120f);
+                        s.AttachedProperties.Set(Canvas.AttachedYId, 50f);
                         s.Position.Width = 50;
                         s.Position.Height = 500;
                         s.IsInverted = true;
-                        s.PropertyValue.PropertyChanged += (o, e) => Console.WriteLine(e.NewValue); 
-                    }));
+                        s.PropertyValue.PropertyChanged += (o, e) => Console.WriteLine(e.NewValue);
+                    });
+
+                    canvas.Add(slider2);
 
                     canvas.Add(controlFactory.Create<Slider>(s =>
                     {
                         s.Orientation = Orientation.Horizontal;
                         s.MaxValue = 100;
                         s.Value = 15;
-                        s.SetAttachedProperty(Canvas.AttachedXId, 180f);
-                        s.SetAttachedProperty(Canvas.AttachedYId, 50f);
+                        s.AttachedProperties.Set(Canvas.AttachedXId, 180f);
+                        s.AttachedProperties.Set(Canvas.AttachedYId, 50f);
                         s.Position.Width = 200;
                         s.Position.Height = 50;
                         s.PropertyValue.PropertyChanged += (o, e) => Console.WriteLine(e.NewValue);
@@ -302,12 +304,27 @@ namespace Medja.Demo
                         s.Orientation = Orientation.Horizontal;
                         s.MaxValue = 100;
                         s.Value = 15;
-                        s.SetAttachedProperty(Canvas.AttachedXId, 180f);
-                        s.SetAttachedProperty(Canvas.AttachedYId, 120f);
+                        s.AttachedProperties.Set(Canvas.AttachedXId, 180f);
+                        s.AttachedProperties.Set(Canvas.AttachedYId, 120f);
                         s.Position.Width = 200;
                         s.Position.Height = 50;
                         s.IsInverted = true;
                         s.PropertyValue.PropertyChanged += (o, e) => Console.WriteLine(e.NewValue);
+                    }));
+
+                    canvas.Add(controlFactory.Create<Slider>(s =>
+                    {
+                        s.Orientation = Orientation.Horizontal;
+                        s.MaxValue = 100;
+                        s.Value = 15;
+                        s.AttachedProperties.Set(Canvas.AttachedXId, 180f);
+                        s.AttachedProperties.Set(Canvas.AttachedYId, 180f);
+                        s.Position.Width = 200;
+                        s.Position.Height = 50;
+                        s.PropertyValue.PropertyChanged += (o, e) =>
+                        {
+                            Canvas.SetX(slider2, 120 + (float) e.NewValue);
+                        };
                     }));
                 }
             ));
