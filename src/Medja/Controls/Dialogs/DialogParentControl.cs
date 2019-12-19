@@ -29,11 +29,11 @@ namespace Medja.Controls
 		{
 			PropertyDialogControl = new Property<Dialog>();
 			PropertyDialogControl.PropertyChanged += OnDialogControlChanged;
-			PropertyDialogControl.AffectsLayout(this);
+			PropertyDialogControl.AffectsLayoutOf(this);
 			
 			PropertyIsDialogVisible = new Property<bool>();
 			PropertyIsDialogVisible.PropertyChanged += OnIsDialogVisibleChanged;
-			PropertyIsDialogVisible.AffectsLayout(this);
+			PropertyIsDialogVisible.AffectsLayoutOf(this);
 			
 			DialogPadding = new Thickness(100);
 		}

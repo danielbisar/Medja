@@ -28,4 +28,8 @@
       <PackageReference Include="Obfuscar" Version="2.2.25" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Property" />
+    </ItemGroup>
+
 </Project>

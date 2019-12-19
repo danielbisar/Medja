@@ -91,7 +91,7 @@ namespace Medja.Controls
 			PropertyTabHeaderPosition.PropertyChanged += OnTabHeaderPositionChanged;
 			PropertySelectedTab = new Property<TabItem>();
 			PropertySelectedTab.PropertyChanged += OnSelectedTabChanged;
-			PropertySelectedTab.AffectsLayout(this);
+			PropertySelectedTab.AffectsLayoutOf(this);
 
 			Padding.PropertyBottom.PropertyChanged += OnPaddingChanged;
 			Padding.PropertyTop.PropertyChanged += OnPaddingChanged;

@@ -16,7 +16,7 @@ namespace Medja.Controls
         public ScrollableContainer(IControlFactory controlFactory)
         {
             _scrollBar = controlFactory.Create<VerticalScrollBar>();
-            _scrollBar.PropertyValue.AffectsLayout(this);
+            _scrollBar.PropertyValue.AffectsLayoutOf(this);
             
             ScrollBarWidth = _scrollBar.Position.Width;
             

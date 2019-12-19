@@ -45,6 +45,17 @@ namespace Medja.Properties
         }
 
         /// <summary>
+        /// Uses reflection to get the value of a property.
+        /// </summary>
+        /// <param name="property">The property.</param>
+        /// <returns>The value of the property.</returns>
+        /// <exception cref="InvalidOperationException">If no public Get method could be found.</exception>
+        public static T GetValue<T>(this IProperty property)
+        {
+            return (T) property.GetValue();
+        }
+
+        /// <summary>
         /// Sets the value of a property via reflection.
         /// </summary>
         /// <param name="property">The property.</param>

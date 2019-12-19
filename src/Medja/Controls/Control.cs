@@ -15,7 +15,7 @@ namespace Medja.Controls
         private readonly HashSet<IProperty> _propertiesAffectingRendering;
         private readonly HashSet<IDisposable> _disposables;
         
-        public Dictionary<int, object> AttachedProperties { get; }
+        public AttachedProperties AttachedProperties { get; }
         public InputState InputState { get; }
         
         /// <summary>
@@ -141,7 +141,7 @@ namespace Medja.Controls
             _disposables = new HashSet<IDisposable>();
             _propertiesAffectingRendering = new HashSet<IProperty>();
             
-            AttachedProperties = new Dictionary<int, object>();
+            AttachedProperties = new AttachedProperties();
             InputState = new InputState(this);
             Position = new MRect();
             Position.PropertyHeight.PropertyChanged += OnPositionChanged;
@@ -214,26 +214,6 @@ namespace Medja.Controls
         public virtual void Arrange(Size availableSize)
         {
             Arranged?.Invoke(this, EventArgs.Empty);
-        }
-
-        public void SetAttachedProperty(int id, object value)
-        {
-            AttachedProperties[id] = value;
-        }
-
-        public object GetAttachedProperty(int id)
-        {
-            return AttachedProperties.TryGetValue(id, out var result) ? result : null;
-        }
-
-        public T GetAttachedProperty<T>(int id)
-        {
-            return (T)GetAttachedProperty(id);
-        }
-
-        public void RemoveAttachedProperty(int id)
-        {
-            AttachedProperties.Remove(id);
         }
 
         public virtual IEnumerable<Control> GetChildren()
