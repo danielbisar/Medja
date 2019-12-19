@@ -8,10 +8,10 @@ namespace Medja
     /// Represents a binding that sets <see cref="Control.IsLayoutUpdated"/> to false on change of the a property.
     /// </summary>
     /// <typeparam name="T">The properties type.</typeparam>
-    public class MarkLayoutDirtyOnPropertyChanged<T> : IBinding
+    public class MarkLayoutDirtyOnPropertyChanged : IBinding
     {
         private readonly Control _control;
-        private readonly Property<T> _property;
+        private readonly IProperty _property;
         private bool _isDisposed;
 
         /// <summary>
@@ -19,7 +19,7 @@ namespace Medja
         /// </summary>
         /// <param name="control">The control to mark for layout updates.</param>
         /// <param name="property">The property that should be watched for changes.</param>
-        public MarkLayoutDirtyOnPropertyChanged(Control control, Property<T> property)
+        public MarkLayoutDirtyOnPropertyChanged(Control control, IProperty property)
         {
             _control = control;
             _property = property;

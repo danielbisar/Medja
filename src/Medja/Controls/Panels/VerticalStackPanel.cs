@@ -22,11 +22,11 @@ namespace Medja.Controls
         public VerticalStackPanel()
         {
             PropertySpaceBetweenChildren = new Property<float>();
-            PropertySpaceBetweenChildren.AffectsLayout(this);
+            PropertySpaceBetweenChildren.AffectsLayoutOf(this);
             PropertySpaceBetweenChildren.SetSilent(10);
             
             PropertyChildrenHeight = new Property<float?>();
-            PropertyChildrenHeight.AffectsLayout(this);
+            PropertyChildrenHeight.AffectsLayoutOf(this);
         }
 
         public override void Arrange(Size availableSize)

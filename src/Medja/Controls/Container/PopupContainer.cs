@@ -25,7 +25,7 @@ namespace Medja.Controls
         public PopupContainer()
         {
             PropertyPopup = new Property<Popup>();
-            PropertyPopup.AffectsLayout(this);
+            PropertyPopup.AffectsLayoutOf(this);
             PropertyPopup.PropertyChanged += OnPopupChanged;
         }
 

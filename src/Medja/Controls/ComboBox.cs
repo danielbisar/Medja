@@ -116,7 +116,7 @@ namespace Medja.Controls
             PropertyTitle = new Property<string>();
 
             PropertyIsFocused.PropertyChanged += OnIsFocusedChanged;
-            PropertyMaxDropDownHeight.AffectsLayout(this);
+            PropertyMaxDropDownHeight.AffectsLayoutOf(this);
             _displayTextBinding = PropertyDisplayText.UpdateFrom(PropertySelectedItem, ApplyGetDisplayTextFromItem);
             DisplayText = "";
             

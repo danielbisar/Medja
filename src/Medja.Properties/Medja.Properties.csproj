@@ -18,4 +18,8 @@
       <DocumentationFile>bin\Release\Medja.Properties.xml</DocumentationFile>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Medja.Utils\Medja.Utils.csproj" />
+    </ItemGroup>
+
 </Project>

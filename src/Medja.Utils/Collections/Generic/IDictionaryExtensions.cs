@@ -17,12 +17,12 @@ namespace Medja.Utils.Collections.Generic
 		/// <typeparam name="TValue">The value type parameter.</typeparam>
 		public static TValue GetOrAdd<TKey, TValue>(this IDictionary<TKey, TValue> dictionary,
 		                                            TKey key,
-		                                            Func<TKey, TValue> factory)
+		                                            Func<TKey, TValue> factory = null)
 		{
 			if (dictionary.TryGetValue(key, out var value))
 				return value;
 
-			value = factory(key);
+            value = factory != null ? factory(key) : default;
 			dictionary.Add(key, value);
 
 			return value;

@@ -22,11 +22,11 @@ namespace Medja.Controls
         public HorizontalStackPanel()
         {
             PropertySpaceBetweenChildren = new Property<float>();
-            PropertySpaceBetweenChildren.AffectsLayout(this);
+            PropertySpaceBetweenChildren.AffectsLayoutOf(this);
             PropertySpaceBetweenChildren.SetSilent(10);
             
             PropertyChildrenWidth = new Property<float?>();
-            PropertyChildrenWidth.AffectsLayout(this);
+            PropertyChildrenWidth.AffectsLayoutOf(this);
         }
 
         protected override void OnItemAdded(Control child)

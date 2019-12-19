@@ -41,7 +41,7 @@ namespace Medja.Controls
         {
             PropertyContent = new Property<Control>();
             PropertyContent.PropertyChanged += OnContentChanged;
-            PropertyContent.AffectsLayout(this);
+            PropertyContent.AffectsLayoutOf(this);
             
             PropertyAutoSetContentAlignment = new Property<bool>();
             PropertyAutoSetContentAlignment.SetSilent(true);
