@@ -41,17 +41,17 @@ namespace Medja.OpenTk.Utils
         }
 
         /// <summary>
-        /// Converts a <see cref="Controls.WindowState"/> to <see cref="WindowState"/>.
+        /// Converts a <see cref="Medja.Controls.WindowState"/> to <see cref="WindowState"/>.
         /// </summary>
-        /// <param name="windowState">The <see cref="Controls.WindowState"/>.</param>
+        /// <param name="windowState">The <see cref="Medja.Controls.WindowState"/>.</param>
         /// <returns>The <see cref="WindowState"/>.</returns>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
-        public static WindowState ToOpenTKWindowState(this Controls.WindowState windowState)
+        public static WindowState ToOpenTKWindowState(this Medja.Controls.WindowState windowState)
         {
             return windowState switch
             {
-                Controls.WindowState.Normal => WindowState.Normal,
-                Controls.WindowState.Fullscreen => WindowState.Fullscreen,
+                Medja.Controls.WindowState.Normal => WindowState.Normal,
+                Medja.Controls.WindowState.Fullscreen => WindowState.Fullscreen,
                 _ => throw new ArgumentOutOfRangeException(nameof(windowState))
             };
         }
