@@ -46,11 +46,11 @@ namespace Medja.OpenTk.Components3D
         }
 
         [NonSerialized]
-        public readonly Property<Vector3> PropertyPosition;
-        public Vector3 Position
+        public readonly Property<Vector3> PropertyTranslation;
+        public Vector3 Translation
         {
-            get => PropertyPosition.Get();
-            set => PropertyPosition.Set(value);
+            get => PropertyTranslation.Get();
+            set => PropertyTranslation.Set(value);
         }
 
         [NonSerialized]
@@ -84,7 +84,7 @@ namespace Medja.OpenTk.Components3D
         {
             PropertyMatrix = new Property<Matrix4>();
             PropertyMatrix.SetSilent(Matrix4.Identity);
-            PropertyPosition = new Property<Vector3>();
+            PropertyTranslation = new Property<Vector3>();
             PropertyScaling = new Property<Vector3>();
             PropertyRotation = new Property<Vector3>();
             PropertyRotateBeforeTranslate = new Property<bool>();
@@ -97,7 +97,7 @@ namespace Medja.OpenTk.Components3D
 
             // property changed handlers
             PropertyMatrix.PropertyChanged += OnMatrixChanged;
-            PropertyPosition.PropertyChanged += OnPositionChanged;
+            PropertyTranslation.PropertyChanged += OnTranslationChanged;
             PropertyScaling.PropertyChanged += OnScalingChanged;
             PropertyRotation.PropertyChanged += OnRotationChanged;
             PropertyRotateBeforeTranslate.PropertyChanged += OnRotateBeforeTranslateChanged;
@@ -108,7 +108,7 @@ namespace Medja.OpenTk.Components3D
             _matrix = (Matrix4) e.NewValue;
         }
 
-        private void OnPositionChanged(object sender, PropertyChangedEventArgs e)
+        private void OnTranslationChanged(object sender, PropertyChangedEventArgs e)
         {
             _translationMatrixNeedsUpdate = true;
         }
@@ -170,6 +170,36 @@ namespace Medja.OpenTk.Components3D
             Rotation = new Vector3(Rotation.X, Rotation.Y, angle);
         }
 
+        public void AddTranslationX(float x)
+        {
+            Translation = new Vector3(Translation.X + x, Translation.Y, Translation.Z);
+        }
+
+        public void AddTranslationY(float y)
+        {
+            Translation = new Vector3(Translation.X, Translation.Y + y, Translation.Z);
+        }
+
+        public void AddTranslationZ(float z)
+        {
+            Translation = new Vector3(Translation.X, Translation.Y, Translation.Z + z);
+        }
+
+        public void SetTranslationX(float x)
+        {
+            Translation = new Vector3(x, Translation.Y, Translation.Z);
+        }
+
+        public void SetTranslationY(float y)
+        {
+            Translation = new Vector3(Translation.X, y, Translation.Z);
+        }
+
+        public void SetTranslationZ(float z)
+        {
+            Translation = new Vector3(Translation.X, Translation.Y, z);
+        }
+
         /// <summary>
         /// Updates the model matrix if necessary.
         /// </summary>
@@ -191,7 +221,7 @@ namespace Medja.OpenTk.Components3D
 
                 if (_translationMatrixNeedsUpdate)
                 {
-                    _translationMatrix = Matrix4.CreateTranslation(Position);
+                    _translationMatrix = Matrix4.CreateTranslation(Translation);
                     _translationMatrixNeedsUpdate = false;
                 }
 

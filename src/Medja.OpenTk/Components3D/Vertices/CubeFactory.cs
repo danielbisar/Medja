@@ -32,10 +32,10 @@ namespace Medja.OpenTk.Components3D.Vertices
                 LengthX, LengthY, 0,
                 0, LengthY, 0,
 
-                0, 0, LengthZ,
-                0, LengthY, LengthZ,
-                LengthX, LengthY, LengthZ,
-                LengthX, 0, LengthZ
+                0, 0, -LengthZ,
+                0, LengthY, -LengthZ,
+                LengthX, LengthY, -LengthZ,
+                LengthX, 0, -LengthZ
             });
 
             var vao = new VertexArrayObject();

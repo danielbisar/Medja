@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManualProjectTo2D", "ManualProjectTo2D\ManualProjectTo2D.csproj", "{E4F7902E-6571-459D-B856-87E12585584D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Medja.OpenTk", "..\..\Medja.OpenTk\Medja.OpenTk.csproj", "{FB569780-7328-4273-B494-024764223209}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Medja.Utils", "..\..\Medja.Utils\Medja.Utils.csproj", "{6E7A8355-F26D-409B-BA6B-3AC630621687}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Medja.Properties", "..\..\Medja.Properties\Medja.Properties.csproj", "{9B378714-287E-4C5E-8B28-5F931A1E5DAC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Medja.OpenTk.Themes", "..\..\Medja.OpenTk.Themes\Medja.OpenTk.Themes.csproj", "{8467406C-A604-4225-B98F-568CDD5D881A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Medja", "..\..\Medja\Medja.csproj", "{50A91F4E-6CEB-48AD-970E-75E4C79180F4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E4F7902E-6571-459D-B856-87E12585584D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4F7902E-6571-459D-B856-87E12585584D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4F7902E-6571-459D-B856-87E12585584D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4F7902E-6571-459D-B856-87E12585584D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB569780-7328-4273-B494-024764223209}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB569780-7328-4273-B494-024764223209}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB569780-7328-4273-B494-024764223209}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB569780-7328-4273-B494-024764223209}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E7A8355-F26D-409B-BA6B-3AC630621687}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E7A8355-F26D-409B-BA6B-3AC630621687}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E7A8355-F26D-409B-BA6B-3AC630621687}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E7A8355-F26D-409B-BA6B-3AC630621687}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B378714-287E-4C5E-8B28-5F931A1E5DAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B378714-287E-4C5E-8B28-5F931A1E5DAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B378714-287E-4C5E-8B28-5F931A1E5DAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B378714-287E-4C5E-8B28-5F931A1E5DAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8467406C-A604-4225-B98F-568CDD5D881A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8467406C-A604-4225-B98F-568CDD5D881A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8467406C-A604-4225-B98F-568CDD5D881A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8467406C-A604-4225-B98F-568CDD5D881A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50A91F4E-6CEB-48AD-970E-75E4C79180F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50A91F4E-6CEB-48AD-970E-75E4C79180F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50A91F4E-6CEB-48AD-970E-75E4C79180F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50A91F4E-6CEB-48AD-970E-75E4C79180F4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
