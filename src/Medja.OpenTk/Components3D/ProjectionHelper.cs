@@ -1,3 +1,4 @@
+using System;
 using Medja.Primitives;
 using OpenTK;
 
@@ -33,10 +34,18 @@ namespace Medja.OpenTk.Components3D
         /// <returns>The 2D position relative to it's container.</returns>
         public Point ProjectTo2D(Matrix4 viewProjection, Vector4 vector)
         {
+            // the modelmatrix applies first the scaling, than the movement and rotation (can be in any order)
+            // for some reason we need to divide the components of the translation vector to get the correct
+            // position
+            var unscaledVector = new Vector4(
+                vector.X / _modelMatrix.Scaling.X,
+                vector.Y / _modelMatrix.Scaling.Y,
+                vector.Z / _modelMatrix.Scaling.Z,
+                vector.W);
+            
             // https://learnopengl.com/Getting-started/Coordinate-Systems
             // note OpenTK matrix multiplication order: left to right
-            
-            var clipCoordinates = vector * _modelMatrix.Matrix * viewProjection;
+            var clipCoordinates = unscaledVector * _modelMatrix.Matrix * viewProjection;
 
             // so called perspective divide 
             // http://www.songho.ca/opengl/gl_transform.html
@@ -45,25 +54,21 @@ namespace Medja.OpenTk.Components3D
                 clipCoordinates.Y / clipCoordinates.W,
                 clipCoordinates.Z / clipCoordinates.W);
             
-            // OpenGL glViewport: xw = x in window coordinates, xnd = x in normalized device coordinates,
-            // width = device coordinates, x of glViewport
-            // xw = (xnd + 1) ⁢ width/2 + x
-            // yw = (ynd + 1) ⁢ height/2 + y
-
             var width = _mainWindowPos.Width;
             var height = _mainWindowPos.Height;
 
-            // x = 0 and y = 0, so left out
-            // for whatever reason this is the correct formula, not the one mentioned on the opengl page...
-            var xWindow = width / 2 + normalizedDeviceCoordinates.X * width / 4;
-            var yWindow = height / 2 + normalizedDeviceCoordinates.Y * -height / 4;
-            // var xWindow = (normalizedDeviceCoordinates.X + 1) * width / 2;
-            // var yWindow = (normalizedDeviceCoordinates.Y + 1) * height / 2;
-
-            // Console.WriteLine($"clip: {clipCoordinates}, ndc: {normalizedDeviceCoordinates}, x: {xWindow:F02}, y: {yWindow:F02}");
-
+            // http://www.songho.ca/opengl/gl_transform.html -> window coordinates
+            // for an unknown reason we need to use 1/4th of the width instead of half for
+            // the first factor; -height because OpenGL <=> SkiaSharps Y axis are inverted 
+            // (OpenGL Y = 0 => bottom, Skia Y = 0 => top)
+            // the (0 + ...) is a placeholder for x and y, if you would specify a viewport not starting at 0
+            // currently all controls get a viewport starting at (0, 0)
+            var xWindow = width * 0.25f * normalizedDeviceCoordinates.X + (0 + width * 0.5f);
+            var yWindow = -height * 0.25f * normalizedDeviceCoordinates.Y + (0 + height * 0.5f);
+           
             var result = new Point(xWindow - _containerPos.X, yWindow - _containerPos.Y);
 
+            // Console.WriteLine($"clip: {clipCoordinates}, ndc: {normalizedDeviceCoordinates}, x: {xWindow:F02}, y: {yWindow:F02}");
             // Console.WriteLine($"point: {result}");
 
             return result;
