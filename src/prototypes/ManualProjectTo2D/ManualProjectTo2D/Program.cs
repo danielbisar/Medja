@@ -8,6 +8,7 @@ using Medja.OpenTk.Controls;
 using Medja.OpenTk.Themes.DarkBlue;
 using Medja.Primitives;
 using Medja.Properties;
+using Medja.Utils;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
 
@@ -96,20 +97,23 @@ namespace ManualProjectTo2D
         private void OnLoad(object sender, EventArgs e)
         {
             _scene = new GLScene();
-            // _scene.Camera = new GLPerspectiveCamera()
-            // {
-            //     Position = new Vector3(0, 5, 5)
-            // };
-            _scene.Camera = new GLOrthographicCamera
+            /*_scene.Camera = new GLOrthographicCamera
             {
-                Width = 10,
+                Width = 5,
                 Height = 10,
                 Position = new Vector3(0, 0, 5),
                 ZFar = 100
+            };*/
+            _scene.Camera = new GLPerspectiveCamera
+            {
+                Position = new Vector3(0, 0, 5),
+                ZFar = 100,
+                FieldOfViewAngle = (float)MedjaMath.Radians(90)
             };
 
             _cube = new GLCuboid();
             _cube.ModelMatrix.PropertyMatrix.PropertyChanged += OnModelMatrixChanged;
+            _cube.ModelMatrix.Scaling = new Vector3(0.5f, 1, 1);
 
             _scene.Add(_cube);
 
@@ -129,8 +133,6 @@ namespace ManualProjectTo2D
         {
             GL.ClearColor(0, 0, 0, 1);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-
-            //_cube.ModelMatrix.AddRotationY((float) MedjaMath.Radians(1));
 
             _scene.Render();
         }
