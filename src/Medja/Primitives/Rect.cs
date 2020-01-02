@@ -76,9 +76,53 @@
             Height -= value;
         }
 
+        /// <summary>
+        /// Sets all values based on the given rect.
+        /// </summary>
+        /// <param name="rect">The rect with the "source" values.</param>
+        public void SetFrom(Rect rect)
+        {
+            X = rect.X;
+            Y = rect.Y;
+            Width = rect.Width;
+            Height = rect.Height;
+        }
+
         public override string ToString()
         {
             return "X = " + X + ", Y = " + Y + ", Width = " + Width + ", Height = " + Height;
+        }
+
+        protected bool Equals(Rect other)
+        {
+            return X.Equals(other.X) && Y.Equals(other.Y) && Width.Equals(other.Width) && Height.Equals(other.Height);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return ReferenceEquals(this, obj) || obj is Rect other && Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hashCode = X.GetHashCode();
+                hashCode = (hashCode * 397) ^ Y.GetHashCode();
+                hashCode = (hashCode * 397) ^ Width.GetHashCode();
+                hashCode = (hashCode * 397) ^ Height.GetHashCode();
+                return hashCode;
+            }
+        }
+
+        public static bool operator ==(Rect left, Rect right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(Rect left, Rect right)
+        {
+            return !Equals(left, right);
         }
     }
 }
