@@ -35,7 +35,9 @@ namespace Medja.OpenTk.Components3D
         private Matrix4 _translationMatrix;
 
         public Matrix4 _matrix;
-        public Property<Matrix4> PropertyMatrix;
+
+        [NonSerialized]
+        public readonly Property<Matrix4> PropertyMatrix;
         /// <summary>
         /// Gets the model matrix (contains position, rotation, ... of the model)
         /// </summary>
@@ -129,6 +131,47 @@ namespace Medja.OpenTk.Components3D
         }
 
         /// <summary>
+        /// Updates the model matrix if necessary.
+        /// </summary>
+        public void UpdateModelMatrix()
+        {
+            if (!_rotationMatrixNeedsUpdate 
+                && !_translationMatrixNeedsUpdate 
+                && !_scalingMatrixNeedsUpdate) 
+                return;
+            
+            if (_rotationMatrixNeedsUpdate)
+            {
+                _rotationMatrix = CreateRotation(Rotation);
+                _rotationMatrixNeedsUpdate = false;
+            }
+
+            if (_scalingMatrixNeedsUpdate)
+            {
+                _scalingMatrix = Matrix4.CreateScale(Scaling);
+                _scalingMatrixNeedsUpdate = false;
+            }
+
+            if (_translationMatrixNeedsUpdate)
+            {
+                _translationMatrix = Matrix4.CreateTranslation(Translation);
+                _translationMatrixNeedsUpdate = false;
+            }
+
+            CalculateMatrix();
+        }
+
+        private void CalculateMatrix()
+        {
+            if(RotateBeforeTranslate)
+                Matrix = _scalingMatrix * _rotationMatrix * _translationMatrix;
+            else
+                Matrix = _scalingMatrix * _translationMatrix * _rotationMatrix;
+        }
+        
+        // MOVEMENT HELPER METHODS
+        
+        /// <summary>
         /// Adds to the current rotation rotation around X axis by <see cref="angle"/> radians.
         /// </summary>
         /// <param name="angle">The angle in radians.</param>
@@ -198,43 +241,6 @@ namespace Medja.OpenTk.Components3D
         public void SetTranslationZ(float z)
         {
             Translation = new Vector3(Translation.X, Translation.Y, z);
-        }
-
-        /// <summary>
-        /// Updates the model matrix if necessary.
-        /// </summary>
-        public void UpdateModelMatrix()
-        {
-            if (_rotationMatrixNeedsUpdate || _translationMatrixNeedsUpdate || _scalingMatrixNeedsUpdate)
-            {
-                if (_rotationMatrixNeedsUpdate)
-                {
-                    _rotationMatrix = CreateRotation(Rotation);
-                    _rotationMatrixNeedsUpdate = false;
-                }
-
-                if (_scalingMatrixNeedsUpdate)
-                {
-                    _scalingMatrix = Matrix4.CreateScale(Scaling);
-                    _scalingMatrixNeedsUpdate = false;
-                }
-
-                if (_translationMatrixNeedsUpdate)
-                {
-                    _translationMatrix = Matrix4.CreateTranslation(Translation);
-                    _translationMatrixNeedsUpdate = false;
-                }
-
-                CalculateMatrix();
-            }
-        }
-
-        private void CalculateMatrix()
-        {
-            if(RotateBeforeTranslate)
-                Matrix = _scalingMatrix * _rotationMatrix * _translationMatrix;
-            else
-                Matrix = _scalingMatrix * _translationMatrix * _rotationMatrix;
         }
     }
 }
