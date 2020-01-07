@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>net472</TargetFramework>
-        <LangVersion>8</LangVersion>
+        <LangVersion>default</LangVersion>
         <Authors>Daniel Bişar</Authors>
         <Company>SprintWORX GmbH</Company>
         <Copyright>Copyright © 2018-2019 SprintWORX GmbH</Copyright>

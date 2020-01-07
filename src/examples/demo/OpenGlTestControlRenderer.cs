@@ -35,11 +35,11 @@ namespace Medja.Demo
             
             _cube = new GLCuboid();
             _cube.SetColor(new Color(0.5f, 0.5f, 1, 0.25f));
-            _cube.ModelMatrix.Position = new Vector3(1,0,0);
+            _cube.ModelMatrix.Translation = new Vector3(1,0,0);
 
             _cube2 = new GLCuboid();
             _cube2.SetColor(new Color(1.0f, 0.5f, 0.5f, 0.5f));
-            _cube2.ModelMatrix.Position = new Vector3(-2, 0, 0);
+            _cube2.ModelMatrix.Translation = new Vector3(-2, 0, 0);
 
             _scene.Add(_cube);
             _scene.Add(_cube2);
