@@ -29,6 +29,7 @@ namespace ManualProjectTo2D
         private Control _control2D;
         private Canvas _canvas;
         private ProjectionHelper _projectionHelper;
+        private GLOrthographicCamera _camera;
 
         public Program()
         {
@@ -91,29 +92,33 @@ namespace ManualProjectTo2D
                 _cube.ModelMatrix.AddTranslationX(-0.05f);
             else if (e.Key == Keys.Right)
                 _cube.ModelMatrix.AddTranslationX(0.05f);
+            else if (e.KeyChar == '+')
+            {
+                _camera.Height = _camera.Height - 1;
+                _camera.Width = _camera.Height;
+            }
+            else if (e.KeyChar == '-')
+            {
+                _camera.Height = _camera.Height + 1;
+                _camera.Width = _camera.Height;
+            }
         }
 
         
         private void OnLoad(object sender, EventArgs e)
         {
             _scene = new GLScene();
-            /*_scene.Camera = new GLOrthographicCamera
+            _scene.Camera = _camera = new GLOrthographicCamera
             {
-                Width = 5,
+                Width = 10,
                 Height = 10,
                 Position = new Vector3(0, 0, 5),
                 ZFar = 100
-            };*/
-            _scene.Camera = new GLPerspectiveCamera
-            {
-                Position = new Vector3(0, 0, 5),
-                ZFar = 100,
-                FieldOfViewAngle = (float)MedjaMath.Radians(90)
             };
 
             _cube = new GLCuboid();
             _cube.ModelMatrix.PropertyMatrix.PropertyChanged += OnModelMatrixChanged;
-            _cube.ModelMatrix.Scaling = new Vector3(0.5f, 1, 1);
+            _cube.ModelMatrix.Scaling = new Vector3(1, 1, 1);
 
             _scene.Add(_cube);
 
@@ -123,7 +128,10 @@ namespace ManualProjectTo2D
 
         private void OnModelMatrixChanged(object sender, PropertyChangedEventArgs e)
         {
-            var point = _projectionHelper.ProjectTo2D(_scene.Camera.ViewProjectionMatrix, new Vector4(_cube.ModelMatrix.Translation, 1));
+            var translation = new Vector4(_cube.ModelMatrix.Translation, 1);
+            translation += new Vector4(1, 2, 0, 0);
+            
+            var point = _projectionHelper.ProjectTo2D(_scene.Camera.ViewProjectionMatrix, translation);
             
             Canvas.SetX(_control2D, point.X);
             Canvas.SetY(_control2D, point.Y);

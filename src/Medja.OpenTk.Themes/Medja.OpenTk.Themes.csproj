@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
-    <LangVersion>8</LangVersion>
+    <LangVersion>default</LangVersion>
     <PackageVersion>0.9.1.0</PackageVersion>
     <Authors>Daniel Bişar</Authors>
     <Description>Cross platform UI library.</Description>
