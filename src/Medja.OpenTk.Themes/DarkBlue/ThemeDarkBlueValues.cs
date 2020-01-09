@@ -6,7 +6,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
     /// <summary>
     /// Values used by this theme.
     /// </summary>
-    public static class DarkBlueThemeValues
+    public static class ThemeDarkBlueValues
     {
         public static Color WindowBackground = Colors.LightGray;
         public static Color ControlBackground = Colors.Gray;

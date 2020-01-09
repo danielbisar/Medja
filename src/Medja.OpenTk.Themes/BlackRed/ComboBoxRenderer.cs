@@ -28,7 +28,7 @@ namespace Medja.OpenTk.Themes.BlackRed
 
             _buttonPaint = new SKPaint();
             _buttonPaint.IsAntialias = true;
-            _buttonPaint.Color = BlackRedThemeValues.SecondaryColor.ToSKColor();
+            _buttonPaint.Color = ThemeBlackRedValues.SecondaryColor.ToSKColor();
             //_buttonPaint.ImageFilter = _backgroundPaint.ImageFilter;
 
             _dropDownArrowPaint = new SKPaint();
@@ -38,7 +38,7 @@ namespace Medja.OpenTk.Themes.BlackRed
             
             _titlePaint = new SKPaint();
             _titlePaint.IsAntialias = true;
-            _titlePaint.Color = BlackRedThemeValues.PrimaryTextColor.ToSKColor();
+            _titlePaint.Color = ThemeBlackRedValues.PrimaryTextColor.ToSKColor();
             _titlePaint.Typeface = SKTypeface.FromFamilyName("Monospace", SKFontStyleWeight.Normal, SKFontStyleWidth.Normal, SKFontStyleSlant.Italic);
             _titlePaint.TextSize = 16;
             _lineHeight = _titlePaint.TextSize * 1.3f;

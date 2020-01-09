@@ -5,7 +5,7 @@ using Medja.Theming;
 
 namespace Medja.OpenTk.Themes.DarkBlue
 {
-    public class DarkBlueTheme : ControlFactory
+    public class ThemeDarkBlue : ThemeOpenTKBase
     {
         public static void SetButtonBackground(Control control)
         {
@@ -14,12 +14,12 @@ namespace Medja.OpenTk.Themes.DarkBlue
 
         public static Color GetButtonBackground(bool isEnabled)
         {
-            return isEnabled ? DarkBlueThemeValues.PrimaryColor : DarkBlueThemeValues.PrimaryColor.GetDisabled();
+            return isEnabled ? ThemeDarkBlueValues.PrimaryColor : ThemeDarkBlueValues.PrimaryColor.GetDisabled();
         }
 
         public static Color GetCheckBoxBackground(bool isChecked, bool isEnabled)
         {
-            var result = isChecked ? DarkBlueThemeValues.PrimaryColor : DarkBlueThemeValues.ControlBackground;
+            var result = isChecked ? ThemeDarkBlueValues.PrimaryColor : ThemeDarkBlueValues.ControlBackground;
 
             if (!isEnabled)
                 result = result.GetDisabled();
@@ -36,7 +36,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
 
         public static Color GetComboBoxMenuItemBackground(bool isSelected, bool isEnabled)
         {
-            var result = isSelected ? DarkBlueThemeValues.PrimaryColor : DarkBlueThemeValues.ControlBackground;
+            var result = isSelected ? ThemeDarkBlueValues.PrimaryColor : ThemeDarkBlueValues.ControlBackground;
 
             if (!isEnabled)
                 result = result.GetDisabled();
@@ -46,7 +46,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
 
         public static Color GetMenuItemBackground(bool isSelected, bool isEnabled)
         {
-            var result = isSelected ? DarkBlueThemeValues.PrimaryColor : null;
+            var result = isSelected ? ThemeDarkBlueValues.PrimaryColor : null;
 
             if (result != null && !isEnabled)
                 result = result.GetDisabled();
@@ -57,41 +57,41 @@ namespace Medja.OpenTk.Themes.DarkBlue
         public static Color GetPopupBackground(bool isEnabled)
         {
             return isEnabled
-                ? DarkBlueThemeValues.ControlBackground
-                : DarkBlueThemeValues.ControlBackground.GetDisabled();
+                ? ThemeDarkBlueValues.ControlBackground
+                : ThemeDarkBlueValues.ControlBackground.GetDisabled();
         }
 
         public static Color GetProgressBarBackground(bool isEnabled)
         {
             return isEnabled
-                ? DarkBlueThemeValues.ControlBackground
-                : DarkBlueThemeValues.ControlBackground.GetDisabled();
+                ? ThemeDarkBlueValues.ControlBackground
+                : ThemeDarkBlueValues.ControlBackground.GetDisabled();
         }
 
         public static Color GetProgressBarProgressColor(bool isEnabled)
         {
             return isEnabled
-                ? DarkBlueThemeValues.PrimaryColor
-                : DarkBlueThemeValues.PrimaryColor.GetDisabled();
+                ? ThemeDarkBlueValues.PrimaryColor
+                : ThemeDarkBlueValues.PrimaryColor.GetDisabled();
         }
 
         public static Color GetSliderBackground(bool isEnabled)
         {
             return isEnabled
-                ? DarkBlueThemeValues.ControlBackground
-                : DarkBlueThemeValues.ControlBackground.GetDisabled();
+                ? ThemeDarkBlueValues.ControlBackground
+                : ThemeDarkBlueValues.ControlBackground.GetDisabled();
         }
 
         public static Color GetSliderThumbColor(bool isEnabled)
         {
             return isEnabled
-                ? DarkBlueThemeValues.PrimaryTextColor
-                : DarkBlueThemeValues.PrimaryTextColor.GetDisabled();
+                ? ThemeDarkBlueValues.PrimaryTextColor
+                : ThemeDarkBlueValues.PrimaryTextColor.GetDisabled();
         }
 
         public static Color GetTabItemBackground(bool isSelected, bool isEnabled)
         {
-            var result = isSelected ? DarkBlueThemeValues.PrimaryColor : DarkBlueThemeValues.ControlBackground;
+            var result = isSelected ? ThemeDarkBlueValues.PrimaryColor : ThemeDarkBlueValues.ControlBackground;
 
             if (!isEnabled)
                 result = result.GetDisabled();
@@ -107,25 +107,25 @@ namespace Medja.OpenTk.Themes.DarkBlue
         public static Color GetTextBoxBackground(bool isEnabled)
         {
             return isEnabled
-                ? DarkBlueThemeValues.ControlBorder
-                : DarkBlueThemeValues.ControlBackground.GetDisabled();
+                ? ThemeDarkBlueValues.ControlBorder
+                : ThemeDarkBlueValues.ControlBackground.GetDisabled();
         }
 
         public static Color GetTextEditorBackground(bool isEnabled)
         {
             return isEnabled
-                ? DarkBlueThemeValues.ControlBackground
-                : DarkBlueThemeValues.ControlBackground.GetDisabled();
+                ? ThemeDarkBlueValues.ControlBackground
+                : ThemeDarkBlueValues.ControlBackground.GetDisabled();
         }
         
         private readonly MedjaOpenTKWindowSettings _windowSettings;
 
-        public DarkBlueTheme(MedjaOpenTKWindowSettings windowSettings)
+        public ThemeDarkBlue(MedjaOpenTKWindowSettings windowSettings)
         {
             _windowSettings = windowSettings;
             DefaultFont = new Font();
             DefaultFont.Name = "Roboto";
-            DefaultFont.Color = DarkBlueThemeValues.PrimaryTextColor;
+            DefaultFont.Color = ThemeDarkBlueValues.PrimaryTextColor;
         }
         
         protected override Button CreateButton()
@@ -140,7 +140,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
         {
             SetButtonBackground(button);
 
-            button.Font.Color = DarkBlueThemeValues.PrimaryTextColor;
+            button.Font.Color = ThemeDarkBlueValues.PrimaryTextColor;
             button.Position.Height = 40;
             button.TextAlignment = TextAlignment.Center;
             button.Padding.Top = 9;
@@ -159,7 +159,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
         protected override CheckBox CreateCheckBox()
         {
             var result = base.CreateCheckBox();
-            result.Font.Color = DarkBlueThemeValues.PrimaryTextColor;
+            result.Font.Color = ThemeDarkBlueValues.PrimaryTextColor;
             result.Position.Height = 19;
             result.Padding.Left = 27;
             result.Renderer = new CheckBoxRenderer(result);
@@ -293,7 +293,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
         {
             var result = base.CreateSimpleMessageDialog();
             result.Renderer = new ControlRenderer(result);
-            result.Background = DarkBlueThemeValues.ControlBackground;
+            result.Background = ThemeDarkBlueValues.ControlBackground;
             
             return result;
         }
@@ -301,7 +301,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
         protected override NumericKeypadDialog CreateNumericKeypadDialog()
         {
             var result = base.CreateNumericKeypadDialog();
-            result.Background = DarkBlueThemeValues.ControlBackground;
+            result.Background = ThemeDarkBlueValues.ControlBackground;
             result.Renderer = new ControlRenderer(result);
 
             return result;
@@ -311,7 +311,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
         {
             var result = base.CreateInputBoxDialog();
             result.Renderer = new ControlRenderer(result);
-            result.Background = DarkBlueThemeValues.ControlBackground;
+            result.Background = ThemeDarkBlueValues.ControlBackground;
 
             return result;
         }
@@ -320,7 +320,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
         {
             var result = base.CreateQuestionDialog();
             result.Renderer = new ControlRenderer(result);
-            result.Background = DarkBlueThemeValues.ControlBackground;
+            result.Background = ThemeDarkBlueValues.ControlBackground;
 
             return result;
         }
@@ -353,7 +353,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
             
             result.TabHeaderSpacing = 5;
             result.TabHeaderHeight = 30;
-            result.TabHeaderWidth = 200;
+            result.TabHeaderMaxWidth = 200;
             result.Padding.SetLeftAndRight(5);
             result.Padding.SetTopAndBottom(10);
             
@@ -399,7 +399,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
         protected override TextBox CreateTextBox()
         {
             var result = base.CreateTextBox();
-            result.Font.Color = DarkBlueThemeValues.PrimaryTextColor;
+            result.Font.Color = ThemeDarkBlueValues.PrimaryTextColor;
             result.Position.Height = 37;
             result.Padding.Top = 9;
             result.Padding.SetLeftAndRight(10);
@@ -431,7 +431,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
         protected override Window CreateWindow()
         {
             var result = new OpenTkWindow(_windowSettings);
-            result.Background = DarkBlueThemeValues.WindowBackground;
+            result.Background = ThemeDarkBlueValues.WindowBackground;
             result.Renderer = new WindowRenderer(result);
 
             return result;

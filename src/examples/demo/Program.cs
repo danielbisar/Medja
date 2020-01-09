@@ -43,7 +43,7 @@ namespace Medja.Demo
 //            window.Position.Y = 2;
 //            window.Position.Width = 800;
 //            window.Position.Height = 800;
-            window.Background = DarkBlueThemeValues.WindowBackground;
+            window.Background = ThemeDarkBlueValues.WindowBackground;
             window.Content = CreateContent(window);
 
             _application.MainWindow = window;
@@ -349,6 +349,8 @@ namespace Medja.Demo
                     p.Add(popupContainer);
                     p.ChildrenHeight = showPopupButton.Position.Height;
                 }));
+
+            rootTabControl.AddTab("Transformations", new TransformationsTab(controlFactory));
 
             var dialogContainer = DialogService.CreateContainer(controlFactory, rootTabControl);
             return dialogContainer;

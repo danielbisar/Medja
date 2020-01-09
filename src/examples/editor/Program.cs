@@ -25,7 +25,7 @@ namespace Medja.examples.Editor
         static void Main(string[] args)
         {
             var settings = new MedjaOpenTKWindowSettings();
-            var controlFactory = new DarkBlueTheme(settings);
+            var controlFactory = new ThemeDarkBlue(settings);
             settings.ControlFactory = controlFactory;
             
             var library = new MedjaOpenTkLibrary();

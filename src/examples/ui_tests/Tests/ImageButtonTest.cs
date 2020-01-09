@@ -29,7 +29,7 @@ namespace MedjaOpenGlTestApp.Tests
             imageButton2.InputState.Clicked += (s, e) => Console.WriteLine("Button2 pressed!");
             imageButton2.HorizontalAlignment = HorizontalAlignment.Left;
             imageButton2.Renderer = new ButtonBackgroundRenderer(imageButton2);
-            DarkBlueTheme.SetButtonBackground(imageButton2);
+            ThemeDarkBlue.SetButtonBackground(imageButton2);
             
             var vStack = _controlFactory.Create<VerticalStackPanel>();
             vStack.Add(imageButton);

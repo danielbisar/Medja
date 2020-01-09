@@ -63,12 +63,14 @@ namespace Medja.Theming
             _factoryMethods.Add(typeof(Slider), CreateSlider);
             _factoryMethods.Add(typeof(TabControl), CreateTabControl);
             _factoryMethods.Add(typeof(TabItem), CreateTabItem);
+            _factoryMethods.Add(typeof(TablePanel), CreateTablePanel);
             _factoryMethods.Add(typeof(TextBox), CreateTextBox);
             _factoryMethods.Add(typeof(TextBlock), CreateTextBlock);
             _factoryMethods.Add(typeof(TextEditor), CreateTextEditor);
+            _factoryMethods.Add(typeof(TransformContainer), CreateTransformContainer);
+            _factoryMethods.Add(typeof(UniformWidthPanel), CreateUniformWidthPanel);
             _factoryMethods.Add(typeof(ProgressBar), CreateProgressBar);
             _factoryMethods.Add(typeof(QuestionDialog), CreateQuestionDialog);
-            _factoryMethods.Add(typeof(TablePanel), CreateTablePanel);
             _factoryMethods.Add(typeof(VerticalStackPanel), CreateVerticalStackPanel);
             _factoryMethods.Add(typeof(VerticalScrollBar), CreateVerticalScrollBar);
             _factoryMethods.Add(typeof(Window), CreateWindow);
@@ -352,6 +354,16 @@ namespace Medja.Theming
         protected virtual TextEditor CreateTextEditor()
         {
             return new TextEditor();
+        }
+
+        protected virtual TransformContainer CreateTransformContainer()
+        {
+            return new TransformContainer();
+        }
+
+        protected virtual UniformWidthPanel CreateUniformWidthPanel()
+        {
+            return new UniformWidthPanel();
         }
 
         protected virtual ProgressBar CreateProgressBar()

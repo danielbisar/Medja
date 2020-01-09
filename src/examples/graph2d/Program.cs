@@ -17,7 +17,7 @@ namespace graph2d
         public Program()
         {
             var settings = new MedjaOpenTKWindowSettings();
-            var controlFactory = new BlackRedTheme(settings);
+            var controlFactory = new ThemeBlackRed(settings);
             settings.ControlFactory = controlFactory;
             
             MedjaApplication.Create(new MedjaOpenTkLibrary());

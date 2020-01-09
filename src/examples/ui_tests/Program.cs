@@ -14,7 +14,7 @@ namespace MedjaOpenGlTestApp
         public static void Main(string[] args)
         {
             var settings = new MedjaOpenTKWindowSettings();
-            var theme = new DarkBlueTheme(settings);
+            var theme = new ThemeDarkBlue(settings);
             settings.ControlFactory = theme;
             
             var library = new MedjaOpenTkLibrary();

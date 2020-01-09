@@ -3,7 +3,7 @@ using Medja.OpenTk.Themes.DarkBlue;
 
 namespace Medja.Demo
 {
-    public class CustomControlsFactory : DarkBlueTheme
+    public class CustomControlsFactory : ThemeDarkBlue
     {
         public CustomControlsFactory(MedjaOpenTKWindowSettings settings)
         : base(settings)

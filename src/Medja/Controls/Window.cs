@@ -54,6 +54,8 @@ namespace Medja.Controls
             PropertyState = new Property<WindowState>();
             PropertyTitle = new Property<string>();
             PropertyTitle.SetSilent("");
+            
+            
         }
 
         public override void Arrange(Size availableSize)

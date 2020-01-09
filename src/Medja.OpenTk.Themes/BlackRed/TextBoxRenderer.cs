@@ -18,7 +18,7 @@ namespace Medja.OpenTk.Themes.BlackRed
             _backgroundPaint.IsAntialias = true;
 
             _caretPaint = new SKPaint();
-            _caretPaint.Color = BlackRedThemeValues.PrimaryTextColor.ToSKColor();
+            _caretPaint.Color = ThemeBlackRedValues.PrimaryTextColor.ToSKColor();
             _caretPaint.IsStroke = true;
             
             _control.AffectRendering(_control.PropertyBackground, 

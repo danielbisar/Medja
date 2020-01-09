@@ -31,13 +31,13 @@ namespace Medja.OpenTk.Themes.DarkBlue
             if (_control.IsEnabled)
             {
                 if (_control.InputState.IsLeftMouseDown)
-                    _backgroundPaint.ImageFilter = DarkBlueThemeValues.DropShadowElevated;
+                    _backgroundPaint.ImageFilter = ThemeDarkBlueValues.DropShadowElevated;
                 else
-                    _backgroundPaint.ImageFilter = DarkBlueThemeValues.DropShadow;
+                    _backgroundPaint.ImageFilter = ThemeDarkBlueValues.DropShadow;
             }
             else
             {
-                _backgroundPaint.ImageFilter = DarkBlueThemeValues.DropShadowDisabled;
+                _backgroundPaint.ImageFilter = ThemeDarkBlueValues.DropShadowDisabled;
             }
 
             _canvas.DrawRoundRect(rect, 3, 3, _backgroundPaint);
