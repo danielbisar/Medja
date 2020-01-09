@@ -2,8 +2,8 @@
 {
     public class Vector2D
     {
-        public float X { get; set; }
-        public float Y { get; set; }
+        public virtual float X { get; set; }
+        public virtual float Y { get; set; }
 
         public Vector2D()
         {

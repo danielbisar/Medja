@@ -2,7 +2,7 @@ using Medja.Primitives;
 
 namespace Medja.OpenTk.Themes.BlackRed
 {
-	public static class BlackRedThemeValues
+	public static class ThemeBlackRedValues
 	{
 		// utils: 
 		// http://corecoding.com/utilities/rgb-or-hex-to-float.php

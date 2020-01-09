@@ -28,7 +28,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
 
             _buttonPaint = new SKPaint();
             _buttonPaint.IsAntialias = true;
-            _buttonPaint.Color = DarkBlueThemeValues.PrimaryColor.ToSKColor();
+            _buttonPaint.Color = ThemeDarkBlueValues.PrimaryColor.ToSKColor();
             //_buttonPaint.ImageFilter = _backgroundPaint.ImageFilter;
 
             _dropDownArrowPaint = new SKPaint();
@@ -38,7 +38,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
             
             _titlePaint = new SKPaint();
             _titlePaint.IsAntialias = true;
-            _titlePaint.Color = DarkBlueThemeValues.ControlBackground.ToSKColor();
+            _titlePaint.Color = ThemeDarkBlueValues.ControlBackground.ToSKColor();
             _titlePaint.Typeface = SKTypeface.FromFamilyName("Roboto", SKFontStyleWeight.Normal, SKFontStyleWidth.Normal, SKFontStyleSlant.Italic);
             _titlePaint.TextSize = 16;
             _lineHeight = _titlePaint.TextSize * 1.3f;

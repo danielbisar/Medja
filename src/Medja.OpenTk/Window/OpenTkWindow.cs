@@ -92,11 +92,34 @@ namespace Medja.OpenTk
         {
             if(_selfUpdatePosition)
                 return;
-            
-            GameWindow.X = (int)Position.X;
-            GameWindow.Y = (int) Position.Y;
-            GameWindow.Width = (int) Position.Width;
-            GameWindow.Height = (int) Position.Height;
+
+            if (ReferenceEquals(sender, Position.PropertyX))
+            {
+                var x = (int) Position.X;
+
+                // at least under X11 this sometimes leads to a complete blocking of the program
+                if (x == 0)
+                    throw new InvalidOperationException("Cannot manually set Window.Position.X = 0");
+                
+                GameWindow.X = x;
+            }
+
+            if (ReferenceEquals(sender, Position.PropertyY))
+            {
+                var y = (int) Position.Y;
+
+                // at least under X11 this sometimes leads to a complete blocking of the program
+                if (y == 0)
+                    throw new InvalidOperationException("Cannot manually set Window.Position.Y = 0");
+                
+                GameWindow.Y = (int) Position.Y;
+            }
+
+            if (ReferenceEquals(sender, Position.PropertyWidth))
+                GameWindow.Width = (int) Position.Width;
+
+            if (ReferenceEquals(sender, Position.PropertyHeight))
+                GameWindow.Height = (int) Position.Height;
         }
 
         private void OnGameWindowMove(object sender, EventArgs e)

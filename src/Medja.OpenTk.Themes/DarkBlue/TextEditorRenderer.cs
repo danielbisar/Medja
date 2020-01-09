@@ -14,12 +14,12 @@ namespace Medja.OpenTk.Themes.DarkBlue
         {
             TextPaint = new SKPaint();
             TextPaint.IsAntialias = true;
-            TextPaint.Color = DarkBlueThemeValues.PrimaryTextColor.ToSKColor();
+            TextPaint.Color = ThemeDarkBlueValues.PrimaryTextColor.ToSKColor();
             TextPaint.TextSize = 16;
 
             SelectionPaint = new SKPaint();
             SelectionPaint.IsAntialias = true;
-            SelectionPaint.Color = DarkBlueThemeValues.ControlBackground.ToSKColor().WithAlpha(178);
+            SelectionPaint.Color = ThemeDarkBlueValues.ControlBackground.ToSKColor().WithAlpha(178);
         }
 
         private readonly float _lineHeight;

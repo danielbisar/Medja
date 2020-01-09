@@ -30,11 +30,14 @@ namespace Medja.Controls
 			set { PropertyTabHeaderHeight.Set(value); }
 		}
 
-		public readonly Property<float> PropertyTabHeaderWidth;
-		public float TabHeaderWidth
+		public readonly Property<float> PropertyTabHeaderMaxWidth;
+        /// <summary>
+        /// Gets or sets the maximum width of a tab header. 
+        /// </summary>
+		public float TabHeaderMaxWidth
 		{
-			get { return PropertyTabHeaderWidth.Get(); }
-			set { PropertyTabHeaderWidth.Set(value); }
+			get { return PropertyTabHeaderMaxWidth.Get(); }
+			set { PropertyTabHeaderMaxWidth.Set(value); }
 		}
 
 		/// <summary>
@@ -74,17 +77,23 @@ namespace Medja.Controls
 			get { return PropertyTabHeaderSpacing.Get(); }
 			set { PropertyTabHeaderSpacing.Set(value); }
 		}
+
+        /// <summary>
+        /// Gets the padding used for the header area.
+        /// </summary>
+        public Thickness HeaderAreaPadding { get; }
 		
 		public TabControl(IControlFactory controlFactory)
 		{
 			_controlFactory = controlFactory;
 			_tabs = new List<TabItem>();
 			Tabs = _tabs.AsReadOnly();
+            HeaderAreaPadding = new Thickness();
 
 			PropertyTabHeaderHeight = new Property<float>();
 			PropertyTabHeaderHeight.SetSilent(30);
-			PropertyTabHeaderWidth = new Property<float>();
-			PropertyTabHeaderWidth.Set(200);
+			PropertyTabHeaderMaxWidth = new Property<float>();
+			PropertyTabHeaderMaxWidth.Set(200);
 			PropertyTabHeaderSpacing = new Property<float>();
 			PropertyTabHeaderSpacing.Set(5);
 			PropertyTabHeaderPosition = new Property<TabHeaderPosition>();
@@ -93,12 +102,17 @@ namespace Medja.Controls
 			PropertySelectedTab.PropertyChanged += OnSelectedTabChanged;
 			PropertySelectedTab.AffectsLayoutOf(this);
 
+            // HeaderAreaPadding.PropertyBottom.AffectsLayoutOf(this);
+            // HeaderAreaPadding.PropertyLeft.AffectsLayoutOf(this);
+            // HeaderAreaPadding.PropertyRight.AffectsLayoutOf(this);
+            // HeaderAreaPadding.PropertyTop.AffectsLayoutOf(this);
+            
 			Padding.PropertyBottom.PropertyChanged += OnPaddingChanged;
 			Padding.PropertyTop.PropertyChanged += OnPaddingChanged;
 			Padding.PropertyLeft.PropertyChanged += OnPaddingChanged;
 			Padding.PropertyRight.PropertyChanged += OnPaddingChanged;
-			
-			_tabContentControl = _controlFactory.Create<ContentControl>();
+            
+            _tabContentControl = _controlFactory.Create<ContentControl>();
 			UpdateContent();
 		}
 
@@ -144,12 +158,15 @@ namespace Medja.Controls
 
 		private Control CreateHeadersTop()
 		{
-			var stackPanel = _controlFactory.Create<HorizontalStackPanel>();
-			_tabHeaderPanel = stackPanel;
+			var uniformWidthPanel = _controlFactory.Create<UniformWidthPanel>();
+			_tabHeaderPanel = uniformWidthPanel;
+            
 			_headerHeightBinding = _tabHeaderPanel.Position.PropertyHeight.UpdateFrom(PropertyTabHeaderHeight);
-			_headerWidthBinding = stackPanel.PropertyChildrenWidth.UpdateFrom(PropertyTabHeaderWidth, f => f);
-			_headerSpacingBinding = stackPanel.PropertySpaceBetweenChildren.UpdateFrom(PropertyTabHeaderSpacing);
+			_headerWidthBinding = uniformWidthPanel.PropertyMaxChildWidth.UpdateFrom(PropertyTabHeaderMaxWidth);
+			_headerSpacingBinding = uniformWidthPanel.PropertySpaceBetweenChildren.UpdateFrom(PropertyTabHeaderSpacing);
 			
+            
+            
 			var dockPanel = _controlFactory.Create<DockPanel>();
 			dockPanel.Add(Dock.Top, _tabHeaderPanel);
 			dockPanel.Add(Dock.Fill, _tabContentControl);
@@ -161,7 +178,7 @@ namespace Medja.Controls
 		{
 			var stackPanel = _controlFactory.Create<VerticalStackPanel>();
 			_tabHeaderPanel = stackPanel;
-			_headerWidthBinding = _tabHeaderPanel.Position.PropertyWidth.UpdateFrom(PropertyTabHeaderWidth);
+			_headerWidthBinding = _tabHeaderPanel.Position.PropertyWidth.UpdateFrom(PropertyTabHeaderMaxWidth);
 			_headerHeightBinding = stackPanel.PropertyChildrenHeight.UpdateFrom(PropertyTabHeaderHeight, f => f);
 			_headerSpacingBinding = stackPanel.PropertySpaceBetweenChildren.UpdateFrom(PropertyTabHeaderSpacing);
 			

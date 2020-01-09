@@ -17,7 +17,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
 
             _checkMarkPaint = new SKPaint();
             _checkMarkPaint.IsAntialias = true;
-            _checkMarkPaint.Color = DarkBlueThemeValues.PrimaryTextColor.ToSKColor();
+            _checkMarkPaint.Color = ThemeDarkBlueValues.PrimaryTextColor.ToSKColor();
             _checkMarkPaint.IsStroke = true;
             _checkMarkPaint.StrokeWidth = 2;
             
@@ -29,9 +29,9 @@ namespace Medja.OpenTk.Themes.DarkBlue
             _backgroundPaint.Color = _control.Background.ToSKColor();
             
             if (_control.IsEnabled)
-                _backgroundPaint.ImageFilter = DarkBlueThemeValues.DropShadow;
+                _backgroundPaint.ImageFilter = ThemeDarkBlueValues.DropShadow;
             else
-                _backgroundPaint.ImageFilter = DarkBlueThemeValues.DropShadowDisabled;
+                _backgroundPaint.ImageFilter = ThemeDarkBlueValues.DropShadowDisabled;
             
             var checkMarkBorder = new SKRect(_rect.Left, _rect.Top, _rect.Left + _rect.Height, _rect.Bottom);
             _canvas.DrawRoundRect(checkMarkBorder, 2, 2, _backgroundPaint);

@@ -18,7 +18,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
 			_borderPaint = new SKPaint();
 			_borderPaint.IsAntialias = true;
 			_borderPaint.IsStroke = true;
-			_borderPaint.Color = DarkBlueThemeValues.ControlBorder.ToSKColor();
+			_borderPaint.Color = ThemeDarkBlueValues.ControlBorder.ToSKColor();
 		}
 		
 		protected override void InternalRender()
