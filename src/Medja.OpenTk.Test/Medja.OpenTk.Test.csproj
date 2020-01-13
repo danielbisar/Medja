@@ -12,7 +12,6 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0" />
-        <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="16.3.0" />
         <PackageReference Include="OpenTK" Version="3.1.0" />
         <PackageReference Include="SkiaSharp" Version="1.68.0" />
         <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
