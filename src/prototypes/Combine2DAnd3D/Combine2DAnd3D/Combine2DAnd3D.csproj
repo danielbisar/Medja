@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net472</TargetFramework>
+        <LangVersion>default</LangVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Medja.OpenTk.Themes\Medja.OpenTk.Themes.csproj" />
+      <ProjectReference Include="..\..\..\Medja.OpenTk\Medja.OpenTk.csproj" />
+      <ProjectReference Include="..\..\..\Medja.Properties\Medja.Properties.csproj" />
+      <ProjectReference Include="..\..\..\Medja.Utils\Medja.Utils.csproj" />
+      <ProjectReference Include="..\..\..\Medja\Medja.csproj" />
+    </ItemGroup>
+
+</Project>
