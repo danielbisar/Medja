@@ -1,4 +1,5 @@
 using Medja.Controls;
+using Medja.OpenTk.Controls;
 using Medja.Theming;
 
 namespace Medja.OpenTk.Themes
@@ -8,6 +9,19 @@ namespace Medja.OpenTk.Themes
     /// </summary>
     public class ThemeOpenTKBase : ControlFactory
     {
+        public ThemeOpenTKBase()
+        {
+            AddFactoryMethod(CreateOpenGLEventControl);
+        }
+
+        protected virtual OpenGLEventControl CreateOpenGLEventControl()
+        {
+            var result = new OpenGLEventControl();
+            result.Renderer = new OpenGLEventControlRenderer(result);
+
+            return result;
+        }
+        
         protected override TransformContainer CreateTransformContainer()
         {
             var result = base.CreateTransformContainer();
