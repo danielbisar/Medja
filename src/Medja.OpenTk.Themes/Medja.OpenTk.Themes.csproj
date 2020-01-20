@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
     <LangVersion>default</LangVersion>
-    <PackageVersion>0.9.1.0</PackageVersion>
+    <PackageVersion>0.9.3.0</PackageVersion>
     <Authors>Daniel Bişar</Authors>
     <Description>Cross platform UI library.</Description>
     <Copyright>Copyright © 2018-2019 SprintWORX GmbH</Copyright>
