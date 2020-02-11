@@ -22,7 +22,7 @@ namespace Medja.Utils.IO
             _fullFileName = Path.GetFullPath(fileName);
             _reader = new StreamReader(new FileStream(fileName, FileMode.Open, FileAccess.Read));
             
-            _watcher = new FileSystemWatcher(GetFolder(fileName));
+            _watcher = new FileSystemWatcher(PathUtils.GetDirectoryPath(fileName));
             _watcher.NotifyFilter = NotifyFilters.Size;
             _watcher.Changed += OnWatcherChanged;
         }
@@ -59,12 +59,6 @@ namespace Medja.Utils.IO
         {
             _watcher.Dispose();
             _reader.Dispose();
-        }
-
-        private static string GetFolder(string fileName)
-        {
-            var path = Path.GetDirectoryName(fileName);
-            return string.IsNullOrEmpty(path) ? "." : path;
         }
     }
 }
