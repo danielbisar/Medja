@@ -20,6 +20,13 @@ namespace ReadFileContinously
 
         public void Run()
         {
+            File.Delete(LogFile);
+
+            FileCreationWatcher.WaitFor(LogFile, OnLogFileCreated);
+            
+            var watcher = new FileCreationWatcher(LogFile);
+            watcher.Created += 
+            
             using (_writer = new StreamWriter(LogFile))
             {
                 _writer.AutoFlush = true;

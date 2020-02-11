@@ -60,11 +60,5 @@ namespace ReadFileContinously
             _watcher.Dispose();
             _reader.Dispose();
         }
-
-        private static string GetFolder(string fileName)
-        {
-            var path = Path.GetDirectoryName(fileName);
-            return string.IsNullOrEmpty(path) ? "." : path;
-        }
     }
 }
