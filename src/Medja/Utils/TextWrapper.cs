@@ -30,6 +30,7 @@ namespace Medja.Utils
         {
             var lines = new List<string>();
             var currentLine = new StringBuilder();
+            var lastCharWasNl = false;
 
             for (int i = 0; i < text.Length; i++)
             {
@@ -37,6 +38,7 @@ namespace Medja.Utils
 
                 if (currentChar == '\n')
                 {
+                    lastCharWasNl = true;
                     lines.Add(currentLine.ToString());
                     currentLine.Clear();
 
@@ -45,6 +47,7 @@ namespace Medja.Utils
                 }
                 else
                 {
+                    lastCharWasNl = false;
                     currentLine.Append(currentChar);
                     var textWidth = GetWidth(currentLine.ToString());
 
@@ -62,11 +65,20 @@ namespace Medja.Utils
 
                         lines.Add(currentLine.ToString());
                         currentLine.Clear();
+
+                        // skip until the next line
+                        for (; i < text.Length && text[i] != '\n'; i++) ;
+
+                        // if we still have text to process, the abort condition
+                        // was the new line, so set the flag, just in case we have
+                        // an empty line
+                        if (i < text.Length) 
+                            lastCharWasNl = true;
                     }
                 }
             }
             
-            if(currentLine.Length > 0)
+            if(currentLine.Length > 0 || lastCharWasNl)
                 lines.Add(currentLine.ToString());
 
             return lines.ToArray();
@@ -76,6 +88,7 @@ namespace Medja.Utils
         {
             var lines = new List<string>();
             var currentLine = new StringBuilder();
+            var lastCharWasNl = false;
 
             for (int i = 0; i < text.Length; i++)
             {
@@ -83,6 +96,7 @@ namespace Medja.Utils
                 
                 if (currentChar == '\n')
                 {
+                    lastCharWasNl = true;
                     lines.Add(currentLine.ToString());
                     currentLine.Clear();
 
@@ -91,6 +105,7 @@ namespace Medja.Utils
                 }
                 else
                 {
+                    lastCharWasNl = false;
                     currentLine.Append(currentChar);
                     var textWidth = GetWidth(currentLine.ToString());
 
@@ -128,16 +143,26 @@ namespace Medja.Utils
                                     currentChar = currentLine.Last();
                             }
                             
-                            lines.Add(currentLine.ToString());
-                            currentLine.Clear();
-                            // reappend the word chars but place them in the next line
-                            currentLine.Append(wordChars);
+                            // edge case, where the word is longer or as long as the line
+                            if (currentLine.Length == 0)
+                            {
+                                lines.Add(wordChars.ToString(0, wordChars.Length - 1));
+                                currentLine.Append(wordChars[wordChars.Length - 1]);
+                            }
+                            else
+                            {
+                                lines.Add(currentLine.ToString());
+                                currentLine.Clear();
+                                
+                                // reappend the word chars but place them in the next line
+                                currentLine.Append(wordChars);
+                            }
                         }
                     }
                 }
             }
             
-            if(currentLine.Length > 0)
+            if(currentLine.Length > 0 || lastCharWasNl)
                 lines.Add(currentLine.ToString());
 
             return lines.ToArray();
