@@ -73,7 +73,7 @@ namespace Medja.OpenTk.Themes
             // todo check if multiline is allowed
             
             var lines = _control.GetLines();
-            var lineHeight = _textPaint.TextSize * 1.3f;
+            var lineHeight = _control.Font.LineHeight.Value;
 
             for (int i = 0; i < lines.Length && pos.Y <= _rect.Bottom; i++)
             {
@@ -106,6 +106,7 @@ namespace Medja.OpenTk.Themes
         {
             var font = _control.Font;
             font.GetWidth = GetTextWidth;
+            font.LineHeight = 1.3f * font.Size;
 
             _isControlInitialized = true;
         }

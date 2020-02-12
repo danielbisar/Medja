@@ -44,19 +44,20 @@ namespace Medja.Controls
         
         public MRect TextClippingArea { get; }
 
+        /// <summary>
+        /// Raised when the layout of lines was recalculated.
+        /// </summary>
+        public event EventHandler TextMeasured;
+        
         public TextControl()
         {
             PropertyText = new Property<string>();
             PropertyTextAlignment = new Property<TextAlignment>();
             PropertyTextWrapping = new Property<TextWrapping>();
             
-            PropertyText.PropertyChanged += (s, e) => InvalidateLines();
-            PropertyTextWrapping.PropertyChanged += (s, e) => InvalidateLines();
-            PropertyIsLayoutUpdated.PropertyChanged += (s, e) =>
-            {
-                if(!IsLayoutUpdated)
-                    InvalidateLines();
-            };
+            PropertyText.PropertyChanged += OnTextChanged;
+            PropertyTextWrapping.PropertyChanged += OnTextWrappingChanged;
+            PropertyIsLayoutUpdated.PropertyChanged += OnIsLayoutUpdatedChanged;
             
             Padding = new Thickness();
             TextClippingArea = new MRect();
@@ -64,6 +65,23 @@ namespace Medja.Controls
             Font = new Font();
             _linesNeedUpdate = true;
         }
+
+        protected virtual void OnIsLayoutUpdatedChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (!IsLayoutUpdated)
+                InvalidateLines();
+        }
+
+        protected virtual void OnTextWrappingChanged(object sender, PropertyChangedEventArgs e)
+        {
+            InvalidateLines();
+        }
+
+        protected virtual void OnTextChanged(object sender, PropertyChangedEventArgs e)
+        {
+            InvalidateLines();
+        }
+
 
         private void InvalidateLines()
         {
@@ -91,6 +109,8 @@ namespace Medja.Controls
 
                 _lines = wrapper.Wrap(Text, Position.Width - Padding.LeftAndRight);
                 _linesNeedUpdate = false;
+
+                TextMeasured?.Invoke(this, EventArgs.Empty);
             }
 
             return _lines;
@@ -120,6 +140,30 @@ namespace Medja.Controls
 
             var lines = Text.Split('\n');
             return lines.Max(Font.GetWidth);
+        }
+
+        /// <summary>
+        /// Sets the height of the control to it's content.
+        /// </summary>
+        /// <returns>The new height, 0 if Text = null or empty, -1 if Font.LineHeight is &lt;= 0 or IsLayoutUpdated is false.</returns>
+        public void SetHeightToContent()
+        {
+            if (!IsLayoutUpdated)
+                throw new InvalidOperationException("First the layout needs to be updated.");
+            
+            if(Font.LineHeight == null)
+                throw new InvalidOperationException("The renderer should set " + nameof(Font) + "." + nameof(Font.LineHeight) + ".");
+
+            var lineHeight = Font.LineHeight.Value;
+            
+            if (string.IsNullOrEmpty(Text))
+                Position.Height = lineHeight;
+            else
+            {
+                var lines = GetLines();
+                var height = lines.Length * lineHeight;
+                Position.Height = height + Padding.TopAndBottom;
+            }
         }
 
         public override string ToString()

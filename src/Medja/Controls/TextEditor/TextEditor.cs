@@ -65,6 +65,8 @@ namespace Medja.Controls
             set { PropertyIsCaretVisible.Set(value); }
         }
 
+        public event EventHandler TextChanged;
+
         public TextEditor()
         {
             Lines = new List<string>();
@@ -288,6 +290,13 @@ namespace Medja.Controls
             CaretY++;
             Lines.Insert(CaretY, line.Substring(CaretX, line.Length - CaretX));
             CaretX = 0;
+
+            RaiseTextChanged();
+        }
+
+        private void RaiseTextChanged()
+        {
+            TextChanged?.Invoke(this, EventArgs.Empty);
         }
 
         private void HandleBackspace()
@@ -305,6 +314,8 @@ namespace Medja.Controls
             {
                 Lines[CaretY] = line.Substring(0, CaretX - 1) + line.Substring(CaretX);
                 CaretX--;
+
+                RaiseTextChanged();
             }
             else
             {
@@ -314,6 +325,8 @@ namespace Medja.Controls
                     CaretX = Lines[CaretY - 1].Length - Lines[CaretY].Length;
                     CaretY--;
                     Lines.RemoveAt(CaretY + 1);
+
+                    RaiseTextChanged();
                 }
             }
         }
@@ -331,10 +344,14 @@ namespace Medja.Controls
             if (CaretX < line.Length)
             {
                 Lines[CaretY] = line.Substring(0, CaretX) + line.Substring(CaretX + 1);
+                RaiseTextChanged();
             }
-            else if(CaretY + 1 < Lines.Count)
+            else if (CaretY + 1 < Lines.Count)
+            {
                 JoinLineAndNext(CaretY);
-            
+                RaiseTextChanged();
+            }
+
             NeedsRendering = true;
         }
 
@@ -368,8 +385,13 @@ namespace Medja.Controls
             var line = Lines[logicalSelectionStart.Y];
             
             // just part of one line selected
-            if (logicalSelectionStart.Y == logicalSelectionEnd.Y) 
-                Lines[logicalSelectionStart.Y] = line.Substring(0, logicalSelectionStart.X) + line.Substring(logicalSelectionEnd.X);
+            if (logicalSelectionStart.Y == logicalSelectionEnd.Y)
+            {
+                Lines[logicalSelectionStart.Y] =
+                    line.Substring(0, logicalSelectionStart.X) + line.Substring(logicalSelectionEnd.X);
+                
+                RaiseTextChanged();
+            }
             else
             {
                 Lines[logicalSelectionStart.Y] = line.Substring(0, logicalSelectionStart.X);
@@ -380,6 +402,8 @@ namespace Medja.Controls
                 // lines in after first and before last line
                 for (int i = logicalSelectionStart.Y + 1; i <= logicalSelectionEnd.Y; i++)
                     Lines.RemoveAt(logicalSelectionStart.Y + 1);
+
+                RaiseTextChanged();
             }
 
             CaretX = logicalSelectionStart.X;
@@ -463,6 +487,7 @@ namespace Medja.Controls
             else
                 throw new InvalidOperationException();
 
+            RaiseTextChanged();
             NeedsRendering = true;
         }
 
@@ -501,8 +526,9 @@ namespace Medja.Controls
             }
 
             Lines.Add(line.ToString());
-
             // todo reduce capacity of lines if they used a large amount before and now just a few...
+
+            RaiseTextChanged();
         }
 
         /// <summary>
