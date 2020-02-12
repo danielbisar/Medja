@@ -51,7 +51,12 @@ namespace Medja.Primitives
         }
         
         public Func<string, float> GetWidth { get; set; }
-
+        
+        /// <summary>
+        /// Gets or sets the height for a line of text. Should be updated by the renderer.
+        /// </summary>
+        public float? LineHeight { get; set; }
+        
         public Font()
         {
             PropertyColor = new Property<Color>();
