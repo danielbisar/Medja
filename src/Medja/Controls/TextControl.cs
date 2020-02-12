@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Medja.Primitives;
 using Medja.Properties;
 using Medja.Utils;
@@ -12,7 +13,7 @@ namespace Medja.Controls
     /// Hint for implementing a renderer for any TextControl: use GetLines to receive the wrapped lines.
     /// The Font.GetWidth method must be set beforehand.
     /// </remarks>
-    public abstract class TextControl : Control
+    public class TextControl : Control
     {
         private string[] _lines;
         private bool _linesNeedUpdate;
@@ -43,7 +44,7 @@ namespace Medja.Controls
         
         public MRect TextClippingArea { get; }
 
-        protected TextControl()
+        public TextControl()
         {
             PropertyText = new Property<string>();
             PropertyTextAlignment = new Property<TextAlignment>();
@@ -103,6 +104,22 @@ namespace Medja.Controls
             TextClippingArea.Y = Position.Y + Padding.Top;
             TextClippingArea.Width = Position.Width - Padding.LeftAndRight;
             TextClippingArea.Height = Position.Height - Padding.TopAndBottom;
+        }
+
+        /// <summary>
+        /// Gets the width of the longest line (rendered).
+        /// </summary>
+        /// <returns>The width of the longest line or 0 if Text is null or empty or -1 if Font.GetWidth is not set.</returns>
+        public float GetLongestLineWidth()
+        {
+            if (string.IsNullOrEmpty(Text))
+                return 0;
+
+            if (Font.GetWidth == null)
+                return -1;
+
+            var lines = Text.Split('\n');
+            return lines.Max(Font.GetWidth);
         }
 
         public override string ToString()

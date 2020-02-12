@@ -66,6 +66,7 @@ namespace Medja.Theming
             _factoryMethods.Add(typeof(TablePanel), CreateTablePanel);
             _factoryMethods.Add(typeof(TextBox), CreateTextBox);
             _factoryMethods.Add(typeof(TextBlock), CreateTextBlock);
+            _factoryMethods.Add(typeof(TextControl), CreateTextControl);
             _factoryMethods.Add(typeof(TextEditor), CreateTextEditor);
             _factoryMethods.Add(typeof(TransformContainer), CreateTransformContainer);
             _factoryMethods.Add(typeof(UniformWidthPanel), CreateUniformWidthPanel);
@@ -349,6 +350,11 @@ namespace Medja.Theming
         protected virtual TextBlock CreateTextBlock()
         {
             return new TextBlock();
+        }
+
+        protected virtual TextControl CreateTextControl()
+        {
+            return new TextControl();
         }
         
         protected virtual TextEditor CreateTextEditor()
