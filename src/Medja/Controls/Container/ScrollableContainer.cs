@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Medja.Primitives;
 using Medja.Properties;
@@ -14,7 +15,8 @@ namespace Medja.Controls
         {
             _scrollBar = controlFactory.Create<VerticalScrollBar>();
             _scrollBar.PropertyValue.AffectsLayoutOf(this);
-            
+            _scrollBar.PropertyMaxValue.AffectsLayoutOf(this);
+
             InputState.Dragged += OnDragged;
             InputState.PropertyMouseWheelDelta.PropertyChanged += OnMouseWheelMoved;
             InputState.PropertyIsLeftMouseDown.PropertyChanged += OnLeftMouseUp;
@@ -102,8 +104,6 @@ namespace Medja.Controls
                 Content.ClippingArea.Y = Position.Y + Margin.Top + Padding.Top;
                 Content.ClippingArea.Height = area.Height;
                 Content.ClippingArea.Width = area.Width;
-
-                UpdateScrollBarMaxValue();
                
                 if (_scrollBar.Value > _scrollBar.MaxValue)
                     _scrollBar.Value = _scrollBar.MaxValue;
@@ -144,6 +144,16 @@ namespace Medja.Controls
             
             if(Content != null)
                 Content.Position.PropertyHeight.PropertyChanged -= OnContentHeightChanged;
+        }
+
+        public void ScrollToTop()
+        {
+            _scrollBar.Value = 0;
+        }
+
+        public void ScrollToBottom()
+        {
+            _scrollBar.Value = _scrollBar.MaxValue;
         }
     }
 }
