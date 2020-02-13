@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Medja.Primitives;
 using Medja.Properties;
@@ -8,9 +7,7 @@ namespace Medja.Controls
 {
     public class ScrollableContainer : ContentControl
     {
-        public readonly float ScrollBarWidth;
         private readonly VerticalScrollBar _scrollBar;
-        
         private float? _startDragPos;
 
         public ScrollableContainer(IControlFactory controlFactory)
@@ -18,13 +15,36 @@ namespace Medja.Controls
             _scrollBar = controlFactory.Create<VerticalScrollBar>();
             _scrollBar.PropertyValue.AffectsLayoutOf(this);
             
-            ScrollBarWidth = _scrollBar.Position.Width;
-            
             InputState.Dragged += OnDragged;
             InputState.PropertyMouseWheelDelta.PropertyChanged += OnMouseWheelMoved;
             InputState.PropertyIsLeftMouseDown.PropertyChanged += OnLeftMouseUp;
             InputState.HandlesDrag = true;
             InputState.OwnsMouseEvents = true;
+        }
+
+        protected override void OnContentChanged(object sender, PropertyChangedEventArgs e)
+        {
+            base.OnContentChanged(sender, e);
+
+            var oldContent = e.OldValue as Control;
+
+            if (oldContent != null)
+            {
+                oldContent.Position.PropertyHeight.PropertyChanged -= OnContentHeightChanged;
+            }
+
+            var newContent = e.NewValue as Control;
+
+            if (newContent != null)
+            {
+                UpdateScrollBarMaxValue();
+                newContent.Position.PropertyHeight.PropertyChanged += OnContentHeightChanged;
+            }
+        }
+
+        private void OnContentHeightChanged(object sender, PropertyChangedEventArgs e)
+        {
+            UpdateScrollBarMaxValue();
         }
 
         private void OnLeftMouseUp(object sender, PropertyChangedEventArgs e)
@@ -64,13 +84,15 @@ namespace Medja.Controls
             var area = Rect.Subtract(Position, Margin);
             area.Subtract(Padding);
 
-            _scrollBar.Position.X = area.X + area.Width - ScrollBarWidth;
+            var scrollBarWidth = _scrollBar.Position.Width;
+
+            _scrollBar.Position.X = area.X + area.Width - scrollBarWidth;
             _scrollBar.Position.Y = area.Y;
             _scrollBar.Position.Height = area.Height;
             
-            area.Width -= ScrollBarWidth;
+            area.Width -= scrollBarWidth;
             area.Y -= _scrollBar.Value;
-			
+            
             ContentArranger.Position(area);
             ContentArranger.StretchWidth(area);
 
@@ -80,12 +102,32 @@ namespace Medja.Controls
                 Content.ClippingArea.Y = Position.Y + Margin.Top + Padding.Top;
                 Content.ClippingArea.Height = area.Height;
                 Content.ClippingArea.Width = area.Width;
-                
-                _scrollBar.MaxValue = Math.Max(area.Height, Content.Position.Height - area.Height);
+
+                UpdateScrollBarMaxValue();
                
                 if (_scrollBar.Value > _scrollBar.MaxValue)
                     _scrollBar.Value = _scrollBar.MaxValue;
             }
+        }
+
+        private void UpdateScrollBarMaxValue()
+        {
+            if (Content == null)
+            {
+                _scrollBar.MaxValue = 0;
+                return;
+            }
+
+            var notVisibleHeight = Content.Position.Height - Position.Height;
+            var maxValue = 0;
+            
+            if (notVisibleHeight > 0)
+                maxValue = (int)notVisibleHeight;
+
+            if (maxValue < 0)
+                maxValue = 0;
+
+            _scrollBar.MaxValue = maxValue;
         }
 
         public override IEnumerable<Control> GetChildren()
@@ -94,6 +136,14 @@ namespace Medja.Controls
                 yield return Content;
 
             yield return _scrollBar;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+            
+            if(Content != null)
+                Content.Position.PropertyHeight.PropertyChanged -= OnContentHeightChanged;
         }
     }
 }

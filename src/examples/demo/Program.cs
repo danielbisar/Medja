@@ -352,6 +352,7 @@ namespace Medja.Demo
 
             rootTabControl.AddTab("Transformations", new TransformationsTab(controlFactory));
             rootTabControl.AddTab("SizeToContent", new SizeToContentTab(controlFactory));
+            rootTabControl.AddTab("Scrolling", new ScrollingTab(controlFactory));
 
             var dialogContainer = DialogService.CreateContainer(controlFactory, rootTabControl);
             return dialogContainer;

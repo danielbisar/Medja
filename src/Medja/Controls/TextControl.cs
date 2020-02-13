@@ -17,6 +17,16 @@ namespace Medja.Controls
     {
         private string[] _lines;
         private bool _linesNeedUpdate;
+
+        public readonly Property<bool> PropertyAutoHeightToContent;
+        /// <summary>
+        /// Gets or sets if the height of the control is adjusted as the text changes. (default = false)
+        /// </summary>
+        public bool AutoHeightToContent
+        {
+            get => PropertyAutoHeightToContent.Get();
+            set => PropertyAutoHeightToContent.Set(value);
+        }
         
         public readonly Property<string> PropertyText;
         public string Text
@@ -51,10 +61,12 @@ namespace Medja.Controls
         
         public TextControl()
         {
+            PropertyAutoHeightToContent = new Property<bool>();
             PropertyText = new Property<string>();
             PropertyTextAlignment = new Property<TextAlignment>();
             PropertyTextWrapping = new Property<TextWrapping>();
-            
+
+            PropertyAutoHeightToContent.PropertyChanged += OnAutoHeightToContentChanged;
             PropertyText.PropertyChanged += OnTextChanged;
             PropertyTextWrapping.PropertyChanged += OnTextWrappingChanged;
             PropertyIsLayoutUpdated.PropertyChanged += OnIsLayoutUpdatedChanged;
@@ -64,6 +76,25 @@ namespace Medja.Controls
 
             Font = new Font();
             _linesNeedUpdate = true;
+        }
+
+        private void OnAutoHeightToContentChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (AutoHeightToContent)
+            {
+                if (IsLayoutUpdated && Font.LineHeight != null)
+                    SetHeightToContent();
+                    
+                TextMeasured += OnTextMeasured;
+            }
+            else
+                TextMeasured -= OnTextMeasured;
+        }
+
+        private void OnTextMeasured(object sender, EventArgs e)
+        {
+            // only called if AutoHeightToContent is true
+            SetHeightToContent();
         }
 
         protected virtual void OnIsLayoutUpdatedChanged(object sender, PropertyChangedEventArgs e)

@@ -1,7 +1,6 @@
 using Medja.Controls;
 using Medja.Primitives;
 using Medja.Properties.Binding;
-using Medja.Theming;
 
 namespace Medja.OpenTk.Themes.DarkBlue
 {
@@ -417,6 +416,16 @@ namespace Medja.OpenTk.Themes.DarkBlue
 
             result.PropertyBackground.UpdateFrom(result.PropertyIsEnabled, GetTextEditorBackground);
             
+            return result;
+        }
+
+        protected override VerticalScrollBar CreateVerticalScrollBar()
+        {
+            var result = base.CreateVerticalScrollBar();
+            result.Renderer = new VerticalScrollBarRenderer(result);
+            result.Position.Width = 10;
+            result.Background = ThemeDarkBlueValues.ControlBackground;
+
             return result;
         }
 

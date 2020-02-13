@@ -432,7 +432,7 @@ namespace Medja.OpenTk.Themes
         protected override VerticalScrollBar CreateVerticalScrollBar()
         {
             var result = base.CreateVerticalScrollBar();
-            result.Renderer = new VerticalScrollBarRenderer(result);
+            result.Renderer = new BlackRed.VerticalScrollBarRenderer(result);
             result.Position.Width = 20;
             result.Background = ThemeBlackRedValues.PrimaryColor;
 
