@@ -47,6 +47,7 @@ namespace Medja.OpenTk
             GameWindow.Resize += OnGameWindowResize;
             GameWindow.Closed += OnGameWindowClosed;
             GameWindow.RenderFrame += OnRender;
+            GameWindow.FocusedChanged += OnGameWindowFocusChanged;
 
             GameWindow.Title = Title;
             Position.X = GameWindow.X;
@@ -63,6 +64,16 @@ namespace Medja.OpenTk
 
             _mouseHandler = new OpenTkMouseHandler(this, GameWindow, FocusManager);
             _keyboardHandler = new OpenTkKeyboardHandler(GameWindow, FocusManager);
+        }
+
+        private void OnGameWindowFocusChanged(object sender, EventArgs e)
+        {
+            // cause a repaint to assure the window is up to date
+            // otherwise the render on demand could cause windows
+            // that were previously over the current window to be
+            // seen inside this window
+            if (GameWindow.Focused)
+                NeedsRendering = true;
         }
 
         private void OnRender(object sender, FrameEventArgs e)
