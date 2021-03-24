@@ -1,4 +1,4 @@
-using Medja.Controls;
+using Medja.Controls.Buttons;
 using Medja.OpenTk.Rendering;
 using SkiaSharp;
 
@@ -7,19 +7,19 @@ namespace Medja.OpenTk.Themes.BlackRed
 	public class ButtonRenderer : TextControlRendererBase<Button>
 	{
 		private readonly SKPaint _backgroundPaint;
-		
+
 		public ButtonRenderer(Button button)
 			: base(button)
 		{
 			_backgroundPaint = new SKPaint();
 			_backgroundPaint.IsAntialias = true;
-			
+
 			_control.AffectRendering(_control.PropertyBackground);
 		}
-		
+
 		protected override void DrawTextControlBackground()
 		{
-			if (_control.Background == null) 
+			if (_control.Background == null)
 				return;
 
 			var rect = _control.Position.ToSKRect();

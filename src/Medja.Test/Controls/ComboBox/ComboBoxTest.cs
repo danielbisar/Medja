@@ -1,17 +1,19 @@
 using System.Linq;
 using Medja.Controls;
+using Medja.Controls.Menu;
+using Medja.Controls.Panels;
 using Medja.Primitives;
 using Medja.Theming;
 using Xunit;
 
-namespace Medja.Test.Controls
+namespace Medja.Test.Controls.ComboBox
 {
     public class ComboBoxTest
     {
         [Fact]
         public void AddSetsTitleOfMenuItem()
         {
-            var comboBox = new ControlFactory().Create<ComboBox>();
+            var comboBox = new ControlFactory().Create<Medja.Controls.ComboBox>();
             var menuItem = comboBox.Add("item");
             
             Assert.Equal("item", menuItem.Title);
@@ -20,7 +22,7 @@ namespace Medja.Test.Controls
         [Fact]
         public void ComboBoxMenuItemIsUsedAsChild()
         {
-            var comboBox = new ControlFactory().Create<ComboBox>();
+            var comboBox = new ControlFactory().Create<Medja.Controls.ComboBox>();
             var menuItem = comboBox.Add("item"); 
             
             Assert.True(menuItem is ComboBoxMenuItem);
@@ -29,7 +31,7 @@ namespace Medja.Test.Controls
         [Fact]
         public void GetChildrenReturnsPopupOnlyIfIsDropDownOpen()
         {
-            var comboBox = new ControlFactory().Create<ComboBox>();
+            var comboBox = new ControlFactory().Create<Medja.Controls.ComboBox>();
             
             Assert.Empty(comboBox.GetChildren());
             
@@ -50,7 +52,7 @@ namespace Medja.Test.Controls
         {
             var factory = new ControlFactory();
             
-            var comboBox = factory.Create<ComboBox>();
+            var comboBox = factory.Create<Medja.Controls.ComboBox>();
             comboBox.Add("123");
             comboBox.Add("234");
             comboBox.Add("345");
@@ -85,7 +87,7 @@ namespace Medja.Test.Controls
         {
             var factory = new ControlFactory();
             
-            var comboBox = factory.Create<ComboBox>();
+            var comboBox = factory.Create<Medja.Controls.ComboBox>();
             comboBox.Add("123");
             comboBox.Add("234");
             comboBox.Add("345");
@@ -109,7 +111,7 @@ namespace Medja.Test.Controls
         [Fact]
         public void LimitsPopupToMaxHeightIfSet()
         {
-            var comboBox = new ControlFactory().Create<ComboBox>();
+            var comboBox = new ControlFactory().Create<Medja.Controls.ComboBox>();
             comboBox.ItemsPanel.ChildrenHeight = 10;
             comboBox.MaxDropDownHeight = 10;
             comboBox.Add("123");
@@ -126,7 +128,7 @@ namespace Medja.Test.Controls
         [Fact]
         public void ChangesSizeOfPopupDependingOnContent()
         {
-            var comboBox = new ControlFactory().Create<ComboBox>();
+            var comboBox = new ControlFactory().Create<Medja.Controls.ComboBox>();
             comboBox.ItemsPanel.ChildrenHeight = 10;
             comboBox.Add("123");
             comboBox.IsDropDownOpen = true;
@@ -149,7 +151,7 @@ namespace Medja.Test.Controls
         [Fact]
         public void ItemsPanelAddMarksIsLayoutUpdatedAsFalse()
         {
-            var comboBox = new ControlFactory().Create<ComboBox>();
+            var comboBox = new ControlFactory().Create<Medja.Controls.ComboBox>();
             comboBox.IsLayoutUpdated = true;
             comboBox.ItemsPanel.Add(new Control());
             
@@ -159,7 +161,7 @@ namespace Medja.Test.Controls
         [Fact]
         public void AddMarksIsLayoutUpdatedAsFalse()
         {
-            var comboBox = new ControlFactory().Create<ComboBox>();
+            var comboBox = new ControlFactory().Create<Medja.Controls.ComboBox>();
             comboBox.IsLayoutUpdated = true;
             comboBox.Add("123");
             
@@ -169,7 +171,7 @@ namespace Medja.Test.Controls
         [Fact]
         public void SelectsItemOnClick()
         {
-            var comboBox = new ControlFactory().Create<ComboBox>();
+            var comboBox = new ControlFactory().Create<Medja.Controls.ComboBox>();
             var menuItem = comboBox.Add("123");
 
             Assert.Null(comboBox.SelectedItem);
@@ -182,7 +184,7 @@ namespace Medja.Test.Controls
         [Fact]
         public void SetDisplayTextWhenSelectedItemIsSet()
         {
-            var comboBox = new ControlFactory().Create<ComboBox>();
+            var comboBox = new ControlFactory().Create<Medja.Controls.ComboBox>();
             var menuItem = comboBox.Add("123");
 
             comboBox.SelectedItem = menuItem;
@@ -197,7 +199,7 @@ namespace Medja.Test.Controls
         [Fact]
         public void SetDisplayTextWhenSelectedItemsTitleChanged()
         {
-            var comboBox = new ControlFactory().Create<ComboBox>();
+            var comboBox = new ControlFactory().Create<Medja.Controls.ComboBox>();
             var menuItem = comboBox.Add("123");
             var menuItem2 = comboBox.Add("789");
             
@@ -218,7 +220,7 @@ namespace Medja.Test.Controls
         [Fact]
         public void DisplayTextIsEmptyStringByDefault()
         {
-            var comboBox = new ControlFactory().Create<ComboBox>();
+            var comboBox = new ControlFactory().Create<Medja.Controls.ComboBox>();
             Assert.Equal("", comboBox.DisplayText);
         }
 
@@ -226,7 +228,7 @@ namespace Medja.Test.Controls
         public void UsesCustomGetDisplayTextIfSet()
         {
             var factory = new ControlFactory();
-            var comboBox = factory.Create<ComboBox>();
+            var comboBox = factory.Create<Medja.Controls.ComboBox>();
             comboBox.GetDisplayTextFromItem = control => ((TextBlock) control).Text;
 
             var item = factory.Create<TextBlock>(p => p.Text = "Test");
@@ -241,7 +243,7 @@ namespace Medja.Test.Controls
         public void ItemClickSelectsItem()
         {
             var controlFactory = new ControlFactory();
-            var comboBox = controlFactory.Create<ComboBox>();
+            var comboBox = controlFactory.Create<Medja.Controls.ComboBox>();
 
             comboBox.Add("123");
             var item2 = comboBox.Add("456");
@@ -257,7 +259,7 @@ namespace Medja.Test.Controls
         public void ClearRemovesClickHandler()
         {
             var controlFactory = new ControlFactory();
-            var comboBox = controlFactory.Create<ComboBox>();
+            var comboBox = controlFactory.Create<Medja.Controls.ComboBox>();
 
             comboBox.Add("123");
             var item2 = comboBox.Add("456");
@@ -273,7 +275,7 @@ namespace Medja.Test.Controls
         public void SelectItem()
         {
             var controlFactory = new ControlFactory();
-            var comboBox = controlFactory.Create<ComboBox>();
+            var comboBox = controlFactory.Create<Medja.Controls.ComboBox>();
             
             comboBox.Add("123");
             comboBox.Add("234");
@@ -289,7 +291,7 @@ namespace Medja.Test.Controls
         public void ItemsCountUpdates()
         {
             var controlFactory = new ControlFactory();
-            var comboBox = controlFactory.Create<ComboBox>();
+            var comboBox = controlFactory.Create<Medja.Controls.ComboBox>();
 
             Assert.Equal(0, comboBox.ItemsCount);
 
@@ -308,7 +310,7 @@ namespace Medja.Test.Controls
         public void RemoveSelectedItem()
         {
             var controlFactory = new ControlFactory();
-            var comboBox = controlFactory.Create<ComboBox>();
+            var comboBox = controlFactory.Create<Medja.Controls.ComboBox>();
 
             comboBox.Add("123");
             comboBox.SelectedItem = comboBox.Add("234");
@@ -323,7 +325,7 @@ namespace Medja.Test.Controls
         public void RemoveSelectedItemUsesCustomSelectionLogic()
         {
             var controlFactory = new ControlFactory();
-            var comboBox = controlFactory.Create<ComboBox>();
+            var comboBox = controlFactory.Create<Medja.Controls.ComboBox>();
 
             comboBox.Add("123");
             comboBox.SelectedItem = comboBox.Add("234");

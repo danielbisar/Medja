@@ -1,4 +1,11 @@
 using Medja.Controls;
+using Medja.Controls.Buttons;
+using Medja.Controls.Container;
+using Medja.Controls.Dialogs;
+using Medja.Controls.Menu;
+using Medja.Controls.Panels;
+using Medja.Controls.TextEditor;
+using Medja.OpenTk.Window;
 using Medja.Primitives;
 using Medja.Properties.Binding;
 
@@ -116,7 +123,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
                 ? ThemeDarkBlueValues.ControlBackground
                 : ThemeDarkBlueValues.ControlBackground.GetDisabled();
         }
-        
+
         private readonly MedjaOpenTKWindowSettings _windowSettings;
 
         public ThemeDarkBlue(MedjaOpenTKWindowSettings windowSettings)
@@ -126,12 +133,12 @@ namespace Medja.OpenTk.Themes.DarkBlue
             DefaultFont.Name = "Roboto";
             DefaultFont.Color = ThemeDarkBlueValues.PrimaryTextColor;
         }
-        
+
         protected override Button CreateButton()
         {
             var result = base.CreateButton();
             SetupButton(result);
-            
+
             return result;
         }
 
@@ -150,7 +157,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
         protected override Canvas CreateCanvas()
         {
             var result = base.CreateCanvas();
-            
+
             result.Renderer = new ControlRenderer(result);
             return result;
         }
@@ -167,7 +174,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
                 result.PropertyIsChecked,
                 result.PropertyIsEnabled,
                 GetCheckBoxBackground);
-            
+
             return result;
         }
 
@@ -181,7 +188,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
             result.Renderer = new ComboBoxRenderer(result);
 
             result.PropertyBackground.UpdateFrom(result.PropertyIsEnabled, GetComboBoxBackground);
-            
+
             return result;
         }
 
@@ -210,7 +217,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
         {
             var result = base.CreateControl();
             result.Renderer = new ControlRenderer(result);
-            
+
             return result;
         }
 
@@ -221,7 +228,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
             result.Renderer = new ControlRenderer(result);
             return result;
         }
-        
+
         protected override HorizontalStackPanel CreateHorizontalStackPanel()
         {
             var result = base.CreateHorizontalStackPanel();
@@ -229,7 +236,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
 
             return result;
         }
-        
+
         protected override Image CreateImage()
         {
             var result = base.CreateImage();
@@ -237,7 +244,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
 
             return result;
         }
-        
+
         protected override MenuItem CreateMenuItem()
         {
             var result = base.CreateMenuItem();
@@ -245,10 +252,10 @@ namespace Medja.OpenTk.Themes.DarkBlue
             result.Renderer = new MenuItemRenderer(result, DefaultFont.Name, DefaultFont.Color);
 
             result.PropertyBackground.UpdateFrom(
-                result.PropertyIsSelected, 
+                result.PropertyIsSelected,
                 result.PropertyIsEnabled,
                 GetMenuItemBackground);
-            
+
             return result;
         }
 
@@ -257,7 +264,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
             var result = base.CreatePopup();
             result.Renderer = new PopupRenderer(result);
             result.PropertyBackground.UpdateFrom(result.PropertyIsEnabled, GetPopupBackground);
-            
+
             return result;
         }
 
@@ -265,7 +272,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
         {
             var result = base.CreateRepeatButton();
             SetupButton(result);
-            
+
             return result;
         }
 
@@ -293,10 +300,10 @@ namespace Medja.OpenTk.Themes.DarkBlue
             var result = base.CreateSimpleMessageDialog();
             result.Renderer = new ControlRenderer(result);
             result.Background = ThemeDarkBlueValues.ControlBackground;
-            
+
             return result;
         }
-        
+
         protected override NumericKeypadDialog CreateNumericKeypadDialog()
         {
             var result = base.CreateNumericKeypadDialog();
@@ -305,7 +312,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
 
             return result;
         }
-        
+
         protected override InputBoxDialog CreateInputBoxDialog()
         {
             var result = base.CreateInputBoxDialog();
@@ -314,7 +321,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
 
             return result;
         }
-        
+
         protected override QuestionDialog CreateQuestionDialog()
         {
             var result = base.CreateQuestionDialog();
@@ -323,14 +330,14 @@ namespace Medja.OpenTk.Themes.DarkBlue
 
             return result;
         }
-        
+
         protected override DialogButtonsControl CreateDialogButtonsControl()
         {
             var result = base.CreateDialogButtonsControl();
             result.ButtonWidth = 150;
             result.ButtonHeight = 40;
             result.Margin.Top = 20;
-            
+
             return result;
         }
 
@@ -349,13 +356,13 @@ namespace Medja.OpenTk.Themes.DarkBlue
         protected override TabControl CreateTabControl()
         {
             var result = base.CreateTabControl();
-            
+
             result.TabHeaderSpacing = 5;
             result.TabHeaderHeight = 30;
             result.TabHeaderMaxWidth = 200;
             result.Padding.SetLeftAndRight(5);
             result.Padding.SetTopAndBottom(10);
-            
+
             result.Renderer = new TabControlRenderer(result);
 
             return result;
@@ -367,21 +374,21 @@ namespace Medja.OpenTk.Themes.DarkBlue
             result.Renderer = new TabItemRenderer(result, DefaultFont.Color);
 
             result.PropertyBackground.UpdateFrom(
-                result.PropertyIsSelected, 
+                result.PropertyIsSelected,
                 result.PropertyIsEnabled,
                 GetTabItemBackground);
 
             return result;
         }
-        
+
         protected override TablePanel CreateTablePanel()
         {
             var result = base.CreateTablePanel();
-            
+
             result.Renderer = new ControlRenderer(result);
             return result;
         }
-        
+
         protected override TextBlock CreateTextBlock()
         {
             var result = base.CreateTextBlock();
@@ -405,7 +412,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
             result.Renderer = new TextBoxRenderer(result);
 
             result.PropertyBackground.UpdateFrom(result.PropertyIsEnabled, GetTextBoxBackground);
-            
+
             return result;
         }
 
@@ -415,7 +422,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
             result.Renderer = new TextEditorRenderer(result);
 
             result.PropertyBackground.UpdateFrom(result.PropertyIsEnabled, GetTextEditorBackground);
-            
+
             return result;
         }
 
@@ -437,7 +444,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
             return result;
         }
 
-        protected override Window CreateWindow()
+        protected override Medja.Controls.Window CreateWindow()
         {
             var result = new OpenTkWindow(_windowSettings);
             result.Background = ThemeDarkBlueValues.WindowBackground;

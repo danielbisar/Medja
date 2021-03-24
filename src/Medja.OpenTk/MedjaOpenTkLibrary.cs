@@ -1,4 +1,5 @@
 ﻿using Medja.Controls.Images;
+using Medja.OpenTk.Window;
 
 namespace Medja.OpenTk
 {
@@ -10,7 +11,7 @@ namespace Medja.OpenTk
         private OpenTkWindow _mainWindow;
 
         public BitmapFactory BitmapFactory { get; }
-        
+
         public MedjaOpenTkLibrary()
         {
             BitmapFactory = new SkiaBitmapFactory();

@@ -1,5 +1,6 @@
 using System.Linq;
 using Medja.Controls;
+using Medja.Controls.Panels;
 using Medja.Theming;
 using Xunit;
 
@@ -43,8 +44,8 @@ namespace Medja.Test.Theming
         public void HasAllControlClassesTest()
         {
             var assembly = typeof(ControlFactory).Assembly;
-            var controls = assembly.ExportedTypes.Where(p => p.IsSubclassOf(typeof(Control)) 
-                                                             && !p.IsGenericType 
+            var controls = assembly.ExportedTypes.Where(p => p.IsSubclassOf(typeof(Control))
+                                                             && !p.IsGenericType
                                                              && !p.IsAbstract
                                                              && p != typeof(Panel));
             var factory = new ControlFactory();

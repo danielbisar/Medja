@@ -3,7 +3,7 @@ using System.Threading;
 using Medja.Utils.IO;
 using Xunit;
 
-namespace Medja.Utils.Test
+namespace Medja.Utils.Test.IO
 {
     public class FileCreatedWatcherTest
     {
@@ -19,7 +19,7 @@ namespace Medja.Utils.Test
             {
                 var createdCount = 0;
                 var createdFileName = string.Empty;
-                
+
                 watcher.Created += (s, e) =>
                 {
                     createdCount++;

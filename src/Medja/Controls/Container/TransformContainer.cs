@@ -1,6 +1,6 @@
 using Medja.Properties;
 
-namespace Medja.Controls
+namespace Medja.Controls.Container
 {
     /// <summary>
     /// A container that allows transforming it's sub controls.

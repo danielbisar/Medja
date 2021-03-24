@@ -1,4 +1,4 @@
-using Medja.Controls;
+using Medja.Controls.Buttons;
 
 namespace Medja.OpenTk.Themes.DarkBlue
 {
@@ -8,7 +8,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
     public class ButtonRenderer : TextControlRendererBase<Button>
     {
         private readonly ButtonBackgroundRenderer _backgroundRenderer;
-        
+
         public ButtonRenderer(Button control)
             : base(control)
         {

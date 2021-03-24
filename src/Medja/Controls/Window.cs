@@ -1,4 +1,5 @@
 ﻿using System;
+using Medja.Controls.Container;
 using Medja.Primitives;
 using Medja.Properties;
 using Medja.Theming;
@@ -32,18 +33,18 @@ namespace Medja.Controls
             get { return PropertyState.Get(); }
             set { PropertyState.Set(value); }
         }
-        
+
         /// <summary>
         /// Gets if the window is closed or not.
         /// </summary>
         public bool IsClosed { get; private set; }
 
         public IControlFactory ControlFactory { get; }
-        
+
         public FocusManager FocusManager { get; }
 
         public TaskQueue<object> TaskQueue { get; }
-        
+
         public event EventHandler Closed;
 
         public Window(IControlFactory controlFactory)
@@ -54,8 +55,8 @@ namespace Medja.Controls
             PropertyState = new Property<WindowState>();
             PropertyTitle = new Property<string>();
             PropertyTitle.SetSilent("");
-            
-            
+
+
         }
 
         public override void Arrange(Size availableSize)
@@ -65,11 +66,11 @@ namespace Medja.Controls
             // this doesn't make sense for windows, because their position
             // is relative to the desktop and the controls position relative
             // to the window
-            
+
             var area = new Rect(0, 0, availableSize.Width, availableSize.Height);
             area.Subtract(Margin);
             area.Subtract(Padding);
-            
+
             ContentArranger.Position(area);
             ContentArranger.Stretch(area);
         }

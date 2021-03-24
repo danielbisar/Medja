@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Medja.Primitives;
 
-namespace Medja.Controls
+namespace Medja.Controls.Graph2D
 {
     public interface IGraph2DDownsampler
     {

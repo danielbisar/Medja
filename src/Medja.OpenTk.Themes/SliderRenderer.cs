@@ -3,7 +3,6 @@ using Medja.Controls;
 using Medja.OpenTk.Rendering;
 using Medja.Primitives;
 using Medja.Properties;
-using Medja.Properties.Binding;
 using SkiaSharp;
 
 namespace Medja.OpenTk.Themes

@@ -2,7 +2,7 @@
 using Medja.Primitives;
 using Medja.Properties;
 
-namespace Medja.Controls
+namespace Medja.Controls.Container
 {
     public class ContentControl : Control
     {
@@ -10,20 +10,20 @@ namespace Medja.Controls
         {
             if (content.VerticalAlignment == VerticalAlignment.None)
                 content.VerticalAlignment = VerticalAlignment.Stretch;
-                
+
             if (content.HorizontalAlignment == HorizontalAlignment.None)
                 content.HorizontalAlignment = HorizontalAlignment.Stretch;
         }
-        
+
         protected readonly ContentArranger ContentArranger;
-        
+
         public readonly Property<Control> PropertyContent;
         public Control Content
         {
             get { return PropertyContent.Get(); }
             set { PropertyContent.Set(value); }
         }
-        
+
         public readonly Property<bool> PropertyAutoSetContentAlignment;
         /// <summary>
         /// Gets or sets whether Horizontal- and VerticalAlignment of the Control is set as Content is set to Stretch
@@ -42,14 +42,14 @@ namespace Medja.Controls
             PropertyContent = new Property<Control>();
             PropertyContent.PropertyChanged += OnContentChanged;
             PropertyContent.AffectsLayoutOf(this);
-            
+
             PropertyAutoSetContentAlignment = new Property<bool>();
             PropertyAutoSetContentAlignment.SetSilent(true);
-            
+
             Padding = new Thickness();
             PropertyIsEnabled.PropertyChanged += OnIsEnabledChanged;
             PropertyIsLayoutUpdated.PropertyChanged += OnIsLayoutUpdatedChanged;
-            
+
             ContentArranger = new ContentArranger();
         }
 
@@ -75,11 +75,11 @@ namespace Medja.Controls
             if (content != null)
             {
                 content.Parent = this;
-                
+
                 if(AutoSetContentAlignment)
                     SetContentAlignment(content);
             }
-            
+
             UpdateContentIsEnabled();
         }
 
@@ -105,7 +105,7 @@ namespace Medja.Controls
 
             var area = new Rect(Position.X, Position.Y, availableSize.Width, availableSize.Height);
             area.Subtract(Padding);
-            
+
             ContentArranger.Position(area);
             ContentArranger.Stretch(area);
         }

@@ -1,6 +1,7 @@
 ﻿using System;
+using Medja.Controls.Container;
 
-namespace Medja.Controls
+namespace Medja.Controls.Dialogs
 {
 	public class Dialog : ContentControl
 	{
@@ -11,7 +12,7 @@ namespace Medja.Controls
 		}
 
 		public event EventHandler Closed;
-		
+
 		public Dialog()
 		{
 		}
@@ -21,7 +22,7 @@ namespace Medja.Controls
 			DialogService.Show(this);
 			NeedsRendering = true;
 		}
-		
+
 		public void Hide()
 		{
 			DialogService.Hide(this);

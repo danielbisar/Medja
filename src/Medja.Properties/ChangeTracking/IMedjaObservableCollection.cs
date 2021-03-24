@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Specialized;
 
-namespace Medja.Properties
+namespace Medja.Properties.ChangeTracking
 {
     public interface IMedjaObservableCollection : INotifyCollectionChanged, IList
     {

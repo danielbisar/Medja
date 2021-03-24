@@ -1,7 +1,10 @@
 ﻿using System;
+using Medja.Controls.Buttons;
+using Medja.Controls.Container;
+using Medja.Controls.Panels;
 using Medja.Theming;
 
-namespace Medja.Controls
+namespace Medja.Controls.Dialogs
 {
 	public class DialogButtonsControl : ContentControl
 	{

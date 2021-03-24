@@ -1,7 +1,8 @@
+using Medja.Controls.Panels;
 using Medja.Primitives;
 using Medja.Theming;
 
-namespace Medja.Controls
+namespace Medja.Controls.Dialogs
 {
     public class NumericKeypadDialog : ConfirmableDialog
     {
@@ -11,11 +12,11 @@ namespace Medja.Controls
         {
             get { return _numericKeypad.Text; }
             set { _numericKeypad.Text = value; }
-        }    
+        }
 
-        public NumericKeypadDialog(ControlFactory controlFactory) 
+        public NumericKeypadDialog(ControlFactory controlFactory)
             : base(controlFactory)
-        { 
+        {
         }
 
         protected override Control CreateContent()

@@ -1,6 +1,6 @@
 using Medja.Properties;
 
-namespace Medja.Controls
+namespace Medja.Controls.Menu
 {
     /// <summary>
     /// Represents a single menu item.

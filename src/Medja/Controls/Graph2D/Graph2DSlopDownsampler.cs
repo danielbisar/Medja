@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Medja.Primitives;
 using Medja.Utils;
 
-namespace Medja.Controls
+namespace Medja.Controls.Graph2D
 {
     /// <summary>
     /// Down samples ordered (x-Axis ascending) points based on the relative slope between these points.

@@ -2,7 +2,7 @@ using System.IO;
 using Medja.Utils.IO;
 using Xunit;
 
-namespace Medja.Utils.Test
+namespace Medja.Utils.Test.IO
 {
     public class SequentialFileNamesTest
     {
@@ -19,15 +19,15 @@ namespace Medja.Utils.Test
         public void UseFullNameTest()
         {
             var fileInfo = new FileInfo("./baseName.1024");
-            var firstCreatedFullName = new FileInfo("./baseName.1024.0").FullName; 
+            var firstCreatedFullName = new FileInfo("./baseName.1024.0").FullName;
             var sequentialFileNames = new SequentialFileNames(fileInfo.FullName);
 
             CreateFile(fileInfo.FullName + ".0");
-            
+
             sequentialFileNames.Load();
 
             Assert.Equal(firstCreatedFullName, sequentialFileNames.FileNames[0]);
-            
+
             File.Delete(firstCreatedFullName);
         }
 
@@ -44,12 +44,12 @@ namespace Medja.Utils.Test
             CreateFile("./base...0");
 
             var baseName = "./base.";
-            
+
             var sequentialFileNames = new SequentialFileNames(baseName);
             sequentialFileNames.Load();
-            
+
             Assert.Collection(sequentialFileNames.FileNames, p => Assert.Equal(new FileInfo("./base..0").FullName, p));
-            
+
             File.Delete("./base.0");
             File.Delete("./base..0");
             File.Delete("./base...0");

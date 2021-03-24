@@ -1,4 +1,4 @@
-namespace Medja.Controls
+namespace Medja.Controls.Graph2D
 {
 //    /// <summary>
 //    /// Sames as <see cref="DataPoints"/> but adds a cache for the downsampled curve.
@@ -7,7 +7,7 @@ namespace Medja.Controls
 //    {
 //        private List<Point> _downsampledPoints;
 //        private DataPointsRenderingSettings _previousSettings;
-//        
+//
 //        public void InvalidateCache()
 //        {
 //            _downsampledPoints = null;

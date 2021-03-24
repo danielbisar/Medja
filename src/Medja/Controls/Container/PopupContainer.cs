@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using Medja.Primitives;
 using Medja.Properties;
 
-namespace Medja.Controls
+namespace Medja.Controls.Container
 {
     /// <summary>
     /// A container that layouts the Content and just shows the popup (does not move it).
     /// </summary>
     public class PopupContainer : ContentControl
     {
-        [NonSerialized] 
+        [NonSerialized]
         public readonly Property<Popup> PropertyPopup;
         /// <summary>
         /// Gets or sets the <see cref="Popup"/>.
@@ -21,7 +21,7 @@ namespace Medja.Controls
             get { return PropertyPopup.Get(); }
             set { PropertyPopup.Set(value); }
         }
-        
+
         public PopupContainer()
         {
             PropertyPopup = new Property<Popup>();
@@ -41,7 +41,7 @@ namespace Medja.Controls
             if (newPopup != null)
             {
                 newPopup.Parent = this;
-                
+
                 if (newPopup.IsVisible)
                     newPopup.Visibility = Visibility.Collapsed;
             }
@@ -51,7 +51,7 @@ namespace Medja.Controls
         {
             foreach(var child in base.GetChildren())
                 yield return child;
-            
+
             if(Popup != null && Popup.IsVisible)
                 yield return Popup;
         }

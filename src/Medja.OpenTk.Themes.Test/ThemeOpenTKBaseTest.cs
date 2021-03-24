@@ -1,7 +1,8 @@
-using System;
 using System.Linq;
 using Medja.Controls;
+using Medja.Controls.Panels;
 using Medja.OpenTk.Controls;
+using Medja.OpenTk.Window;
 using Medja.Theming;
 using Xunit;
 using Xunit.Abstractions;
@@ -29,10 +30,10 @@ namespace Medja.OpenTk.Themes.Test
                                                              && !p.IsGenericType
                                                              && !p.IsAbstract
                                                              && p != typeof(Panel));
-            
+
             // filter classes - f.e. OpenTkWindow because it inherits from Window
             controls = controls.Where(p => p != typeof(OpenTkWindow));
-            
+
             var factory = new ThemeOpenTKBase();
 
             foreach (var control in controls)

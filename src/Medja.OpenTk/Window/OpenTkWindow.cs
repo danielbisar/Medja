@@ -9,37 +9,37 @@ using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL4;
 
-namespace Medja.OpenTk
+namespace Medja.OpenTk.Window
 {
-    public class OpenTkWindow : Window
+    public class OpenTkWindow : Medja.Controls.Window
     {
         private OpenTkRenderer _renderer;
         private OpenTkMouseHandler _mouseHandler;
         private OpenTkKeyboardHandler _keyboardHandler;
         private ControlHierarchy _controlHierarchy;
         private FramesPerSecondLimiter _frameLimiter;
-        
+
         private bool _calledClose;
         private bool _selfUpdatePosition;
 
         public GameWindow GameWindow { get; }
-        
+
         public OpenTkWindow(MedjaOpenTKWindowSettings windowSettings)
         : base(windowSettings.ControlFactory)
         {
             var openGLVersion = windowSettings.OpenGLVersion;
-            
-            GameWindow = new GameWindow(800, 600, 
-                GraphicsMode.Default, 
-                "", 
-                GameWindowFlags.Default, 
-                DisplayDevice.Default, 
-                openGLVersion.Major, openGLVersion.Minor, 
+
+            GameWindow = new GameWindow(800, 600,
+                GraphicsMode.Default,
+                "",
+                GameWindowFlags.Default,
+                DisplayDevice.Default,
+                openGLVersion.Major, openGLVersion.Minor,
                 GraphicsContextFlags.ForwardCompatible);
-            
+
             _controlHierarchy = new ControlHierarchy(this);
             _frameLimiter = new FramesPerSecondLimiter(windowSettings.MaxFramesPerSecond, UpdateAndRender);
-            
+
             // order of events
             // load, resize, move, render, closed
             GameWindow.Load += OnGameWindowLoad;
@@ -111,7 +111,7 @@ namespace Medja.OpenTk
                 // at least under X11 this sometimes leads to a complete blocking of the program
                 if (x == 0)
                     throw new InvalidOperationException("Cannot manually set Window.Position.X = 0");
-                
+
                 GameWindow.X = x;
             }
 
@@ -122,7 +122,7 @@ namespace Medja.OpenTk
                 // at least under X11 this sometimes leads to a complete blocking of the program
                 if (y == 0)
                     throw new InvalidOperationException("Cannot manually set Window.Position.Y = 0");
-                
+
                 GameWindow.Y = (int) Position.Y;
             }
 
@@ -144,7 +144,7 @@ namespace Medja.OpenTk
         public override void Show()
         {
             _frameLimiter.Run();
-            
+
             // do not limit fps via this method, since OpenTK keeps using too much CPU
             GameWindow.Run();
         }
@@ -173,7 +173,7 @@ namespace Medja.OpenTk
             _selfUpdatePosition = false;
 
             GameWindow.MakeCurrent();
-            
+
             // TODO extract OpenGL calls into strategy, so we can handle multiple versions?
             var clientRect = GameWindow.ClientRectangle;
             GL.Viewport(0, 0, clientRect.Width, clientRect.Height);
@@ -221,7 +221,7 @@ namespace Medja.OpenTk
             try
             {
                 // call to GameWindow.Close(); and afterwards Dispose will
-                // create an error under linux (BadWindow from window manager X), 
+                // create an error under linux (BadWindow from window manager X),
                 // so we just call Dispose which will also close the window.
                 GameWindow.Dispose();
             }

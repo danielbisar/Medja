@@ -1,8 +1,8 @@
-using Medja.Controls;
+using Medja.Controls.Graph2D;
 using Medja.Theming;
 using Xunit;
 
-namespace Medja.Test.Controls
+namespace Medja.Test.Controls.Graph2D
 {
     public class Graph2DAxisTest
     {

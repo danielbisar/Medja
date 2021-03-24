@@ -5,7 +5,7 @@ using System.Threading;
 using Medja.Utils.IO;
 using Xunit;
 
-namespace Medja.Utils.Test
+namespace Medja.Utils.Test.IO
 {
     public class FileFollowReaderTest
     {
@@ -20,6 +20,8 @@ namespace Medja.Utils.Test
                 stream.WriteLine("test");
                 stream.Flush();
 
+                // note: this test will fail on windows, since the StreamWriter keeps the file open
+                // on linux it will work as expected
                 var dataChangedEventCount = 0;
                 var content = new StringBuilder();
 

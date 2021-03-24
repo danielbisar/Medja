@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Specialized;
 
-namespace Medja.Properties.ChangeTracking
+namespace Medja.Properties.ChangeTracking.Changes
 {
     [Serializable]
     public class CollectionPropertyChange : PropertyChange
@@ -10,14 +10,14 @@ namespace Medja.Properties.ChangeTracking
         public int Index { get; }
         public object Item { get; }
         public object[] Items { get; }
-        
-        public CollectionPropertyChange(string name, NotifyCollectionChangedAction action, object item, int index) 
+
+        public CollectionPropertyChange(string name, NotifyCollectionChangedAction action, object item, int index)
             : base(name)
         {
-            if(action != NotifyCollectionChangedAction.Add 
+            if(action != NotifyCollectionChangedAction.Add
                && action != NotifyCollectionChangedAction.Remove)
                 throw new ArgumentOutOfRangeException(nameof(action));
-            
+
             Action = action;
             Item = item;
             Index = index;

@@ -2,7 +2,7 @@ using System.Linq;
 using Medja.Primitives;
 using Medja.Properties;
 
-namespace Medja.Controls
+namespace Medja.Controls.Panels
 {
     public class UniformWidthPanel : Panel
     {
@@ -35,7 +35,7 @@ namespace Medja.Controls
         public override void Arrange(Size availableSize)
         {
             var visibleChildrenCount = Children.Count(p => p.Visibility != Visibility.Collapsed);
-            
+
             if (visibleChildrenCount == 0)
                 return;
 
@@ -59,7 +59,7 @@ namespace Medja.Controls
                     childPos.Y = y + height - childPos.Height;
                 else
                     childPos.Y = y + child.Margin.Top;
-                
+
                 if (child.VerticalAlignment != VerticalAlignment.Top
                     && child.VerticalAlignment != VerticalAlignment.Bottom)
                     childPos.Height = height - child.Margin.TopAndBottom;
@@ -68,7 +68,7 @@ namespace Medja.Controls
 
                 child.Arrange(new Size(childPos.Width, childPos.Height));
             }
-            
+
             base.Arrange(availableSize);
         }
     }

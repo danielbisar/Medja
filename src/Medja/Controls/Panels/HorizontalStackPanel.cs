@@ -1,7 +1,7 @@
 using Medja.Primitives;
 using Medja.Properties;
 
-namespace Medja.Controls
+namespace Medja.Controls.Panels
 {
     public class HorizontalStackPanel : Panel
     {
@@ -24,7 +24,7 @@ namespace Medja.Controls
             PropertySpaceBetweenChildren = new Property<float>();
             PropertySpaceBetweenChildren.AffectsLayoutOf(this);
             PropertySpaceBetweenChildren.SetSilent(10);
-            
+
             PropertyChildrenWidth = new Property<float?>();
             PropertyChildrenWidth.AffectsLayoutOf(this);
         }
@@ -56,18 +56,18 @@ namespace Medja.Controls
                 if (child.VerticalAlignment != VerticalAlignment.Top
                         && child.VerticalAlignment != VerticalAlignment.Bottom)
                     childPos.Height = height - child.Margin.TopAndBottom;
-                
+
                 if(child.VerticalAlignment == VerticalAlignment.Bottom)
                     childPos.Y = curY + height - childPos.Height;
                 else
                     childPos.Y = curY + child.Margin.Top;
-                
+
                 if (ChildrenWidth.HasValue)
                     childPos.Width = ChildrenWidth.Value - child.Margin.LeftAndRight;
 
                 childPos.X = curX + child.Margin.Left;
                 curX += childPos.Width + SpaceBetweenChildren;
-                
+
                 child.Arrange(new Size(childPos.Width, childPos.Height));
             }
 

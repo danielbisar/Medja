@@ -1,9 +1,9 @@
 using System;
-using Medja.Controls;
+using Medja.Controls.Graph2D;
 using Medja.Primitives;
 using Xunit;
 
-namespace Medja.Test.Controls
+namespace Medja.Test.Controls.Graph2D
 {
     public class DataPointsTest
     {
@@ -18,7 +18,7 @@ namespace Medja.Test.Controls
         {
             var items = new DataPoints();
             items.Add(new Point(1,2));
-            
+
             // todo collection assert?
         }
 
@@ -30,7 +30,7 @@ namespace Medja.Test.Controls
 
             Assert.Throws<NotSupportedException>(() => items.Add(new Point(1, 1)));
         }
-        
+
         [Fact]
         public void CanAddWithSameX()
         {
@@ -43,7 +43,7 @@ namespace Medja.Test.Controls
         public void GetPointsInLimits()
         {
             var items = new DataPoints();
-            
+
             items.Add(new Point(0, 1));
             items.Add(new Point(1, 1));
             items.Add(new Point(2, 0));
@@ -55,9 +55,9 @@ namespace Medja.Test.Controls
             settings.MaxX = 3;
             settings.MinY = 1;
             settings.MaxY = 2;
-            
+
             /*var result = items.GetForRendering(settings);
-            
+
             Assert.Equal(2, result.Count);
             Assert.Equal(1, result[0].X);
             Assert.Equal(3, result[1].X);*/

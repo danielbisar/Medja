@@ -1,4 +1,4 @@
-using Medja.Controls;
+using Medja.Controls.Menu;
 using Medja.OpenTk.Rendering;
 using Medja.OpenTk.Utils;
 using Medja.Primitives;
@@ -16,15 +16,15 @@ namespace Medja.OpenTk.Themes
          textColor)
             : base(control)
         {
-            control.AffectRendering(_control.PropertyBackground, 
+            control.AffectRendering(_control.PropertyBackground,
                 _control.PropertyTitle);
-            
+
             _textPaint = new SKPaint();
             _textPaint.Color = textColor.ToSKColor();
             _textPaint.Typeface = SKTypeface.FromFamilyName(fontName);
             _textPaint.TextSize = 16;
             _textPaint.IsAntialias = true;
-            
+
             _backgroundPaint = new SKPaint();
             _backgroundPaint.IsAntialias = true;
         }
@@ -44,7 +44,7 @@ namespace Medja.OpenTk.Themes
         {
             _textPaint.Dispose();
             _backgroundPaint.Dispose();
-            
+
             base.Dispose(disposing);
         }
     }

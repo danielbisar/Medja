@@ -1,10 +1,9 @@
-using System;
 using System.Collections.Generic;
 using Medja.Primitives;
 using Medja.Properties;
 using Medja.Theming;
 
-namespace Medja.Controls
+namespace Medja.Controls.Container
 {
     public class ScrollableContainer : ContentControl
     {
@@ -53,7 +52,7 @@ namespace Medja.Controls
         {
             _startDragPos = null;
         }
-        
+
         protected virtual void OnDragged(object sender, MouseDraggedEventArgs e)
         {
             if (!_startDragPos.HasValue)
@@ -69,7 +68,7 @@ namespace Medja.Controls
 
             if (newValue < 0)
                 newValue = 0;
-            
+
             _scrollBar.Value = newValue;
         }
 
@@ -91,10 +90,10 @@ namespace Medja.Controls
             _scrollBar.Position.X = area.X + area.Width - scrollBarWidth;
             _scrollBar.Position.Y = area.Y;
             _scrollBar.Position.Height = area.Height;
-            
+
             area.Width -= scrollBarWidth;
             area.Y -= _scrollBar.Value;
-            
+
             ContentArranger.Position(area);
             ContentArranger.StretchWidth(area);
 
@@ -104,7 +103,7 @@ namespace Medja.Controls
                 Content.ClippingArea.Y = Position.Y + Margin.Top + Padding.Top;
                 Content.ClippingArea.Height = area.Height;
                 Content.ClippingArea.Width = area.Width;
-               
+
                 if (_scrollBar.Value > _scrollBar.MaxValue)
                     _scrollBar.Value = _scrollBar.MaxValue;
             }
@@ -120,7 +119,7 @@ namespace Medja.Controls
 
             var notVisibleHeight = Content.Position.Height - Position.Height;
             var maxValue = 0;
-            
+
             if (notVisibleHeight > 0)
                 maxValue = (int)notVisibleHeight;
 
@@ -141,7 +140,7 @@ namespace Medja.Controls
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
-            
+
             if(Content != null)
                 Content.Position.PropertyHeight.PropertyChanged -= OnContentHeightChanged;
         }

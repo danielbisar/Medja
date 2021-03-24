@@ -1,6 +1,6 @@
 using System;
 
-namespace Medja.Controls
+namespace Medja.Controls.TextEditor
 {
     public class Caret : IEquatable<Caret>
     {
@@ -11,7 +11,7 @@ namespace Medja.Controls
 
             if (b == null)
                 return true;
-            
+
             if (a.Y == b.Y)
                 return a.X > a.Y;
 
@@ -25,7 +25,7 @@ namespace Medja.Controls
 
             if (b == null)
                 return false;
-            
+
             if (a.Y == b.Y)
                 return a.X < b.X;
 
@@ -66,24 +66,24 @@ namespace Medja.Controls
 
         public bool Equals(Caret other)
         {
-            if (ReferenceEquals(null, other)) 
+            if (ReferenceEquals(null, other))
                 return false;
-            if (ReferenceEquals(this, other)) 
+            if (ReferenceEquals(this, other))
                 return true;
-            
+
             return X == other.X && Y == other.Y;
         }
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj)) 
+            if (ReferenceEquals(null, obj))
                 return false;
-            if (ReferenceEquals(this, obj)) 
+            if (ReferenceEquals(this, obj))
                 return true;
-            
-            if (obj.GetType() != this.GetType()) 
+
+            if (obj.GetType() != this.GetType())
                 return false;
-            
+
             return Equals((Caret) obj);
         }
 

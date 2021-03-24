@@ -1,4 +1,4 @@
-namespace Medja.Properties
+namespace Medja.Properties.ChangeTracking
 {
     public interface IUndoable
     {

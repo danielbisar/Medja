@@ -1,4 +1,4 @@
-using Medja.Controls;
+using Medja.Controls.TextEditor;
 using Medja.OpenTk.Rendering;
 using Medja.OpenTk.Utils;
 using SkiaSharp;
@@ -9,7 +9,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
     {
         private static readonly SKPaint TextPaint;
         private static readonly SKPaint SelectionPaint;
-        
+
         static TextEditorRenderer()
         {
             TextPaint = new SKPaint();
@@ -32,15 +32,15 @@ namespace Medja.OpenTk.Themes.DarkBlue
         {
             _backgroundPaint = new SKPaint();
             _backgroundPaint.IsAntialias = true;
-            
+
             _lineHeight = TextPaint.TextSize * 1.3f;
-            
+
             _control.AffectRendering(
-                _control.PropertyBackground, 
-                _control.PropertyCaretX, 
-                _control.PropertyCaretY, 
-                _control.PropertySelectionStart, 
-                _control.PropertySelectionEnd, 
+                _control.PropertyBackground,
+                _control.PropertyCaretX,
+                _control.PropertyCaretY,
+                _control.PropertySelectionStart,
+                _control.PropertySelectionEnd,
                 _control.PropertyIsCaretVisible);
         }
 
@@ -139,7 +139,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
             if (!_control.IsCaretVisible)
                 return;
 
-            // todo use intptr version and specify length, so we don't need to 
+            // todo use intptr version and specify length, so we don't need to
             // use substr
             var textBeforeCaret = _control.Lines[_control.CaretY].Substring(0, _control.CaretX) ?? "";
             float x;

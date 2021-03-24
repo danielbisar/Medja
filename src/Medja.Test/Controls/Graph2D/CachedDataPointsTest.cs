@@ -1,6 +1,6 @@
 using Xunit;
 
-namespace Medja.Test.Controls
+namespace Medja.Test.Controls.Graph2D
 {
     public class CachedDataPointsTest
     {

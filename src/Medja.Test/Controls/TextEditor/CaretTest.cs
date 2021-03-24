@@ -1,7 +1,7 @@
-using Medja.Controls;
+using Medja.Controls.TextEditor;
 using Xunit;
 
-namespace Medja.Test.Controls
+namespace Medja.Test.Controls.TextEditor
 {
     public class CaretTest
     {
@@ -15,15 +15,15 @@ namespace Medja.Test.Controls
             Assert.True(a > b);
             Assert.True(c > b);
             Assert.True(c > a);
-            
+
             Assert.False(b > a);
             Assert.False(b > c);
             Assert.False(a > c);
-            
+
             Assert.True(a > null);
             Assert.False(null > a);
         }
-        
+
         [Fact]
         public void LessThanOperator()
         {
@@ -34,11 +34,11 @@ namespace Medja.Test.Controls
             Assert.False(a < b);
             Assert.False(c < b);
             Assert.False(c < a);
-            
+
             Assert.True(b < a);
             Assert.True(b < c);
             Assert.True(a < c);
-            
+
             Assert.False(a < null);
             Assert.True(null < a);
         }
@@ -50,7 +50,7 @@ namespace Medja.Test.Controls
             var b = new Caret(5,3);
             var c = new Caret(5,4);
             var d = new Caret(4,3);
-            
+
             Assert.Equal(a, b);
             Assert.Equal(b, a);
             Assert.NotEqual(a, c);

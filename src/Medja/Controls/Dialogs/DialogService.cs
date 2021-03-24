@@ -2,7 +2,7 @@ using System;
 using Medja.Primitives;
 using Medja.Theming;
 
-namespace Medja.Controls
+namespace Medja.Controls.Dialogs
 {
     /// <summary>
     /// Helper class to make working with dialogs easier.
@@ -28,7 +28,7 @@ namespace Medja.Controls
                 _dialogParentControl.HorizontalAlignment = HorizontalAlignment.Stretch;
                 _dialogParentControl.VerticalAlignment = VerticalAlignment.Stretch;
                 _dialogParentControl.Content = content;
-                
+
                 return _dialogParentControl;
             }
         }

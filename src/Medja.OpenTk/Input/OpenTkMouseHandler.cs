@@ -7,7 +7,7 @@ using Medja.Utils;
 using OpenTK;
 using OpenTK.Input;
 
-namespace Medja.OpenTk
+namespace Medja.OpenTk.Input
 {
     public class OpenTkMouseHandler
     {
@@ -20,17 +20,17 @@ namespace Medja.OpenTk
                     WheelDelta = e.DeltaPrecise
             };
         }
-        
+
         private static bool IsMouseOver(Control control, Point pos)
         {
             var childPos = control.Position;
-            
+
             return pos.X >= childPos.X
                     && pos.Y >= childPos.Y
                     && pos.X <= childPos.X + childPos.Width
                     && pos.Y <= childPos.Y + childPos.Height;
         }
-        
+
         private static MouseState GetInputState(MouseEventArgs e)
         {
             return new MouseState
@@ -40,7 +40,7 @@ namespace Medja.OpenTk
                 IsMouseMove = true
             };
         }
-        
+
         private static MouseState GetInputState(MouseButtonEventArgs e)
         {
             return new MouseState
@@ -50,15 +50,15 @@ namespace Medja.OpenTk
                 IsMouseMove = false
             };
         }
-        
-        private readonly Window _window;
+
+        private readonly Medja.Controls.Window _window;
         private readonly GameWindow _gameWindow;
         private readonly FocusManager _focusManager;
         private Control _currentDragControl;
-        
+
         public List<Control> Controls { get; set; }
 
-        public OpenTkMouseHandler(Window window, GameWindow gameWindow, FocusManager focusManager)
+        public OpenTkMouseHandler(Medja.Controls.Window window, GameWindow gameWindow, FocusManager focusManager)
         {
             _window = window;
             _gameWindow = gameWindow;
@@ -74,7 +74,7 @@ namespace Medja.OpenTk
         {
             ApplyMouseToControls(GetInputState(e));
         }
-        
+
         private void OnMouseMove(object sender, MouseMoveEventArgs e)
         {
             ApplyMouseToControls(GetInputState(e));
@@ -94,13 +94,13 @@ namespace Medja.OpenTk
         {
             if (Controls == null)
                 return;
-            
+
             var position = e.Position;
 
             if (e.IsLeftButtonDown && _currentDragControl != null)
             {
                 ApplyMouse(_currentDragControl, e);
-                
+
                 foreach(var control in Controls.Where(p => p != _currentDragControl))
                     control.InputState.Clear();
             }
@@ -108,7 +108,7 @@ namespace Medja.OpenTk
             {
                 if (!e.IsLeftButtonDown)
                     _currentDragControl = null;
-                
+
                 // controls are in z-Order from back to front, so we go through them in reverse order
                 for (int i = Controls.Count - 1; i >= 0; i--)
                 {
@@ -153,6 +153,6 @@ namespace Medja.OpenTk
                 _currentDragControl = control;
         }
 
-        
+
     }
 }
