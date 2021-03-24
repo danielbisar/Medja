@@ -1,6 +1,6 @@
 using Medja.Primitives;
 
-namespace Medja.Controls
+namespace Medja.Controls.Panels
 {
     /// <summary>
     /// A panel that resizes it's children to it's own size.
@@ -26,7 +26,7 @@ namespace Medja.Controls
                     pos.Y = y + margin.Top;
                 else if (child.VerticalAlignment == VerticalAlignment.Bottom)
                     pos.Y = y + height - (pos.Height + margin.Bottom);
-                
+
                 if(child.VerticalAlignment == VerticalAlignment.None
                    || child.VerticalAlignment == VerticalAlignment.Stretch)
                     pos.Height = height - margin.TopAndBottom;
@@ -37,7 +37,7 @@ namespace Medja.Controls
                     pos.X = x + margin.Left;
                 else if(child.HorizontalAlignment == HorizontalAlignment.Right)
                     pos.X = x + width - (pos.Width + margin.Right);
-                
+
                 if(child.HorizontalAlignment == HorizontalAlignment.None
                    || child.HorizontalAlignment == HorizontalAlignment.Stretch)
                     pos.Width = width - margin.LeftAndRight;

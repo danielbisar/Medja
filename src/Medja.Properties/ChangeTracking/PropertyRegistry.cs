@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using Medja.Properties.ChangeTracking;
+using Medja.Properties.ChangeTracking.Changes;
 
-namespace Medja.Properties
+namespace Medja.Properties.ChangeTracking
 {
     /// <summary>
     /// Tracks changes on properties and allow revert.

@@ -2,7 +2,7 @@ using System;
 using OpenTK.Graphics;
 using OpenTK.Platform;
 
-namespace Medja.OpenTk
+namespace Medja.OpenTk.Rendering
 {
     public class GlContext : IDisposable
     {

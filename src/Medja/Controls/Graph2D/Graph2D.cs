@@ -1,11 +1,13 @@
+using Medja.Controls.Container;
+using Medja.Controls.Panels;
 using Medja.Theming;
 
-namespace Medja.Controls
+namespace Medja.Controls.Graph2D
 {
     // idea: if necessary reuse point objects
     // idea: use a type of list that adds points ordered by x so that max and min methods could operate faster?
     // do not use ObservableCollection for performance reasons
-    
+
     /// <summary>
     /// A 2D graph control that allows different usage scenarios
     /// - big data: put in you x,y data, the graph will downsample and display it
@@ -13,14 +15,14 @@ namespace Medja.Controls
     public class Graph2D : ContentControl
     {
         private readonly IControlFactory _controlFactory;
-        
+
         public Graph2DAxis AxisX { get; }
         public Graph2DAxis AxisY { get; }
-        
+
         public Graph2D(IControlFactory controlFactory)
         {
             _controlFactory = controlFactory;
-            
+
             AxisX = controlFactory.Create<Graph2DAxis>();
             AxisX.Orientation = AxisOrientation.Vertical;
             AxisY = controlFactory.Create<Graph2DAxis>();

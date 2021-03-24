@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace Medja.OpenTk
+namespace Medja.OpenTk.Input
 {
 	internal class MouseState
 	{

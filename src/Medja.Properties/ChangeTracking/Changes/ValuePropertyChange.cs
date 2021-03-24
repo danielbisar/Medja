@@ -1,6 +1,6 @@
 using System;
 
-namespace Medja.Properties
+namespace Medja.Properties.ChangeTracking.Changes
 {
     [Serializable]
     public class ValuePropertyChange : PropertyChange

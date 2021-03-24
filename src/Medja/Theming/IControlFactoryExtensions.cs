@@ -1,4 +1,6 @@
 using Medja.Controls;
+using Medja.Controls.Container;
+using Medja.Utils;
 
 namespace Medja.Theming
 {
@@ -25,21 +27,21 @@ namespace Medja.Theming
         /// <param name="content"></param>
         /// <param name="popupContent"></param>
         /// <returns></returns>
-        public static PopupContainer CreatePopupContainer(this IControlFactory controlFactory, 
-            Control content, 
+        public static PopupContainer CreatePopupContainer(this IControlFactory controlFactory,
+            Control content,
             Control popupContent)
         {
             var popup = controlFactory.Create<Popup>();
             popup.Content = popupContent;
             popup.AutoPosRelativeToBottomOf(content);
-            
+
             var result = controlFactory.Create<PopupContainer>();
             result.Content = content;
             result.Popup = popup;
-            
+
             return result;
         }
-        
+
         /// <summary>
         /// Creates a text block with the given text.
         /// </summary>

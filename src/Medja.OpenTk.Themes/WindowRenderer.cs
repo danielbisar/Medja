@@ -1,14 +1,13 @@
-using Medja.Controls;
 using Medja.OpenTk.Rendering;
 using SkiaSharp;
 
 namespace Medja.OpenTk.Themes
 {
-    public class WindowRenderer : SkiaControlRendererBase<Window>
+    public class WindowRenderer : SkiaControlRendererBase<Medja.Controls.Window>
     {
         private readonly SKPaint _backgroundPaint;
-        
-        public WindowRenderer(Window control) 
+
+        public WindowRenderer(Medja.Controls.Window control)
             : base(control)
         {
             _backgroundPaint = new SKPaint();
@@ -18,7 +17,7 @@ namespace Medja.OpenTk.Themes
         {
             var color = _control.IsEnabled ? _control.Background : _control.Background.GetDisabled();
             _backgroundPaint.Color = color.ToSKColor();
-            
+
             _canvas.DrawRect(0, 0, _control.Position.Width, _control.Position.Height, _backgroundPaint);
         }
     }

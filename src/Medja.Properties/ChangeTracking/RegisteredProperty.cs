@@ -1,4 +1,5 @@
 using System;
+using Medja.Properties.ChangeTracking.Changes;
 
 namespace Medja.Properties.ChangeTracking
 {
@@ -8,7 +9,7 @@ namespace Medja.Properties.ChangeTracking
     internal class RegisteredProperty : IDisposable
     {
         private PropertyCollectionChangedHandler _collectionChangedHandler;
-        
+
         public string Name { get; }
         public IProperty Property { get; }
 
@@ -22,9 +23,9 @@ namespace Medja.Properties.ChangeTracking
         {
             if(addCollectionChange == null)
                 throw new ArgumentNullException(nameof(addCollectionChange));
-            
+
             var valueType = Property.GetValueType();
-            
+
             if (!typeof(IMedjaObservableCollection).IsAssignableFrom(valueType))
                 return;
 
@@ -67,7 +68,7 @@ namespace Medja.Properties.ChangeTracking
                 value.BeforeClear -= _collectionChangedHandler.HandleBeforeClear;
                 value.CollectionChanged -= _collectionChangedHandler.HandleCollectionChanged;
                 _collectionChangedHandler = null;
-                
+
                 Property.PropertyChanged -= UpdateCollectionHandler;
             }
         }

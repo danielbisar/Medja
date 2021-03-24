@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Medja.Properties.ChangeTracking
+namespace Medja.Properties.ChangeTracking.Changes
 {
     [Serializable]
     public class SubPropertyChanges : PropertyChange

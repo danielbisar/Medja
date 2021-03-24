@@ -1,4 +1,4 @@
-namespace Medja.Test.Controls
+namespace Medja.Test.Controls.Panels
 {
     public class HorizontalStackPanelTest
     {

@@ -1,17 +1,16 @@
-﻿using Medja.Properties.Binding;
-using Medja.Controls;
-using Medja.OpenTk.Themes.BlackRed;
+﻿using Medja.Controls;
+using Medja.Controls.Buttons;
+using Medja.Controls.Container;
+using Medja.Controls.Dialogs;
+using Medja.Controls.Graph2D;
+using Medja.Controls.Menu;
+using Medja.Controls.Panels;
 using Medja.OpenTk.Themes.DarkBlue;
+using Medja.OpenTk.Window;
 using Medja.Primitives;
-using Medja.Theming;
-using ButtonRenderer = Medja.OpenTk.Themes.BlackRed.ButtonRenderer;
-using CheckBoxRenderer = Medja.OpenTk.Themes.BlackRed.CheckBoxRenderer;
-using ComboBoxRenderer = Medja.OpenTk.Themes.BlackRed.ComboBoxRenderer;
-using TabControlRenderer = Medja.OpenTk.Themes.BlackRed.TabControlRenderer;
-using TextBlockRenderer = Medja.OpenTk.Themes.BlackRed.TextBlockRenderer;
-using TextBoxRenderer = Medja.OpenTk.Themes.BlackRed.TextBoxRenderer;
+using Medja.Properties.Binding;
 
-namespace Medja.OpenTk.Themes
+namespace Medja.OpenTk.Themes.BlackRed
 {
     public class ThemeBlackRed : ThemeOpenTKBase
     {
@@ -24,12 +23,12 @@ namespace Medja.OpenTk.Themes
             DefaultFont.Name = "Monospace";
             DefaultFont.Color = ThemeBlackRedValues.PrimaryTextColor;
         }
-        
+
         protected override Button CreateButton()
         {
             var result = base.CreateButton();
             SetupButton(result);
-            
+
             return result;
         }
 
@@ -62,7 +61,7 @@ namespace Medja.OpenTk.Themes
         private Color GetButtonFontColor(bool isEnabled)
         {
             return isEnabled
-                ? ThemeBlackRedValues.PrimaryTextColor 
+                ? ThemeBlackRedValues.PrimaryTextColor
                 : ThemeBlackRedValues.PrimaryTextColor.GetDisabled();
         }
 
@@ -76,7 +75,7 @@ namespace Medja.OpenTk.Themes
 
             result.PropertyBackground.UpdateFrom(result.PropertyIsChecked, GetCheckBoxBackground);
             result.Font.PropertyColor.UpdateFrom(result.PropertyIsChecked, GetCheckBoxFontColor);
-            
+
             return result;
         }
 
@@ -109,8 +108,8 @@ namespace Medja.OpenTk.Themes
 
         private Color GetComboBoxBackground(bool isEnabled)
         {
-            return isEnabled 
-                ? ThemeBlackRedValues.PrimaryColor 
+            return isEnabled
+                ? ThemeBlackRedValues.PrimaryColor
                 : ThemeBlackRedValues.PrimaryColor.GetDisabled();
         }
 
@@ -129,7 +128,7 @@ namespace Medja.OpenTk.Themes
 
         private Color GetComboBoxMenuItemBackground(bool isSelected, bool isEnabled)
         {
-            var result = isSelected 
+            var result = isSelected
                 ? ThemeBlackRedValues.SecondaryColor
                 : ThemeBlackRedValues.PrimaryColor;
 
@@ -169,7 +168,7 @@ namespace Medja.OpenTk.Themes
             result.ButtonWidth = 150;
             result.ButtonHeight = 50;
             result.Margin.Top = 20;
-            
+
             return result;
         }
 
@@ -180,7 +179,7 @@ namespace Medja.OpenTk.Themes
             result.AxisX.Position.Width = 75;
             result.AxisX.Margin.Bottom = 50;
             result.AxisY.Position.Height = 50;
-            
+
             //result.Renderer = new Graph2DRenderer(result);
 
             return result;
@@ -194,7 +193,7 @@ namespace Medja.OpenTk.Themes
             result.Font.Color = DefaultFont.Color;
             result.Font.Size = 10;
             result.Font.Name = DefaultFont.Name;
-            
+
             return result;
         }
 
@@ -225,7 +224,7 @@ namespace Medja.OpenTk.Themes
                 result.PropertyIsSelected,
                 result.PropertyIsEnabled,
                 GetMenuItemBackground);
-            
+
             return result;
         }
 
@@ -298,7 +297,7 @@ namespace Medja.OpenTk.Themes
 
             result.PropertyBackground.UpdateFrom(result.PropertyIsEnabled, GetSliderBackground);
             result.PropertyThumbColor.UpdateFrom(result.PropertyIsEnabled, GetSliderThumbColor);
-            
+
             return result;
         }
 
@@ -325,7 +324,7 @@ namespace Medja.OpenTk.Themes
             result.Padding.SetLeftAndRight(5);
             result.Padding.SetTopAndBottom(10);
             result.Renderer = new TabControlRenderer(result);
-            
+
             return result;
         }
 
@@ -339,7 +338,7 @@ namespace Medja.OpenTk.Themes
                 result.PropertyIsEnabled,
                 GetTabItemBackground
             );
-            
+
             return result;
         }
 
@@ -367,7 +366,7 @@ namespace Medja.OpenTk.Themes
                 result.PropertyIsFocused,
                 result.PropertyIsEnabled,
                 GetTextBoxBackground);
-            
+
             return result;
         }
 
@@ -402,7 +401,7 @@ namespace Medja.OpenTk.Themes
 
             result.PropertyBackground.UpdateFrom(result.PropertyIsEnabled, GetProgressBarBackground);
             result.PropertyProgressColor.UpdateFrom(result.PropertyIsEnabled, GetProgressBarProgressColor);
-            
+
             return result;
         }
 
@@ -415,8 +414,8 @@ namespace Medja.OpenTk.Themes
 
         private Color GetProgressBarBackground(bool isEnabled)
         {
-            return isEnabled ? 
-                ThemeBlackRedValues.PrimaryColor : 
+            return isEnabled ?
+                ThemeBlackRedValues.PrimaryColor :
                 ThemeBlackRedValues.PrimaryColor.GetDisabled();
         }
 
@@ -447,7 +446,7 @@ namespace Medja.OpenTk.Themes
             return result;
         }
 
-        protected override Window CreateWindow()
+        protected override Medja.Controls.Window CreateWindow()
         {
             var result = new OpenTkWindow(_windowSettings);
             return result;

@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
+using Medja.Controls;
 using Medja.Primitives;
 using Medja.Properties.Binding;
 
-namespace Medja.Controls
+namespace Medja.Utils
 {
     public static class ControlExtensions
     {

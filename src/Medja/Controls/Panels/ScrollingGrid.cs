@@ -2,7 +2,7 @@ using System;
 using Medja.Primitives;
 using Medja.Properties;
 
-namespace Medja.Controls
+namespace Medja.Controls.Panels
 {
     /// <summary>
     /// A container that allows its content to be bigger than the available area and offers scrolling (todo).
@@ -24,7 +24,7 @@ namespace Medja.Controls
             {
                 if(value <= 0)
                     throw new ArgumentOutOfRangeException(nameof(Columns), "must be > 0");
-                
+
                 _columns = value;
             }
         }
@@ -33,12 +33,12 @@ namespace Medja.Controls
         /// The space between each column.
         /// </summary>
         public float SpacingX { get; set; }
-        
+
         /// <summary>
         /// The space between each row.
         /// </summary>
         public float SpacingY { get; set; }
-        
+
         /// <summary>
         /// The height of each row. If null the height of the first element will be used.
         /// </summary>
@@ -49,7 +49,7 @@ namespace Medja.Controls
             Columns = 2;
             IsVerticalScrollBarVisibleProperty = new Property<bool>();
         }
-        
+
         public override void Arrange(Size availableSize)
         {
             if (Children.Count != 0)

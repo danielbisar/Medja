@@ -1,4 +1,4 @@
-namespace Medja.Controls
+namespace Medja.Primitives
 {
     public enum TextAlignment
     {

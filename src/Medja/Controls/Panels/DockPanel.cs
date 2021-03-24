@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using Medja.Primitives;
 using System.Linq;
-using Medja.Properties;
+using Medja.Primitives;
 using Medja.Utils.Collections.Generic;
 
-namespace Medja.Controls
+namespace Medja.Controls.Panels
 {
     /// <summary>
     /// A simple dock panel.
-    /// 
+    ///
     /// To add or remove children use Add, Remove of this class not the Children list directly.
     /// </summary>
     public class DockPanel : Panel
@@ -32,7 +31,7 @@ namespace Medja.Controls
             _docks.Add(control, dock);
             Children.Insert(index, control);
         }
-        
+
         protected override void OnItemAdded(Control child)
         {
             base.OnItemAdded(child);
@@ -55,13 +54,13 @@ namespace Medja.Controls
 
             foreach (var kvp in _docks)
             {
-                if (kvp.Value != Dock.Fill) 
+                if (kvp.Value != Dock.Fill)
                     continue;
-                
+
                 fillChild = kvp.Key;
                 break;
             }
-            
+
             if(fillChild != null)
                 Children.Remove(fillChild);
         }
@@ -78,20 +77,20 @@ namespace Medja.Controls
             {
                 var dock = _docks[child];
                 var childPos = child.Position;
-                
+
                 // width and height
                 if (dock == Dock.Top || dock == Dock.Bottom || dock == Dock.Fill)
                 {
                     if (child.HorizontalAlignment != HorizontalAlignment.Left
                             && child.HorizontalAlignment != HorizontalAlignment.Right)
                         childPos.Width = width - child.Margin.LeftAndRight;
-                        
+
                     if (child.HorizontalAlignment != HorizontalAlignment.Right)
                         childPos.X = left + child.Margin.Left;
                     else
                         childPos.X = left + width - childPos.Width - child.Margin.Right;
                 }
-                
+
                 if (dock == Dock.Left || dock == Dock.Right || dock == Dock.Fill)
                 {
                     if(child.VerticalAlignment != VerticalAlignment.Bottom
@@ -134,7 +133,7 @@ namespace Medja.Controls
 
                 child.Arrange(new Size(childPos.Width, childPos.Height));
             }
-            
+
             base.Arrange(availableSize);
         }
     }

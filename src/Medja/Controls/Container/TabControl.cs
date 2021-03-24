@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using Medja.Controls.Panels;
 using Medja.Input;
 using Medja.Primitives;
 using Medja.Properties;
 using Medja.Properties.Binding;
 using Medja.Theming;
 
-namespace Medja.Controls
+namespace Medja.Controls.Container
 {
 	public class TabControl : ContentControl
 	{
@@ -16,7 +17,7 @@ namespace Medja.Controls
 		private IDisposable _headerWidthBinding;
 		private IDisposable _headerHeightBinding;
 		private IDisposable _headerSpacingBinding;
-		
+
 		private Panel _tabHeaderPanel;
 		public Panel TabHeaderPanel
 		{
@@ -32,7 +33,7 @@ namespace Medja.Controls
 
 		public readonly Property<float> PropertyTabHeaderMaxWidth;
         /// <summary>
-        /// Gets or sets the maximum width of a tab header. 
+        /// Gets or sets the maximum width of a tab header.
         /// </summary>
 		public float TabHeaderMaxWidth
 		{
@@ -82,7 +83,7 @@ namespace Medja.Controls
         /// Gets the padding used for the header area.
         /// </summary>
         public Thickness HeaderAreaPadding { get; }
-		
+
 		public TabControl(IControlFactory controlFactory)
 		{
 			_controlFactory = controlFactory;
@@ -106,12 +107,12 @@ namespace Medja.Controls
             // HeaderAreaPadding.PropertyLeft.AffectsLayoutOf(this);
             // HeaderAreaPadding.PropertyRight.AffectsLayoutOf(this);
             // HeaderAreaPadding.PropertyTop.AffectsLayoutOf(this);
-            
+
 			Padding.PropertyBottom.PropertyChanged += OnPaddingChanged;
 			Padding.PropertyTop.PropertyChanged += OnPaddingChanged;
 			Padding.PropertyLeft.PropertyChanged += OnPaddingChanged;
 			Padding.PropertyRight.PropertyChanged += OnPaddingChanged;
-            
+
             _tabContentControl = _controlFactory.Create<ContentControl>();
 			UpdateContent();
 		}
@@ -160,20 +161,20 @@ namespace Medja.Controls
 		{
 			var uniformWidthPanel = _controlFactory.Create<UniformWidthPanel>();
 			_tabHeaderPanel = uniformWidthPanel;
-            
+
 			_headerHeightBinding = _tabHeaderPanel.Position.PropertyHeight.UpdateFrom(PropertyTabHeaderHeight);
 			_headerWidthBinding = uniformWidthPanel.PropertyMaxChildWidth.UpdateFrom(PropertyTabHeaderMaxWidth);
 			_headerSpacingBinding = uniformWidthPanel.PropertySpaceBetweenChildren.UpdateFrom(PropertyTabHeaderSpacing);
-			
-            
-            
+
+
+
 			var dockPanel = _controlFactory.Create<DockPanel>();
 			dockPanel.Add(Dock.Top, _tabHeaderPanel);
 			dockPanel.Add(Dock.Fill, _tabContentControl);
 
 			return dockPanel;
 		}
-		
+
 		private Control CreateHeadersLeft()
 		{
 			var stackPanel = _controlFactory.Create<VerticalStackPanel>();
@@ -181,14 +182,14 @@ namespace Medja.Controls
 			_headerWidthBinding = _tabHeaderPanel.Position.PropertyWidth.UpdateFrom(PropertyTabHeaderMaxWidth);
 			_headerHeightBinding = stackPanel.PropertyChildrenHeight.UpdateFrom(PropertyTabHeaderHeight, f => f);
 			_headerSpacingBinding = stackPanel.PropertySpaceBetweenChildren.UpdateFrom(PropertyTabHeaderSpacing);
-			
+
 			var dockPanel = _controlFactory.Create<DockPanel>();
 			dockPanel.Add(Dock.Left, _tabHeaderPanel);
 			dockPanel.Add(Dock.Fill, _tabContentControl);
 
 			return dockPanel;
 		}
-		
+
 		private void OnTabHeaderPositionChanged(object sender, PropertyChangedEventArgs e)
 		{
 			UpdateContent();
@@ -210,9 +211,9 @@ namespace Medja.Controls
 			var tabItem = _controlFactory.Create<TabItem>();
 			tabItem.Header = header;
 			tabItem.Content = content;
-			
+
 			AddTab(tabItem);
-            
+
             return tabItem;
 		}
 
@@ -220,7 +221,7 @@ namespace Medja.Controls
 		{
 			if(tabItem == null)
 				throw new ArgumentNullException(nameof(tabItem));
-			
+
 			_tabs.Add(tabItem);
 			_tabHeaderPanel.Add(tabItem);
 			tabItem.InputState.Clicked += OnTabClicked;
@@ -230,14 +231,14 @@ namespace Medja.Controls
 
 			IsLayoutUpdated = false;
 		}
-		
+
 		public override void Arrange(Size availableSize)
 		{
 			base.Arrange(availableSize);
 
 			var area = new Rect(Position.X, Position.Y, availableSize.Width, availableSize.Height);
 			area.Subtract(Margin);
-			
+
 			ContentArranger.Position(area);
 			ContentArranger.Stretch(area);
 		}
@@ -252,7 +253,7 @@ namespace Medja.Controls
 		{
 			_tabs.Remove(tabItem);
 			_tabHeaderPanel.Remove(tabItem);
-			
+
 			tabItem.InputState.Clicked -= OnTabClicked;
 
 			if (SelectedTab == tabItem)

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Medja.Primitives;
 
-namespace Medja.Controls
+namespace Medja.Controls.Graph2D
 {
     /// <summary>
     /// Contains a list of ordered points. These points must be ordered according to their X-value.

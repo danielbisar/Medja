@@ -1,4 +1,4 @@
-namespace Medja.Controls
+namespace Medja.Controls.Container
 {
     public enum TabHeaderPosition
     {

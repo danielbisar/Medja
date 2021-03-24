@@ -1,8 +1,9 @@
 using System.Collections.Specialized;
 using Medja.Properties.ChangeTracking;
+using Medja.Properties.ChangeTracking.Changes;
 using Xunit;
 
-namespace Medja.Properties.Test
+namespace Medja.Properties.Test.ChangeTracking
 {
     public class PropertyRegistryTest
     {
@@ -11,9 +12,9 @@ namespace Medja.Properties.Test
         {
             var registry = new PropertyRegistry();
             var property = new Property<string>();
-            
+
             registry.Add("prop", property);
-            
+
             property.Set("sf");
 
             Assert.True(registry.IsChanged);
@@ -29,10 +30,10 @@ namespace Medja.Properties.Test
         {
             var registry = new PropertyRegistry();
             var property = new Property<string>();
-            
+
             registry.Add("prop", property);
             registry.Dispose();
-            
+
             property.Set("sf");
 
             Assert.False(registry.IsChanged);
@@ -51,33 +52,33 @@ namespace Medja.Properties.Test
         [Fact]
         public void UndoLastChange()
         {
-            var registry = new PropertyRegistry(); 
+            var registry = new PropertyRegistry();
             var property = new Property<string>();
-            
+
             registry.Add("property", property);
-            
+
             property.Set("123");
-            
+
             registry.UndoLastChange();
-            
+
             Assert.Empty(registry.Changes);
             Assert.False(registry.IsChanged);
             Assert.Null(property.Get());
         }
-        
+
         [Fact]
         public void UndoMultipleChanges()
         {
-            var registry = new PropertyRegistry(); 
+            var registry = new PropertyRegistry();
             var property = new Property<string>();
-            
+
             registry.Add("property", property);
-            
+
             property.Set("123");
             property.Set("456");
-            
+
             registry.UndoLastChange();
-            
+
             Assert.Collection(registry.Changes, p =>
             {
                 Assert.Null(((ValuePropertyChange)p).OldValue);
@@ -96,16 +97,16 @@ namespace Medja.Properties.Test
         [Fact]
         public void CommitChanges()
         {
-            var registry = new PropertyRegistry(); 
+            var registry = new PropertyRegistry();
             var property = new Property<string>();
-            
+
             registry.Add("property", property);
-            
+
             property.Set("123");
             property.Set("456");
 
             registry.CommitChanges();
-            
+
             Assert.Empty(registry.Changes);
             Assert.False(registry.IsChanged);
             Assert.Equal("456", property.Get());
@@ -114,20 +115,20 @@ namespace Medja.Properties.Test
         [Fact]
         public void UndoCollectionChanges()
         {
-            var registry = new PropertyRegistry(); 
+            var registry = new PropertyRegistry();
             var property = new Property<MedjaObservableCollection<string>>();
-            
+
             var collection = new MedjaObservableCollection<string>();
             property.Set(collection);
-            
+
             registry.Add("property", property);
-            
+
             collection.Add("123");
             collection.Add("456");
             collection.RemoveAt(0);
             collection.Remove("456");
-            
-            Assert.Collection(registry.Changes, 
+
+            Assert.Collection(registry.Changes,
                 p =>
                 {
                     Assert.Equal(NotifyCollectionChangedAction.Add, ((CollectionPropertyChange)p).Action);
@@ -152,10 +153,10 @@ namespace Medja.Properties.Test
                     Assert.Equal("456", ((CollectionPropertyChange)p).Item);
                     Assert.Equal(0, ((CollectionPropertyChange)p).Index);
                 });
-            
+
             registry.UndoLastChange();
 
-            Assert.Collection(registry.Changes, 
+            Assert.Collection(registry.Changes,
                 p =>
                 {
                     Assert.Equal(NotifyCollectionChangedAction.Add, ((CollectionPropertyChange)p).Action);
@@ -174,60 +175,60 @@ namespace Medja.Properties.Test
                     Assert.Equal("123", ((CollectionPropertyChange)p).Item);
                     Assert.Equal(0, ((CollectionPropertyChange)p).Index);
                 });
-            
+
             Assert.Collection(collection, p => Assert.Equal("456", p));
-            
+
             registry.UndoLastChange();
-            
+
             Assert.Collection(collection, p => Assert.Equal("123", p),
                 p => Assert.Equal("456", p));
-            
+
             registry.UndoChanges();
-            
+
             Assert.Empty(registry.Changes);
             Assert.False(registry.IsChanged);
         }
-        
+
         [Fact]
         public void UndoUnorderedCollectionChanges()
         {
-            var registry = new PropertyRegistry(); 
+            var registry = new PropertyRegistry();
             var property = new Property<MedjaObservableCollection<string>>();
-            
+
             var collection = new MedjaObservableCollection<string>();
             property.Set(collection);
-            
+
             registry.Add("property", property);
-            
+
             collection.Add("123");
             collection.Add("456");
             collection.Insert(1, "5");
             collection.RemoveAt(2); // 456
             collection.Clear();
-            
+
             registry.UndoLastChange();
             registry.UndoLastChange();
 
-            Assert.Collection(collection, 
-                p => Assert.Equal("123", p), 
-                p => Assert.Equal("5", p), 
+            Assert.Collection(collection,
+                p => Assert.Equal("123", p),
+                p => Assert.Equal("5", p),
                 p => Assert.Equal("456", p));
         }
 
         [Fact]
         public void UnregistersCollectionChangedOnDispose()
         {
-            var registry = new PropertyRegistry(); 
+            var registry = new PropertyRegistry();
             var property = new Property<MedjaObservableCollection<string>>();
-            
+
             var collection = new MedjaObservableCollection<string>();
             property.Set(collection);
-            
+
             registry.Add("property", property);
             registry.Dispose();
-            
+
             collection.Add("123");
-            
+
             Assert.False(registry.IsChanged);
             Assert.Empty(registry.Changes);
         }
@@ -237,24 +238,24 @@ namespace Medja.Properties.Test
         {
             var registry = new PropertyRegistry();
             var property = new Property<IUndoableTestObj>();
-            
+
             registry.Add("property", property);
-            
+
             var obj = new IUndoableTestObj();
-            
+
             property.Set(obj);
-            
+
             obj.Number = 1;
             obj.Text = "tt";
-            
+
             var obj2 = new IUndoableTestObj();
             obj2.Number = 2;
             obj2.Text = "some t";
-            
+
             property.Set(obj2);
-            
+
             var snapshot = registry.GetChangesTreeSnapshot();
-            
+
             Assert.Collection(snapshot,
                 p =>
                 {
@@ -267,7 +268,7 @@ namespace Medja.Properties.Test
                 {
                     var subPropertyChanges = Assert.IsType<SubPropertyChanges>(p);
                     Assert.Equal("property", p.Name);
-                    
+
                     Assert.Collection(subPropertyChanges.Changes, s =>
                         {
                             var valueChange = Assert.IsType<ValuePropertyChange>(s);
@@ -290,9 +291,9 @@ namespace Medja.Properties.Test
         {
             var registry = new PropertyRegistry();
             var property = new Property<MedjaObservableCollection<IUndoableTestObj>>();
-            
+
             registry.Add("property", property);
-            
+
             var list = new MedjaObservableCollection<IUndoableTestObj>();
             property.Set(list);
 
@@ -368,24 +369,24 @@ namespace Medja.Properties.Test
         {
             var registry = new PropertyRegistry();
             var property = new Property<MedjaObservableCollection<IUndoableTestObj>>();
-            
+
             var list = new MedjaObservableCollection<IUndoableTestObj>();
             list.Add(new IUndoableTestObj());
 
             property.Set(list);
             registry.Add("property", property);
-            
+
             list[0].Number = 2;
-            
+
             var snapshot = registry.GetChangesTreeSnapshot();
-            
+
             Assert.Equal(1, snapshot.Count);
             var item = Assert.IsType<SubListItemChanges>(snapshot[0]);
-            
+
             Assert.Equal(0, item.Index);
             Assert.Equal(1, item.Changes.Count);
             var valuePropertyChange = Assert.IsType<ValuePropertyChange>(item.Changes[0]);
-            
+
             Assert.Equal("Number", valuePropertyChange.Name);
             Assert.Equal(2, valuePropertyChange.NewValue);
             Assert.Equal(0, valuePropertyChange.OldValue);
@@ -405,17 +406,17 @@ namespace Medja.Properties.Test
 
             obj.Number = 1;
             obj.Text = "tt";
-            
+
             Assert.True(obj.PropertyRegistry.IsChanged);
             Assert.True(registry.IsChanged);
-            
+
             registry.CommitChangesTree();
-            
+
             Assert.False(obj.PropertyRegistry.IsChanged);
             Assert.Empty(obj.PropertyRegistry.Changes);
             Assert.False(registry.IsChanged);
             Assert.Empty(registry.Changes);
-            
+
         }
 
         [Fact]

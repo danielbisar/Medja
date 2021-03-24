@@ -1,6 +1,6 @@
 using Medja.Primitives;
 
-namespace Medja.Controls
+namespace Medja.Controls.Container
 {
     /// <summary>
     /// Helper class to arrange a control inside another one.

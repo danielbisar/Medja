@@ -1,4 +1,4 @@
-namespace Medja.Controls
+namespace Medja.Controls.Graph2D
 {
     public enum AxisOrientation
     {

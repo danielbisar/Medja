@@ -1,9 +1,10 @@
 using System;
-using Medja.Theming;
+using Medja.Controls.Panels;
 using Medja.Primitives;
 using Medja.Properties;
+using Medja.Theming;
 
-namespace Medja.Controls
+namespace Medja.Controls.Dialogs
 {
     /// <summary>
     /// Dialog that allows a boolean result with two buttons at the bottom.
@@ -11,7 +12,7 @@ namespace Medja.Controls
     public class ConfirmableDialog : Dialog
     {
         protected readonly IControlFactory _controlFactory;
-        
+
         public readonly Property<bool> PropertyIsConfirmed;
         /// <summary>
         /// Gets or sets if the dialog was confirmed.
@@ -29,13 +30,13 @@ namespace Medja.Controls
         public ConfirmableDialog(IControlFactory controlFactory)
         {
             _controlFactory = controlFactory;
-            
+
             PropertyIsConfirmed = new Property<bool>();
             Padding.SetAll(5);
-            
+
             Content = CreateContent();
         }
-        
+
         protected virtual Control CreateContent()
         {
             var buttons = _controlFactory.Create<DialogButtonsControl>();
@@ -70,7 +71,7 @@ namespace Medja.Controls
             IsConfirmed = false;
             Hide();
         }
-        
+
         private void OnCancelButtonClicked(object sender, EventArgs e)
         {
             Dismiss();

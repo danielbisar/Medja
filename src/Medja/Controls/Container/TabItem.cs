@@ -1,6 +1,6 @@
 ﻿using Medja.Properties;
 
-namespace Medja.Controls
+namespace Medja.Controls.Container
 {
 	public class TabItem : Control
 	{
@@ -17,7 +17,7 @@ namespace Medja.Controls
 			get { return PropertyIsSelected.Get(); }
 			set { PropertyIsSelected.Set(value); }
 		}
-		
+
 		public readonly Property<Control> PropertyContent;
 		public Control Content
 		{

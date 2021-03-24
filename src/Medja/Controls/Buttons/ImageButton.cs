@@ -1,7 +1,8 @@
+using Medja.Controls.Container;
 using Medja.Properties;
 using Medja.Theming;
 
-namespace Medja.Controls
+namespace Medja.Controls.Buttons
 {
     /// <summary>
     /// A button containing an image.

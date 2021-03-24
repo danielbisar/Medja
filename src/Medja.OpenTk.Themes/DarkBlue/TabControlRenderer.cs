@@ -1,4 +1,4 @@
-using Medja.Controls;
+using Medja.Controls.Container;
 using Medja.OpenTk.Rendering;
 using SkiaSharp;
 
@@ -14,13 +14,13 @@ namespace Medja.OpenTk.Themes.DarkBlue
 		{
 			_backgroundPaint = new SKPaint();
 			_backgroundPaint.IsAntialias = true;
-			
+
 			_borderPaint = new SKPaint();
 			_borderPaint.IsAntialias = true;
 			_borderPaint.IsStroke = true;
 			_borderPaint.Color = ThemeDarkBlueValues.ControlBorder.ToSKColor();
 		}
-		
+
 		protected override void InternalRender()
 		{
 			var rect = _control.Position.ToSKRect();
@@ -38,7 +38,7 @@ namespace Medja.OpenTk.Themes.DarkBlue
 		{
 			_backgroundPaint.Dispose();
 			_borderPaint.Dispose();
-			
+
 			base.Dispose(disposing);
 		}
 	}

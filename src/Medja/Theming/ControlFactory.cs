@@ -2,6 +2,13 @@
 using System.Collections.Generic;
 using System.Reflection;
 using Medja.Controls;
+using Medja.Controls.Buttons;
+using Medja.Controls.Container;
+using Medja.Controls.Dialogs;
+using Medja.Controls.Graph2D;
+using Medja.Controls.Menu;
+using Medja.Controls.Panels;
+using Medja.Controls.TextEditor;
 using Medja.Primitives;
 using Medja.Utils.Reflection;
 
@@ -22,7 +29,7 @@ namespace Medja.Theming
     public class ControlFactory : IControlFactory
     {
         private readonly Dictionary<Type, Func<object>> _factoryMethods;
-        
+
         public Font DefaultFont { get; protected set; }
 
         public ControlFactory()
@@ -75,7 +82,7 @@ namespace Medja.Theming
             _factoryMethods.Add(typeof(VerticalStackPanel), CreateVerticalStackPanel);
             _factoryMethods.Add(typeof(VerticalScrollBar), CreateVerticalScrollBar);
             _factoryMethods.Add(typeof(Window), CreateWindow);
-            
+
             // generic methods are not added here
             // TouchButtonList<T>
         }
@@ -103,7 +110,7 @@ namespace Medja.Theming
 
             if (type.IsGenericType)
             {
-                // todo maybe we can avoid using reflection by using new() keyword as generic parameter constraint  
+                // todo maybe we can avoid using reflection by using new() keyword as generic parameter constraint
                 var genericTypeArguments = type.GenericTypeArguments;
 
                 if (genericTypeArguments.Length != 1)
@@ -112,10 +119,10 @@ namespace Medja.Theming
                 var typeName = type.GetNameWithoutGenericArity();
                 var methodName = "Create" + typeName;
                 var method = GetType().GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Instance);
-                
+
                 if(method == null)
                     throw new InvalidOperationException($"The method with the name {methodName} was not found.");
-                
+
                 var genericMethod = method.MakeGenericMethod(type.GenericTypeArguments);
 
                 return (TControl)genericMethod.Invoke(this, null);
@@ -160,9 +167,9 @@ namespace Medja.Theming
         {
             return _factoryMethods.ContainsKey(type);
         }
-        
+
         // create methods in alphabetical order
-        
+
         protected virtual TablePanel CreateTablePanel()
         {
             return new TablePanel();
@@ -266,7 +273,7 @@ namespace Medja.Theming
         protected virtual void SetupImageButton(ImageButton imageButton)
         {
         }
-        
+
         protected virtual InputBoxDialog CreateInputBoxDialog()
         {
             return new InputBoxDialog(this);
@@ -281,7 +288,7 @@ namespace Medja.Theming
         {
             return new MenuItem();
         }
-        
+
         protected virtual NumericKeypad CreateNumericKeypad()
         {
             return new NumericKeypad(this);
@@ -291,7 +298,7 @@ namespace Medja.Theming
         {
             return new NumericKeypadDialog(this);
         }
-        
+
         protected virtual Popup CreatePopup()
         {
             return new Popup();
@@ -311,7 +318,7 @@ namespace Medja.Theming
         {
             return new ScrollableContainer(this);
         }
-        
+
         protected virtual ScrollingGrid CreateScrollingGrid()
         {
             return new ScrollingGrid();
@@ -356,7 +363,7 @@ namespace Medja.Theming
         {
             return new TextControl();
         }
-        
+
         protected virtual TextEditor CreateTextEditor()
         {
             return new TextEditor();

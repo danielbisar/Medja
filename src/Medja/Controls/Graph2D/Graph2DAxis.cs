@@ -1,7 +1,7 @@
 using Medja.Primitives;
 using Medja.Properties;
 
-namespace Medja.Controls
+namespace Medja.Controls.Graph2D
 {
     /// <summary>
     /// Represents an axis configuration for the <see cref="Graph2D"/> control.
@@ -50,8 +50,8 @@ namespace Medja.Controls
             get { return PropertyOrientation.Get(); }
             set { PropertyOrientation.Set(value); }
         }
-        
-        public Font Font { get; } 
+
+        public Font Font { get; }
 
         public Graph2DAxis()
         {
@@ -59,7 +59,7 @@ namespace Medja.Controls
             PropertyMax = new Property<float>();
             PropertyMin = new Property<float>();
             PropertyOrientation = new Property<AxisOrientation>();
-            
+
             Font = new Font();
         }
     }

@@ -1,8 +1,9 @@
-﻿using Medja.Primitives;
+﻿using Medja.Controls.Panels;
+using Medja.Primitives;
 using Medja.Properties;
 using Medja.Theming;
 
-namespace Medja.Controls
+namespace Medja.Controls.Dialogs
 {
 	/// <summary>
 	/// A dialog that displays an input box to the user.
@@ -13,7 +14,7 @@ namespace Medja.Controls
 		private TextBox _inputTextBox;
 
 		public readonly Property<string> PropertyMessage;
-		
+
 		/// <summary>
 		/// Gets or sets the message that is display to the user.
 		/// </summary>
@@ -62,18 +63,18 @@ namespace Medja.Controls
 			_messageTextBlock = _controlFactory.Create<TextBlock>();
 			_inputTextBox = _controlFactory.Create<TextBox>();
 			_inputTextBox.PropertyText.PropertyChanged += OnTextBoxTextChanged;
-			
+
 			_messageTextBlock.Position.Height = 50;
 			_messageTextBlock.TextWrapping = TextWrapping.Auto;
-			
+
 			var stackPanel = _controlFactory.Create<VerticalStackPanel>();
 			stackPanel.Padding = new Thickness(10);
 			stackPanel.Children.Add(_messageTextBlock);
 			stackPanel.Children.Add(_inputTextBox);
-			
+
 			var result = (DockPanel)base.CreateContent();
 			result.Add(Dock.Fill, stackPanel);
-			
+
 			return result;
 		}
 	}

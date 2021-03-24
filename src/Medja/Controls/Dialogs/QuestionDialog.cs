@@ -1,8 +1,9 @@
-﻿using Medja.Primitives;
+﻿using Medja.Controls.Panels;
+using Medja.Primitives;
 using Medja.Properties;
 using Medja.Theming;
 
-namespace Medja.Controls
+namespace Medja.Controls.Dialogs
 {
 	/// <summary>
 	/// A dialog that displays a question to the user. Can be confirmed with Ok/Cancel. Later maybe yes/no.
@@ -33,7 +34,7 @@ namespace Medja.Controls
 		{
 			_messageTextBlock = _controlFactory.Create<TextBlock>();
 			_messageTextBlock.TextWrapping = TextWrapping.Auto;
-			
+
 			var result = (DockPanel)base.CreateContent();
 			result.Add(Dock.Fill, _messageTextBlock);
 

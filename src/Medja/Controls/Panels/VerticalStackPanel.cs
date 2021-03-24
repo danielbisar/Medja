@@ -1,7 +1,7 @@
 ﻿using Medja.Primitives;
 using Medja.Properties;
 
-namespace Medja.Controls
+namespace Medja.Controls.Panels
 {
     public class VerticalStackPanel : Panel
     {

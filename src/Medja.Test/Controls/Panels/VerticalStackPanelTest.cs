@@ -1,8 +1,9 @@
 using Medja.Controls;
+using Medja.Controls.Panels;
 using Medja.Theming;
 using Xunit;
 
-namespace Medja.Test.Controls
+namespace Medja.Test.Controls.Panels
 {
     public class VerticalStackPanelTest
     {

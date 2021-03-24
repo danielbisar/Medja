@@ -1,6 +1,7 @@
 using System;
+using Medja.Properties.ChangeTracking;
 
-namespace Medja.Properties.Test
+namespace Medja.Properties.Test.ChangeTracking
 {
     [Serializable]
     public class IUndoableTestObj : IUndoable

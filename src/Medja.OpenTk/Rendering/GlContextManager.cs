@@ -4,7 +4,7 @@ using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Platform;
 
-namespace Medja.OpenTk
+namespace Medja.OpenTk.Rendering
 {
     /// <summary>
     /// Manages multiple OpenGL contexts. (f.e. handle resizes etc, setup, etc)

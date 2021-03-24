@@ -1,5 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using Medja.Controls.Buttons;
+using Medja.Controls.Container;
+using Medja.Controls.Menu;
+using Medja.Controls.Panels;
 using Medja.Properties;
 using Medja.Properties.Binding;
 using Medja.Theming;

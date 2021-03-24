@@ -2,7 +2,7 @@ using System.Timers;
 using Medja.Properties;
 using Medja.Utils;
 
-namespace Medja.Controls
+namespace Medja.Controls.Buttons
 {
     /// <summary>
     /// Sends repetitive click events, when the button is hold.
@@ -11,22 +11,22 @@ namespace Medja.Controls
     {
         private readonly Timer _timer;
         private readonly TaskQueueFinder _taskQueueFinder;
-        
+
         public readonly Property<int> PropertyClickRepeatMilliseconds;
         public int ClickRepeatMilliseconds
         {
             get { return PropertyClickRepeatMilliseconds.Get(); }
             set { PropertyClickRepeatMilliseconds.Set(value); }
         }
-        
+
         public RepeatButton()
         {
             PropertyClickRepeatMilliseconds = new Property<int>();
             PropertyClickRepeatMilliseconds.SetSilent(200);
             PropertyClickRepeatMilliseconds.PropertyChanged += OnClickRepeatMillisecondsChanged;
-            
+
             InputState.PropertyIsLeftMouseDown.PropertyChanged += OnIsLeftMouseDownChanged;
-            
+
             _taskQueueFinder = new TaskQueueFinder(this);
             _timer = new Timer();
             _timer.AutoReset = true;
@@ -45,7 +45,7 @@ namespace Medja.Controls
                     var button = (RepeatButton)control;
                     var position = button.InputState.PointerPosition;
                     button.InputState.SendClick(position);
-                    
+
                     return null;
                 }, this);
         }

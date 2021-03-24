@@ -7,14 +7,14 @@ using Medja.Input;
 using Medja.Properties;
 using Medja.Utils;
 
-namespace Medja.Controls
+namespace Medja.Controls.TextEditor
 {
     // todo refactor theoretical base class: textcontrol
     public class TextEditor : Control
     {
         private readonly Timer _timer;
         private readonly TaskQueueFinder _taskQueueFinder;
-        
+
         // maybe we will use another class instead of string later on
         // on every typing a line must be updated, since strings in c#
         // are read only this copies the whole line and adds the char
@@ -57,7 +57,7 @@ namespace Medja.Controls
             get { return PropertySelectionEnd.Get(); }
             private set { PropertySelectionEnd.Set(value); }
         }
-        
+
         public readonly Property<bool> PropertyIsCaretVisible;
         public bool IsCaretVisible
         {
@@ -85,7 +85,7 @@ namespace Medja.Controls
             _taskQueueFinder = new TaskQueueFinder(this);
             _timer = new Timer(OnTimerTick, null, TimeSpan.FromMilliseconds(1000), TimeSpan.FromMilliseconds(1000));
         }
-        
+
         private void OnFocusChanged(object sender, PropertyChangedEventArgs e)
         {
             if (IsFocused == false)
@@ -142,7 +142,7 @@ namespace Medja.Controls
             else
                 InsertChar(e.KeyChar);
         }
-        
+
         /// <summary>
         /// Sets the position of the caret.
         /// </summary>
@@ -209,7 +209,7 @@ namespace Medja.Controls
             else
                 ClearSelection();
         }
-        
+
         /// <summary>
         /// Moves the caret up one line.
         /// </summary>
@@ -338,7 +338,7 @@ namespace Medja.Controls
                 RemoveSelectedText();
                 return;
             }
-            
+
             var line = Lines[CaretY];
 
             if (CaretX < line.Length)
@@ -380,16 +380,16 @@ namespace Medja.Controls
 
             var logicalSelectionStart = GetLogicalSelectionStart();
             var logicalSelectionEnd = GetLogicalSelectionEnd();
-            
+
             // handle first line
             var line = Lines[logicalSelectionStart.Y];
-            
+
             // just part of one line selected
             if (logicalSelectionStart.Y == logicalSelectionEnd.Y)
             {
                 Lines[logicalSelectionStart.Y] =
                     line.Substring(0, logicalSelectionStart.X) + line.Substring(logicalSelectionEnd.X);
-                
+
                 RaiseTextChanged();
             }
             else
@@ -408,7 +408,7 @@ namespace Medja.Controls
 
             CaretX = logicalSelectionStart.X;
             CaretY = logicalSelectionStart.Y;
-            
+
             ClearSelection();
         }
 
@@ -473,15 +473,15 @@ namespace Medja.Controls
             else if (insertLines.Length > 1)
             {
                 Lines[CaretY] = linePart1 + insertLines[0];
-                
+
                 for(int i = 1; i + 1 < insertLines.Length; i++, CaretY++)
                     Lines.Insert(CaretY, insertLines[i]);
 
                 CaretY++;
                 var lastInsertLine = insertLines[insertLines.Length - 1];
-                
+
                 Lines.Insert(CaretY, lastInsertLine + linePart2);
-                
+
                 CaretX = lastInsertLine.Length;
             }
             else
@@ -500,7 +500,7 @@ namespace Medja.Controls
         }
 
         ///<summary>Replaces the complete text (content) of the Editor.</summary>
-        ///<remarks>Function because the text will be parsed into lines, so we don't want to support binding as it 
+        ///<remarks>Function because the text will be parsed into lines, so we don't want to support binding as it
         /// would look like this operation is very fast and does not use a lot resources.</remarks>
         public void SetText(string text)
         {

@@ -1,17 +1,17 @@
-using Medja.Controls;
+using System;
+using Medja.Controls.TextEditor;
+using Medja.Input;
 using Medja.Theming;
 using Medja.Utils;
-using Medja.Input;
 using Xunit;
-using System;
 
-namespace Medja.Test.Controls
+namespace Medja.Test.Controls.TextEditor
 {
     public class TextEditorTest
     {
-        private TextEditor CreateEditor()
+        private Medja.Controls.TextEditor.TextEditor CreateEditor()
         {
-            return new ControlFactory().Create<TextEditor>();
+            return new ControlFactory().Create<Medja.Controls.TextEditor.TextEditor>();
         }
 
         [Fact]

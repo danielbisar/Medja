@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using Medja.Controls.Container;
 using Medja.Primitives;
 using Medja.Properties;
 
-namespace Medja.Controls
+namespace Medja.Controls.Dialogs
 {
 	/// <summary>
 	/// A control that allows dialogs and message boxes to be presented.
@@ -30,11 +31,11 @@ namespace Medja.Controls
 			PropertyDialogControl = new Property<Dialog>();
 			PropertyDialogControl.PropertyChanged += OnDialogControlChanged;
 			PropertyDialogControl.AffectsLayoutOf(this);
-			
+
 			PropertyIsDialogVisible = new Property<bool>();
 			PropertyIsDialogVisible.PropertyChanged += OnIsDialogVisibleChanged;
 			PropertyIsDialogVisible.AffectsLayoutOf(this);
-			
+
 			DialogPadding = new Thickness(100);
 		}
 
@@ -48,7 +49,7 @@ namespace Medja.Controls
 		private void OnDialogControlChanged(object sender, PropertyChangedEventArgs eventArgs)
 		{
 			var dialog = eventArgs.OldValue as Dialog;
-			
+
 			if (dialog != null)
 				dialog.DialogParent = null;
 
@@ -61,7 +62,7 @@ namespace Medja.Controls
 		public override void Arrange(Size availableSize)
 		{
 			base.Arrange(availableSize);
-			
+
 			if (IsDialogVisible && DialogControl != null)
 			{
 				var pos = DialogControl.Position;

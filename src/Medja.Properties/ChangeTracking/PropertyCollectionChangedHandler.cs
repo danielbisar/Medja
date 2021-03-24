@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Specialized;
 using System.Linq;
-using Medja.Properties.ChangeTracking;
+using Medja.Properties.ChangeTracking.Changes;
 
-namespace Medja.Properties
+namespace Medja.Properties.ChangeTracking
 {
     public class PropertyCollectionChangedHandler
     {

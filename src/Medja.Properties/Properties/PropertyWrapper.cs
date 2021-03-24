@@ -1,7 +1,6 @@
 using System;
-using Medja.Properties;
 
-namespace Medja
+namespace Medja.Properties
 {
     /// <summary>
     /// Acts as a wrapper for .NET Properties to support binding.

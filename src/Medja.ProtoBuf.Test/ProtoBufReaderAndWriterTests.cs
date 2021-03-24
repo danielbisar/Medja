@@ -1,4 +1,5 @@
 using System.IO;
+using Medja.ProtoBuf.Test.proto;
 using Xunit;
 
 namespace Medja.ProtoBuf.Test

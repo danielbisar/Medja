@@ -2,7 +2,7 @@ using System.IO;
 using Medja.Utils.IO;
 using Xunit;
 
-namespace Medja.Utils.Test
+namespace Medja.Utils.Test.IO
 {
     public class PathUtilsTest
     {

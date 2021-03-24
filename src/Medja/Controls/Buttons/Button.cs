@@ -1,4 +1,4 @@
-﻿namespace Medja.Controls
+﻿namespace Medja.Controls.Buttons
 {
 	public class Button : TextControl
 	{
@@ -6,7 +6,7 @@
 		{
 			InputState.OwnsMouseEvents = true;
 		}
-		
+
 		public override string ToString()
 		{
 			return "Button: " + Text;

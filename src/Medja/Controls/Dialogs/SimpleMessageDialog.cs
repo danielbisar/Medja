@@ -1,9 +1,10 @@
 ﻿using System;
+using Medja.Controls.Panels;
 using Medja.Primitives;
 using Medja.Properties;
 using Medja.Theming;
 
-namespace Medja.Controls
+namespace Medja.Controls.Dialogs
 {
 	public class SimpleMessageDialog : Dialog
 	{
