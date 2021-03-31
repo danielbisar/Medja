@@ -7,7 +7,7 @@ namespace Medja.OpenTk.Components3D
 {
     public class GLPerspectiveCamera : GLCamera
     {
-        [NonSerialized] 
+        [NonSerialized]
         public readonly Property<float> PropertyFieldOfViewAngle;
         /// <summary>
         /// The field of view angle in radians. Default value: 45° => 0.79 radians. Use <see cref="MedjaMath.Radians"/>.
@@ -18,7 +18,7 @@ namespace Medja.OpenTk.Components3D
             set { PropertyFieldOfViewAngle.Set(value); }
         }
 
-        [NonSerialized] 
+        [NonSerialized]
         public readonly Property<float> PropertyAspectRatio;
         /// <summary>
         /// The x to y aspect ratio. Default value: 4/3
@@ -34,11 +34,11 @@ namespace Medja.OpenTk.Components3D
             PropertyFieldOfViewAngle = new Property<float>();
             PropertyFieldOfViewAngle.SetSilent(0.79f);
             PropertyFieldOfViewAngle.PropertyChanged += OnProjectionMatrixPropertyChanged;
-            
+
             PropertyAspectRatio = new Property<float>();
             PropertyAspectRatio.SetSilent(4f / 3);
             PropertyAspectRatio.PropertyChanged += OnProjectionMatrixPropertyChanged;
-            
+
             PropertyZNear.PropertyChanged += OnProjectionMatrixPropertyChanged;
             PropertyZFar.PropertyChanged += OnProjectionMatrixPropertyChanged;
         }
@@ -52,6 +52,11 @@ namespace Medja.OpenTk.Components3D
         {
             base.UpdateProjectionMatrix();
             ProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView(FieldOfViewAngle, AspectRatio, ZNear, ZFar);
+        }
+
+        protected override string ToStringSubClass()
+        {
+            return " perpective, field-of-view=" + FieldOfViewAngle + ", aspect ratio=" + AspectRatio;
         }
     }
 }

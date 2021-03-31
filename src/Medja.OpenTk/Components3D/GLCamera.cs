@@ -9,7 +9,7 @@ namespace Medja.OpenTk.Components3D
         private bool _viewMatrixNeedsUpdate;
         protected bool _projectionMatrixNeedsUpdate;
         private bool _viewProjectionMatrixNeedsUpdate;
-            
+
         [NonSerialized]
         public readonly Property<Vector3> PropertyPosition;
         public Vector3 Position
@@ -17,8 +17,8 @@ namespace Medja.OpenTk.Components3D
             get { return PropertyPosition.Get(); }
             set { PropertyPosition.Set(value); }
         }
-        
-        [NonSerialized] 
+
+        [NonSerialized]
         public readonly Property<Vector3> PropertyTargetPosition;
         /// <summary>
         /// The position the viewer looks at.
@@ -29,7 +29,7 @@ namespace Medja.OpenTk.Components3D
             set { PropertyTargetPosition.Set(value); }
         }
 
-        [NonSerialized] 
+        [NonSerialized]
         public readonly Property<Vector3> PropertyUpVector;
         /// <summary>
         /// Defines where is up of the viewers eyes. Default: x=0, y=1, z=0
@@ -39,8 +39,8 @@ namespace Medja.OpenTk.Components3D
             get { return PropertyUpVector.Get(); }
             set { PropertyUpVector.Set(value); }
         }
-        
-        [NonSerialized] 
+
+        [NonSerialized]
         public readonly Property<Matrix4> PropertyViewMatrix;
         public Matrix4 ViewMatrix
         {
@@ -48,13 +48,13 @@ namespace Medja.OpenTk.Components3D
             {
                 if(_viewMatrixNeedsUpdate)
                     UpdateViewMatrix();
-                
+
                 return PropertyViewMatrix.Get();
             }
             set { PropertyViewMatrix.Set(value); }
         }
 
-        [NonSerialized] 
+        [NonSerialized]
         public readonly Property<float> PropertyZNear;
         /// <summary>
         /// Distance of the near clipping plane. Default: 0.1f
@@ -65,7 +65,7 @@ namespace Medja.OpenTk.Components3D
             set { PropertyZNear.Set(value); }
         }
 
-        [NonSerialized] 
+        [NonSerialized]
         public readonly Property<float> PropertyZFar;
         /// <summary>
         /// Distance of the far clipping plane. Default: 100.0f
@@ -84,7 +84,7 @@ namespace Medja.OpenTk.Components3D
             {
                 if(_projectionMatrixNeedsUpdate)
                     UpdateProjectionMatrix();
-                
+
                 return PropertyProjectionMatrix.Get();
             }
             set { PropertyProjectionMatrix.Set(value); }
@@ -98,10 +98,10 @@ namespace Medja.OpenTk.Components3D
             {
                 if(_viewMatrixNeedsUpdate)
                     UpdateViewMatrix();
-            
+
                 if(_projectionMatrixNeedsUpdate)
                     UpdateProjectionMatrix();
-                
+
                 if (_viewProjectionMatrixNeedsUpdate)
                     UpdateViewProjectionMatrix();
 
@@ -136,7 +136,7 @@ namespace Medja.OpenTk.Components3D
 
             PropertyZFar = new Property<float>();
             PropertyZFar.SetSilent(100.0f);
-            
+
             _viewMatrixNeedsUpdate = true;
             _projectionMatrixNeedsUpdate = true;
             _viewProjectionMatrixNeedsUpdate = true;
@@ -187,6 +187,16 @@ namespace Medja.OpenTk.Components3D
             // OpenTK matrix multiplication order is from left to right
             ViewProjectionMatrix = ViewMatrix * ProjectionMatrix;
             _viewProjectionMatrixNeedsUpdate = false;
+        }
+
+        public override string ToString()
+        {
+            return "Camera: Pos(" + Position + "), TargetPos(" + TargetPosition + "), Z (near=" + ZNear + ", far=" + ZFar +")" + ToStringSubClass();
+        }
+
+        protected virtual string ToStringSubClass()
+        {
+            return "";
         }
     }
 }
