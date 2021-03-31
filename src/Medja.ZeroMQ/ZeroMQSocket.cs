@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 using ZeroMQ;
 
@@ -16,11 +17,11 @@ namespace Medja.ZeroMQ
         private readonly object _goingToDisposeLock;
 
         private volatile bool _isDisposed;
-        
+
         private volatile bool _goingToDispose;
         /// <summary>
         /// Is true if the <see cref="Dispose"/> was called from another thread. This flags the socket to be disposed
-        /// as soon as any of the sockets methods are called. 
+        /// as soon as any of the sockets methods are called.
         /// </summary>
         public bool GoingToDispose
         {
@@ -61,7 +62,7 @@ namespace Medja.ZeroMQ
         /// Gets notified whenever Dispose was called, no matter on the status of the object.
         /// </summary>
         public event EventHandler DisposeWasCalled;
-        
+
         /// <summary>
         /// Gets notified when the internal socket is actually disposed.
         /// </summary>
@@ -78,12 +79,12 @@ namespace Medja.ZeroMQ
             _managedThreadId = Thread.CurrentThread.ManagedThreadId;
             _socket = ZeroMQManager.Instance.Create(settings);
             _goingToDisposeLock = new object();
-            
+
             Disposing += (s, e) => { };
-            
+
             ZeroMQManager.Instance.Add(this);
         }
-        
+
         private void AssureCorrectThread()
         {
             if(!OwnedByCurrentThread)
@@ -122,7 +123,7 @@ namespace Medja.ZeroMQ
             try
             {
                 var messagePrefix = _settings.MessagePrefix;
-            
+
                 using (var frame = CreateZFrame(messagePrefix, bytes))
                 {
                     Send(frame);
@@ -180,17 +181,19 @@ namespace Medja.ZeroMQ
         public ArraySegment<byte> Receive()
         {
             AssurePreconditionsAndHandleDispose();
-            
+
             try
             {
                 // receive might block for a long time
                 using (var frame = _socket.ReceiveFrame())
                 {
                     var data = frame.Read();
-                    
-                    return HasMessagePrefix
-                            ? new ArraySegment<byte>(data, _settings.MessagePrefix.Length, data.Length - _settings.MessagePrefix.Length)
-                            : new ArraySegment<byte>(data);
+
+                    if(HasMessagePrefix && StartsWithPrefix(data))
+                        return new ArraySegment<byte>(data, _settings.MessagePrefix.Length,
+                                data.Length - _settings.MessagePrefix.Length);
+                    else
+                        return new ArraySegment<byte>(data);
                 }
             }
             catch (ZException exception)
@@ -199,7 +202,7 @@ namespace Medja.ZeroMQ
 
                 if (exception.Error.Number == ZError.ETERM)
                     Trace.WriteLine(nameof(ZeroMQSocket) + ": ZContext termination detected.");
-                
+
                 throw;
             }
             finally
@@ -207,7 +210,20 @@ namespace Medja.ZeroMQ
                 DisposeIfRequested();
             }
         }
-        
+
+        private bool StartsWithPrefix(byte[] data)
+        {
+            var prefix = _settings.MessagePrefix;
+
+            for (int i = 0; i < data.Length && i < prefix.Length; i++)
+            {
+                if (prefix[i] != data[i])
+                    return false;
+            }
+
+            return true;
+        }
+
         /// <summary>
         /// Since <see cref="Dispose"/> of <see cref="ZSocket"/>s is a little complicated this method assures that
         /// <see cref="Dispose"/> is only allowed from the correct thread. If another thread then the one
@@ -224,13 +240,13 @@ namespace Medja.ZeroMQ
         /// });
         ///
         /// For sockets that are created on the MainThread and only used there (synchronious calls), Dispose will be
-        /// called from <see cref="ZeroMQManager.Dispose"/>. 
+        /// called from <see cref="ZeroMQManager.Dispose"/>.
         /// </summary>
         public void Dispose()
         {
             GoingToDispose = true;
             DisposeWasCalled?.Invoke(this, EventArgs.Empty);
-            
+
             if (!OwnedByCurrentThread)
                 return;
 
@@ -238,7 +254,7 @@ namespace Medja.ZeroMQ
             {
                 NotifyDisposing();
                 Trace.WriteLine(nameof(ZeroMQSocket) + ": Dispose socket on thread: " + Thread.CurrentThread.ManagedThreadId);
-                
+
                 _isDisposed = true;
                 _socket.Dispose();
             }
