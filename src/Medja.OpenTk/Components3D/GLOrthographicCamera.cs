@@ -9,7 +9,7 @@ namespace Medja.OpenTk.Components3D
     /// </summary>
     public class GLOrthographicCamera : GLCamera
     {
-        [NonSerialized] 
+        [NonSerialized]
         public readonly Property<float> PropertyWidth;
         public float Width
         {
@@ -17,7 +17,7 @@ namespace Medja.OpenTk.Components3D
             set { PropertyWidth.Set(value); }
         }
 
-        [NonSerialized] 
+        [NonSerialized]
         public readonly Property<float> PropertyHeight;
         public float Height
         {
@@ -29,15 +29,15 @@ namespace Medja.OpenTk.Components3D
         {
             PropertyWidth = new Property<float>();
             PropertyWidth.SetSilent(12);
-            
+
             PropertyHeight = new Property<float>();
             PropertyHeight.SetSilent(9);
-            
+
             PropertyWidth.PropertyChanged += OnProjectionMatrixPropertyChanged;
             PropertyHeight.PropertyChanged += OnProjectionMatrixPropertyChanged;
             PropertyZFar.PropertyChanged += OnProjectionMatrixPropertyChanged;
             PropertyZNear.PropertyChanged += OnProjectionMatrixPropertyChanged;
-            
+
             _projectionMatrixNeedsUpdate = true;
         }
 
@@ -50,6 +50,11 @@ namespace Medja.OpenTk.Components3D
         {
             base.UpdateProjectionMatrix();
             ProjectionMatrix = Matrix4.CreateOrthographic(Width, Height, ZNear, ZFar);
+        }
+
+        protected override string ToStringSubClass()
+        {
+            return " ortho, width=" + Width + ", height=" + Height;
         }
     }
 }
