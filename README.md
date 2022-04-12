@@ -26,6 +26,8 @@ Still missing
 
 https://github.com/danielbisar/Medja/tree/master/src/examples
 
+Have a look at https://github.com/danielbisar/Medja/blob/master/src/examples/graph2d/Program.cs for a simple example on how to setup an application using Medja. (54 lines of code)
+
 # Thanks
 
 Big thanks to SprintWORX GmbH for supporting and letting me publish my work.
