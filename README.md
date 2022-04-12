@@ -1,5 +1,7 @@
 # Medja
 
+A UI Framework purposed for Embedded Devices using SkiaSharp and OpenTK.
+
 - [Documentation](docs/README.md)
 - [License](docs/license.md)
 
