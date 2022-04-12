@@ -5,7 +5,7 @@ A cross platform UI Framework purposed for Embedded Devices using SkiaSharp and 
 Mainly developed under Linux, partially tested under Windows and MacOS, but should work, since both SkiaSharp and OpenTK supports it.
 
 - [Documentation](docs/README.md)
-- [License](docs/license.md)
+- [License](License.md)
 
 # Features
 
