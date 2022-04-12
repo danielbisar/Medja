@@ -22,6 +22,12 @@ Still missing
 - Validation
 - More controls
 
+## Additional, non UI Features:
+
+- easy to use ZeroMQ helpers
+- Protobuf as Streaming Format
+- Other useful extensions for dotnet
+
 # Examples
 
 https://github.com/danielbisar/Medja/tree/master/src/examples
