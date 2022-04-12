@@ -9,6 +9,7 @@ Mainly developed under Linux, partially tested under Windows and MacOS, but shou
 
 # Features
 
+- UI-Tests without rendering any UI, but still test the behavior (e.g. including keystrokes etc)
 - DataBinding (~1000 times as fast as WPF on .NET 4.7)
 - Theming
 - Good set of default controls (Button, Slider, ProgressBar, TextBox, ...)
