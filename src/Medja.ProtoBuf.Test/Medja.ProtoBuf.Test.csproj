@@ -6,6 +6,8 @@
         <IsPackable>false</IsPackable>
 
         <RootNamespace>Medja.ProtoBuf.Test</RootNamespace>
+
+        <Platforms>AnyCPU;x86</Platforms>
     </PropertyGroup>
 
     <ItemGroup>

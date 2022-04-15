@@ -1,7 +1,9 @@
 using System;
 using Medja.Controls;
+using Medja.Controls.Container;
+using Medja.Controls.Panels;
+using Medja.Controls.TextEditor;
 using Medja.Primitives;
-using Medja.Properties.Binding;
 using Medja.Theming;
 
 namespace Medja.Demo
