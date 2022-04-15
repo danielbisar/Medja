@@ -5,6 +5,7 @@
         <TargetFramework>net472</TargetFramework>
         <RootNamespace>Medja.Demo</RootNamespace>
         <LangVersion>default</LangVersion>
+        <Platforms>AnyCPU;x86</Platforms>
     </PropertyGroup>
 
     <ItemGroup>

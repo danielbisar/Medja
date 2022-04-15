@@ -8,6 +8,8 @@
         <RootNamespace>Medja.OpenTk.Test</RootNamespace>
 
         <LangVersion>8</LangVersion>
+
+        <Platforms>AnyCPU;x86</Platforms>
     </PropertyGroup>
 
     <ItemGroup>

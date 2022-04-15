@@ -12,6 +12,7 @@
         <NeutralLanguage>en</NeutralLanguage>
         <PackageVersion>0.9.3.0</PackageVersion>
         <PackageProjectUrl>https://www.sprintworx.de/</PackageProjectUrl>
+        <Platforms>AnyCPU;x86</Platforms>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">

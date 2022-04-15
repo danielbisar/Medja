@@ -8,6 +8,7 @@
     <Description>Cross platform UI library.</Description>
     <Copyright>Copyright © 2018-2019 SprintWORX GmbH</Copyright>
     <PackageProjectUrl>https://www.sprintworx.de/</PackageProjectUrl>
+    <Platforms>AnyCPU;x86</Platforms>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">

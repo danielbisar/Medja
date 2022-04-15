@@ -20,10 +20,9 @@ namespace Medja
         {
             var result = new MarkLayoutDirtyOnPropertyChanged(control, property);
 
-            var markDirtyHelpersProperty = (Property<Dictionary<IProperty, IDisposable>>)control.AttachedProperties
-                .GetOrAdd(MarkLayoutDirtyHelpersId, CreateLayoutDirtyHelpersProperty);
-            var markDirtyHelpers = markDirtyHelpersProperty.Get();
-            
+            var markDirtyHelpersProperty = control.AttachedProperties.GetOrAddProperty<Dictionary<IProperty, IDisposable>>(MarkLayoutDirtyHelpersId, CreateLayoutDirtyHelpersProperty);
+            var markDirtyHelpers = markDirtyHelpersProperty.GetValue<Dictionary<IProperty, IDisposable>>();
+
             markDirtyHelpers.Add(property, result);
         }
 

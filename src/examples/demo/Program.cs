@@ -6,6 +6,14 @@ using Medja.OpenTk.Themes.DarkBlue;
 using Medja.Properties.Binding;
 using Medja.Theming;
 using OpenTK.Graphics.OpenGL4;
+using Medja.OpenTk.Window;
+using Medja.Controls.Buttons;
+using Medja.Controls.Panels;
+using Medja.Controls.Menu;
+using Medja.Controls.Container;
+using Medja.Controls.TextEditor;
+using Medja.Controls.Dialogs;
+using Medja.Utils;
 
 namespace Medja.Demo
 {
