@@ -9,6 +9,7 @@ Mainly developed under Linux, partially tested under Windows and MacOS, but shou
 
 # Features
 
+- Cross-Platform (Windows, Linux, MacOS)
 - UI-Tests without rendering any UI, but still test the behavior (e.g. including keystrokes etc; see https://github.com/danielbisar/Medja/blob/master/src/Medja.Test/Controls/TextEditor/TextEditorTest.cs for an example)
 - DataBinding (~1000 times as fast as WPF on .NET 4.7)
 - Theming
@@ -22,6 +23,10 @@ Still missing
 - UI without Code (f.e. via a markup language)
 - Validation
 - More controls
+
+Goals:
+.net standard or dotnet 6 support
+Currently just mono/.net Framework 4.7.2 since the used OpenTK Version does not support anything else.
 
 ## Additional, non UI Features:
 
@@ -42,4 +47,8 @@ Big thanks to SprintWORX GmbH for supporting and letting me publish my work.
 Contributors
 - Matthias Fritsch (owner of SprintWORX GmbH)
 - @lockejan some control development
+
+# Used by:
+
+https://github.com/lockejan/secure-text-editor
 
