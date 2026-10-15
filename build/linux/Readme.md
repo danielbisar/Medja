@@ -1,39 +1,15 @@
-Use setup_system.sh to setup your system for building.
+# Archived Linux setup tooling
 
-* install_mono.sh installes mono (latest version)
-* build_opentk.sh clones opentk and builds it
+These scripts preserve the historical Mono/MSBuild development environment.
+They are not supported installation instructions for current Linux systems.
+In particular, `install_mono.sh` references an obsolete Ubuntu Xenial repository,
+and `build_open_tk.sh` clones an unpinned development branch.
 
-# Build
-from root folder of the repo
+Do not run `setup_system.sh` to provision a current workstation. Use the
+[supported .NET SDK headless build/test path](../../docs/build.md) instead.
+Framework-reference packages allow compiling the legacy backend without
+installing Mono; GUI execution remains separately unverified.
 
-CURRENTLY WORKING PARTLY even though you get an error message
-
-nuget restore
-msbuild /t:Rebuild /p:Configuration=Release Medja.sln
-
-
-# Install mono
-
-https://baruchcodes.visualstudio.com/Medja/_wiki/wikis/Medja.wiki?wikiVersion=GBwikiMaster&pagePath=%2FLinux%20development%20environment
-
-# Native libs for linux
-
-Downloaded from https://github.com/mono/SkiaSharp/releases
-Must match the used NuGet Package Version.
-
-Must currently be placed at the top level of the project, else they will be in a subfolder in the build directory.
-
-
-
-
-# currently not needed anymore
--------------------------------
-
-# Build opentk
-
-If the scripts fails during execution you can continue by 
-cd source
-cd opentk
-./build.sh
-
-
+The tracked native SkiaSharp library has now been matched by hash to the
+official Linux x86-64 v1.68.0 release. See
+[native provenance and redistribution notices](../../THIRD-PARTY-NOTICES.md).

@@ -1,3 +1,8 @@
+# Historical coding guidelines
+
+These preserve team conventions from the original development period; snippets
+illustrate style rather than serving as compilable current API examples.
+
 # Naming
 
 - boolean variables should start with is, has, can
@@ -45,7 +50,7 @@ public class MyClass
  // to quickly understand what is happing, public methods can easily be found via IntelliSense or the ComboBox in VS above the code editor
  private void DoSomethingCrazy()
  {
-     // use var, except you want to assure using the interface (interfaces are up to 10x slower in c#)
+     // use var unless an explicit type communicates the intended contract
      var someStr = CreateString();
      PrintString(someStr);
 

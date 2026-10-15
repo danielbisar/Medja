@@ -1,4 +1,9 @@
-﻿# Controls
+﻿# Historical control-authoring notes
+
+See [adding a control](howto-add-control.md) for the maintained architectural
+entry point. These notes preserve the original design intent.
+
+# Controls
 
 Controls should be created under the folder Controls and have the same namespace. Also they should inherit from the class Control or any subclass. Additionally you should add a method to the ControlFactory class and make that method protected virtual (so that any theme can overwrite it's renderer).
 

@@ -1,5 +1,6 @@
 #! /bin/bash
-# please run with build as current folder
+# Archived Mono/MSBuild workflow; see docs/build.md for the supported SDK path.
+# Run with build as the current folder.
 
 NUGET_RESTORE=true
 
@@ -34,6 +35,6 @@ if [ "$NUGET_RESTORE" = "true" ]; then
 	nuget restore    || exit -1
 fi
 
-msbuild ./Medja.sln /p:Configuration=$BUILD_CONFIG /t:Build /p:OutDir=$(realpath "$BUILD_TARGET_DIR") /p:AllowedReferenceRelatedFileExtensions=none  || exit -1
+msbuild ./Medja.sln /p:Configuration=$BUILD_CONFIG /p:LegacyTestTarget=true /t:Build /p:OutDir=$(realpath "$BUILD_TARGET_DIR") /p:AllowedReferenceRelatedFileExtensions=none  || exit -1
 
 popd    # back to build

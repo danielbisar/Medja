@@ -1,5 +1,7 @@
 using System;
 using Medja.Controls;
+using Medja.Controls.Buttons;
+using Medja.Controls.Panels;
 using Medja.Theming;
 using Medja.Utils;
 

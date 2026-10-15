@@ -189,11 +189,7 @@ namespace Medja.ZeroMQ
                 {
                     var data = frame.Read();
 
-                    if(HasMessagePrefix && StartsWithPrefix(data))
-                        return new ArraySegment<byte>(data, _settings.MessagePrefix.Length,
-                                data.Length - _settings.MessagePrefix.Length);
-                    else
-                        return new ArraySegment<byte>(data);
+                    return RemoveMessagePrefix(data, _settings.MessagePrefix);
                 }
             }
             catch (ZException exception)
@@ -211,17 +207,18 @@ namespace Medja.ZeroMQ
             }
         }
 
-        private bool StartsWithPrefix(byte[] data)
+        internal static ArraySegment<byte> RemoveMessagePrefix(byte[] data, byte[] prefix)
         {
-            var prefix = _settings.MessagePrefix;
+            if (prefix == null || prefix.Length == 0 || data.Length < prefix.Length)
+                return new ArraySegment<byte>(data);
 
-            for (int i = 0; i < data.Length && i < prefix.Length; i++)
+            for (int i = 0; i < prefix.Length; i++)
             {
                 if (prefix[i] != data[i])
-                    return false;
+                    return new ArraySegment<byte>(data);
             }
 
-            return true;
+            return new ArraySegment<byte>(data, prefix.Length, data.Length - prefix.Length);
         }
 
         /// <summary>

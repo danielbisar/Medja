@@ -1,4 +1,6 @@
 using Medja.Controls;
+using Medja.Controls.Buttons;
+using Medja.Controls.Panels;
 using Medja.Primitives;
 using Medja.Theming;
 

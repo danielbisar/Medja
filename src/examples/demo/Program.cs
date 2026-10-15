@@ -144,9 +144,9 @@ namespace Medja.Demo
 
             var textBlock = controlFactory.Create<TextBlock>();
             textBlock.TextWrapping = TextWrapping.Auto;
-            textBlock.Text = "Modern UI Design without Android or iOS. A Linux device that is supported by the mono runtime " +
-                             "is enough. (ARM, MIPS, x86-64, x86, s390x 64bit, SPARC 32 bit, PowerPC)\n" +
-                             ".NET Core support is going to come.";
+            textBlock.Text = "Historical C# UI framework: control behavior and layout are independent of rendering.\n" +
+                             "The graphics backend uses OpenTK and SkiaSharp on a legacy .NET Framework/Mono stack. " +
+                             "Current verification covers headless tests and graphics compilation, not device compatibility.";
             textBlock.Position.Height = 75;
 
             var checkBoxStackPanel = controlFactory.Create<HorizontalStackPanel>();

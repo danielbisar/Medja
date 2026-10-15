@@ -1,4 +1,8 @@
-Release Notes
+Archived Release Notes: 0.9.1.0
+
+Historical release record. Dependency versions and platform observations below
+describe that release, not the currently verified build/runtime scope.
+See docs/build.md for current verification.
 
 - Projects use C# 8.0
 - Refactored part of the UI core library
@@ -18,12 +22,9 @@ Release Notes
 API changes:
 - OpenGL support: default version is now OpenGL 4.2
 
-  Note (for Mac OS): you might need to set this to another value, since MacOS since version 10.14 does only support
-  OpenGL 2.2 OR 3.3 (even though this might be wrong, since this states something else: https://support.apple.com/en-us/HT202823) 
-  OpenGL for Mac is marked as deprecated (if this is still true is not clear). 
-  For 3D Rendering under Mac Metal should be adopted.
-  The 2D Rendering should still work just fine, with the correct settings.
-  Since I can't test this, i haven't hardcoded OS detection and version setting yet.
+  macOS runtime support was not verified for this release. The old notes did not
+  establish a reliable OpenGL/platform matrix. Current GUI compatibility must be
+  tested rather than inferred from dependency support.
   
   - support multiple OpenGL controls in one window (via Control3D and an OpenGL context per 3D control)
   this makes the background code for rendering controls much easier, so we do not require two different "OpenTKRenderer" for 2D and 3D.
@@ -63,9 +64,9 @@ Last version
 
 - PropertyWrapper: class to wrap .NET properties and support binding and update notification (as long as the wrapper is used)
 - IBinding: interface for all binding classes
-- ForEachSplitSeq: see related Town Square post
+- ForEachSplitSeq: sequential string-splitting utility
 
 BugFixes:
-- #441, #237, #467: KeyboardHandling fixed: Delete key on MacOS, arrow keys in text box, shift key does not print dummy char anymore
-- #441: Delay in rendering for TextBox, TextEditor and possibly other text controls: added TextProperty as Property that requires rerendering
-- #409: Resize of Window does not display content (fixed on Linux, Mac not clear)
+- KeyboardHandling fixed: Delete key on MacOS, arrow keys in text box, shift key does not print dummy char anymore
+- Delay in rendering for TextBox, TextEditor and possibly other text controls: added TextProperty as Property that requires rerendering
+- Resize of Window does not display content (fixed on Linux, Mac not clear)

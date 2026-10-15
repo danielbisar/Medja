@@ -1,4 +1,5 @@
 #! /bin/bash
+# Archived Mono runner; the supported CPU-only path is test_headless.sh.
 
 . common.sh
 

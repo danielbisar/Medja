@@ -1,5 +1,10 @@
 # Modern OpenGL
 
+Historical graphics notes and API experiments. Some snippets predate the current
+wrappers and are not standalone buildable examples; see the
+[example index](../../src/examples/README.md) and
+[current verification scope](../build.md).
+
 ## OpenTK
 
 - Matrix multiplication order is inverse from GLSL order.
@@ -135,4 +140,3 @@ void main()
 ```
 
 or, if you object is not really moving you can combine some of the matrices as well.
-

@@ -1,0 +1,3 @@
+# Preserve whitespace in verbatim upstream license/notice copies.
+licenses/OpenTK-3.1.txt -whitespace
+licenses/SkiaSharp*.txt -whitespace

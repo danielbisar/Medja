@@ -1,30 +1,11 @@
-# This is the default git ignore file used for projects at SprintWORX GmbH
-# if you need to make any changes follow the following steps
-#
-# - are these changes 100% just for this project? Add them at the beginning 
-#   under "local project settings"
-# - if these changes could make sense for all/most repositories share your idea
-#   at least with one team member and if they agree add the changes to an 
-#   appropriate area below and update the template_gitignore in in the Internal 
-#   project as well 
-# - inform the team via Mattermost/DevOps about the updated template so that
-#   changes can be applied to other projects as well (this is necessary as long
-#   as we don't have a way to automate the merge process) - if you know how this
-#   could be done let me know
-#
-# Do not place a comment at the end of a line; this does not really work well.
-#
+# Medja build outputs and local development files.
+# Adapted from the historical SprintWORX project template.
 # Copyright (c) SprintWORX GmbH 2019
-#
-# Authors:
-# Daniel Klafft
-#
-
-# local project settings
+# Author: Daniel Klafft
 
 # build results
-bin/
-obj/
+[Bb]in/
+[Oo]bj/
 out/
 packages/
 .vs/
@@ -32,3 +13,11 @@ packages/
 .vscode/
 build/test_runs/
 *.DotSettings.user
+*.suo
+*.user
+*.userosscache
+TestResults/
+*.trx
+*.log
+.DS_Store
+Thumbs.db

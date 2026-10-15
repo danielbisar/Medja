@@ -1,6 +1,7 @@
 ﻿using Medja;
 using Medja.Controls;
 using Medja.OpenTk;
+using Medja.OpenTk.Window;
 using Medja.OpenTk.Themes.DarkBlue;
 using Medja.Primitives;
 using MedjaOpenGlTestApp.Tests;

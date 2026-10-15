@@ -1,4 +1,10 @@
-﻿# Features
+﻿# Historical binding design sketch
+
+This is an experimental requirements/API sketch, not the current API reference.
+See the [implemented binding](../src/Medja.Properties/Binding/Binding.cs) and
+[behavioral tests](../src/Medja.Properties.Test/Binding/BindingTest.cs).
+
+# Features
 - conversion of types (bind str to int and vice-versa)
 - high performance (the overhead - memory and performance should be low)
 - easy to use
@@ -17,4 +23,3 @@ How to use:
 
 var binding = BindingFactory.Create(target, nameof(target.Property), source, nameof(source.Property), Mode.TwoWay);
 binding.Converter = ...
-

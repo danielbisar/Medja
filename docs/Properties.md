@@ -1,4 +1,11 @@
-﻿# Requirements
+﻿# Historical property-system experiments
+
+These notes preserve early design alternatives and raw timing observations.
+The original workload/hardware/runtime is not fully specified, and some shown
+APIs were rejected or removed. They are not current usage instructions or a
+reproducible comparison with other UI frameworks.
+
+# Requirements
 
 - Binding
   - Property Changed notification? or some other way to track changes

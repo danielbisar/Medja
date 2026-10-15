@@ -1,4 +1,7 @@
 using Medja.Controls;
+using Medja.Controls.Buttons;
+using Medja.Controls.Dialogs;
+using Medja.Controls.Panels;
 using Medja.Theming;
 
 namespace MedjaOpenGlTestApp.Tests

@@ -1,0 +1,23 @@
+name: Headless tests
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  headless:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.112
+      - name: Run CPU-only tests
+        run: bash build/test_headless.sh
+      - name: Compile legacy graphics libraries (no GPU runtime validation)
+        run: dotnet build src/Medja.OpenTk.Themes/Medja.OpenTk.Themes.csproj --configuration Release

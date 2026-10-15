@@ -2,8 +2,12 @@ using System;
 using System.IO;
 using System.Reflection;
 using Medja.Controls;
+using Medja.Controls.Buttons;
+using Medja.Controls.Panels;
+using Medja.Controls.TextEditor;
 using Medja.OpenTk;
 using Medja.OpenTk.Themes.DarkBlue;
+using Medja.OpenTk.Window;
 using Medja.Primitives;
 
 namespace Medja.examples.Editor
@@ -17,7 +21,7 @@ namespace Medja.examples.Editor
                 var codeBase = Assembly.GetExecutingAssembly().CodeBase;
                 var uri = new UriBuilder(codeBase);
                 var path = Uri.UnescapeDataString(uri.Path);
-                
+
                 return Path.GetDirectoryName(path);
             }
         }
@@ -27,7 +31,7 @@ namespace Medja.examples.Editor
             var settings = new MedjaOpenTKWindowSettings();
             var controlFactory = new ThemeDarkBlue(settings);
             settings.ControlFactory = controlFactory;
-            
+
             var library = new MedjaOpenTkLibrary();
             var application = MedjaApplication.Create(library);
 

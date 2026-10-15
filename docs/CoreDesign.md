@@ -1,4 +1,10 @@
-﻿After some tests starting a UI Framework/Library we should have clear goals since it is a very complex project.
+﻿# Historical core-design notes
+
+These are early requirements and experimental questions, not a current roadmap.
+Performance hypotheses require workload/runtime-specific measurement. See the
+[current project status](../README.md#current-status).
+
+After some tests starting a UI Framework/Library we should have clear goals since it is a very complex project.
 
 - easy to use
 	- easy to integrate into a project
@@ -62,11 +68,9 @@ How do we know if an object needs to be rendered again?
 
 
 # Performance Guidelines
-- Interfaces are 10x slower than direct class usages. Use interfaces only were really necessary.
-  Unclear is yet how this is with basic inheritance vs interfaces
-  TODO This of course is something we should have a deeper look at for the rendering API.
-  TODO measure composition vs inheritance (accessing fields and call their submethods vs access virtual methods)
-- 
+- Measure dispatch/allocation costs in the actual rendering workload and runtime
+  before choosing composition, inheritance or interfaces for performance reasons.
+  No general interface-versus-class speed ratio is established by these notes.
 
 # Language for designer
 - easy to use for users without designer (xml, json?, others)
@@ -83,7 +87,7 @@ How do we know if an object needs to be rendered again?
 
 
 - startup performance vs runtime performance
-  - project fd: startup performance does not have to be so high, if runtime performance is
+  - historical target-device tradeoff: runtime performance could take priority over startup performance
   - lazy loading (just load what you need) can add significant 
 complexity 
 

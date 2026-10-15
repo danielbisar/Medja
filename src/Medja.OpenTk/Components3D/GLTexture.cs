@@ -44,7 +44,7 @@ namespace Medja.OpenTk.Components3D
         public void SetMagFilter(TextureMagFilter filter)
         {
             Bind();
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter,
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter,
                 (int) filter);
         }
 
